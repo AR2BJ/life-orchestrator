@@ -1,0 +1,22 @@
+{
+  "name": "life-orchestrator",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "packages/*",
+    "modules/*",
+    "orchestrator-app"
+  ],
+  "scripts": {
+    "dev:orchestrator": "npm run dev --workspace=orchestrator-app",
+    "dev:habit": "npm run dev --workspace=@life-orchestrator/habit-tracker",
+    "dev:task": "npm run dev --workspace=@life-orchestrator/task-engine",
+    "build:all": "npm run build --workspaces --if-present"
+  },
+  "devDependencies": {
+    "vite": "^8.1.5"
+  },
+  "author": "Arman Birjandi",
+  "license": "MIT"
+}
