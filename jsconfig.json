@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "paths": {
+      "@/*": ["./modules/habit-tracker/src/*"],
+      "@life-orchestrator/core-store": ["./packages/core-store/src/index.js"],
+      "@life-orchestrator/event-bus": ["./packages/event-bus/src/index.js"],
+      "@life-orchestrator/ui-theme/*": ["./packages/ui-theme/src/*"]
+    }
+  },
+  "exclude": ["node_modules", "**/dist"]
+}

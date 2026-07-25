@@ -1,32 +1,51 @@
-export class CoreStore {
-  constructor(namespace) {
-    this.namespace = `LO_CORE_${namespace.toUpperCase()}`;
-  }
+const ROOT_KEY = "LIFE_ORCHESTRATOR_STORAGE";
+const STORAGE_VERSION = 1;
 
-  get() {
+export class CoreStore {
+  static getRawStorage() {
     try {
-      const data = localStorage.getItem(this.namespace);
-      return data ? JSON.parse(data) : null;
+      const raw = localStorage.getItem(ROOT_KEY);
+      return raw ? JSON.parse(raw) : { version: STORAGE_VERSION };
     } catch (err) {
-      console.error(`[CoreStore Error] Failed to read ${this.namespace}:`, err);
-      return null;
+      console.error("[CoreStore] Global read error:", err);
+      return { version: STORAGE_VERSION };
     }
   }
 
-  set(data) {
+  static setRawStorage(data) {
     try {
-      localStorage.setItem(this.namespace, JSON.stringify(data));
+      localStorage.setItem(ROOT_KEY, JSON.stringify(data));
       return true;
     } catch (err) {
-      console.error(
-        `[CoreStore Error] Failed to write ${this.namespace}:`,
-        err,
-      );
+      console.error("[CoreStore] Global write error:", err);
       return false;
     }
   }
 
-  clear() {
-    localStorage.removeItem(this.namespace);
+  static getNamespace(namespace) {
+    const storage = this.getRawStorage();
+    return storage[namespace] ?? null;
+  }
+
+  static setNamespace(namespace, data) {
+    const storage = this.getRawStorage();
+    storage[namespace] = data;
+    return this.setRawStorage(storage);
+  }
+
+  static clearNamespace(namespace) {
+    const storage = this.getRawStorage();
+    delete storage[namespace];
+    return this.setRawStorage(storage);
+  }
+
+  static purgeAll() {
+    try {
+      localStorage.removeItem(ROOT_KEY);
+      return true;
+    } catch (err) {
+      console.error("[CoreStore] Purge error:", err);
+      return false;
+    }
   }
 }
