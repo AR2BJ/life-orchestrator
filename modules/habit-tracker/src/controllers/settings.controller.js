@@ -1,8 +1,9 @@
-import { StateManager, state } from "@/models/state.model.js";
 import {
+  HABIT_NAMESPACE,
   clearHabitStorage,
   saveToStorage,
 } from "@/models/storage.model";
+import { StateManager, state } from "@/models/state.model.js";
 
 import { GlobalLoaderService } from "@/services/loader.service";
 import { HabitController } from "./habit.controller";
@@ -188,7 +189,7 @@ export const SettingsController = {
   },
 
   handleDataExport(format = "json") {
-    const localData = JSON.parse(localStorage.getItem(STORAGE_KEY));
+    const localData = JSON.parse(localStorage.getItem(HABIT_NAMESPACE));
     const habits = localData?.habits || [];
 
     if (habits.length === 0) {
