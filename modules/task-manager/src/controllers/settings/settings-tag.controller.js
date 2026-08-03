@@ -39,7 +39,9 @@ export const SettingsTagController = {
 
     if (tags.length === 0) {
       container.innerHTML = `
-        <div class="w-full h-full min-h-40 sm:min-h-30 lg:min-h-20 overflow-y-auto scrollbar-thumb-surface-2 scrollbar-thin bg-surface-2 rounded-2xl border border-dashed border-border p-4 text-center flex flex-col justify-center items-center">
+        <div
+          class="w-full h-full min-h-40 sm:min-h-30 lg:min-h-20 overflow-y-auto scrollbar-thumb-surface-2 scrollbar-thin bg-surface-2 rounded-2xl border border-dashed border-border p-4 text-center flex flex-col justify-center items-center"
+        >
           <div class="h-full flex flex-col justify-center items-center">
             <div class="text-3xl">
               <i class="fa-regular fa-tags text-brand/60"></i>
@@ -60,7 +62,10 @@ export const SettingsTagController = {
         ).length;
 
         return `
-          <div data-tag-id="${tag.id}" class="flex items-center justify-between gap-2 p-2 rounded-xl bg-surface-2 border border-border/80 transition">
+          <div
+            data-tag-id="${tag.id}"
+            class="flex flex-col xs:flex-row items-center justify-start xs:justify-between gap-2 p-2 rounded-xl bg-surface-2 border border-border/80 transition"
+          >
             <div class="flex items-center gap-1 min-w-0 flex-1">
               <i class="fa-regular fa-tag text-brand/80 text-xs shrink-0"></i>
               <input
@@ -71,15 +76,27 @@ export const SettingsTagController = {
                 readonly
               />
             </div>
-            <div class="flex items-center gap-1 shrink-0">
-              <div class="min-w-20 flex items-center gap-1 px-2 py-1.75 rounded-md sm:rounded-lg bg-surface border border-border text-[10px] sm:text-xs font-semibold text-secondary" title="Used in ${usageCount} task${usageCount === 1 ? "" : "s"}">
-                <i class="fa-regular fa-list-check text-xs text-brand/80"></i>
+            <div class="w-full xs:w-fit flex items-center gap-1 shrink-0">
+              <div
+                class="min-w-0 sm:min-w-20 flex items-center gap-1 px-1.5 py-1 sm:py-1.75 rounded-md sm:rounded-lg bg-surface border border-border text-[9px] sm:text-xs font-semibold text-secondary"
+                title="Used in ${usageCount} task${usageCount === 1 ? "" : "s"}"
+              >
+                <i class="fa-regular fa-list-check text-[9px] sm:text-xs text-brand/80"></i>
                 <span>${usageCount} ${usageCount <= 1 ? "task" : "tasks"}</span>
               </div>
-              <button data-action="toggle-edit" class="edit-btn flex h-6 w-6 sm:w-8 sm:h-8 items-center justify-center rounded-md sm:rounded-lg border border-border bg-surface hover:bg-brand/10 hover:cursor-pointer transition" title="Edit tag name">
-                <i class="fa-regular fa-pen-to-square text-xs text-brand/80"></i>
+              <button
+                data-action="toggle-edit"
+                class="edit-btn flex h-6 w-6 sm:w-8 sm:h-8 items-center justify-center rounded-md sm:rounded-lg border border-border bg-surface hover:bg-brand/10 hover:cursor-pointer transition"
+                title="Edit tag name"
+              >
+                <i
+                  class="fa-regular fa-pen-to-square text-xs text-brand/80"
+                ></i>
               </button>
-              <button data-action="delete-tag" class="delete-btn flex h-6 w-6 sm:w-8 sm:h-8 items-center justify-center rounded-md sm:rounded-lg border border-border bg-surface hover:bg-red-600/10 hover:cursor-pointer transition">
+              <button
+                data-action="delete-tag"
+                class="delete-btn flex h-6 w-6 sm:w-8 sm:h-8 items-center justify-center rounded-md sm:rounded-lg border border-border bg-surface hover:bg-red-600/10 hover:cursor-pointer transition"
+              >
                 <i class="fa-regular fa-trash-can text-red-500/80 text-xs"></i>
               </button>
             </div>

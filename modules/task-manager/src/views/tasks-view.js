@@ -209,7 +209,7 @@ export const TasksView = {
                 <button
                   id="btn-scroll-right"
                   type="button"
-                  class="absolute right-0 z-20 flex h-7 w-7 items-center justify-center rounded-lg border border-border bg-surface/95 backdrop-blur-xl shadow-2xl text-secondary hover:text-primary hover:border-brand/50 transition-all cursor-pointer"
+                  class="absolute right-0 z-20 hidden h-7 w-7 items-center justify-center rounded-lg border border-border bg-surface/95 backdrop-blur-xl shadow-2xl text-secondary hover:text-primary hover:border-brand/50 transition-all cursor-pointer"
                 >
                   <i class="fa-regular fa-chevron-right text-xs"></i>
                 </button>
@@ -261,88 +261,90 @@ function setupTaskFiltersDragScroll() {
 
   const scrollStep = 180;
 
-  const updateScrollState = () => {
-    const hasOverflow =
-      scrollContainer.scrollWidth - scrollContainer.clientWidth > 1;
-    const atStart = scrollContainer.scrollLeft <= 2;
-    const atEnd =
-      scrollContainer.scrollLeft + scrollContainer.clientWidth >=
-      scrollContainer.scrollWidth - 2;
-
-    btnLeft.classList.toggle("hidden", atStart || !hasOverflow);
-    btnLeft.classList.toggle("flex", !atStart && hasOverflow);
-
-    btnRight.classList.toggle("hidden", !hasOverflow || atEnd);
-    btnRight.classList.toggle("flex", hasOverflow && !atEnd);
-
-    if (!hasOverflow) {
-      scrollContainer.style.webkitMaskImage = "none";
-      scrollContainer.style.maskImage = "none";
-      return;
-    }
-
-    let maskImage = "";
-    const fadeWidth = "100px";
-
-    if (atStart && atEnd) {
-      maskImage = "none";
-    } else if (atStart) {
-      maskImage = `linear-gradient(to right, black 0%, black calc(100% - ${fadeWidth}), transparent 100%)`;
-    } else if (atEnd) {
-      maskImage = `linear-gradient(to right, transparent 0%, black ${fadeWidth}, black 100%)`;
-    } else {
-      maskImage = `linear-gradient(to right, transparent 0%, black ${fadeWidth}, black calc(100% - ${fadeWidth}), transparent 100%)`;
-    }
-
-    scrollContainer.style.webkitMaskImage = maskImage;
-    scrollContainer.style.maskImage = maskImage;
-  };
-
-  const scheduleUpdate = () => {
-    requestAnimationFrame(() => {
-      requestAnimationFrame(updateScrollState);
-    });
-  };
-
-  scrollContainer.addEventListener("scroll", updateScrollState);
-
-  if (typeof ResizeObserver !== "undefined") {
-    const resizeObserver = new ResizeObserver(() => {
-      scheduleUpdate();
-    });
-
-    resizeObserver.observe(scrollContainer);
-
-    if (scrollContainer.parentElement) {
-      resizeObserver.observe(scrollContainer.parentElement);
-    }
-  }
-
-  const mutationObserver = new MutationObserver(() => {
-    scheduleUpdate();
-  });
-
-  mutationObserver.observe(scrollContainer, {
-    childList: true,
-    subtree: true,
-  });
-
   btnLeft.addEventListener("click", (e) => {
     e.stopPropagation();
-    scrollContainer.scrollLeft -= scrollStep;
+    scrollContainer.scrollBy({ left: -scrollStep, behavior: "smooth" });
   });
 
   btnRight.addEventListener("click", (e) => {
     e.stopPropagation();
-    scrollContainer.scrollLeft += scrollStep;
+    scrollContainer.scrollBy({ left: scrollStep, behavior: "smooth" });
   });
 
-  window.addEventListener("resize", scheduleUpdate);
-  window.addEventListener("load", scheduleUpdate);
+  const checkOverflowState = () => {
+    if (
+      scrollContainer.offsetParent === null ||
+      scrollContainer.clientWidth === 0
+    ) {
+      btnLeft.classList.add("hidden");
+      btnLeft.classList.remove("flex");
+      btnRight.classList.add("hidden");
+      btnRight.classList.remove("flex");
+      scrollContainer.style.maskImage = "none";
+      return;
+    }
 
-  scheduleUpdate();
+    const { scrollLeft, scrollWidth, clientWidth } = scrollContainer;
+    const hasOverflow = scrollWidth > clientWidth + 2;
+
+    if (!hasOverflow) {
+      btnLeft.classList.add("hidden");
+      btnLeft.classList.remove("flex");
+      btnRight.classList.add("hidden");
+      btnRight.classList.remove("flex");
+      scrollContainer.style.maskImage = "none";
+      return;
+    }
+
+    const atStart = Math.ceil(scrollLeft) <= 2;
+    const atEnd = Math.ceil(scrollLeft + clientWidth) >= scrollWidth - 2;
+
+    btnLeft.classList.toggle("hidden", atStart);
+    btnLeft.classList.toggle("flex", !atStart);
+
+    btnRight.classList.toggle("hidden", atEnd);
+    btnRight.classList.toggle("flex", !atEnd);
+
+    const fadeWidth = "80px";
+
+    if (atStart) {
+      scrollContainer.style.maskImage = `linear-gradient(to right, black 0%, black calc(100% - ${fadeWidth}), transparent 100%)`;
+    } else if (atEnd) {
+      scrollContainer.style.maskImage = `linear-gradient(to right, transparent 0%, black ${fadeWidth}, black 100%)`;
+    } else {
+      scrollContainer.style.maskImage = `linear-gradient(to right, transparent 0%, black ${fadeWidth}, black calc(100% - ${fadeWidth}), transparent 100%)`;
+    }
+  };
+
+  const triggerCheck = () => {
+    requestAnimationFrame(() => {
+      setTimeout(checkOverflowState, 50);
+    });
+  };
+
+  scrollContainer.addEventListener("scroll", checkOverflowState);
+
+  const mutationObserver = new MutationObserver(() => {
+    triggerCheck();
+  });
+  mutationObserver.observe(scrollContainer, { childList: true, subtree: true });
+
+  const viewSection = document.getElementById("tasks-view");
+  if (viewSection) {
+    const sectionObserver = new MutationObserver(() => {
+      if (!viewSection.classList.contains("hidden")) {
+        triggerCheck();
+      }
+    });
+    sectionObserver.observe(viewSection, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+  }
+
+  window.addEventListener("resize", triggerCheck);
+  triggerCheck();
 }
-
 if (typeof window !== "undefined") {
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", () => {

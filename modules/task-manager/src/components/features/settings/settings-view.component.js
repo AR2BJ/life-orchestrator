@@ -99,16 +99,16 @@ export const SettingsViewComponent = {
               </div>
             </div>
 
-            <div class="flex gap-2 items-center">
+            <div class="flex flex-col xs:flex-row gap-2 items-center">
               <input
                 type="text"
                 id="sett-new-tag-input"
                 placeholder="Enter new tag name..."
-                class="flex-1 bg-surface-2 border border-border rounded-xl px-3.5 py-2 text-xs sm:text-sm text-primary placeholder:text-muted focus:outline-none focus:border-brand/80 transition"
+                class="w-full bg-surface-2 border border-border rounded-xl px-3.5 py-2 text-xs sm:text-sm text-primary placeholder:text-muted truncate focus:outline-none focus:border-brand/80 transition"
               />
               <button
                 id="sett-add-tag-btn"
-                class="px-4 py-2 bg-brand/80 hover:bg-brand text-white font-medium text-xs sm:text-sm rounded-xl transition cursor-pointer shrink-0 flex items-center gap-1.5"
+                class="w-full xs:w-auto px-4 py-2 bg-brand/80 hover:bg-brand text-white font-medium text-xs sm:text-sm rounded-xl transition cursor-pointer shrink-0 flex justify-center items-center gap-1.5"
               >
                 <i class="fa-regular fa-plus"></i>
                 <span>Add Tag</span>
