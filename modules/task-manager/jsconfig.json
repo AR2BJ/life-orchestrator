@@ -12,9 +12,6 @@
       "@life-orchestrator/ui-theme/*": ["../../packages/ui-theme/src/*"]
     },
     "rootDir": "./src",
-    "declaration": true,
-    "declarationMap": true,
-    "incremental": true,
     "tsBuildInfoFile": "./dist/.tsbuildinfo",
     "allowJs": true
   },
