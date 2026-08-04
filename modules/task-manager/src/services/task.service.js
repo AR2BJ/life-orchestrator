@@ -184,6 +184,13 @@ export const TaskService = {
         ? sanitizeTagIds(updatedFields.tags)
         : task.tags;
 
+    const alreadyExists = currentTasks.some(
+      (t) => t.id !== id && t.title.toLowerCase() === cleanedTitle.toLowerCase(),
+    );
+    if (alreadyExists) {
+      throw new Error("Task already exists.");
+    }
+
     return currentTasks.map((t) => {
       if (t.id !== id) return t;
 

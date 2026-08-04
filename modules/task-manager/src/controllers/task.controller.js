@@ -70,7 +70,7 @@ export const TaskController = {
         {
           value: "today",
           title: "Today",
-          icon: "fa-regular fa-calendar-day text-brand",
+          icon: "fa-regular fa-calendar-day text-brand/80",
         },
         {
           value: "this_week",
@@ -94,6 +94,7 @@ export const TaskController = {
           itemTitle: "title",
           itemValue: "value",
           itemIcon: "icon",
+          containerClass: "min-h-8!",
           inputClass: "h-5! pb-0! w-full lg:w-36 text-xs sm:text-sm",
           onChange: (selectedVal) => {
             GlobalLoaderService.show("Filtering tasks by date...");
@@ -120,7 +121,7 @@ export const TaskController = {
         {
           value: "priority",
           title: "Priority",
-          icon: "fa-regular fa-arrow-down-short-wide text-brand",
+          icon: "fa-regular fa-arrow-down-short-wide text-brand/80",
         },
         {
           value: "dueDate",
@@ -154,6 +155,7 @@ export const TaskController = {
           itemTitle: "title",
           itemValue: "value",
           itemIcon: "icon",
+          containerClass: "min-h-8!",
           inputClass: "h-5! pb-0! w-full lg:w-36 text-xs sm:text-sm",
           onChange: (selectedVal) => {
             GlobalLoaderService.show("Sorting tasks...");
@@ -503,11 +505,7 @@ export const TaskController = {
     const helpBackdrop = document.getElementById("help-modal-backdrop");
 
     const openHelp = (defaultTab = "safeguard") => {
-      const helpModal = document.getElementById("help-modal");
-      if (!helpModal) return;
-
-      helpModal.classList.remove("hidden");
-      helpModal.classList.add("flex");
+      if (helpModal) helpModal.classList.replace("hidden", "flex");
 
       // Function to switch tabs inside the help modal
       const switchHelpTab = (tabName) => {

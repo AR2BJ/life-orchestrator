@@ -9,8 +9,8 @@ function normalizeTag(tag) {
     return { id: crypto.randomUUID(), name: tag.trim() };
   }
   return {
-    id: String(tag?.id || crypto.randomUUID()),
-    name: String(tag?.name || tag?.title || "").trim(),
+    id: String(tag.id || crypto.randomUUID()),
+    name: String(tag.name || tag.title || "").trim(),
   };
 }
 
@@ -23,7 +23,7 @@ function normalizeTask(task) {
     priority: task.priority || "low",
     dueDate: task.dueDate || null,
     createdAt: task.createdAt || formatDate(new Date()),
-    updatedAt: task.updatedAt || formatDate(new Date()),
+    updatedAt: task.updatedAt || formatDate(new Date()) || null,
     completedAt: task.completedAt || null,
     estimatedMinutes: Number(task.estimatedMinutes) || 0,
     archived: Boolean(task.archived),
@@ -35,16 +35,16 @@ function normalizeTask(task) {
           id: String(st.id || crypto.randomUUID()),
           title: st.title || "",
           completed: Boolean(st.completed),
-          createdAt: st.createdAt || formatDate(new Date()),
-          updatedAt: st.updatedAt || formatDate(new Date()),
+          createdAt: task.createdAt || formatDate(new Date()),
+          updatedAt: task.updatedAt || formatDate(new Date()) || null,
         }))
       : [],
   };
 }
 
 function migrateData(data) {
-  const tasks = Array.isArray(data?.tasks) ? data.tasks : [];
-  const tags = Array.isArray(data?.tags) ? data.tags : [];
+  const tasks = Array.isArray(data.tasks) ? data.tasks : [];
+  const tags = Array.isArray(data.tags) ? data.tags : [];
 
   return {
     version: STORAGE_VERSION,

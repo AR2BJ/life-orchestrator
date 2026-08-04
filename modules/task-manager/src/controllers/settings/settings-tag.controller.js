@@ -66,8 +66,8 @@ export const SettingsTagController = {
             data-tag-id="${tag.id}"
             class="flex flex-col xs:flex-row items-center justify-start xs:justify-between gap-2 p-2 rounded-xl bg-surface-2 border border-border/80 transition"
           >
-            <div class="flex items-center gap-1 min-w-0 flex-1">
-              <i class="fa-regular fa-tag text-brand/80 text-xs shrink-0"></i>
+            <div class="flex items-center gap-1 min-w-0 flex-1 ps-1">
+              <i class="fa-regular fa-tag text-brand/80 text-sm"></i>
               <input
                 type="text"
                 value="${(tag.name || "").replace(/"/g, "&quot;")}"

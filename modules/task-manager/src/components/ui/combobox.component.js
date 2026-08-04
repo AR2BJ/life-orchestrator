@@ -54,7 +54,11 @@ export class ComboboxComponent {
 
     this.container.innerHTML = `
       <div class="relative flex flex-col justify-center items-stretch gap-1">
-        <div class="flex ${this.options.isRow ? "flex-row" : "flex-col"} justify-center items-stretch">
+        <div
+          class="flex ${
+            this.options.isRow ? "flex-row" : "flex-col"
+          } justify-center items-stretch"
+        >
           ${
             this.options.label
               ? `<label
@@ -69,7 +73,7 @@ export class ComboboxComponent {
             id="combobox-container-${uuid}"
             class="${
               this.options.containerClass
-            } relative min-h-10 w-full flex flex-wrap items-center content-start gap-1.5 rounded-xl border border-border bg-surface-2 py-1.75 ps-2.5 pe-20 focus-within:border-brand/80 focus-within:ring-1 focus-within:ring-brand/30 transition group cursor-pointer"
+            } relative min-h-10 w-full flex flex-wrap items-center content-start gap-1.5 rounded-xl border border-border bg-surface-2 p-1.75 pe-20 focus-within:border-brand/80 focus-within:ring-1 focus-within:ring-brand/30 transition group cursor-pointer"
           >
             <div
               id="combobox-chips-${uuid}"
@@ -150,14 +154,12 @@ export class ComboboxComponent {
     input.addEventListener("blur", () => {
       setTimeout(() => {
         const activeElement = document.activeElement;
+        const dropdownId = this.elements.dropdown.id;
         const isChipButton =
           activeElement?.closest?.(".remove-chip-btn") ||
-          activeElement?.closest?.(".autocomplete-chip") ||
           activeElement?.closest?.(".combobox-chip");
 
-        const isDropdown =
-          activeElement?.closest?.("#autocomplete-dropdown") ||
-          activeElement?.closest?.("#combobox-dropdown");
+        const isDropdown = activeElement?.closest?.(`#${dropdownId}`);
 
         if (!isChipButton && !isDropdown) {
           this.closeDropdown();
@@ -206,6 +208,10 @@ export class ComboboxComponent {
       }
     });
 
+    dropdown.addEventListener("wheel", (e) => {
+      e.stopPropagation();
+    });
+
     this.boundDocumentClick = (e) => {
       if (!this.container.contains(e.target)) {
         this.closeDropdown();
@@ -213,7 +219,14 @@ export class ComboboxComponent {
     };
     document.addEventListener("click", this.boundDocumentClick);
 
-    this.boundScroll = () => {
+    this.boundScroll = (e) => {
+      if (
+        e.target &&
+        e.target instanceof Node &&
+        this.elements.dropdown.contains(e.target)
+      ) {
+        return;
+      }
       if (this.isOpen) this.closeDropdown();
     };
     window.addEventListener("scroll", this.boundScroll, true);
@@ -240,7 +253,7 @@ export class ComboboxComponent {
     });
 
     this.boundResize = () => {
-      if (this.isOpen) this.closeList();
+      if (this.isOpen) this.closeDropdown();
     };
     window.addEventListener("resize", this.boundResize);
   }
@@ -360,7 +373,7 @@ export class ComboboxComponent {
             class="combobox-item px-3.5 py-2 text-xs font-medium text-primary hover:bg-brand/10 hover:text-brand cursor-pointer flex items-center justify-between transition border-b border-border/30 last:border-none"
           >
             <span class="flex items-center gap-1.5">
-              <i class="${icon} text-xs"></i>
+              <i class="${icon} text-sm"></i>
               ${this.getItemText(item)}
             </span>
             <span class="text-[10px] text-muted"
@@ -385,7 +398,7 @@ export class ComboboxComponent {
         html += `
           <div
             data-value="${query}"
-            class="combobox-item px-3.5 py-2 text-xs font-medium text-brand hover:bg-brand/15 cursor-pointer flex items-center justify-between transition ${
+            class="combobox-item px-3.5 py-2 text-xs font-medium text-brand/80 hover:bg-brand/15 cursor-pointer flex items-center justify-between transition ${
               items.length > 0 ? "border-t border-border/40" : ""
             }"
           >
@@ -439,7 +452,7 @@ export class ComboboxComponent {
     );
 
     items.forEach((item) => {
-      item.classList.remove("bg-brand/15", "border-brand/20", "text-brand");
+      item.classList.remove("bg-brand/15", "border-brand/20", "text-brand/80");
     });
 
     this.activeIndex = -1;
@@ -451,9 +464,9 @@ export class ComboboxComponent {
 
     items.forEach((el, i) => {
       if (i === index) {
-        el.classList.add("bg-brand/15", "border-brand/20", "text-brand");
+        el.classList.add("bg-brand/15", "border-brand/20", "text-brand/80");
       } else {
-        el.classList.remove("bg-brand/15", "border-brand/20", "text-brand");
+        el.classList.remove("bg-brand/15", "border-brand/20", "text-brand/80");
       }
     });
 
@@ -530,7 +543,7 @@ export class ComboboxComponent {
 
     chipsContainer.innerHTML = "";
 
-    const chipClasses = `${this.options.chipClass} combobox-chip flex items-center gap-1.5 px-2.5 py-0.5 rounded-lg bg-brand/10 text-brand font-medium text-xs border border-brand/20 select-none animate-fadeIn`;
+    const chipClasses = `${this.options.chipClass} combobox-chip flex items-center gap-1.5 px-2.5 py-0.5 rounded-lg bg-brand/10 text-brand/80 font-medium text-xs border border-brand/20 select-none animate-fadeIn`;
 
     this.selectedItems.forEach((item) => {
       const chip = document.createElement("span");

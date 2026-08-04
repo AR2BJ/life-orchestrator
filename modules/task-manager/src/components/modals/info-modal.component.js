@@ -179,7 +179,7 @@ export const InfoModalComponent = {
         ></div>
 
         <div
-          class="relative w-full max-w-2xl bg-surface border border-border rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 shadow-2xl transition-all scale-95 flex flex-col max-h-[75vh] md:max-h-[80vh] h-auto"
+          class="relative w-full max-w-2xl bg-surface border border-border rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 shadow-2xl transition-all scale-95 flex flex-col max-h-[75dvh] md:max-h-[80dvh] h-auto"
         >
           <div
             class="flex justify-between items-center mb-4 sm:mb-5 border-b border-border pb-3 sm:pb-4 shrink-0"
@@ -238,7 +238,7 @@ export const InfoModalComponent = {
                 class="p-3.5 sm:p-4 bg-brand/5 border border-brand/10 rounded-xl sm:rounded-2xl"
               >
                 <h4
-                  class="text-xs sm:text-sm font-bold text-brand uppercase tracking-wide flex items-center gap-2"
+                  class="text-xs sm:text-sm font-bold text-brand/80 uppercase tracking-wide flex items-center gap-2"
                 >
                   <i class="fa-regular fa-layer-group"></i> Subtasks & Progress
                 </h4>
@@ -309,15 +309,15 @@ export const InfoModalComponent = {
             >
               ${InfoModalComponent.renderShortcutsData()}
             </div>
-            </div>
-            
-            <div
+          </div>
+
+          <div
             class="flex justify-end mt-3 sm:mt-4 shrink-0 border-t border-border pt-3 sm:pt-4"
-            >
+          >
             <button
               id="btn-close-help"
               class="w-full sm:w-auto px-6 py-2.5 text-xs sm:text-sm rounded-lg lg:rounded-xl bg-brand/80 text-white font-semibold hover:bg-brand/50 transition cursor-pointer shadow-lg shadow-brand/10"
-              >
+            >
               Got it, Thanks!
             </button>
           </div>

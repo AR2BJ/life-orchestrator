@@ -586,10 +586,10 @@ export class DatePickerComponent {
         "h-7 w-7 mx-auto flex items-center justify-center text-xs rounded-lg cursor-pointer transition-all ";
 
       if (isSelected) {
-        classNames += "bg-brand text-white font-bold shadow-md shadow-brand/20";
+        classNames += "bg-brand/80 text-white font-bold shadow-md shadow-brand/20";
       } else if (isToday) {
         classNames +=
-          "border border-brand text-brand font-semibold hover:bg-brand/10";
+          "border border-brand/80 text-brand/80 font-semibold hover:bg-brand/10";
       } else if (isFriday) {
         classNames += "text-rose-400 font-medium hover:bg-rose-500/10";
       } else {
@@ -649,7 +649,7 @@ export class DatePickerComponent {
         "py-2 text-center text-xs rounded-xl cursor-pointer font-medium transition-all ";
 
       if (isCurrentMonth) {
-        classNames += "bg-brand/15 text-brand font-bold border border-brand/30";
+        classNames += "bg-brand/15 text-brand/80 font-bold border border-brand/30";
       } else {
         classNames += "text-primary hover:bg-surface-2";
       }
@@ -686,7 +686,7 @@ export class DatePickerComponent {
         "py-2 text-center text-xs rounded-xl cursor-pointer font-medium transition-all ";
 
       if (isCurrentYear) {
-        classNames += "bg-brand/15 text-brand font-bold border border-brand/30";
+        classNames += "bg-brand/15 text-brand/80 font-bold border border-brand/30";
       } else {
         classNames += "text-primary hover:bg-surface-2";
       }

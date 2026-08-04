@@ -35,7 +35,7 @@ export const NotificationService = {
       success: "text-emerald-500",
       error: "text-red-500",
       warning: "text-amber-500",
-      info: "text-brand",
+      info: "text-brand/80",
     };
     const typeTextColorMap = {
       success: "text-emerald-800/80 dark:text-emerald-500",

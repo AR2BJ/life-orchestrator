@@ -1,8 +1,7 @@
+import { STORAGE_VERSION, TASK_NAMESPACE } from "@/models/storage.model.js";
 import { formatDate, todayISO } from "@/utils/helpers";
 
 import { NotificationService } from "@/services/notification.service.js";
-import { STORAGE_VERSION } from "@/models/storage.model.js";
-import { TASK_NAMESPACE } from "@/models/storage.model";
 
 export const SettingsExportController = {
   handleDataExport(format = "json") {

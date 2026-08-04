@@ -67,7 +67,7 @@ export const CalendarView = {
           >
             <button
               id="calendar-btn-today"
-              class="px-2 py-1 xs:px-2.5 xs:py-1.5 text-[10px] xs:text-xs font-bold rounded-lg bg-brand/10 text-brand border border-brand/20 hover:bg-brand/20 transition cursor-pointer"
+              class="px-2 py-1 xs:px-2.5 xs:py-1.5 text-[10px] xs:text-xs font-bold rounded-lg bg-brand/10 text-brand/80 border border-brand/20 hover:bg-brand/20 transition cursor-pointer"
             >
               Today
             </button>

@@ -2,6 +2,7 @@ import { StateManager, state } from "@/models/state.model.js";
 
 import { GlobalLoaderService } from "@/services/loader.service";
 import { NotificationService } from "@/services/notification.service.js";
+import { SettingsArchiveController } from "./settings-archive.controller.js";
 import { SettingsTagController } from "./settings-tag.controller.js";
 import { TASK_NAMESPACE } from "@/models/storage.model.js";
 import { TaskController } from "../task.controller.js";

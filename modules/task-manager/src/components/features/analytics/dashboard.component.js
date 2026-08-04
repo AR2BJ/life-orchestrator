@@ -315,7 +315,7 @@ export const DashboardComponent = {
           class="col-span-2 md:col-span-1 relative overflow-hidden bg-surface-2 border border-border/70 hover:-translate-y-1 hover:border-brand/30 rounded-2xl p-6 transition-all duration-300 flex flex-col justify-between min-h-36 group"
         >
           <i
-            class="fa-solid fa-tags absolute -right-4 -bottom-6 text-[10rem] text-brand opacity-[0.04] dark:opacity-[0.06] rotate-15 pointer-events-none group-hover:scale-110 group-hover:rotate-5 transition-transform duration-500"
+            class="fa-solid fa-tags absolute -right-4 -bottom-6 text-[10rem] text-brand/80 opacity-[0.04] dark:opacity-[0.06] rotate-15 pointer-events-none group-hover:scale-110 group-hover:rotate-5 transition-transform duration-500"
           ></i>
           <div class="flex items-center justify-between z-10">
             <span
@@ -323,13 +323,13 @@ export const DashboardComponent = {
               >Domain Focus</span
             >
             <span
-              class="text-[10px] font-semibold px-2 py-0.5 rounded-md bg-brand/10 text-brand border border-brand/20"
+              class="text-[10px] font-semibold px-2 py-0.5 rounded-md bg-brand/10 text-brand/80 border border-brand/20"
               >${topTagPercentage}% Concentration</span
             >
           </div>
           <div class="z-10 mt-3">
             <div
-              class="text-2xl font-black text-brand tracking-tight truncate max-w-45"
+              class="text-2xl font-black text-brand/80 tracking-tight truncate max-w-45"
               title="${topTag[0]}"
             >
               <i class="fa-regular fa-tag text-base me-2"></i>${topTag[0]}
@@ -353,7 +353,7 @@ export const DashboardComponent = {
                 <h4
                   class="text-lg font-bold text-primary flex items-center gap-2"
                 >
-                  <i class="fa-regular fa-chart-network text-brand text-xl"></i>
+                  <i class="fa-regular fa-chart-network text-brand/80 text-xl"></i>
                   Sprint & Execution Heatmap
                 </h4>
                 <p class="text-xs text-secondary mt-1">
@@ -401,7 +401,7 @@ export const DashboardComponent = {
                 >
                   <div
                     id="heatmap-tab-indicator"
-                    class="absolute top-1 left-1 h-[calc(100%-8px)] w-24 rounded-lg bg-brand transition-all duration-300 ease-out z-0 shadow-sm"
+                    class="absolute top-1 left-1 h-[calc(100%-8px)] w-24 rounded-lg bg-brand/80 transition-all duration-300 ease-out z-0 shadow-sm"
                   ></div>
 
                   <button
@@ -610,7 +610,7 @@ export const DashboardComponent = {
                 <h4
                   class="text-lg font-bold text-primary flex items-center gap-2"
                 >
-                  <i class="fa-regular fa-sliders text-brand text-xl"></i>
+                  <i class="fa-regular fa-sliders text-brand/80 text-xl"></i>
                   Task-Level Execution & Subtask Progress
                 </h4>
                 <p class="text-xs text-secondary/80 mt-0.5 font-medium">

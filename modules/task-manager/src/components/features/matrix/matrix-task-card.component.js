@@ -7,7 +7,7 @@ export const MatrixTaskCardComponent = {
       getTaskMatrixAttributes(task);
 
     const headerExtraHtml = `
-      <span class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-brand-light text-brand shrink-0">
+      <span class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-brand-light text-brand/80 shrink-0">
         Score: ${priorityScore}
       </span>
     `;

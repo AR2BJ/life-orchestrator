@@ -47,14 +47,14 @@ export function renderMonthGrid(currentDate, tasks) {
 
     cellsHtml += `
       <div 
-        class="group flex flex-col justify-between border border-border/70 min-h-12 sm:min-h-28 rounded-lg sm:rounded-xl p-1 sm:p-2 bg-surface hover:border-brand/50 transition cursor-pointer ${isToday ? "ring-2 ring-brand bg-brand/5" : ""}"
+        class="group flex flex-col justify-between border border-border/70 min-h-12 sm:min-h-28 rounded-lg sm:rounded-xl p-1 sm:p-2 bg-surface hover:border-brand/50 transition cursor-pointer ${isToday ? "ring-2 ring-brand/80 bg-brand/5" : ""}"
         data-calendar-date="${cellDateStr}"
       >
         <div class="flex justify-between items-center mb-0.5 sm:mb-1">
-          <span class="text-[10px] sm:text-xs font-black ${isToday ? "text-brand" : "text-primary"}">${day}</span>
+          <span class="text-[10px] sm:text-xs font-black ${isToday ? "text-brand/80" : "text-primary"}">${day}</span>
           ${
             dayTasks.length > 0
-              ? `<span class="hidden sm:inline-block text-[10px] font-bold px-1.5 py-0.2 rounded bg-brand/10 text-brand">${dayTasks.length}</span>`
+              ? `<span class="hidden sm:inline-block text-[10px] font-bold px-1.5 py-0.2 rounded bg-brand/10 text-brand/80">${dayTasks.length}</span>`
               : ""
           }
         </div>
@@ -137,7 +137,7 @@ export function renderDayList(currentDate, tasks) {
       <div class="flex items-center justify-between pb-3 border-b border-border/60">
         <h3 class="text-sm font-bold text-primary flex items-center gap-2">
           Scheduled Tasks
-          <span class="text-xs px-2 py-0.5 rounded bg-brand/10 text-brand font-bold">${dayTasks.length}</span>
+          <span class="text-xs px-2 py-0.5 rounded bg-brand/10 text-brand/80 font-bold">${dayTasks.length}</span>
         </h3>
       </div>
       
@@ -205,7 +205,7 @@ export function renderYearHeatmap(currentDate, tasks) {
       if (!isOverflow) {
         if (count >= 1 && count <= 2) color = "bg-brand/40";
         else if (count >= 3 && count <= 4) color = "bg-brand/70";
-        else if (count >= 5) color = "bg-brand shadow-xs shadow-brand/50";
+        else if (count >= 5) color = "bg-brand/80 shadow-xs shadow-brand/50";
       }
 
       dotsHtml += `<div class="w-2.5 h-2.5 rounded-xs ${color}" title="${dStr}: ${count} tasks"></div>`;

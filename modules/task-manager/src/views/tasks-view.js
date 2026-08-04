@@ -38,7 +38,7 @@ export const TasksView = {
             </button>
           </div>
 
-          <div class="relative w-full sm:w-120 group/search">
+          <div class="relative w-full sm:w-72 group/search">
             <span
               class="absolute inset-y-0 left-0 flex items-center ps-3.5 pointer-events-none text-muted"
             >
@@ -47,8 +47,8 @@ export const TasksView = {
             <input
               type="text"
               id="search-tasks"
-              placeholder="Search tasks, tags, description, priority or status...."
-              class="w-full ps-10 pe-20 py-2.5 truncate text-sm rounded-xl border border-border bg-surface text-primary placeholder:text-muted/70 focus:outline-none focus:border-brand/50 transition-all shadow-sm"
+              placeholder="Search tasks...."
+              class="w-full ps-10 pe-10 py-3 text-sm rounded-xl border border-border bg-surface text-primary placeholder:text-muted/70 focus:outline-none focus:border-brand/50 transition-all shadow-sm"
             />
 
             <div
@@ -235,7 +235,7 @@ export const TasksView = {
 
               <div
                 id="task-count-badge"
-                class="shrink-0 flex justify-center items-center gap-1.5 px-4 py-2 bg-surface-3 rounded-xl text-xs font-bold text-primary select-none w-full sm:w-36 lg:w-auto"
+                class="shrink-0 flex justify-center items-center gap-1.5 px-4 py-1.5 bg-surface-3 rounded-xl text-xs font-bold text-primary select-none w-full sm:w-36 lg:w-auto"
               >
                 0 Tasks
               </div>
@@ -272,6 +272,9 @@ function setupTaskFiltersDragScroll() {
   });
 
   const checkOverflowState = () => {
+    const { scrollLeft, scrollWidth, clientWidth } = scrollContainer;
+    const hasOverflow = scrollWidth > clientWidth + 2;
+
     if (
       scrollContainer.offsetParent === null ||
       scrollContainer.clientWidth === 0
@@ -283,9 +286,6 @@ function setupTaskFiltersDragScroll() {
       scrollContainer.style.maskImage = "none";
       return;
     }
-
-    const { scrollLeft, scrollWidth, clientWidth } = scrollContainer;
-    const hasOverflow = scrollWidth > clientWidth + 2;
 
     if (!hasOverflow) {
       btnLeft.classList.add("hidden");
@@ -318,7 +318,7 @@ function setupTaskFiltersDragScroll() {
 
   const triggerCheck = () => {
     requestAnimationFrame(() => {
-      setTimeout(checkOverflowState, 50);
+      setTimeout(checkOverflowState, 100);
     });
   };
 
@@ -342,15 +342,34 @@ function setupTaskFiltersDragScroll() {
     });
   }
 
+  const resizeObserver = new ResizeObserver(() => {
+    triggerCheck();
+  });
+
+  resizeObserver.observe(scrollContainer);
+
+  if (viewSection) {
+    resizeObserver.observe(viewSection);
+  }
+
   window.addEventListener("resize", triggerCheck);
+  window.addEventListener("load", triggerCheck);
+
+  if (document.fonts?.ready) {
+    document.fonts.ready.then(() => triggerCheck());
+  }
+
   triggerCheck();
 }
+
 if (typeof window !== "undefined") {
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", () => {
       requestAnimationFrame(setupTaskFiltersDragScroll);
     });
   } else {
-    requestAnimationFrame(setupTaskFiltersDragScroll);
+    requestAnimationFrame(() => {
+      requestAnimationFrame(setupTaskFiltersDragScroll);
+    });
   }
 }

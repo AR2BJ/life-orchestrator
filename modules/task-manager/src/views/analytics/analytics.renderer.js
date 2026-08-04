@@ -144,7 +144,7 @@ function syncMobileMenuSelection(view) {
   buttons.forEach((btn) => {
     const isActive = btn.getAttribute("data-view") === view;
     btn.classList.toggle("bg-brand/10", isActive);
-    btn.classList.toggle("text-brand", isActive);
+    btn.classList.toggle("text-brand/80", isActive);
     btn.classList.toggle("font-bold", isActive);
     btn.classList.toggle("text-secondary", !isActive);
   });
