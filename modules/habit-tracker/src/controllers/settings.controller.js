@@ -502,7 +502,7 @@ export const SettingsController = {
             habits: importedHabits,
           };
 
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(parsedData));
+          localStorage.setItem(HABIT_NAMESPACE, JSON.stringify(parsedData));
           StateManager.save(parsedData.habits);
 
           state.activeTab = "active";
