@@ -7,7 +7,7 @@ export const DeleteModalsComponent = {
       >
         <div class="bg-surface rounded-2xl p-6 max-w-sm w-full shadow-xl flex flex-col gap-4">
           <div
-            class="w-12 h-12 rounded-full bg-red-500/10 text-red-500/80 flex items-center justify-center text-xl mx-auto"
+            class="w-10 h-10 lg:w-11 lg:h-11 rounded-xl lg:rounded-2xl bg-red-500/10 text-red-500/80 flex items-center justify-center text-xl mx-auto"
           >
             <i class="fa-regular fa-trash"></i>
           </div>
@@ -22,7 +22,7 @@ export const DeleteModalsComponent = {
           <div class="grid grid-cols-2 gap-3 mt-2">
             <button
               id="cancel-delete"
-              class="px-4 py-2.5 rounded-xl bg-(--color-surface-3) hover:border-primary  text-secondary hover:text-primary! font-medium text-sm transition border border-border cursor-pointer"
+              class="px-4 py-2.5 rounded-xl bg-surface-3 hover:border-primary  text-secondary hover:text-primary! font-medium text-sm transition border border-border cursor-pointer"
             >
               Cancel
             </button>

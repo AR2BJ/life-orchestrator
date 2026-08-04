@@ -21,7 +21,7 @@ function getDaysInMonth(year, month) {
 }
 
 export const AnalyticsAdapter = {
-  generateHeatmapSeries(habits, view) {
+  generateHeatmapSeries(habits = [], view = "weekly") {
     const activeHabits = habits.filter((h) => !h.archived);
 
     let startDate = new Date();
@@ -113,8 +113,8 @@ export const AnalyticsAdapter = {
 
       return weekLabels.map((weekLabel, weekIdx) => {
         const rowData = activeMonthsRange.map((mInfo) => {
-          let weeklyTicks = 0;
-          let totalPossibleTicksInWeek = 0;
+          let weeklyChecks = 0;
+          let totalPossibleChecksInWeek = 0;
           const daysInMonth = getDaysInMonth(mInfo.year, mInfo.month);
 
           const startDay = weekIdx * 7 + 1;
@@ -124,16 +124,16 @@ export const AnalyticsAdapter = {
             for (let d = startDay; d <= endDay; d++) {
               const targetDate = new Date(mInfo.year, mInfo.month, d);
               if (targetDate >= startDate && targetDate <= today) {
-                totalPossibleTicksInWeek += activeHabits.length;
+                totalPossibleChecksInWeek += activeHabits.length;
                 const isoStr = formatDate(targetDate);
                 if (globalActivityMap[isoStr]) {
-                  weeklyTicks += globalActivityMap[isoStr];
+                  weeklyChecks += globalActivityMap[isoStr];
                 }
               }
             }
           }
 
-          return { x: `${mInfo.name} ${mInfo.year}`, y: weeklyTicks };
+          return { x: `${mInfo.name} ${mInfo.year}`, y: weeklyChecks };
         });
 
         return { name: weekLabel, data: rowData };
@@ -150,7 +150,7 @@ export const AnalyticsAdapter = {
 
       return yearsRange.map((year) => {
         const rowData = monthNames.map((monthName, mIdx) => {
-          let monthlyTotalTicks = 0;
+          let monthlyTotalChecks = 0;
           let validDaysInTracking = 0;
           const daysInMonth = getDaysInMonth(year, mIdx);
 
@@ -160,12 +160,12 @@ export const AnalyticsAdapter = {
               validDaysInTracking++;
               const isoStr = formatDate(targetDate);
               if (globalActivityMap[isoStr]) {
-                monthlyTotalTicks += globalActivityMap[isoStr];
+                monthlyTotalChecks += globalActivityMap[isoStr];
               }
             }
           }
 
-          return { x: monthName, y: monthlyTotalTicks };
+          return { x: monthName, y: monthlyTotalChecks };
         });
 
         return { name: String(year), data: rowData };

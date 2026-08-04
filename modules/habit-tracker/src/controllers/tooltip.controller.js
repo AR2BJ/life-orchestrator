@@ -11,8 +11,8 @@ function createTooltip(text) {
   const tooltip = document.createElement("div");
   tooltip.id = TOOLTIP_ID;
   tooltip.className =
-    "fixed z-50 flex justify-center items-center rounded-lg border border-white/10 bg-slate-900/95 px-2.5 py-1.5 text-[11px] font-medium leading-5 text-white shadow-xl pointer-events-none";
-  tooltip.textContent = text;
+    "max-w-70 fixed z-50 flex justify-center items-center rounded-lg border border-white/10 bg-slate-900/95 px-2.5 py-1.5 text-[11px] font-medium leading-5 text-white shadow-xl pointer-events-none";
+  tooltip.innerHTML = `<span class="max-w-full wrap-break-word">${text}</span>`;
 
   document.body.appendChild(tooltip);
   return tooltip;
@@ -41,7 +41,7 @@ function showTooltip(target) {
   };
 
   window.addEventListener("scroll", onScroll, { passive: true });
-  setTimeout(removeTooltip, 2000);
+  setTimeout(removeTooltip, 3000);
 }
 
 function findTooltipTarget(element) {

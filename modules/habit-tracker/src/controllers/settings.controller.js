@@ -1,8 +1,4 @@
-import {
-  HABIT_NAMESPACE,
-  clearHabitStorage,
-  saveToStorage,
-} from "@/models/storage.model";
+import { HABIT_NAMESPACE, STORAGE_VERSION } from "@/models/storage.model";
 import { StateManager, state } from "@/models/state.model.js";
 
 import { GlobalLoaderService } from "@/services/loader.service";
@@ -11,6 +7,7 @@ import { NotificationService } from "@/services/notification.service.js";
 import { StateController } from "./state.controller";
 import { formatDate } from "@/utils/helpers";
 import { generateDynamicMockData } from "@/utils/seed-generator";
+import { getTheme } from "@/services/theme.service";
 
 export const SettingsController = {
   init() {
@@ -29,12 +26,10 @@ export const SettingsController = {
       ?.addEventListener("click", () => this.handleThemeSwitch("dark"));
 
     document.addEventListener("themeChanged", (event) => {
-      this.syncThemeControls(
-        event.detail?.theme || localStorage.getItem("theme") || "light",
-      );
+      this.syncThemeControls(event.detail?.theme || getTheme());
     });
 
-    this.syncThemeControls(localStorage.getItem("theme") || "light");
+    this.syncThemeControls(getTheme());
 
     document
       .getElementById("sett-export-btn")
@@ -73,14 +68,14 @@ export const SettingsController = {
 
       if (e.key === "Escape") this.closeResetModal();
 
-      if (e.key === "Enter")
+      if (e.ctrlKey && e.key === "Enter")
         document.getElementById("confirm-settings-reset")?.click();
     });
 
     this.initResetModalEvents();
 
     window.addEventListener("resize", () => {
-      this.syncThemeControls(localStorage.getItem("theme") || "light");
+      this.syncThemeControls(getTheme());
     });
   },
 
@@ -134,7 +129,7 @@ export const SettingsController = {
   },
 
   handleThemeSwitch(targetTheme) {
-    const currentTheme = localStorage.getItem("theme") || "light";
+    const currentTheme = getTheme();
     if (currentTheme === targetTheme) return;
 
     document.getElementById("theme-toggle")?.click();
@@ -346,7 +341,7 @@ export const SettingsController = {
         .map((line) => line.trim())
         .filter(Boolean);
 
-      let category = "General";
+      let category = "general";
       let frequency = 7;
       let createdAt = formatDate(new Date());
       let archived = false;
@@ -367,7 +362,7 @@ export const SettingsController = {
         }
 
         if (line.includes("- **Category:**")) {
-          category = line.split("📁 ")[1]?.trim() || "General";
+          category = line.split("📁 ")[1]?.trim() || "general";
         } else if (line.includes("- **Frequency:**")) {
           frequency = parseInt(line.split("📅 ")[1]) || 7;
         } else if (line.includes("- **Created At:**")) {
@@ -759,6 +754,7 @@ export const SettingsController = {
   },
 
   async executeApplicationReset() {
+    const previousPayload = localStorage.getItem(HABIT_NAMESPACE);
     const previousHabits = StateManager.getHabits().map((habit) => ({
       ...habit,
     }));
@@ -769,7 +765,7 @@ export const SettingsController = {
 
     setTimeout(async () => {
       try {
-        clearHabitStorage();
+        localStorage.removeItem(HABIT_NAMESPACE);
 
         state.habits = [];
         state.activeTab = "active";
@@ -793,7 +789,11 @@ export const SettingsController = {
             );
             setTimeout(async () => {
               try {
-                saveToStorage(previousHabits);
+                if (previousPayload) {
+                  localStorage.setItem(HABIT_NAMESPACE, previousPayload);
+                } else {
+                  localStorage.removeItem(HABIT_NAMESPACE);
+                }
 
                 StateManager.save(previousHabits || []);
                 state.habits = previousHabits || [];

@@ -2,7 +2,7 @@ export const MobileNavComponent = {
   render() {
     return `
       <nav
-        class="lg:hidden fixed bottom-0 left-0 right-0 z-40 flex justify-around items-center bg-surface/90 backdrop-blur-2xl border-t border-border px-6 py-3 shadow-[0_-10px_30px_rgba(0,0,0,0.3)]"
+        class="lg:hidden fixed bottom-0 left-0 right-0 z-300 flex justify-around items-center bg-surface/90 backdrop-blur-2xl border-t border-border px-6 py-3 shadow-[0_-10px_30px_rgba(0,0,0,0.3)]"
       >
         <button
           id="mobile-habits"

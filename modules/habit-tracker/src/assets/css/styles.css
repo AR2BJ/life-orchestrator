@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "./loading.css";
 
 /* ============================= */
 /* THEME TOKENS START */
@@ -8,8 +9,12 @@
   --color-bg: #030712;
   --color-surface: #111827;
   --color-surface-2: #1f2937;
+  --color-surface-3: #2e3f5e;
+  --color-surface-4: #40567e;
   --color-primary: #ffffff;
-  --color-secondary: #9ca3af;
+  --color-secondary: #94a3b8;
+  --color-tertiary: #64748b;
+  --color-inverse: #ffffff;
   --color-border: #374151;
   --color-brand: #4f46e5;
   --breakpoint-xs: 23.4375rem;
@@ -158,7 +163,7 @@
 body {
   background: var(--color-bg);
   color: var(--color-primary);
-  min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
@@ -166,28 +171,6 @@ body {
     background 0.3s ease,
     color 0.3s ease,
     border-color 0.3s ease;
-}
-
-select.form-select {
-  appearance: none;
-  background-repeat: no-repeat;
-  background-position: right 0.85rem center;
-  background-size: 0.8rem;
-  padding-right: 2.5rem;
-  width: 100%;
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.dark select.form-select {
-  background-image: url("../../../public/picture/chevron-down-solid-light.svg");
-  background-color: var(--color-surface);
-}
-
-.light select.form-select {
-  background-image: url("../../../public/picture/chevron-down-solid-dark.svg");
-  background-color: var(--color-surface);
 }
 
 .btn-primary {

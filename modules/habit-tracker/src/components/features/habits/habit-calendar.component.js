@@ -101,7 +101,7 @@ export const HabitCalendarComponent = {
               const editable =
                 day.date === todayIso || day.date === yesterdayIso;
 
-              let bgClass = "bg-(--color-surface-4)";
+              let bgClass = "bg-surface-4";
               if (day.completed) {
                 bgClass =
                   "bg-emerald-500/80 shadow-md sm:shadow-lg shadow-emerald-500/20 text-white";
@@ -121,15 +121,15 @@ export const HabitCalendarComponent = {
                   : "cursor-not-allowed opacity-45"
               } rounded-sm sm:rounded-md flex flex-row justify-center items-center transition-all duration-200 ${bgClass} ${
                 editable && !isArchived && !day.completed && !day.skipped
-                  ? "hover:bg-(--color-surface-4)/60"
+                  ? "hover:bg-surface-4/60"
                   : ""
               }"
             >
               ${
                 day.completed
-                  ? `<span class="text-xs md:text-sm lg:text-base xl:text-lg 2xl:text-2xl font-bold leading-none select-none"><i class="fa-regular fa-check"></i></span>`
+                  ? `<span class="text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl 2xl:text-2xl font-bold leading-none select-none"><i class="fa-regular fa-check"></i></span>`
                   : day.skipped
-                    ? `<span class="text-xs md:text-sm lg:text-base xl:text-lg 2xl:text-2xl font-bold leading-none select-none"><i class="fa-regular fa-shield"></i></span>`
+                    ? `<span class="text-xs xs:text-sm sm:text-base lg:text-lg xl:text-xl 2xl:text-2xl font-bold leading-none select-none"><i class="fa-regular fa-shield"></i></span>`
                     : ""
               }
             </button>

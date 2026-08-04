@@ -1,4 +1,109 @@
+const habitCategoryFilters = [
+  {
+    id: "general",
+    label: "General",
+    buttonClass:
+      "category-filter-btn h-8 shrink-0 whitespace-nowrap rounded-lg px-3.5 text-xs font-semibold transition cursor-pointer flex items-center gap-1.5 bg-surface border border-border text-secondary hover:text-primary hover:bg-surface-2",
+    iconClass: "fa-regular fa-folders",
+    iconColor: "text-yellow-500/80",
+  },
+  {
+    id: "health",
+    label: "Health",
+    buttonClass:
+      "category-filter-btn h-8 shrink-0 whitespace-nowrap rounded-lg px-3.5 text-xs font-semibold transition cursor-pointer flex items-center gap-1.5 bg-surface border border-border text-secondary hover:text-primary hover:bg-surface-2",
+    iconClass: "fa-regular fa-apple-whole",
+    iconColor: "text-emerald-500/80",
+  },
+  {
+    id: "work",
+    label: "Work",
+    buttonClass:
+      "category-filter-btn h-8 shrink-0 whitespace-nowrap rounded-lg px-3.5 text-xs font-semibold transition cursor-pointer flex items-center gap-1.5 bg-surface border border-border text-secondary hover:text-primary hover:bg-surface-2",
+    iconClass: "fa-regular fa-laptop-code",
+    iconColor: "text-cyan-500/80",
+  },
+  {
+    id: "research",
+    label: "Research",
+    buttonClass:
+      "category-filter-btn h-8 shrink-0 whitespace-nowrap rounded-lg px-3.5 text-xs font-semibold transition cursor-pointer flex items-center gap-1.5 bg-surface border border-border text-secondary hover:text-primary hover:bg-surface-2",
+    iconClass: "fa-regular fa-microscope",
+    iconColor: "text-violet-500/80",
+  },
+  {
+    id: "academics",
+    label: "Academics",
+    buttonClass:
+      "category-filter-btn h-8 shrink-0 whitespace-nowrap rounded-lg px-3.5 text-xs font-semibold transition cursor-pointer flex items-center gap-1.5 bg-surface border border-border text-secondary hover:text-primary hover:bg-surface-2",
+    iconClass: "fa-regular fa-graduation-cap",
+    iconColor: "text-pink-500/80",
+  },
+  {
+    id: "openSource",
+    label: "Open Source",
+    buttonClass:
+      "category-filter-btn h-8 shrink-0 whitespace-nowrap rounded-lg px-3.5 text-xs font-semibold transition cursor-pointer flex items-center gap-1.5 bg-surface border border-border text-secondary hover:text-primary hover:bg-surface-2",
+    iconClass: "fa-regular fa-code-branch",
+    iconColor: "text-lime-500/80",
+  },
+  {
+    id: "systemDesign",
+    label: "System Design",
+    buttonClass:
+      "category-filter-btn h-8 shrink-0 whitespace-nowrap rounded-lg px-3.5 text-xs font-semibold transition cursor-pointer flex items-center gap-1.5 bg-surface border border-border text-secondary hover:text-primary hover:bg-surface-2",
+    iconClass: "fa-regular fa-diagram-project",
+    iconColor: "text-blue-500/80",
+  },
+  {
+    id: "digitalDetox",
+    label: "Digital Detox",
+    buttonClass:
+      "category-filter-btn h-8 shrink-0 whitespace-nowrap rounded-lg px-3.5 text-xs font-semibold transition cursor-pointer flex items-center gap-1.5 bg-surface border border-border text-secondary hover:text-primary hover:bg-surface-2",
+    iconClass: "fa-regular fa-person-meditating",
+    iconColor: "text-fuchsia-500/80",
+  },
+  {
+    id: "routine",
+    label: "Routine",
+    buttonClass:
+      "category-filter-btn h-8 shrink-0 whitespace-nowrap rounded-lg px-3.5 text-xs font-semibold transition cursor-pointer flex items-center gap-1.5 bg-surface border border-border text-secondary hover:text-primary hover:bg-surface-2",
+    iconClass: "fa-regular fa-calendar-check",
+    iconColor: "text-orange-500/80",
+  },
+  {
+    id: "harmful",
+    label: "Harmful",
+    buttonClass:
+      "category-filter-btn h-8 shrink-0 whitespace-nowrap rounded-lg px-3.5 text-xs font-semibold transition cursor-pointer flex items-center gap-1.5 bg-surface border border-border text-secondary hover:text-primary hover:bg-surface-2",
+    iconClass: "fa-regular fa-smoking",
+    iconColor: "text-red-500/80",
+  },
+];
+
 export const HabitsView = {
+  renderCategoryFilters() {
+    return habitCategoryFilters
+      .map((category) => {
+        const contentMarkup = `
+          <i
+            class="category-icon ${category.iconClass} ${category.iconColor}"
+          ></i>
+          <span>${category.label}</span>
+        `;
+
+        return `
+          <button
+            data-category="${category.id}"
+            class="${category.buttonClass}"
+          >
+            ${contentMarkup}
+          </button>
+        `;
+      })
+      .join("");
+  },
+
   render() {
     return `
       <section
@@ -9,7 +114,7 @@ export const HabitsView = {
           class="mb-6 flex flex-col sm:flex-row gap-4 justify-between items-center w-full"
         >
           <div
-            class="relative flex w-full justify-center rounded-xl border border-border bg-surface-2 p-1 sm:w-fit sm:justify-start"
+            class="relative flex w-full justify-center rounded-xl border border-border bg-surface p-1 sm:w-fit sm:justify-start"
           >
             <div
               id="tab-indicator"
@@ -33,7 +138,7 @@ export const HabitsView = {
 
           <div class="relative w-full sm:w-72 group/search">
             <span
-              class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-muted"
+              class="absolute inset-y-0 left-0 flex items-center ps-3.5 pointer-events-none text-muted"
             >
               <i class="fa-regular fa-magnifying-glass text-sm"></i>
             </span>
@@ -41,25 +146,25 @@ export const HabitsView = {
               type="text"
               id="search-habits"
               placeholder="Search habits...."
-              class="w-full pl-10 pr-10 py-3 text-sm rounded-xl border border-border bg-surface text-primary placeholder:text-muted/70 focus:outline-none focus:border-brand/50 transition-all shadow-sm"
+              class="w-full ps-10 pe-10 py-3 text-sm rounded-xl border border-border bg-surface text-primary placeholder:text-muted/70 focus:outline-none focus:border-brand/50 transition-all shadow-sm"
             />
 
             <div
-              class="absolute inset-y-0 right-0 flex items-center pr-3 gap-3"
+              class="absolute inset-y-0 right-0 flex items-center pe-3 gap-3"
             >
               <button
                 id="clear-search-btn"
-                class="hidden opacity-0 scale-75 h-5 w-5 cursor-pointer items-center justify-center rounded-full border border-border bg-surface-2 hover:bg-(--color-surface-4) text-secondary hover:text-primary transition-all duration-200 ease-out"
+                class="hidden opacity-0 scale-75 h-5 w-5 cursor-pointer items-center justify-center rounded-full border border-border bg-surface-2 hover:bg-surface-4 text-secondary hover:text-primary transition-all duration-200 ease-out"
                 title="Clear Search"
               >
-                <i class="fa-solid fa-xmark text-[10px]"></i>
+                <i class="fa-regular fa-xmark text-[10px]"></i>
               </button>
 
               <kbd class="flex items-center pointer-events-none">
                 <span
-                  class="px-1.5 py-0.5 text-[10px] font-mono bg-surface-2 border border-border text-muted rounded-md shadow-2xs"
-                  >/</span
-                >
+                  class="px-1.25 py-1 text-[9px] font-mono bg-surface-2 border border-border text-muted rounded-md shadow-2xs flex flex-row justify-center items-center"
+                  ><i class="fa-regular fa-slash-forward"></i
+                ></span>
               </kbd>
             </div>
           </div>
@@ -100,87 +205,25 @@ export const HabitsView = {
                 <div class="w-full min-w-0 sm:col-span-2 xl:col-span-2">
                   <label
                     for="habit-input"
-                    class="mb-2 block ps-2 text-sm font-semibold text-secondary sm:text-xs"
+                    class="mb-1.5 block ps-3 text-xs font-semibold text-secondary"
                   >
                     Habit name
+                    <span class="text-red-700"> *</span>
                   </label>
                   <input
                     id="habit-input"
                     type="text"
-                    placeholder="What habit do you want to build?..."
-                    class="h-12 w-full rounded-xl border border-border bg-surface px-4 text-sm text-primary placeholder:text-secondary/70 transition focus:border-brand/80 focus:outline-none"
+                    placeholder="What habit do you want to build or quit?...."
+                    class="h-11 w-full rounded-xl border border-border bg-surface-2 px-4 text-sm text-primary placeholder:text-secondary/70 transition focus:border-brand/80 focus:outline-none"
                   />
                 </div>
 
                 <div class="w-full min-w-0">
-                  <label
-                    for="habit-category-select"
-                    class="mb-2 block ps-2 text-sm font-semibold text-secondary sm:text-xs"
-                  >
-                    Category
-                  </label>
-                  <div class="relative w-full min-w-0">
-                    <select
-                      id="habit-category-select"
-                      class="form-select h-12 w-full cursor-pointer rounded-xl border border-border bg-surface px-3 pr-10 text-sm text-primary focus:border-brand/80 focus:outline-none"
-                    >
-                      <option
-                        value="General"
-                        selected
-                      >
-                        General
-                      </option>
-                      <option value="Health">Health & Bio-Maintenance</option>
-                      <option value="Work">Work & Production Dev</option>
-                      <option value="Research">
-                        Research & Deep Dive (Thesis/Next-Gen Tech)
-                      </option>
-                      <option value="Academics">
-                        Academics & Advanced Knowledge
-                      </option>
-                      <option value="OpenSource">
-                        Open Source & Side Projects
-                      </option>
-                      <option value="SystemDesign">
-                        System Design & Soft Skills
-                      </option>
-                      <option value="DigitalDetox">
-                        Digital Detox & Reset
-                      </option>
-                      <option value="Routine">
-                        Daily Architecture & Workflow
-                      </option>
-                      <option value="Harmful">Harmful Habits</option>
-                    </select>
-                  </div>
+                  <div id="create-category-wrapper"></div>
                 </div>
 
                 <div class="w-full min-w-0">
-                  <label
-                    for="habit-frequency-select"
-                    class="mb-2 block ps-2 text-sm font-semibold text-secondary sm:text-xs"
-                  >
-                    Days per week
-                  </label>
-                  <div class="relative w-full min-w-0">
-                    <select
-                      id="habit-frequency-select"
-                      class="form-select h-12 w-full cursor-pointer rounded-xl border border-border bg-surface px-3 pr-10 text-sm text-primary focus:border-brand/80 focus:outline-none"
-                    >
-                      <option
-                        value="7"
-                        selected
-                      >
-                        Everyday (7 days/wk)
-                      </option>
-                      <option value="6">High Intensity (6 days/wk)</option>
-                      <option value="5">Workweek Pace (5 days/wk)</option>
-                      <option value="4">Consistent (4 days/wk)</option>
-                      <option value="3">Flexible Routine (3 days/wk)</option>
-                      <option value="2">Intermittent (2 days/wk)</option>
-                      <option value="1">Minimal Focus (1 day/wk)</option>
-                    </select>
-                  </div>
+                  <div id="create-frequency-wrapper"></div>
                 </div>
               </div>
 
@@ -203,136 +246,54 @@ export const HabitsView = {
 
           <div
             id="category-filters"
-            class="relative mb-6 flex flex-row items-center justify-between gap-4 border-b border-border pb-4 w-full group"
+            class="mb-6 flex flex-wrap lg:flex-nowrap items-stretch lg:items-center justify-between gap-6 border-b border-border pb-4 w-full"
           >
-            <p
-              class="text-xs font-bold uppercase tracking-wider text-secondary shrink-0 mr-1 hidden sm:block"
-            >
-              Filter by:
-            </p>
-
-            <button
-              id="btn-scroll-left"
-              class="absolute left-1.5 sm:left-23 z-20 lg:hidden hidden h-7 w-7 items-center justify-center rounded-lg border border-border bg-surface text-secondary hover:text-primary shadow-xs opacity-0 group-hover:opacity-80 hover:opacity-100 transition-opacity cursor-pointer"
-            >
-              <i class="fa-regular fa-chevron-left text-xs"></i>
-            </button>
-
-            <div
-              id="habit-filter-scroll"
-              class="flex flex-1 min-w-0 flex-row items-center gap-2 overflow-x-auto pr-2 scrollbar-none scroll-smooth"
-            >
-              <button
-                data-category="all"
-                class="category-filter-btn h-8 shrink-0 whitespace-nowrap rounded-lg bg-brand/80 shadow-brand/10 px-4 text-xs font-semibold text-white transition cursor-pointer"
+            <div class="relative flex flex-1 items-center gap-2 min-w-0 group">
+              <p
+                class="text-xs font-bold uppercase tracking-wider text-secondary shrink-0 me-1 hidden sm:flex"
               >
-                All
-              </button>
+                Filter by:
+              </p>
 
-              <button
-                data-category="General"
-                class="category-filter-btn h-8 shrink-0 whitespace-nowrap rounded-lg bg-(--color-surface-3) px-4 text-xs font-medium text-secondary transition hover:bg-(--color-surface-4) flex flex-row justify-center items-center gap-2 hover:text-secondary cursor-pointer"
-              >
-                <i
-                  class="category-icon fa-regular fa-folders text-yellow-500/80"
-                ></i>
-                <span>General</span>
-              </button>
+              <div class="relative flex-1 min-w-0 flex items-center">
+                <button
+                  id="btn-scroll-left"
+                  type="button"
+                  class="absolute left-0 z-20 hidden h-7 w-7 items-center justify-center rounded-lg border border-border bg-surface/95 backdrop-blur-xl shadow-2xl text-secondary hover:text-primary hover:border-brand/50 transition-all cursor-pointer"
+                >
+                  <i class="fa-regular fa-chevron-left text-xs"></i>
+                </button>
 
-              <button
-                data-category="Health"
-                class="category-filter-btn h-8 shrink-0 whitespace-nowrap rounded-lg bg-(--color-surface-3) px-4 text-xs font-medium text-secondary transition hover:bg-(--color-surface-4) flex flex-row justify-center items-center gap-2 hover:text-secondary cursor-pointer"
-              >
-                <i
-                  class="category-icon fa-regular fa-apple-whole text-emerald-500/80"
-                ></i>
-                <span>Health</span>
-              </button>
+                <div
+                  id="habit-filter-scroll"
+                  class="flex flex-1 min-w-0 flex-row items-center gap-2 overflow-x-auto px-1 scrollbar-none scroll-smooth transition-all duration-300"
+                >
+                  <button
+                    data-category="all"
+                    class="category-filter-btn h-8 shrink-0 whitespace-nowrap rounded-lg px-3.5 text-xs font-semibold transition cursor-pointer bg-brand/80 text-white shadow-brand/10 shadow-sm"
+                  >
+                    All Habits
+                  </button>
 
-              <button
-                data-category="Work"
-                class="category-filter-btn h-8 shrink-0 whitespace-nowrap rounded-lg bg-(--color-surface-3) px-4 text-xs font-medium text-secondary transition hover:bg-(--color-surface-4) flex flex-row justify-center items-center gap-2 hover:text-secondary cursor-pointer"
-              >
-                <i
-                  class="category-icon fa-regular fa-laptop-code text-cyan-500/80"
-                ></i>
-                <span>Work</span>
-              </button>
-              
-              <button
-                data-category="Research"
-                class="category-filter-btn h-8 shrink-0 whitespace-nowrap rounded-lg bg-(--color-surface-3) px-4 text-xs font-medium text-secondary transition hover:bg-(--color-surface-4) flex flex-row justify-center items-center gap-2 hover:text-secondary cursor-pointer"
-              >
-                <i
-                  class="category-icon fa-regular fa-microscope text-violet-500/80"
-                ></i>
-                <span>Research</span>
-              </button>
+                  ${HabitsView.renderCategoryFilters()}
+                </div>
 
-              <button
-                data-category="Academics"
-                class="category-filter-btn h-8 shrink-0 whitespace-nowrap rounded-lg bg-(--color-surface-3) px-4 text-xs font-medium text-secondary transition hover:bg-(--color-surface-4) flex flex-row justify-center items-center gap-2 hover:text-secondary cursor-pointer"
-              >
-                <i
-                  class="category-icon fa-regular fa-graduation-cap text-pink-500/80"
-                ></i>
-                <span>Academics</span>
-              </button>
-
-              <button
-                data-category="OpenSource"
-                class="category-filter-btn h-8 shrink-0 whitespace-nowrap rounded-lg bg-(--color-surface-3) px-4 text-xs font-medium text-secondary transition hover:bg-(--color-surface-4) flex flex-row justify-center items-center gap-2 hover:text-secondary cursor-pointer"
-              >
-                <i class="category-icon fa-regular fa-code-branch text-lime-500/80"></i>
-                <span>OpenSource</span>
-              </button>
-
-              <button
-                data-category="SystemDesign"
-                class="category-filter-btn h-8 shrink-0 whitespace-nowrap rounded-lg bg-(--color-surface-3) px-4 text-xs font-medium text-secondary transition hover:bg-(--color-surface-4) flex flex-row justify-center items-center gap-2 hover:text-secondary cursor-pointer"
-              >
-                <i class="category-icon fa-regular fa-diagram-project text-blue-500/80"></i>
-                <span>SystemDesign</span>
-              </button>
-
-              <button
-                data-category="DigitalDetox"
-                class="category-filter-btn h-8 shrink-0 whitespace-nowrap rounded-lg bg-(--color-surface-3) px-4 text-xs font-medium text-secondary transition hover:bg-(--color-surface-4) flex flex-row justify-center items-center gap-2 hover:text-secondary cursor-pointer"
-              >
-                <i class="category-icon fa-regular fa-person-meditating text-fuchsia-500/80"></i>
-                <span>DigitalDetox</span>
-              </button>
-
-              <button
-                data-category="Routine"
-                class="category-filter-btn h-8 shrink-0 whitespace-nowrap rounded-lg bg-(--color-surface-3) px-4 text-xs font-medium text-secondary transition hover:bg-(--color-surface-4) flex flex-row justify-center items-center gap-2 hover:text-secondary cursor-pointer"
-              >
-                <i class="category-icon fa-regular fa-calendar-check text-orange-500/80"></i>
-                <span>Routine</span>
-              </button>
-
-              <button
-                data-category="Harmful"
-                class="category-filter-btn h-8 shrink-0 whitespace-nowrap rounded-lg bg-(--color-surface-3) px-4 text-xs font-medium text-secondary transition hover:bg-(--color-surface-4) flex flex-row justify-center items-center gap-2 hover:text-secondary cursor-pointer"
-              >
-                <i
-                  class="category-icon fa-regular fa-ban-smoking text-red-500/80"
-                ></i>
-                <span>Harmful</span>
-              </button>
+                <button
+                  id="btn-scroll-right"
+                  type="button"
+                  class="absolute right-0 z-20 hidden h-7 w-7 items-center justify-center rounded-lg border border-border bg-surface/95 backdrop-blur-xl shadow-2xl text-secondary hover:text-primary hover:border-brand/50 transition-all cursor-pointer"
+                >
+                  <i class="fa-regular fa-chevron-right text-xs"></i>
+                </button>
+              </div>
             </div>
-
-            <button
-              id="btn-scroll-right"
-              class="absolute right-26 z-20 lg:hidden flex h-7 w-7 items-center justify-center rounded-lg border border-border bg-surface text-secondary hover:text-primary shadow-xs opacity-0 group-hover:opacity-80 hover:opacity-100 transition-opacity cursor-pointer"
-            >
-              <i class="fa-regular fa-chevron-right text-xs"></i>
-            </button>
 
             <div
               id="habit-count-badge"
-              class="shrink-0 flex items-center gap-1.5 px-3 py-1 bg-(--color-surface-3) rounded-xl text-xs font-bold text-primary select-none animate-fade-in"
-            ></div>
+              class="flex justify-center items-center gap-1.5 px-4 py-1 bg-surface-3 rounded-lg text-xs font-bold text-primary select-none w-full sm:w-36 lg:w-auto"
+            >
+              0 Habits
+            </div>
           </div>
 
           <div
@@ -354,33 +315,105 @@ function setupHabitFiltersDragScroll() {
 
   const scrollStep = 180;
 
-  function updateScrollButtons() {
-    const atStart = scrollContainer.scrollLeft <= 0;
-    const atEnd =
-      scrollContainer.scrollLeft + scrollContainer.clientWidth >=
-      scrollContainer.scrollWidth - 1;
-
-    btnLeft.classList.toggle("hidden", atStart);
-    btnLeft.classList.toggle("flex", !atStart);
-    btnRight.classList.toggle("hidden", atEnd);
-    btnRight.classList.toggle("flex", !atEnd);
-  }
-
-  ["scroll", "mouseenter"].forEach((event) =>
-    scrollContainer.addEventListener(event, updateScrollButtons),
-  );
-
   btnLeft.addEventListener("click", (e) => {
     e.stopPropagation();
-    scrollContainer.scrollLeft -= scrollStep;
+    scrollContainer.scrollBy({ left: -scrollStep, behavior: "smooth" });
   });
 
   btnRight.addEventListener("click", (e) => {
     e.stopPropagation();
-    scrollContainer.scrollLeft += scrollStep;
+    scrollContainer.scrollBy({ left: scrollStep, behavior: "smooth" });
   });
 
-  updateScrollButtons();
+  const checkOverflowState = () => {
+    const { scrollLeft, scrollWidth, clientWidth } = scrollContainer;
+    const hasOverflow = scrollWidth > clientWidth + 2;
+
+    if (
+      scrollContainer.offsetParent === null ||
+      scrollContainer.clientWidth === 0
+    ) {
+      btnLeft.classList.add("hidden");
+      btnLeft.classList.remove("flex");
+      btnRight.classList.add("hidden");
+      btnRight.classList.remove("flex");
+      scrollContainer.style.maskImage = "none";
+      return;
+    }
+
+    if (!hasOverflow) {
+      btnLeft.classList.add("hidden");
+      btnLeft.classList.remove("flex");
+      btnRight.classList.add("hidden");
+      btnRight.classList.remove("flex");
+      scrollContainer.style.maskImage = "none";
+      return;
+    }
+
+    const atStart = Math.ceil(scrollLeft) <= 2;
+    const atEnd = Math.ceil(scrollLeft + clientWidth) >= scrollWidth - 2;
+
+    btnLeft.classList.toggle("hidden", atStart);
+    btnLeft.classList.toggle("flex", !atStart);
+
+    btnRight.classList.toggle("hidden", atEnd);
+    btnRight.classList.toggle("flex", !atEnd);
+
+    const fadeWidth = "80px";
+
+    if (atStart) {
+      scrollContainer.style.maskImage = `linear-gradient(to right, black 0%, black calc(100% - ${fadeWidth}), transparent 100%)`;
+    } else if (atEnd) {
+      scrollContainer.style.maskImage = `linear-gradient(to right, transparent 0%, black ${fadeWidth}, black 100%)`;
+    } else {
+      scrollContainer.style.maskImage = `linear-gradient(to right, transparent 0%, black ${fadeWidth}, black calc(100% - ${fadeWidth}), transparent 100%)`;
+    }
+  };
+
+  const triggerCheck = () => {
+    requestAnimationFrame(() => {
+      setTimeout(checkOverflowState, 100);
+    });
+  };
+
+  scrollContainer.addEventListener("scroll", checkOverflowState);
+
+  const mutationObserver = new MutationObserver(() => {
+    triggerCheck();
+  });
+  mutationObserver.observe(scrollContainer, { childList: true, subtree: true });
+
+  const viewSection = document.getElementById("habits-view");
+  if (viewSection) {
+    const sectionObserver = new MutationObserver(() => {
+      if (!viewSection.classList.contains("hidden")) {
+        triggerCheck();
+      }
+    });
+    sectionObserver.observe(viewSection, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+  }
+
+  const resizeObserver = new ResizeObserver(() => {
+    triggerCheck();
+  });
+
+  resizeObserver.observe(scrollContainer);
+
+  if (viewSection) {
+    resizeObserver.observe(viewSection);
+  }
+
+  window.addEventListener("resize", triggerCheck);
+  window.addEventListener("load", triggerCheck);
+
+  if (document.fonts?.ready) {
+    document.fonts.ready.then(() => triggerCheck());
+  }
+
+  triggerCheck();
 }
 
 if (typeof window !== "undefined") {
@@ -389,6 +422,8 @@ if (typeof window !== "undefined") {
       requestAnimationFrame(setupHabitFiltersDragScroll);
     });
   } else {
-    requestAnimationFrame(setupHabitFiltersDragScroll);
+    requestAnimationFrame(() => {
+      requestAnimationFrame(setupHabitFiltersDragScroll);
+    });
   }
 }

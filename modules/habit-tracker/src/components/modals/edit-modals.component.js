@@ -5,41 +5,90 @@ export const EditModalsComponent = {
         id="edit-modal"
         class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in"
       >
-        <div class="bg-surface rounded-2xl p-6 max-w-sm w-full shadow-xl flex flex-col gap-4">
+        <div
+          class="bg-surface rounded-2xl p-4 lg:p-6 max-w-3xl w-full h-auto shadow-2xl flex flex-col border border-border overflow-hidden"
+        >
           <div
-            class="w-12 h-12 rounded-full bg-brand/10 text-brand/80 flex items-center justify-center text-xl mx-auto"
+            class="flex items-center justify-between border-b border-border pb-4 shrink-0"
           >
-            <i class="fa-regular fa-pen"></i>
-          </div>
+            <div class="flex items-center gap-3 min-w-0">
+              <div
+                class="w-10 h-10 lg:w-11 lg:h-11 rounded-xl lg:rounded-2xl bg-brand/10 text-brand/80 flex items-center justify-center text-base lg:text-lg shrink-0"
+              >
+                <i class="fa-regular fa-pen-to-square"></i>
+              </div>
 
-          <div class="text-center flex flex-col gap-1">
-            <h3 class="text-lg font-bold text-primary">Edit Habit</h3>
-            <p class="text-sm text-secondary">
-              Change the habit title below.
-            </p>
-          </div>
-
-          <input
-            id="edit-habit-input"
-            type="text"
-            maxlength="50"
-            class="w-full mt-2 px-4 py-3 rounded-xl bg-surface-2 border border-border text-primary placeholder:text-secondary outline-none focus:ring-2 focus:ring-brand/80"
-          />
-
-          <div class="grid grid-cols-2 gap-3 mt-2">
-            <button
-              id="cancel-edit"
-              class="px-4 py-2.5 rounded-xl bg-(--color-surface-3) hover:border-primary  text-secondary hover:text-primary! font-medium text-sm transition border border-border cursor-pointer"
-            >
-              Cancel
-            </button>
+              <div class="min-w-0">
+                <h3
+                  class="text-sm lg:text-base font-bold text-primary truncate"
+                >
+                  Edit Habit Details
+                </h3>
+                <p
+                  class="text-[11px] w-40 xs:w-auto lg:text-xs text-secondary truncate"
+                >
+                  Update habit attributes.
+                </p>
+              </div>
+            </div>
 
             <button
-              id="confirm-edit"
-              class="px-4 py-2.5 rounded-xl bg-brand/80 hover:bg-indigo-700/80! text-white font-medium text-sm transition shadow-sm cursor-pointer"
+              id="cancel-edit-modal"
+              type="button"
+               class="w-8 h-8 lg:w-9 lg:h-9 rounded-lg lg:rounded-xl bg-surface-2 hover:bg-red-600/10 border border-border text-secondary hover:text-primary flex items-center justify-center transition cursor-pointer shrink-0"
             >
-              Save
+              <i class="fa-regular fa-xmark text-sm"></i>
             </button>
+          </div>
+
+          <div class="flex-1 min-h-0 overflow-y-auto py-4 lg:py-5">
+            <div class="space-y-4">
+              <div>
+                <label
+                  for="edit-habit-input"
+                  class="mb-1.5 block ps-3 text-xs font-semibold text-secondary"
+                >
+                  Habit name <span class="text-red-700">*</span>
+                </label>
+
+                <input
+                  id="edit-habit-input"
+                  type="text"
+                  placeholder="What habit do you want to build or quit?...."
+                  class="h-11 w-full rounded-xl border border-border bg-surface-2 px-4 text-sm text-primary placeholder:text-secondary/70 transition focus:border-brand/80 focus:outline-none"
+                />
+              </div>
+
+              <div class="grid grid-cols-1 gap-3.5 lg:grid-cols-2">
+                <div class="w-full">
+                  <div id="edit-category-wrapper"></div>
+                </div>
+
+                <div class="w-full">
+                  <div id="edit-frequency-wrapper"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="shrink-0 border-t border-border bg-surface/90 pt-3"
+          >
+            <div class="grid grid-cols-2 gap-3">
+              <button
+                id="cancel-edit"
+                class="h-10 lg:h-11 rounded-lg lg:rounded-xl bg-surface-2 hover:border-primary text-secondary hover:text-primary font-medium text-xs lg:text-sm transition border border-border cursor-pointer flex items-center justify-center"
+              >
+                Cancel
+              </button>
+
+              <button
+                id="confirm-edit"
+                class="h-10 lg:h-11 rounded-lg lg:rounded-xl bg-brand/80 hover:bg-brand text-white font-medium text-xs lg:text-sm transition shadow-md shadow-brand/10 cursor-pointer flex items-center justify-center gap-2"
+              >
+                <i class="fa-regular fa-check"></i> Save Changes
+              </button>
+            </div>
           </div>
         </div>
       </div>

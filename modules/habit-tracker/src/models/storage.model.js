@@ -8,7 +8,7 @@ function migrateHabit(habit) {
   return {
     id: habit.id,
     name: habit.name,
-    category: habit.category ?? "General",
+    category: habit.category ?? "general",
     frequency: Number(habit.frequency ?? 7),
     createdAt: habit.createdAt ?? formatDate(new Date()),
     archived: habit.archived ?? false,

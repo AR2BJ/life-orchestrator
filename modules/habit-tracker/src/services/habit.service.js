@@ -1,24 +1,32 @@
 import { formatDate, generateId } from "@/utils/helpers.js";
 
 export const HabitService = {
-  createHabit(currentHabits, name, category = "General", frequency = 7) {
-    const cleaned = name.trim().replace(/\s+/g, " ");
-    if (!cleaned || cleaned.length < 2 || cleaned.length > 20) {
+  createHabit(currentHabits, habitData) {
+    const rawName = typeof habitData === "string" ? habitData : habitData.name;
+
+    const cleanedName = (rawName || "").trim().replace(/\s+/g, " ");
+
+    if (!cleanedName || cleanedName.length < 2 || cleanedName.length > 20) {
       throw new Error("Invalid habit name length (2-20 chars).");
     }
 
     const alreadyExists = currentHabits.some(
-      (h) => h.name.toLowerCase() === cleaned.toLowerCase(),
+      (habit) =>
+        habit.name.toLowerCase() === cleanedName.toLowerCase() &&
+        !habit.archived,
     );
     if (alreadyExists) {
-      throw new Error("Habit already exists.");
+      throw new Error("An active habit with this title already exists.");
     }
+
+    const habitCategory = habitData.category || "general";
+    const habitFrequency = habitData.frequency || 7;
 
     const newHabit = {
       id: generateId(),
-      name: cleaned,
-      category: category,
-      frequency: Number(frequency),
+      name: cleanedName,
+      category: habitCategory,
+      frequency: Number(habitFrequency),
       createdAt: formatDate(new Date()),
       archived: false,
       completedDates: [],
@@ -80,25 +88,41 @@ export const HabitService = {
     });
   },
 
-  editHabit(currentHabits, id, newName) {
+  editHabit(currentHabits, id, updatedFields) {
     const habit = currentHabits.find((h) => h.id === id);
     if (!habit) throw new Error("Habit not found.");
 
-    const cleaned = newName.trim().replace(/\s+/g, " ");
-    if (!cleaned || cleaned.length < 2 || cleaned.length > 20) {
-      throw new Error("Invalid habit name length (2-20 chars).");
+    let cleanedTitle = habit.name;
+    if (updatedFields.title) {
+      cleanedTitle = updatedFields.title.trim().replace(/\s+/g, " ");
+      if (
+        !cleanedTitle ||
+        cleanedTitle.length < 2 ||
+        cleanedTitle.length > 20
+      ) {
+        throw new Error("Invalid habit name length (2-20 chars).");
+      }
     }
 
+    const targetCategory = updatedFields.category || habit.category;
+    const targetFrequency = updatedFields.frequency || habit.frequency;
+
     const alreadyExists = currentHabits.some(
-      (h) => h.id !== id && h.name.toLowerCase() === cleaned.toLowerCase(),
+      (h) => h.id !== id && h.name.toLowerCase() === cleanedTitle.toLowerCase(),
     );
     if (alreadyExists) {
       throw new Error("Habit already exists.");
     }
 
-    return currentHabits.map((h) =>
-      h.id === id ? { ...h, name: cleaned } : h,
-    );
+    return currentHabits.map((h) => {
+      if (h.id !== id) return h;
+      return {
+        ...h,
+        name: cleanedTitle,
+        category: targetCategory,
+        frequency: targetFrequency,
+      };
+    });
   },
 
   deleteHabit(currentHabits, id) {

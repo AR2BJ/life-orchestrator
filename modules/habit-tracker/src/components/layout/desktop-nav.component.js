@@ -10,7 +10,7 @@ export const DesktopNavComponent = {
             <a href="/">
               <img
                 id="logo"
-                src="/public/picture/logo.png"
+                src="/picture/logo.png"
                 class="logo h-full justify-center shadow-brand/10"
                 title="Habit Tracker"
                 alt="Habit Tracker Logo"

@@ -8,7 +8,7 @@ export const GlobalLoaderService = {
     const overlayHTML = `
       <div
         id="global-glass-overlay"
-        class="fixed inset-0 z-9999 flex items-center justify-center bg-background/50 backdrop-blur-xl opacity-0 pointer-events-none transition-opacity duration-300 ease-in-out"
+        class="fixed inset-0 z-200 flex items-center justify-center bg-background/50 backdrop-blur-xl opacity-0 pointer-events-none transition-opacity duration-300 ease-in-out"
       >
         <div
           class="flex flex-col items-center gap-5 p-8 rounded-3xl transform scale-95 transition-transform duration-300 backdrop-blur-xl"

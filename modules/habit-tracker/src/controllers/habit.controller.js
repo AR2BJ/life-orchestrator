@@ -79,13 +79,13 @@ export const HabitController = {
           "-translate-x-[calc(100%+2rem)]",
           "translate-x-0",
         );
-        app?.classList.replace("lg:pl-8", "lg:pl-30");
+        app?.classList.replace("lg:ps-8", "lg:ps-30");
       } else {
         desktopNav?.classList.replace(
           "translate-x-0",
           "-translate-x-[calc(100%+2rem)]",
         );
-        app?.classList.replace("lg:pl-30", "lg:pl-8");
+        app?.classList.replace("lg:ps-30", "lg:ps-8");
       }
     });
   },
@@ -126,12 +126,15 @@ export const HabitController = {
           : icon?.querySelector("svg");
 
       button.classList.toggle("bg-brand/80", isActive);
-      button.classList.toggle("shadow-brand/10", isActive);
       button.classList.toggle("text-white", isActive);
-      button.classList.toggle("bg-(--color-surface-3)", !isActive);
+      button.classList.toggle("shadow-brand/10", isActive);
+      button.classList.toggle("shadow-sm", isActive);
+      button.classList.toggle("border-brand/80", isActive);
+      button.classList.toggle("bg-surface", !isActive);
+      button.classList.toggle("border-border", !isActive);
       button.classList.toggle("text-secondary", !isActive);
-      button.classList.toggle("hover:bg-(--color-surface-4)", !isActive);
-      button.classList.toggle("hover:text-secondary", !isActive);
+      button.classList.toggle("hover:text-primary", !isActive);
+      button.classList.toggle("hover:bg-surface-2", !isActive);
 
       if (icon) {
         icon.style.color = isActive ? "#fff" : "";
@@ -162,15 +165,15 @@ export const HabitController = {
 
         const categoryNames = {
           all: "All Habits",
-          general: "General",
+          general: "General & Miscellaneous",
           health: "Health & Bio-Maintenance",
           work: "Work & Production Dev",
           research: "Research & Deep Dive",
           academics: "Academics & Advanced Knowledge",
-          opensource: "Open Source & Side Projects",
-          systemdesign: "System Design & Soft Skills",
-          digitaldetox: "Digital Detox & Reset",
-          routine: "Daily Architecture & Workflow",
+          openSource: "Open Source & Side Projects",
+          systemDesign: "System Design & Soft Skills",
+          digitalDetox: "Digital Detox & Reset",
+          routine: "Daily Routines & Workflow",
           harmful: "Harmful Habits",
         };
         GlobalLoaderService.show(
@@ -365,72 +368,75 @@ export const HabitController = {
     const btnCloseHelp = document.getElementById("btn-close-help");
     const helpBackdrop = document.getElementById("help-modal-backdrop");
 
-    const openHelp = () => {
+    const openHelp = (defaultTab = "safeguard") => {
       if (helpModal) helpModal.classList.replace("hidden", "flex");
 
-      document.body.classList.add("overflow-hidden");
+      // Function to switch tabs inside the help modal
+      const switchHelpTab = (tabName) => {
+        const btnSafeguard = document.getElementById("tab-help-safeguard");
+        const btnShortcuts = document.getElementById("tab-help-shortcuts");
+        const contentSafeguard = document.getElementById(
+          "content-help-safeguard",
+        );
+        const contentShortcuts = document.getElementById(
+          "content-help-shortcuts",
+        );
 
-      const tabSafeguard = document.getElementById("tab-help-safeguard");
-      const tabShortcuts = document.getElementById("tab-help-shortcuts");
-      const contentSafeguard = document.getElementById(
-        "content-help-safeguard",
-      );
-      const contentShortcuts = document.getElementById(
-        "content-help-shortcuts",
-      );
+        if (
+          !btnSafeguard ||
+          !btnShortcuts ||
+          !contentSafeguard ||
+          !contentShortcuts
+        )
+          return;
 
-      if (
-        tabSafeguard &&
-        tabShortcuts &&
-        contentSafeguard &&
-        contentShortcuts
-      ) {
-        const resetTabs = () => {
-          tabSafeguard.classList.remove(
-            "bg-surface",
-            "text-primary",
-            "border",
-            "border-border/40",
-            "shadow-sm",
-          );
-          tabSafeguard.classList.add("text-secondary");
-          tabShortcuts.classList.remove(
-            "bg-surface",
-            "text-primary",
-            "border",
-            "border-border/40",
-            "shadow-sm",
-          );
-          tabShortcuts.classList.add("text-secondary");
-          contentSafeguard.classList.add("hidden");
-          contentShortcuts.classList.add("hidden");
-        };
+        if (tabName === "safeguard") {
+          // Safeguard Active State
+          btnSafeguard.className =
+            "w-full md:flex-1 text-center py-2 sm:py-2.5 text-xs sm:text-sm font-bold rounded-lg bg-brand/30 text-primary border border-brand/40 transition cursor-pointer";
+          btnShortcuts.className =
+            "w-full md:flex-1 text-center py-2 sm:py-2.5 text-xs sm:text-sm font-bold rounded-lg text-secondary hover:text-primary border border-transparent transition cursor-pointer";
 
-        tabSafeguard.onclick = () => {
-          resetTabs();
-          tabSafeguard.classList.add(
-            "bg-surface",
-            "text-primary",
-            "border",
-            "border-border/40",
-            "shadow-sm",
-          );
           contentSafeguard.classList.remove("hidden");
-        };
+          contentSafeguard.classList.add("flex");
+          contentShortcuts.classList.add("hidden");
+        } else if (tabName === "shortcuts") {
+          // Shortcuts Active State
+          btnShortcuts.className =
+            "w-full md:flex-1 text-center py-2 sm:py-2.5 text-xs sm:text-sm font-bold rounded-lg bg-brand/30 text-primary border border-brand/40 transition cursor-pointer";
+          btnSafeguard.className =
+            "w-full md:flex-1 text-center py-2 sm:py-2.5 text-xs sm:text-sm font-bold rounded-lg text-secondary hover:text-primary border border-transparent transition cursor-pointer";
 
-        tabShortcuts.onclick = () => {
-          resetTabs();
-          tabShortcuts.classList.add(
-            "bg-surface",
-            "text-primary",
-            "border",
-            "border-border/40",
-            "shadow-sm",
-          );
           contentShortcuts.classList.remove("hidden");
-        };
+          contentSafeguard.classList.add("hidden");
+          contentSafeguard.classList.remove("flex");
+        }
+      };
+
+      // Set initial tab state upon opening
+      switchHelpTab(defaultTab);
+
+      // Bind click listeners for help modal tabs
+      const btnSafeguard = document.getElementById("tab-help-safeguard");
+      const btnShortcuts = document.getElementById("tab-help-shortcuts");
+
+      if (btnSafeguard && !btnSafeguard.dataset.bound) {
+        btnSafeguard.addEventListener("click", () =>
+          switchHelpTab("safeguard"),
+        );
+        btnSafeguard.dataset.bound = "true";
       }
+
+      if (btnShortcuts && !btnShortcuts.dataset.bound) {
+        btnShortcuts.addEventListener("click", () =>
+          switchHelpTab("shortcuts"),
+        );
+        btnShortcuts.dataset.bound = "true";
+      }
+
+      document.body.classList.add("overflow-hidden");
     };
+
     const closeHelp = () => {
       if (helpModal) helpModal.classList.replace("flex", "hidden");
 

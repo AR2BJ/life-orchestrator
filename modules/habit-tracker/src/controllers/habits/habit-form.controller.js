@@ -1,3 +1,4 @@
+import { AutocompleteComponent } from "@/components/ui/autocomplete.component";
 import { GlobalLoaderService } from "@/services/loader.service";
 import { HabitService } from "@/services/habit.service.js";
 import { NotificationService } from "@/services/notification.service.js";
@@ -6,29 +7,233 @@ import { StateManager } from "@/models/state.model.js";
 let pendingDeleteId = null;
 let pendingEditId = null;
 
-export function setPendingEditId(id) {
-  pendingEditId = id;
-}
+// Autocomplete instances (Create Form)
+let createCategoryAutocomplete = null;
+let createFrequencyAutocomplete = null;
+
+// Autocomplete instances (Edit Form)
+let editCategoryAutocomplete = null;
+let editFrequencyAutocomplete = null;
+
+const CATEGORY_OPTIONS = [
+  {
+    title: "General & Miscellaneous",
+    value: "general",
+    icon: "fa-solid fa-folders text-yellow-500/80",
+  },
+  {
+    title: "Health & Bio-Maintenance",
+    value: "health",
+    icon: "fa-solid fa-apple-whole text-emerald-500/80",
+  },
+  {
+    title: "Work & Production Development",
+    value: "work",
+    icon: "fa-solid fa-laptop-code text-cyan-500/80",
+  },
+  {
+    title: "Research & Deep Dive (Thesis/Next-Gen Tech)",
+    value: "research",
+    icon: "fa-solid fa-microscope text-violet-500/80",
+  },
+  {
+    title: "Academics & Advanced Knowledge",
+    value: "academics",
+    icon: "fa-solid fa-graduation-cap text-pink-500/80",
+  },
+  {
+    title: "Open Source & Side Projects",
+    value: "openSource",
+    icon: "fa-solid fa-code-branch text-lime-500/80",
+  },
+  {
+    title: "System Design & Soft Skills",
+    value: "systemDesign",
+    icon: "fa-solid fa-diagram-project text-blue-500/80",
+  },
+  {
+    title: "Digital Detox & Reset",
+    value: "digitalDetox",
+    icon: "fa-solid fa-person-meditating text-fuchsia-500/80",
+  },
+  {
+    title: "Daily Routines & Workflow",
+    value: "routine",
+    icon: "fa-solid fa-calendar-check text-orange-500/80",
+  },
+  {
+    title: "Harmful Habits",
+    value: "harmful",
+    icon: "fa-solid fa-smoking text-red-500/80",
+  },
+];
+
+const FREQUENCY_OPTIONS = [
+  {
+    title: "Everyday (7 days/wk)",
+    value: 7,
+    icon: "fa-solid fa-square-7 text-brand text-lg!",
+  },
+  {
+    title: "High Intensity (6 days/wk)",
+    value: 6,
+    icon: "fa-solid fa-square-6 text-brand/80 text-lg!",
+  },
+  {
+    title: "Workweek Pace (5 days/wk)",
+    value: 5,
+    icon: "fa-solid fa-square-5 text-brand/70 text-lg!",
+  },
+  {
+    title: "Consistent (4 days/wk)",
+    value: 4,
+    icon: "fa-solid fa-square-4 text-brand/60 text-lg!",
+  },
+  {
+    title: "Flexible Routine (3 days/wk)",
+    value: 3,
+    icon: "fa-solid fa-square-3 text-brand/50 text-lg!",
+  },
+  {
+    title: "Intermittent (2 days/wk)",
+    value: 2,
+    icon: "fa-solid fa-square-2 text-brand/40 text-lg!",
+  },
+  {
+    title: "Minimal Focus (1 day/wk)",
+    value: 1,
+    icon: "fa-solid fa-square-1 text-brand/30 text-lg!",
+  },
+];
+
 export function setPendingDeleteId(id) {
   pendingDeleteId = id;
+}
+
+export function setPendingEditId(id) {
+  pendingEditId = id;
+  if (id) {
+    HabitFormController.populateEditModal(id);
+  }
 }
 
 export const HabitFormController = {
   init(mainController) {
     this.mainController = mainController;
+
+    this.setupCreateAutocompletes();
     this.bindFormEvents();
+  },
+
+  setupCreateAutocompletes() {
+    const categoryWrapper = document.getElementById("create-category-wrapper");
+    const frequencyWrapper = document.getElementById(
+      "create-frequency-wrapper",
+    );
+
+    if (categoryWrapper) {
+      createCategoryAutocomplete = new AutocompleteComponent(
+        categoryWrapper,
+        CATEGORY_OPTIONS,
+        {
+          label: "Category",
+          placeholder: "Select Category...",
+          itemTitle: "title",
+          itemValue: "value",
+          itemIcon: "icon",
+        },
+      );
+
+      createCategoryAutocomplete.setValue("general");
+    }
+
+    if (frequencyWrapper) {
+      createFrequencyAutocomplete = new AutocompleteComponent(
+        frequencyWrapper,
+        FREQUENCY_OPTIONS,
+        {
+          label: "Days per week",
+          placeholder: "Select Days per week...",
+          itemTitle: "title",
+          itemValue: "value",
+          itemIcon: "icon",
+        },
+      );
+      // Set default value
+      createFrequencyAutocomplete.setValue(7);
+    }
+  },
+
+  populateEditModal(habitId) {
+    if (editCategoryAutocomplete) {
+      editCategoryAutocomplete.destroy();
+      editCategoryAutocomplete = null;
+    }
+    if (editFrequencyAutocomplete) {
+      editFrequencyAutocomplete.destroy();
+      editFrequencyAutocomplete = null;
+    }
+
+    const habit = StateManager.getHabits().find((h) => h.id === habitId);
+
+    if (!habit) return;
+
+    const titleInput = document.getElementById("edit-habit-title");
+    const descInput = document.getElementById("edit-habit-desc");
+
+    if (titleInput) titleInput.value = habit.name || "";
+    if (descInput) descInput.value = habit.description || "";
+
+    const categoryWrapper = document.getElementById("edit-category-wrapper");
+    const frequencyWrapper = document.getElementById("edit-frequency-wrapper");
+
+    if (categoryWrapper) {
+      editCategoryAutocomplete = new AutocompleteComponent(
+        categoryWrapper,
+        CATEGORY_OPTIONS,
+        {
+          label: "Category",
+          placeholder: "Select Category...",
+          itemTitle: "title",
+          itemValue: "value",
+          itemIcon: "icon",
+        },
+      );
+      if (habit.category) {
+        editCategoryAutocomplete.setValue(habit.category);
+      }
+    }
+
+    if (frequencyWrapper) {
+      editFrequencyAutocomplete = new AutocompleteComponent(
+        frequencyWrapper,
+        FREQUENCY_OPTIONS,
+        {
+          label: "Days per week",
+          placeholder: "Select Days per week...",
+          itemTitle: "title",
+          itemValue: "value",
+          itemIcon: "icon",
+        },
+      );
+      if (habit.frequency) {
+        editFrequencyAutocomplete.setValue(habit.frequency);
+      }
+    }
   },
 
   bindFormEvents() {
     const input = document.getElementById("habit-input");
     const addBtn = document.getElementById("add-habit-btn");
-    const categorySelect = document.getElementById("habit-category-select");
-    const frequencySelect = document.getElementById("habit-frequency-select");
 
     const addHabit = () => {
       const name = input.value;
-      const category = categorySelect ? categorySelect.value : "General";
-      const frequency = frequencySelect ? frequencySelect.value : 7;
+      const category = createCategoryAutocomplete
+        ? createCategoryAutocomplete.getValue()
+        : "general";
+      const frequency = createFrequencyAutocomplete
+        ? createFrequencyAutocomplete.getValue()
+        : 7;
 
       if (!name)
         NotificationService.show({
@@ -46,17 +251,22 @@ export const HabitFormController = {
       setTimeout(() => {
         try {
           const currentHabits = StateManager.getHabits();
-          const updated = HabitService.createHabit(
-            currentHabits,
+
+          const newHabitPayload = {
             name,
             category,
             frequency,
-          );
-          StateManager.save(updated);
+          };
 
-          input.value = "";
-          categorySelect.value = "General";
-          frequencySelect.value = "7";
+          const updatedHabits = HabitService
+            ? HabitService.createHabit(currentHabits, newHabitPayload)
+            : [newHabitPayload, ...currentHabits];
+
+          StateManager.save(updatedHabits);
+
+          if (input) input.value = "";
+          createCategoryAutocomplete?.setValue("general");
+          createFrequencyAutocomplete?.setValue(7);
           this.mainController.refreshUI();
 
           NotificationService.show({
@@ -82,7 +292,7 @@ export const HabitFormController = {
 
     addBtn?.addEventListener("click", addHabit);
     input?.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") addHabit();
+      if (e.ctrlKey && e.key === "Enter") addHabit();
     });
 
     document.addEventListener("keydown", (e) => {
@@ -100,7 +310,7 @@ export const HabitFormController = {
         if (editOpen) this.mainController.toggleModal("edit-modal", false);
       }
 
-      if (e.key === "Enter") {
+      if (e.ctrlKey && e.key === "Enter") {
         if (deleteOpen) {
           document.getElementById("confirm-delete-btn")?.click();
           document.getElementById("confirm-delete")?.click();
@@ -130,6 +340,9 @@ export const HabitFormController = {
       this.mainController.toggleModal("edit-modal", false),
     );
     addClick("cancel-edit", () =>
+      this.mainController.toggleModal("edit-modal", false),
+    );
+    addClick("cancel-edit-modal", () =>
       this.mainController.toggleModal("edit-modal", false),
     );
   },
@@ -183,16 +396,7 @@ export const HabitFormController = {
   executeEdit() {
     const editInput = document.getElementById("edit-habit-input");
 
-    if (!pendingEditId || !editInput) {
-      NotificationService.show({
-        type: "error",
-        message: "Unable to edit habit. Please try again.",
-        icon: "fa-triangle-exclamation",
-        iconColor: "text-red-500/80",
-        duration: 5000,
-      });
-      return;
-    }
+    if (!pendingEditId || !editInput) return;
 
     const newName = editInput.value.trim();
     if (!newName) {
@@ -200,31 +404,50 @@ export const HabitFormController = {
         type: "error",
         message: "Habit name cannot be empty.",
         icon: "fa-triangle-exclamation",
-        iconColor: "text-red-500/80",
         duration: 5000,
       });
       return;
     }
+
+    const editCategory = editCategoryAutocomplete?.getValue();
+    const editFrequency = editFrequencyAutocomplete?.getValue();
 
     GlobalLoaderService.show("Re-indexing habit identifiers...");
 
     setTimeout(() => {
       try {
         const currentHabits = StateManager.getHabits();
+
+        const updatedHabitData = {
+          title: newName,
+          category: editCategory || "general",
+          frequency: editFrequency || 7,
+        };
+
         const updated = HabitService.editHabit(
           currentHabits,
           pendingEditId,
-          newName,
+          updatedHabitData,
         );
 
         StateManager.save(updated);
         this.mainController.toggleModal("edit-modal", false);
+
+        if (editCategoryAutocomplete) {
+          editCategoryAutocomplete.destroy();
+          editCategoryAutocomplete = null;
+        }
+        if (editFrequencyAutocomplete) {
+          editFrequencyAutocomplete.destroy();
+          editFrequencyAutocomplete = null;
+        }
+
         pendingEditId = null;
         this.mainController.refreshUI();
 
         NotificationService.show({
           type: "success",
-          message: `Habit renamed to "${newName}"`,
+          message: "Habit edited successfully!",
           icon: "fa-check",
           iconColor: "text-emerald-500/80",
           duration: 5000,

@@ -29,16 +29,16 @@ const NOUNS = [
 ];
 
 const CATEGORIES = [
-  "General",
-  "Health",
-  "Work",
-  "Research",
-  "Academics",
-  "OpenSource",
-  "SystemDesign",
-  "DigitalDetox",
-  "Routine",
-  "Harmful",
+  "general",
+  "health",
+  "work",
+  "research",
+  "academics",
+  "openSource",
+  "systemDesign",
+  "digitalDetox",
+  "routine",
+  "harmful",
 ];
 
 const SCENARIOS = ["perfect", "average", "struggling", "stale"];
