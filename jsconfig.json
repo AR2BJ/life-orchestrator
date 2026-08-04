@@ -2,13 +2,22 @@
   "compilerOptions": {
     "target": "ESNext",
     "module": "ESNext",
-    "moduleResolution": "bundler"
+    "moduleResolution": "bundler",
+    "lib": ["ESNext", "DOM"],
+    "allowJs": true,
+    "checkJs": false,
+    "resolveJsonModule": true,
+    "strict": false,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "references": [
+      { "path": "./modules/habit-tracker" },
+      { "path": "./modules/task-manager" },
+      { "path": "./packages/core-store" },
+      { "path": "./packages/ui-theme" }
+    ]
   },
-  "references": [
-    { "path": "./modules/habit-tracker" },
-    { "path": "./modules/task-manager" },
-    { "path": "./packages/core-store" },
-    { "path": "./packages/ui-theme" }
-  ],
-  "exclude": ["node_modules", "**/dist"]
+  "exclude": ["node_modules", "dist"]
 }
