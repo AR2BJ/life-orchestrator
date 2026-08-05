@@ -7,11 +7,11 @@ export const DesktopNavComponent = {
       >
         <div class="flex flex-col items-center gap-6 w-full px-3">
           <div class="w-13.5 h-13.5 flex flex-row justify-center items-center">
-            <a href="/">
+            <a href="/" class="w-13.5 h-13.5 flex flex-row justify-center items-center">
               <img
                 id="logo"
                 src="/picture/logo.png"
-                class="logo h-full justify-center shadow-brand/10"
+                class="logo w-13.5 h-13.5 justify-center shadow-brand/10"
                 title="Task Manager"
                 alt="Task Manager Logo"
               />
