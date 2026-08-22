@@ -15,6 +15,7 @@
     "references": [
       { "path": "./modules/habit-tracker" },
       { "path": "./modules/task-manager" },
+      { "path": "./modules/time-manager" },
       { "path": "./packages/core-store" },
       { "path": "./packages/ui-theme" }
     ]

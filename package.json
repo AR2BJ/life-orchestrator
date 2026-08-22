@@ -12,6 +12,7 @@
     "dev:orchestrator": "npm run dev --workspace=orchestrator-app",
     "dev:habit": "npm run dev --workspace=@life-orchestrator/habit-tracker",
     "dev:task": "npm run dev --prefix modules/task-manager",
+    "dev:time": "npm run dev --prefix modules/time-manager",
     "dev:all": "concurrently \"npm:dev:habit\" \"npm:dev:task\"",
     "build:all": "npm run build --workspaces --if-present"
   },
