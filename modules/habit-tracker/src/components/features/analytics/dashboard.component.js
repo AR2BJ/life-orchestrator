@@ -72,7 +72,7 @@ export const DashboardComponent = {
               class="text-xs font-bold text-secondary uppercase tracking-wider"
               >Total Habits</span
             >
-            <div class="text-4xl font-black text-primary tracking-tight mt-2">
+            <div class="text-4xl font-black text-color tracking-tight mt-2">
               ${totalHabits}
             </div>
             <p class="text-[10px] text-muted font-medium mt-1">
@@ -96,7 +96,7 @@ export const DashboardComponent = {
               class="text-xs font-bold text-secondary uppercase tracking-wider"
               >Completed Today</span
             >
-            <div class="text-4xl font-black text-primary tracking-tight mt-2">
+            <div class="text-4xl font-black text-color tracking-tight mt-2">
               ${completedToday}
             </div>
             <p class="text-[10px] text-muted font-medium mt-1">
@@ -125,7 +125,7 @@ export const DashboardComponent = {
               goalsOverflowThisWeek > 0
                 ? "fa-bolt-lightning text-lime-500"
                 : goalsOverflowThisWeek === 0 && goalsMetThisWeek > 0
-                  ? "fa-circle-check text-brand"
+                  ? "fa-circle-check text-brand/80"
                   : "fa-bullseye-arrow text-pink-500"
             } absolute -right-2 -bottom-6 text-[10rem] opacity-[0.04] dark:opacity-[0.06] rotate-25 pointer-events-none group-hover:scale-110 group-hover:rotate-15 transition-transform duration-500"
           ></i>
@@ -135,7 +135,7 @@ export const DashboardComponent = {
               class="text-xs font-bold text-secondary uppercase tracking-wider"
               >Weekly Targets</span
             >
-            <div class="text-4xl font-black text-primary tracking-tight mt-2">
+            <div class="text-4xl font-black text-color tracking-tight mt-2">
               ${goalsMetThisWeek}<span class="text-sm font-bold text-muted"
                 >/${habits.length}</span
               >
@@ -162,7 +162,7 @@ export const DashboardComponent = {
               class="text-xs font-bold text-secondary uppercase tracking-wider"
               >Best Streak</span
             >
-            <div class="text-4xl font-black text-primary tracking-tight mt-2">
+            <div class="text-4xl font-black text-color tracking-tight mt-2">
               ${bestStreak}<span class="text-sm font-bold text-secondary ms-0.5"
                 >days</span
               >
@@ -186,7 +186,7 @@ export const DashboardComponent = {
               class="text-xs font-bold text-secondary uppercase tracking-wider"
               >Avg Success</span
             >
-            <div class="text-4xl font-black text-primary tracking-tight mt-2">
+            <div class="text-4xl font-black text-color tracking-tight mt-2">
               ${averageSuccessRate}%
             </div>
             <p class="text-[10px] text-muted font-medium mt-1">
@@ -211,7 +211,7 @@ export const DashboardComponent = {
               class="text-xs font-bold text-secondary uppercase tracking-wider"
               >Archived</span
             >
-            <div class="text-4xl font-black text-primary tracking-tight mt-2">
+            <div class="text-4xl font-black text-color tracking-tight mt-2">
               ${archivedCount}
             </div>
             <p class="text-[10px] text-muted font-medium mt-1">
@@ -235,7 +235,7 @@ export const DashboardComponent = {
             >
               <div>
                 <h4
-                  class="text-lg font-bold text-primary flex items-center gap-2"
+                  class="text-lg font-bold text-color flex items-center gap-2"
                 >
                   <i class="fa-regular fa-calendar text-brand/80 text-xl"></i>
                   Lifetime Activity Grid
@@ -249,7 +249,7 @@ export const DashboardComponent = {
               <div class="relative flex items-center justify-end">
                 <button
                   id="heatmap-mobile-menu-toggle"
-                  class="sm:hidden inline-flex items-center justify-center h-8 w-8 rounded-lg border border-border bg-surface text-secondary hover:text-primary transition shadow-sm cursor-pointer"
+                  class="sm:hidden inline-flex items-center justify-center h-8 w-8 rounded-lg border border-border bg-surface text-secondary hover:text-color transition shadow-sm cursor-pointer"
                   aria-label="Open view menu"
                 >
                   <i class="fa-regular fa-ellipsis-vertical text-lg"></i>
@@ -285,7 +285,7 @@ export const DashboardComponent = {
                 >
                   <div
                     id="heatmap-tab-indicator"
-                    class="absolute top-1 left-1 h-[calc(100%-8px)] w-24 rounded-lg bg-brand transition-all duration-300 ease-out z-0 shadow-sm"
+                    class="absolute top-1 left-1 h-[calc(100%-8px)] w-24 rounded-lg bg-brand/80 transition-all duration-300 ease-out z-0 shadow-sm"
                   ></div>
 
                   <button
@@ -328,7 +328,7 @@ export const DashboardComponent = {
           >
             <div>
               <h4
-                class="text-lg font-bold text-primary flex items-center gap-2"
+                class="text-lg font-bold text-color flex items-center gap-2"
               >
                 <i
                   class="fa-regular fa-chart-simple text-amber-500/80 text-xl"
@@ -354,13 +354,13 @@ export const DashboardComponent = {
         <div
           class="w-full col-span-2 sm:col-span-full mt-4 bg-surface-2 rounded-2xl"
         >
-          <div class="w-full col-span-full bg-surface-2 rounded-2xl p-6">
+          <div class="w-full col-span-full bg-surface-2 border border-border/70 rounded-2xl p-6">
             <div
               class="flex flex-wrap sm:flex-nowrap sm:items-center justify-between gap-2"
             >
               <div>
                 <h4
-                  class="text-lg font-bold text-primary flex items-center gap-2"
+                  class="text-lg font-bold text-color flex items-center gap-2"
                 >
                   <i
                     class="fa-regular fa-layer-group text-brand/80 text-xl"
@@ -390,7 +390,7 @@ export const DashboardComponent = {
                           class="fa-regular fa-box-open text-brand/60"
                         ></i>
                       </div>
-                      <h2 class="text-2xl font-bold text-primary">
+                      <h2 class="text-2xl font-bold text-color">
                         No active habits
                       </h2>
                       <p class="mt-3 text-secondary max-w-sm mx-auto">
@@ -462,7 +462,7 @@ export const DashboardComponent = {
                             <div class="flex items-center gap-3 min-w-0 flex-1">
                               <div class="w-full">
                                 <div
-                                  class="text-sm pb-3 sm:pb-0 font-bold text-primary truncate flex flex-wrap items-center gap-2"
+                                  class="text-sm pb-3 sm:pb-0 font-bold text-color truncate flex flex-wrap items-center gap-2"
                                 >
                                   <span
                                     class="md:hidden truncate cursor-pointer js-tooltip-target"
@@ -540,7 +540,7 @@ export const DashboardComponent = {
                                   <span class="inline-flex items-center gap-1">
                                     <i class="fa-regular ${rowIcon}"></i> This
                                     Week:
-                                    <strong class="text-primary font-bold"
+                                    <strong class="text-color font-bold"
                                       >${weeklyChecks}/${targetFrequency}</strong
                                     >
                                   </span>
@@ -563,7 +563,7 @@ export const DashboardComponent = {
                                     Current Streak
                                   </div>
                                   <div
-                                    class="text-lg sm:text-base font-black text-primary mt-0.5 truncate"
+                                    class="text-lg sm:text-base font-black text-color mt-0.5 truncate"
                                   >
                                     ${stats.current}d
                                   </div>
@@ -577,7 +577,7 @@ export const DashboardComponent = {
                                     Best Streak
                                   </div>
                                   <div
-                                    class="text-lg sm:text-base font-black text-primary mt-0.5 truncate"
+                                    class="text-lg sm:text-base font-black text-color mt-0.5 truncate"
                                   >
                                     ${stats.best}d
                                   </div>
@@ -616,7 +616,7 @@ export const DashboardComponent = {
                                     <span class="text-secondary font-medium"
                                       >Stability</span
                                     >
-                                    <span class="font-bold text-primary"
+                                    <span class="font-bold text-color"
                                       >${lifetimeRate}%</span
                                     >
                                   </div>

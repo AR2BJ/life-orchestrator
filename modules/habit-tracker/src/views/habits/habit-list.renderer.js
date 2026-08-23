@@ -34,7 +34,7 @@ export function renderHabitList(habits, activeTab = "active") {
         class="min-h-80 bg-surface border border-dashed border-border rounded-2xl p-16 text-center"
       >
         <div class="text-6xl mb-6">${icon}</div>
-        <h2 class="text-2xl font-bold text-primary">${title}</h2>
+        <h2 class="text-2xl font-bold text-color">${title}</h2>
         <p class="mt-3 text-secondary max-w-sm mx-auto">${description}</p>
       </div>
     `;

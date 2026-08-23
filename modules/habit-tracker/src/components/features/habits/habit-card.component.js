@@ -89,7 +89,7 @@ export const HabitCardComponent = {
                 `
               }
               <div
-                class="absolute top-full left-1/2 -translate-x-1/2 mt-2 px-2 py-1 rounded bg-surface-2 text-xs text-primary opacity-0 cursor-default peer-hover:opacity-100 transition z-10 whitespace-nowrap pointer-events-none border border-border/60"
+                class="absolute top-full left-1/2 -translate-x-1/2 mt-2 px-2 py-1 rounded bg-surface-2 text-xs text-color opacity-0 cursor-default peer-hover:opacity-100 transition z-10 whitespace-nowrap pointer-events-none border border-border/60"
               >
                 ${checkTooltip}
               </div>
@@ -109,7 +109,7 @@ export const HabitCardComponent = {
                 </span>
               </div>
               <h2
-                class="mt-1 text-sm md:text-base font-bold text-primary tracking-tight leading-snug wrap-break-word"
+                class="mt-1 text-sm md:text-base font-bold text-color tracking-tight leading-snug wrap-break-word"
               >
                 ${habit.name}
               </h2>
@@ -133,7 +133,7 @@ export const HabitCardComponent = {
                   >Current</span
                 >
                 <span
-                  class="text-xs md:text-sm font-bold text-primary flex items-center gap-1 mt-0.5"
+                  class="text-xs md:text-sm font-bold text-color flex items-center gap-1 mt-0.5"
                 >
                   <i
                     class="fa-regular fa-fire text-orange-500/80 text-[10px] md:text-sm pe-0.5"
@@ -149,7 +149,7 @@ export const HabitCardComponent = {
                   >Best</span
                 >
                 <span
-                  class="text-xs md:text-sm font-bold text-primary flex items-center gap-1 mt-0.5"
+                  class="text-xs md:text-sm font-bold text-color flex items-center gap-1 mt-0.5"
                 >
                   <i
                     class="fa-regular fa-crown text-yellow-500/80 text-[10px] md:text-sm pe-0.5"
@@ -165,7 +165,7 @@ export const HabitCardComponent = {
                   >This Wk</span
                 >
                 <span
-                  class="text-xs md:text-sm font-bold text-primary flex items-center gap-1 mt-0.5"
+                  class="text-xs md:text-sm font-bold text-color flex items-center gap-1 mt-0.5"
                 >
                   <i
                     class="fa-regular ${goalIcon} text-[10px] md:text-sm pe-0.5"
@@ -176,7 +176,7 @@ export const HabitCardComponent = {
                         ? "text-lime-500/80"
                         : isGoalMet
                           ? "text-brand/80"
-                          : "text-primary"
+                          : "text-color"
                     }"
                     >${weeklyChecks}/${targetFrequency}</span
                   >
@@ -188,7 +188,7 @@ export const HabitCardComponent = {
                   >Total</span
                 >
                 <span
-                  class="text-xs md:text-sm font-bold text-primary flex items-center gap-1 mt-0.5"
+                  class="text-xs md:text-sm font-bold text-color flex items-center gap-1 mt-0.5"
                 >
                   <i
                     class="fa-regular fa-chart-simple text-teal-500/80 text-[10px] md:text-sm pe-0.5"
@@ -212,7 +212,7 @@ export const HabitCardComponent = {
                     <i class="fa-regular ${actionIcon} text-base"></i>
                   </button>
                   <div
-                    class="absolute top-full left-1/2 -translate-x-1/2 mt-1 px-2 py-1 rounded bg-surface-2 text-xs text-primary opacity-0 cursor-default peer-hover:opacity-100 transition z-10"
+                    class="absolute top-full left-1/2 -translate-x-1/2 mt-1 px-2 py-1 rounded bg-surface-2 text-xs text-color opacity-0 cursor-default peer-hover:opacity-100 transition z-10"
                   >
                     ${actionTooltip}
                   </div>
@@ -228,7 +228,7 @@ export const HabitCardComponent = {
                     ></i>
                   </button>
                   <div
-                    class="absolute top-full left-1/2 -translate-x-1/2 mt-1 px-2 py-1 rounded bg-surface-2 text-xs text-primary opacity-0 cursor-default peer-hover:opacity-100 transition z-10 whitespace-nowrap pointer-events-none border border-border/60"
+                    class="absolute top-full left-1/2 -translate-x-1/2 mt-1 px-2 py-1 rounded bg-surface-2 text-xs text-color opacity-0 cursor-default peer-hover:opacity-100 transition z-10 whitespace-nowrap pointer-events-none border border-border/60"
                   >
                     Edit
                   </div>
@@ -242,7 +242,7 @@ export const HabitCardComponent = {
                     <i class="fa-regular fa-trash-can text-red-500/80 text-base"></i>
                   </button>
                   <div
-                    class="absolute top-full left-1/2 -translate-x-1/2 mt-1 px-2 py-1 rounded bg-surface-2 text-xs text-primary opacity-0 cursor-default peer-hover:opacity-100 transition z-10 whitespace-nowrap pointer-events-none border border-border/60"
+                    class="absolute top-full left-1/2 -translate-x-1/2 mt-1 px-2 py-1 rounded bg-surface-2 text-xs text-color opacity-0 cursor-default peer-hover:opacity-100 transition z-10 whitespace-nowrap pointer-events-none border border-border/60"
                   >
                     Delete
                   </div>
@@ -252,7 +252,7 @@ export const HabitCardComponent = {
               <div class="flex md:hidden relative dropdown-container">
                 <button
                   data-id="${habit.id}"
-                  class="dropdown-toggle-btn h-9 w-9 rounded-lg border border-border text-secondary hover:text-primary hover:bg-surface flex items-center justify-center transition shadow-sm cursor-pointer"
+                  class="dropdown-toggle-btn h-9 w-9 rounded-lg border border-border text-secondary hover:text-color hover:bg-surface flex items-center justify-center transition shadow-sm cursor-pointer"
                 >
                   <i class="fa-regular fa-ellipsis-vertical text-lg"></i>
                 </button>
@@ -265,7 +265,7 @@ export const HabitCardComponent = {
                     data-id="${habit.id}"
                     class="${
                       isHabitArchived ? "restore-btn" : "archive-btn"
-                    } flex w-full items-center gap-2 rounded-lg px-2.5 py-1.5 text-left text-xs font-medium border-0 bg-transparent text-secondary hover:text-primary hover:bg-surface-2 transition cursor-pointer"
+                    } flex w-full items-center gap-2 rounded-lg px-2.5 py-1.5 text-left text-xs font-medium border-0 bg-transparent text-secondary hover:text-color hover:bg-surface-2 transition cursor-pointer"
                   >
                     <i class="fa-regular ${actionIcon} text-xs"></i>
                     <span
@@ -277,7 +277,7 @@ export const HabitCardComponent = {
 
                   <button
                     data-id="${habit.id}"
-                    class="edit-btn flex w-full items-center gap-2 rounded-lg px-2.5 py-1.5 text-left text-xs font-medium border-0 bg-transparent text-secondary hover:text-primary hover:bg-surface-2 transition cursor-pointer"
+                    class="edit-btn flex w-full items-center gap-2 rounded-lg px-2.5 py-1.5 text-left text-xs font-medium border-0 bg-transparent text-secondary hover:text-color hover:bg-surface-2 transition cursor-pointer"
                   >
                     <i
                       class="fa-regular fa-pen-to-square text-xs text-blue-500/80"

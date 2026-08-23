@@ -16,7 +16,7 @@ export const SettingsViewComponent = {
         >
           <div class="flex flex-col gap-1 px-1">
             <h1
-              class="text-xl sm:text-2xl font-bold text-primary tracking-tight"
+              class="text-xl sm:text-2xl font-bold text-color tracking-tight"
             >
               Application Settings
             </h1>
@@ -36,7 +36,7 @@ export const SettingsViewComponent = {
               </div>
               <div class="min-w-0">
                 <h3
-                  class="text-sm sm:text-base font-semibold text-primary truncate"
+                  class="text-sm sm:text-base font-semibold text-color truncate"
                 >
                   Appearance Theme
                 </h3>
@@ -91,13 +91,12 @@ export const SettingsViewComponent = {
               </div>
               <div class="min-w-0">
                 <h3
-                  class="text-sm sm:text-base font-semibold text-primary truncate"
+                  class="text-sm sm:text-base font-semibold text-color truncate"
                 >
                   Data Backup & Sandbox
                 </h3>
                 <p class="text-[11px] sm:text-xs text-secondary truncate">
-                  Export workspace records, import historical snapshots, or seed
-                  environment mock data.
+                  Export workspace records, import historical snapshots.
                 </p>
               </div>
             </div>
@@ -112,7 +111,7 @@ export const SettingsViewComponent = {
               <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
                 <button
                   id="sett-export-btn"
-                  class="w-full px-3 py-2.5 bg-surface-2 hover:bg-surface-3 border border-border rounded-xl text-primary text-xs font-semibold flex items-center justify-center gap-2 transition cursor-pointer group"
+                  class="w-full px-3 py-2.5 bg-surface-2 hover:bg-surface-3 border border-border rounded-xl text-color text-xs font-semibold flex items-center justify-center gap-2 transition cursor-pointer group"
                 >
                   <i
                     class="fa-regular fa-file-code text-amber-500/80 text-sm group-hover:scale-105 transition"
@@ -122,7 +121,7 @@ export const SettingsViewComponent = {
 
                 <button
                   id="sett-export-md-btn"
-                  class="w-full px-3 py-2.5 bg-surface-2 hover:bg-surface-3 border border-border rounded-xl text-primary text-xs font-semibold flex items-center justify-center gap-2 transition cursor-pointer group"
+                  class="w-full px-3 py-2.5 bg-surface-2 hover:bg-surface-3 border border-border rounded-xl text-color text-xs font-semibold flex items-center justify-center gap-2 transition cursor-pointer group"
                 >
                   <i
                     class="fa-brands fa-markdown text-sky-500/80 text-sm group-hover:scale-105 transition"
@@ -132,7 +131,7 @@ export const SettingsViewComponent = {
 
                 <button
                   id="sett-export-notion-btn"
-                  class="w-full px-3 py-2.5 bg-surface-2 hover:bg-surface-3 border border-border rounded-xl text-primary text-xs font-semibold flex items-center justify-center gap-2 transition cursor-pointer group"
+                  class="w-full px-3 py-2.5 bg-surface-2 hover:bg-surface-3 border border-border rounded-xl text-color text-xs font-semibold flex items-center justify-center gap-2 transition cursor-pointer group"
                 >
                   <i
                     class="fa-regular fa-table text-emerald-500/80 text-sm group-hover:scale-105 transition"
@@ -140,41 +139,6 @@ export const SettingsViewComponent = {
                   <span>Spreadsheet CSV</span>
                 </button>
               </div>
-            </div>
-
-            <div class="flex flex-col gap-2 border-t border-border/60 pt-4">
-              <label
-                class="text-[10px] sm:text-[11px] font-bold text-secondary uppercase tracking-wider flex items-center gap-1.5"
-              >
-                <i class="fa-regular fa-flask-vial opacity-70"></i>
-                <span>Development & Sandbox</span>
-              </label>
-              <button
-                id="sett-seed-btn"
-                class="w-full px-4 py-2.5 bg-brand/5 hover:bg-brand/10 border border-brand/20 rounded-xl text-brand/80 text-xs font-semibold flex items-center justify-center gap-2 transition cursor-pointer"
-              >
-                <div
-                  id="sett-seed-icon"
-                  class="flex"
-                >
-                  <i
-                    id="sett-seed-icon"
-                    class="fa-regular fa-flask text-sm transition-transform duration-200"
-                  ></i>
-                </div>
-                <div
-                  id="sett-seed-spinner"
-                  class="hidden"
-                >
-                  <i class="fa-regular fa-spinner fa-spin text-sm"></i>
-                </div>
-
-                <span
-                  id="sett-seed-text"
-                  class="flex"
-                  >Seed Historical Mock Data</span
-                >
-              </button>
             </div>
 
             <div class="flex flex-col gap-2 border-t border-border/60 pt-4">
@@ -191,7 +155,7 @@ export const SettingsViewComponent = {
                 <i
                   class="fa-regular fa-cloud-arrow-up text-lg sm:text-xl text-secondary group-hover:text-brand/80 transition animate-pulse"
                 ></i>
-                <span class="text-xs font-semibold text-primary px-2">
+                <span class="text-xs font-semibold text-color px-2">
                   Drag & drop file here or
                   <span class="text-brand/80 font-bold"
                     >browse local files</span
@@ -222,7 +186,7 @@ export const SettingsViewComponent = {
               </div>
               <div class="min-w-0">
                 <h3
-                  class="text-sm sm:text-base font-semibold text-primary truncate"
+                  class="text-sm sm:text-base font-semibold text-color truncate"
                 >
                   Automation Rules
                 </h3>
@@ -234,7 +198,7 @@ export const SettingsViewComponent = {
 
             <div class="flex items-start justify-between gap-4 mt-1">
               <div class="flex flex-col gap-0.5 min-w-0">
-                <span class="text-xs sm:text-sm font-medium text-primary"
+                <span class="text-xs sm:text-sm font-medium text-color"
                   >Auto-Archive Inactive Habits</span
                 >
                 <span
@@ -268,7 +232,7 @@ export const SettingsViewComponent = {
               </div>
               <div class="min-w-0">
                 <h3
-                  class="text-sm sm:text-base font-semibold text-primary truncate"
+                  class="text-sm sm:text-base font-semibold text-color truncate"
                 >
                   Storage & Factory Reset
                 </h3>

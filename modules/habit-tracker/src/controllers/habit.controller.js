@@ -133,7 +133,7 @@ export const HabitController = {
       button.classList.toggle("bg-surface", !isActive);
       button.classList.toggle("border-border", !isActive);
       button.classList.toggle("text-secondary", !isActive);
-      button.classList.toggle("hover:text-primary", !isActive);
+      button.classList.toggle("hover:text-color", !isActive);
       button.classList.toggle("hover:bg-surface-2", !isActive);
 
       if (icon) {
@@ -382,34 +382,25 @@ export const HabitController = {
           "content-help-shortcuts",
         );
 
-        if (
-          !btnSafeguard ||
-          !btnShortcuts ||
-          !contentSafeguard ||
-          !contentShortcuts
-        )
-          return;
+        if (!btnSafeguard || !btnShortcuts) return;
 
         if (tabName === "safeguard") {
           // Safeguard Active State
           btnSafeguard.className =
-            "w-full md:flex-1 text-center py-2 sm:py-2.5 text-xs sm:text-sm font-bold rounded-lg bg-brand/30 text-primary border border-brand/40 transition cursor-pointer";
+            "flex-1 py-2 text-xs font-bold rounded-lg bg-brand text-white transition cursor-pointer";
           btnShortcuts.className =
-            "w-full md:flex-1 text-center py-2 sm:py-2.5 text-xs sm:text-sm font-bold rounded-lg text-secondary hover:text-primary border border-transparent transition cursor-pointer";
+            "flex-1 py-2 text-xs font-bold rounded-lg text-secondary hover:text-color transition cursor-pointer";
 
           contentSafeguard.classList.remove("hidden");
-          contentSafeguard.classList.add("flex");
           contentShortcuts.classList.add("hidden");
         } else if (tabName === "shortcuts") {
           // Shortcuts Active State
           btnShortcuts.className =
-            "w-full md:flex-1 text-center py-2 sm:py-2.5 text-xs sm:text-sm font-bold rounded-lg bg-brand/30 text-primary border border-brand/40 transition cursor-pointer";
+            "flex-1 py-2 text-xs font-bold rounded-lg bg-brand text-white transition cursor-pointer";
           btnSafeguard.className =
-            "w-full md:flex-1 text-center py-2 sm:py-2.5 text-xs sm:text-sm font-bold rounded-lg text-secondary hover:text-primary border border-transparent transition cursor-pointer";
-
+            "flex-1 py-2 text-xs font-bold rounded-lg text-secondary hover:text-color transition cursor-pointer";
           contentShortcuts.classList.remove("hidden");
           contentSafeguard.classList.add("hidden");
-          contentSafeguard.classList.remove("flex");
         }
       };
 

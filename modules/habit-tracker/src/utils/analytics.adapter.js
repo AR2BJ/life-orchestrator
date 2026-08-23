@@ -1,6 +1,6 @@
 import { formatDate } from "./helpers.js";
 
-const weekdayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+const weekdayNames = ["Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"];
 const monthNames = [
   "Jan",
   "Feb",
@@ -46,21 +46,25 @@ export const AnalyticsAdapter = {
     });
 
     if (view === "weekly") {
-      const startSunday = new Date(startDate);
-      startSunday.setDate(startDate.getDate() - startSunday.getDay());
+      const startSaturday = new Date(startDate);
+      const dayOfWeek = startSaturday.getDay();
+      const offsetToSaturday = (dayOfWeek + 1) % 7;
+      startSaturday.setDate(startDate.getDate() - offsetToSaturday);
+
       const totalWeeksToShow = 12;
 
       return weekdayNames.map((dayName, dayIdx) => {
         const rowData = [];
         for (let w = 0; w < totalWeeksToShow; w++) {
-          const currentTarget = new Date(startSunday);
-          currentTarget.setDate(startSunday.getDate() + w * 7 + dayIdx);
+          const currentTarget = new Date(startSaturday);
+          currentTarget.setDate(startSaturday.getDate() + w * 7 + dayIdx);
 
           const isoStr = formatDate(currentTarget);
           const count =
             currentTarget < startDate || currentTarget > today
               ? 0
               : globalActivityMap[isoStr] || 0;
+
           const monthName = currentTarget.toLocaleString("en-US", {
             month: "short",
           });
@@ -176,13 +180,18 @@ export const AnalyticsAdapter = {
   },
 
   generateWeekdayCounts(habits) {
-    const weekdayCounts = [0, 0, 0, 0, 0, 0, 0];
+    const weekdayCounts = Array(7).fill(0);
+
     habits.forEach((habit) => {
       habit.completedDates.forEach((dateStr) => {
         const dayIndex = new Date(dateStr).getDay();
-        if (dayIndex >= 0 && dayIndex <= 6) weekdayCounts[dayIndex]++;
+        const shiftedIndex = (dayIndex + 1) % 7;
+        if (shiftedIndex >= 0 && shiftedIndex <= 6) {
+          weekdayCounts[shiftedIndex]++;
+        }
       });
     });
+
     return weekdayCounts;
   },
 

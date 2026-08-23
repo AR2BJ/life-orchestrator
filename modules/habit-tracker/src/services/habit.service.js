@@ -7,7 +7,7 @@ export const HabitService = {
     const cleanedName = (rawName || "").trim().replace(/\s+/g, " ");
 
     if (!cleanedName || cleanedName.length < 2 || cleanedName.length > 20) {
-      throw new Error("Invalid habit name length (2-20 chars).");
+      throw new Error("Invalid habit name length (2-20 chars)");
     }
 
     const alreadyExists = currentHabits.some(
@@ -16,7 +16,7 @@ export const HabitService = {
         !habit.archived,
     );
     if (alreadyExists) {
-      throw new Error("An active habit with this title already exists.");
+      throw new Error("An active habit with this title already exists");
     }
 
     const habitCategory = habitData.category || "general";
@@ -90,7 +90,7 @@ export const HabitService = {
 
   editHabit(currentHabits, id, updatedFields) {
     const habit = currentHabits.find((h) => h.id === id);
-    if (!habit) throw new Error("Habit not found.");
+    if (!habit) throw new Error("Habit not found");
 
     let cleanedTitle = habit.name;
     if (updatedFields.title) {
@@ -100,7 +100,7 @@ export const HabitService = {
         cleanedTitle.length < 2 ||
         cleanedTitle.length > 20
       ) {
-        throw new Error("Invalid habit name length (2-20 chars).");
+        throw new Error("Invalid habit name length (2-20 chars)");
       }
     }
 
@@ -111,7 +111,7 @@ export const HabitService = {
       (h) => h.id !== id && h.name.toLowerCase() === cleanedTitle.toLowerCase(),
     );
     if (alreadyExists) {
-      throw new Error("Habit already exists.");
+      throw new Error("Habit already exists");
     }
 
     return currentHabits.map((h) => {

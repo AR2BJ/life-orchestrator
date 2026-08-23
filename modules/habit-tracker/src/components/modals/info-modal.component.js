@@ -88,143 +88,129 @@ const HELP_SHORTCUTS = [
 
 export const InfoModalComponent = {
   renderShortcutsData() {
-    return Object.entries(HELP_SHORTCUTS)
-      .map(
-        ([_, group]) => `
-          <div
-            class="text-xs font-bold text-brand/80 uppercase tracking-wider mt-4 first:mt-0 mb-1.5 ps-1"
-          >
-            ${group.category}
-          </div>
+    return HELP_SHORTCUTS.map(
+      (group) => `
+        <div
+          class="text-[11px] font-bold text-brand uppercase tracking-wider mt-4 first:mt-0 mb-2 ps-1"
+        >
+          ${group.category}
+        </div>
+        <div class="space-y-2">
           ${group.items
             .map(
               (item) => `
-                <div
-                  class="flex items-center justify-between p-2.5 sm:p-3 bg-surface-2/60 border border-border/50 rounded-xl hover:border-border transition gap-2"
+              <div
+                class="flex items-center justify-between p-2.5 bg-surface-2 border border-border rounded-xl"
+              >
+                <span
+                  class="text-xs font-semibold text-secondary flex items-center gap-2"
                 >
-                  <span
-                    data-tooltip-title="${item.label}"
-                    class="text-xs sm:text-sm font-semibold text-secondary block md:hidden items-center gap-2 truncate cursor-pointer"
-                  >
-                    <i class="fa-regular ${item.icon} text-muted"></i>
-                    ${item.label}
-                  </span>
-                  <span
-                    class="text-xs sm:text-sm font-semibold text-secondary hidden md:flex items-center gap-2"
-                  >
-                    <i class="fa-regular ${item.icon} text-muted"></i>
-                    ${item.label}
-                  </span>
-                  <div class="flex items-center gap-1 shrink-0">
-                    ${item.keys
-                      .map(
-                        (keyGroup) => `
-                          <div class="flex items-center gap-0.5">
-                            ${keyGroup
-                              .map(
-                                (key) =>
-                                  `<kbd
-                                    class="px-1.5 sm:px-2 py-0.5 sm:py-1 text-[9px] sm:text-xs font-mono font-bold text-primary bg-surface border border-border shadow-2xs rounded-md"
-                                    >${key}</kbd
-                                  >`,
-                              )
-                              .join(
-                                '<span class="text-[9px] font-bold text-muted/60"><i class="fa-regular fa-slash-forward"></i></span>',
-                              )}
-                          </div>
-                        `,
-                      )
-                      .join(
-                        '<span class="text-[9px] font-bold text-muted/60"><i class="fa-regular fa-plus"></i></span>',
-                      )}
-                  </div>
+                  <i class="fa-regular ${item.icon} text-muted"></i>
+                  ${item.label}
+                </span>
+                <div class="flex items-center gap-1 shrink-0">
+                  ${item.keys
+                    .map(
+                      (keyGroup) => `
+                        <div class="flex items-center gap-1">
+                          ${keyGroup
+                            .map(
+                              (key) =>
+                                `<kbd
+                                  class="px-2 py-0.5 text-[10px] font-bold text-color bg-surface border border-border rounded-md shadow-2xs"
+                                  >${key}</kbd
+                                >`,
+                            )
+                            .join(
+                              '<span class="text-[10px] text-muted">/</span>',
+                            )}
+                        </div>
+                      `,
+                    )
+                    .join('<span class="text-[10px] text-muted">+</span>')}
                 </div>
-              `,
+              </div>
+            `,
             )
             .join("")}
-        `,
-      )
-      .join("");
+        </div>
+      `,
+    ).join("");
   },
 
   render() {
     return `
       <div
         id="help-modal"
-        class="min-h-screen fixed inset-0 z-50 hidden items-center justify-center animate-fade-in p-3 sm:p-4 md:p-6"
+        class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in"
       >
         <div
           id="help-modal-backdrop"
-          class="absolute inset-0 bg-black/60 backdrop-blur-sm cursor-pointer"
+          class="absolute inset-0 cursor-pointer"
         ></div>
 
         <div
-          class="relative w-full max-w-2xl bg-surface border border-border rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 shadow-2xl transition-all scale-95 flex flex-col max-h-[75dvh] md:max-h-[80dvh] h-auto"
+          class="relative w-full max-w-xl bg-surface border border-border rounded-3xl p-6 shadow-2xl flex flex-col max-h-[85dvh] overflow-hidden"
         >
           <div
-            class="flex justify-between items-center mb-4 sm:mb-5 border-b border-border pb-3 sm:pb-4 shrink-0"
+            class="flex justify-between items-center mb-4 pb-3 border-b border-border shrink-0"
           >
-            <div class="flex items-center gap-2.5 sm:gap-3">
+            <div class="flex items-center gap-3">
               <div
-                class="w-10 h-10 lg:w-11 lg:h-11 rounded-xl lg:rounded-2xl bg-brand/10 text-brand/80 flex items-center justify-center text-xl sm:text-2xl shrink-0"
+                class="w-10 h-10 rounded-xl bg-brand/10 text-brand flex items-center justify-center text-lg shrink-0"
               >
-                <i class="fa-regular fa-square-terminal"></i>
+                <i class="fa-regular fa-circle-question"></i>
               </div>
               <div>
-                <h3 class="text-sm sm:text-base font-bold text-primary">
+                <h3 class="text-base font-bold text-color">
                   Habit Tracker Help Center
                 </h3>
-                <p
-                  class="text-[11px] sm:text-xs text-secondary max-w-50 sm:max-w-none"
-                >
+                <p class="text-xs text-secondary">
                   Habit checking Tips and Shortcuts.
                 </p>
               </div>
             </div>
             <button
               id="close-help-modal"
-              class="w-8 h-8 sm:w-9 sm:h-9 rounded-lg lg:rounded-xl bg-surface-2 hover:bg-red-600/10 border border-border text-secondary hover:text-primary flex items-center justify-center transition cursor-pointer shrink-0"
+              type="button"
+              class="w-8 h-8 rounded-xl bg-surface-2 hover:bg-surface-3 border border-border text-secondary hover:text-color flex items-center justify-center transition cursor-pointer"
             >
-              <i class="fa-regular fa-xmark text-sm sm:text-base"></i>
+              <i class="fa-regular fa-xmark text-sm"></i>
             </button>
           </div>
 
           <div
-            class="flex flex-wrap sm:flex-nowrap border-b md:border-b-0 border-border/60 p-1 bg-surface-2 rounded-xl mb-4 sm:mb-5 shrink-0 gap-1.5"
+            class="flex border-b border-border p-1 bg-surface-2 rounded-xl mb-4 shrink-0 gap-1.5"
           >
             <button
               id="tab-help-safeguard"
-              class="w-full md:flex-1 text-center py-2 sm:py-2.5 text-xs sm:text-sm font-bold rounded-lg bg-brand/30 text-primary border border-brand/40 transition cursor-pointer"
+              class="flex-1 py-2 text-xs font-bold rounded-lg bg-brand text-white transition cursor-pointer"
             >
               <i class="fa-regular fa-shield-halved me-1.5"></i> Habit Guide
             </button>
             <button
               id="tab-help-shortcuts"
-              class="w-full md:flex-1 text-center py-2 sm:py-2.5 text-xs sm:text-sm font-bold rounded-lg text-secondary hover:text-primary transition cursor-pointer"
+              class="flex-1 py-2 text-xs font-bold rounded-lg text-secondary hover:text-color transition cursor-pointer"
             >
               <i class="fa-regular fa-keyboard me-1.5"></i> Keyboard Shortcuts
             </button>
           </div>
 
           <div
-            class="flex-1 overflow-y-auto pe-1 sm:pe-2 scroll-smooth scrollbar-thin scrollbar-thumb-surface-2 min-h-0"
+            class="flex-1 overflow-y-auto pe-1 scrollbar-thin scrollbar-thumb-surface-2"
             id="help-modal-content"
           >
             <div
               id="content-help-safeguard"
-              class="flex flex-col gap-3 sm:gap-3.5"
+              class="space-y-4"
             >
-              <div
-                class="p-3.5 sm:p-4 bg-amber-500/5 border border-amber-500/10 rounded-xl sm:rounded-2xl"
-              >
+              <div class="p-4 bg-surface-2 border border-border rounded-2xl">
                 <h4
-                  class="text-xs sm:text-sm font-bold text-amber-500/80 uppercase tracking-wide flex items-center gap-2"
+                  class="text-xs font-bold text-amber-500/80 uppercase tracking-wider flex items-center gap-2 mb-1.5"
                 >
                   <i class="fa-regular fa-lightbulb"></i> Core Feature: Skip Day
                 </h4>
-                <p
-                  class="text-xs sm:text-sm text-secondary mt-1.5 leading-relaxed"
-                >
+                <p class="text-xs text-secondary leading-relaxed">
                   <strong>Double-click</strong> on today or yesterday inside any
                   calendar cell to toggle a
                   <span class="text-amber-500/80 font-semibold"
@@ -234,17 +220,12 @@ export const InfoModalComponent = {
                 </p>
               </div>
 
-              <div
-                class="p-3.5 sm:p-4 bg-emerald-500/5 border border-emerald-500/10 rounded-xl sm:rounded-2xl"
-              >
+              <div class="p-4 bg-surface-2 border border-border rounded-2xl">
                 <h4
-                  class="text-xs sm:text-sm font-bold text-emerald-500/80 uppercase tracking-wide flex items-center gap-2"
-                >
+                  class="text-xs font-bold text-brand uppercase tracking-wider flex items-center gap-2 mb-1.5">
                   <i class="fa-regular fa-bullseye-arrow"></i> Normal Check-In
                 </h4>
-                <p
-                  class="text-xs sm:text-sm text-secondary mt-1.5 leading-relaxed"
-                >
+                <p class="text-xs text-secondary leading-relaxed">
                   A single <strong>Left-Click</strong> handles a standard
                   success check-in, keeping the interface fluid and incredibly
                   native.
@@ -254,20 +235,21 @@ export const InfoModalComponent = {
 
             <div
               id="content-help-shortcuts"
-              class="hidden space-y-2.5 sm:space-y-3 overflow-y-auto pe-1"
+              class="hidden"
             >
               ${InfoModalComponent.renderShortcutsData()}
             </div>
           </div>
 
           <div
-            class="flex justify-end mt-3 sm:mt-4 shrink-0 border-t border-border pt-3 sm:pt-4"
+            class="flex justify-end mt-4 pt-3 border-t border-border shrink-0"
           >
             <button
               id="btn-close-help"
-              class="w-full sm:w-auto px-6 py-2.5 text-xs sm:text-sm rounded-lg lg:rounded-xl bg-brand/80 text-white font-semibold hover:bg-brand/50 transition cursor-pointer shadow-lg shadow-brand/10"
+              type="button"
+              class="w-full sm:w-auto px-5 py-2 text-xs font-bold rounded-xl bg-brand text-white hover:bg-(--color-brand-hover) transition cursor-pointer"
             >
-              Got it, Thanks!
+              Got it, thanks!
             </button>
           </div>
         </div>

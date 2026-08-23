@@ -1,13 +1,14 @@
 import { HABIT_NAMESPACE, STORAGE_VERSION } from "@/models/storage.model";
 import { StateManager, state } from "@/models/state.model.js";
 
+import { CoreStore } from "@life-orchestrator/core-store";
 import { GlobalLoaderService } from "@/services/loader.service";
 import { HabitController } from "./habit.controller";
 import { NotificationService } from "@/services/notification.service.js";
 import { StateController } from "./state.controller";
 import { formatDate } from "@/utils/helpers";
-import { generateDynamicMockData } from "@/utils/seed-generator";
 import { getTheme } from "@/services/theme.service";
+import { renderHabitList } from "@/views/habits/habit-list.renderer.js";
 
 export const SettingsController = {
   init() {
@@ -44,10 +45,6 @@ export const SettingsController = {
       ?.addEventListener("click", () => this.handleDataExport("notion"));
 
     this.initImportDropzone();
-
-    document
-      .getElementById("sett-seed-btn")
-      ?.addEventListener("click", () => this.handleDataSeeding());
 
     document
       .getElementById("sett-auto-archive-toggle")
@@ -184,13 +181,13 @@ export const SettingsController = {
   },
 
   handleDataExport(format = "json") {
-    const localData = JSON.parse(localStorage.getItem(HABIT_NAMESPACE));
+    const localData = CoreStore.getNamespace(HABIT_NAMESPACE);
     const habits = localData?.habits || [];
 
     if (habits.length === 0) {
       NotificationService.show({
         type: "info",
-        message: "There is no data to export.",
+        message: "There is no data to export",
         icon: "fa-circle-info",
         iconColor: "text-brand/80",
         duration: 5000,
@@ -287,7 +284,7 @@ export const SettingsController = {
 
     NotificationService.show({
       type: "success",
-      message: `Database layer exported successfully as ${format.toUpperCase()}.`,
+      message: `Database layer exported successfully as ${format.toUpperCase()}`,
       icon: "fa-file-arrow-down",
       iconColor: "text-emerald-500/80",
       duration: 5000,
@@ -460,7 +457,7 @@ export const SettingsController = {
       NotificationService.show({
         type: "error",
         message:
-          "Invalid format! Only structural JSON, MD, or CSV files are permitted.",
+          "Invalid format! Only structural JSON, MD, or CSV files are permitted",
         icon: "fa-circle-xmark",
         iconColor: "text-red-500/80",
         duration: 5000,
@@ -490,29 +487,27 @@ export const SettingsController = {
             importedHabits = this._parseCSVToHabits(rawContent);
 
           if (!Array.isArray(importedHabits) || importedHabits.length === 0)
-            throw new Error("No structured data could be extracted.");
+            throw new Error("No structured data could be extracted");
 
           const parsedData = {
             version: STORAGE_VERSION,
             habits: importedHabits,
           };
 
-          localStorage.setItem(HABIT_NAMESPACE, JSON.stringify(parsedData));
+         CoreStore.setNamespace(HABIT_NAMESPACE, JSON.stringify(parsedData));
           StateManager.save(parsedData.habits);
 
           state.activeTab = "active";
           state.currentView = "habits";
           state.currentCategory = "all";
 
-          const { renderHabitList } =
-            await import("@/views/habits/habit-list.renderer.js");
           renderHabitList(StateManager.getFilteredHabits(), state.activeTab);
 
           HabitController.refreshUI();
 
           NotificationService.show({
             type: "success",
-            message: `Data ledger parsed and synchronized from ${format.toUpperCase()} file.`,
+            message: `Data ledger parsed and synchronized from ${format.toUpperCase()} file`,
             icon: "fa-circle-check",
             iconColor: "text-emerald-500/80",
             duration: 5000,
@@ -521,7 +516,7 @@ export const SettingsController = {
           console.error("Parser failure:", err);
           NotificationService.show({
             type: "error",
-            message: "Failed to parse structural integrity of the file.",
+            message: "Failed to parse structural integrity of the file",
             icon: "fa-triangle-exclamation",
             iconColor: "text-red-500/80",
             duration: 5000,
@@ -533,81 +528,6 @@ export const SettingsController = {
     });
 
     reader.readAsText(file);
-  },
-
-  async handleDataSeeding() {
-    const seedBtn = document.getElementById("sett-seed-btn");
-    const seedIcon = document.getElementById("sett-seed-icon");
-    const seedSpinner = document.getElementById("sett-seed-spinner");
-    const seedText = document.getElementById("sett-seed-text");
-
-    const mockDataCount = Math.floor(Math.random() * 100);
-
-    if (seedBtn) seedBtn.disabled = true;
-    if (seedIcon) seedIcon.classList.replace("flex", "hidden");
-    if (seedSpinner) seedSpinner.classList.replace("hidden", "flex");
-    if (seedText)
-      seedText.textContent = "Processing & Constructing Database Layers...";
-
-    NotificationService.show({
-      type: "info",
-      message: `Initiating massive ${mockDataCount}-habit matrix calculation...`,
-      icon: "fa-gears",
-      iconColor: "text-brand/80",
-      duration: 5000,
-    });
-
-    setTimeout(() => {
-      StateController.execute();
-      this.runAutoArchivePipeline();
-      this.resetSession();
-    }, 200);
-
-    setTimeout(async () => {
-      try {
-        const dynamicMockData = generateDynamicMockData(mockDataCount);
-
-        StateManager.save(dynamicMockData.habits);
-
-        state.activeTab = "active";
-        state.currentView = "habits";
-        state.currentCategory = "all";
-
-        const { renderHabitList } =
-          await import("@/views/habits/habit-list.renderer.js");
-        renderHabitList(StateManager.getFilteredHabits(), state.activeTab);
-        HabitController.refreshUI();
-
-        setTimeout(() => {
-          NotificationService.show({
-            type: "success",
-            message: `Sandbox environment populated with ${mockDataCount} edge-case routine logs.`,
-            icon: "fa-circle-check",
-            iconColor: "text-emerald-500/80",
-            duration: 5000,
-          });
-
-          if (seedBtn) seedBtn.disabled = false;
-          if (seedIcon) seedIcon.classList.replace("hidden", "flex");
-          if (seedSpinner) seedSpinner.classList.replace("flex", "hidden");
-          if (seedText) seedText.textContent = "Seed Historical Mock Data";
-        }, 200);
-      } catch (error) {
-        console.error("Critical fault inside seeding controller:", error);
-
-        if (seedBtn) seedBtn.disabled = false;
-        if (seedIcon) seedIcon.classList.replace("hidden", "flex");
-        if (seedSpinner) seedSpinner.classList.replace("flex", "hidden");
-
-        NotificationService.show({
-          type: "error",
-          message: error.message || "Fail-Safe Trigger: Retry Seeding",
-          icon: "fa-circle-exclamation",
-          iconColor: "text-red-500/80",
-          duration: 5000,
-        });
-      }
-    }, 60);
   },
 
   resetSession() {
@@ -663,7 +583,7 @@ export const SettingsController = {
 
     NotificationService.show({
       type: "info",
-      message: `Autonomous archiving pipeline has been ${nextState ? "activated" : "deactivated"}.`,
+      message: `Autonomous archiving pipeline has been ${nextState ? "activated" : "deactivated"}`,
       icon: "fa-robot",
       iconColor: "text-brand/80",
       duration: 5000,
@@ -717,7 +637,7 @@ export const SettingsController = {
       NotificationService.show({
         type: "info",
         message:
-          "Stale habits exceeding 30 days structural limits auto-archived.",
+          "Stale habits exceeding 30 days structural limits auto-archived",
         icon: "fa-box-archive",
         iconColor: "text-brand/80",
         duration: 5000,
@@ -754,7 +674,7 @@ export const SettingsController = {
   },
 
   async executeApplicationReset() {
-    const previousPayload = localStorage.getItem(HABIT_NAMESPACE);
+    const previousPayload = CoreStore.getNamespace(HABIT_NAMESPACE);
     const previousHabits = StateManager.getHabits().map((habit) => ({
       ...habit,
     }));
@@ -765,15 +685,13 @@ export const SettingsController = {
 
     setTimeout(async () => {
       try {
-        localStorage.removeItem(HABIT_NAMESPACE);
+        CoreStore.clearNamespace(HABIT_NAMESPACE);
 
         state.habits = [];
         state.activeTab = "active";
         state.currentView = "habits";
         state.currentCategory = "all";
 
-        const { renderHabitList } =
-          await import("@/views/habits/habit-list.renderer.js");
         renderHabitList([], state.activeTab);
 
         HabitController.refreshUI();
@@ -781,7 +699,7 @@ export const SettingsController = {
         NotificationService.show({
           type: "error",
           message:
-            "Application synchronization storage has been completely cleared.",
+            "Application synchronization storage has been completely cleared",
           duration: 5000,
           undoAction: async () => {
             GlobalLoaderService.show(
@@ -790,9 +708,9 @@ export const SettingsController = {
             setTimeout(async () => {
               try {
                 if (previousPayload) {
-                  localStorage.setItem(HABIT_NAMESPACE, previousPayload);
+                  CoreStore.setNamespace(HABIT_NAMESPACE, previousPayload);
                 } else {
-                  localStorage.removeItem(HABIT_NAMESPACE);
+                  CoreStore.clearNamespace(HABIT_NAMESPACE);
                 }
 
                 StateManager.save(previousHabits || []);
@@ -802,9 +720,7 @@ export const SettingsController = {
                 state.currentView = "habits";
                 state.currentCategory = "all";
 
-                const { renderHabitList: reloadList } =
-                  await import("@/views/habits/habit-list.renderer.js");
-                reloadList(StateManager.getFilteredHabits(), state.activeTab);
+                renderHabitList(StateManager.getFilteredHabits(), state.activeTab);
                 HabitController.refreshUI();
               } finally {
                 GlobalLoaderService.hide();

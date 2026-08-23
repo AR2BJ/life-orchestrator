@@ -1,4 +1,5 @@
 import "@life-orchestrator/ui-theme/fontawesome/js/all.js";
+import "@life-orchestrator/ui-theme/assets/css/font.css";
 
 import { GlobalLoaderService } from "@/services/loader.service";
 import { HabitController } from "@/controllers/habit.controller.js";

@@ -238,7 +238,7 @@ export const HabitFormController = {
       if (!name)
         NotificationService.show({
           type: "error",
-          message: "Habit name cannot be empty.",
+          message: "Habit name cannot be empty",
           icon: "fa-triangle-exclamation",
           iconColor: "text-red-500/80",
           duration: 5000,
@@ -402,7 +402,7 @@ export const HabitFormController = {
     if (!newName) {
       NotificationService.show({
         type: "error",
-        message: "Habit name cannot be empty.",
+        message: "Habit name cannot be empty",
         icon: "fa-triangle-exclamation",
         duration: 5000,
       });

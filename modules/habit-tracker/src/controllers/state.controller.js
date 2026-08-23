@@ -61,7 +61,7 @@ export const StateController = {
       NotificationService.show({
         type: "success",
         message:
-          "Previous days without a status have been automatically marked as skipped.",
+          "Previous days without a status have been automatically marked as skipped",
         icon: "fa-circle-check",
         iconColor: "text-emerald-500/80",
         duration: 5000,

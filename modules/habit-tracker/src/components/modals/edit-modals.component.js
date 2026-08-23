@@ -20,7 +20,7 @@ export const EditModalsComponent = {
 
               <div class="min-w-0">
                 <h3
-                  class="text-sm lg:text-base font-bold text-primary truncate"
+                  class="text-sm lg:text-base font-bold text-color truncate"
                 >
                   Edit Habit Details
                 </h3>
@@ -35,7 +35,7 @@ export const EditModalsComponent = {
             <button
               id="cancel-edit-modal"
               type="button"
-               class="w-8 h-8 lg:w-9 lg:h-9 rounded-lg lg:rounded-xl bg-surface-2 hover:bg-red-600/10 border border-border text-secondary hover:text-primary flex items-center justify-center transition cursor-pointer shrink-0"
+               class="w-8 h-8 lg:w-9 lg:h-9 rounded-lg lg:rounded-xl bg-surface-2 hover:bg-red-600/10 border border-border text-secondary hover:text-color flex items-center justify-center transition cursor-pointer shrink-0"
             >
               <i class="fa-regular fa-xmark text-sm"></i>
             </button>
@@ -55,7 +55,7 @@ export const EditModalsComponent = {
                   id="edit-habit-input"
                   type="text"
                   placeholder="What habit do you want to build or quit?...."
-                  class="h-11 w-full rounded-xl border border-border bg-surface-2 px-4 text-sm text-primary placeholder:text-secondary/70 transition focus:border-brand/80 focus:outline-none"
+                  class="h-11 w-full rounded-xl border border-border bg-surface-2 px-4 text-sm text-color placeholder:text-secondary/70 transition focus:border-brand/80 focus:outline-none"
                 />
               </div>
 
@@ -77,7 +77,7 @@ export const EditModalsComponent = {
             <div class="grid grid-cols-2 gap-3">
               <button
                 id="cancel-edit"
-                class="h-10 lg:h-11 rounded-lg lg:rounded-xl bg-surface-2 hover:border-primary text-secondary hover:text-primary font-medium text-xs lg:text-sm transition border border-border cursor-pointer flex items-center justify-center"
+                class="h-10 lg:h-11 rounded-lg lg:rounded-xl bg-surface-2 hover:border-primary text-secondary hover:text-color font-medium text-xs lg:text-sm transition border border-border cursor-pointer flex items-center justify-center"
               >
                 Cancel
               </button>

@@ -74,7 +74,7 @@ export const HabitCalendarComponent = {
               class="absolute inset-0 animate-micro-ping rounded-full bg-brand/25"
             ></span>
             <span
-              class="relative text-[10px] sm:text-xs bg-brand/10 text-brand px-3 py-1 rounded-full font-bold tracking-wide border border-brand/20 shadow-sm select-none whitespace-nowrap"
+              class="relative text-[10px] sm:text-xs bg-brand/10 text-brand/80 px-3 py-1 rounded-full font-bold tracking-wide border border-brand/20 shadow-sm select-none whitespace-nowrap"
             >
               Sprint ${periodIndex + 1}
             </span>

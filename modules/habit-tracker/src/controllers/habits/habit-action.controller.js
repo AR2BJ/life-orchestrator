@@ -51,7 +51,7 @@ export const HabitActionController = {
                 type: isNowCompleted ? "success" : "info",
                 message: isNowCompleted
                   ? `Completed "${habit.name}" for today! ✨`
-                  : `Removed completion for "${habit.name}".`,
+                  : `Removed completion for "${habit.name}"`,
                 icon: isNowCompleted ? "fa-circle-check" : "fa-circle",
                 iconColor: isNowCompleted
                   ? "text-emerald-500/80"
@@ -107,7 +107,7 @@ export const HabitActionController = {
                 type: isNowSkipped ? "warning" : "info",
                 message: isNowSkipped
                   ? `Safeguard activated: Skipped day for "${habit.name}".`
-                  : `Removed safeguard for "${habit.name}".`,
+                  : `Removed safeguard for "${habit.name}"`,
                 icon: isNowSkipped ? "fa-shield-halved" : "fa-calendar",
                 iconColor: isNowSkipped ? "text-amber-500/80" : "text-brand/80",
                 duration: 5000,
@@ -143,7 +143,7 @@ export const HabitActionController = {
                   type: isNowCompleted ? "success" : "info",
                   message: isNowCompleted
                     ? `Marked "${habit.name}" as done for ${dateLabel}! ✨`
-                    : `Unchecked "${habit.name}" for ${dateLabel}.`,
+                    : `Unchecked "${habit.name}" for ${dateLabel}`,
                   icon: isNowCompleted ? "fa-square-check" : "fa-square-xmark",
                   iconColor: isNowCompleted
                     ? "text-emerald-500/80"

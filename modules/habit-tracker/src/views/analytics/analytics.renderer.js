@@ -8,7 +8,7 @@ let barChartInstance = null;
 let resizeListenerAttached = false;
 let activeHeatmapTab = "weekly";
 
-const weekdayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+const weekdayNames = ["Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"];
 
 function getHeatmapOptions(habits, view) {
   const heatmapSeries = AnalyticsAdapter.generateHeatmapSeries(habits, view);
@@ -217,7 +217,7 @@ function renderChartEmptyState(chartEl, title, icon, subtitle) {
       <div class="max-w-xs">
         <i class="text-4xl mb-3 fa-regular ${icon} text-brand/60"></i>
         <div
-          class="mb-2 text-lg font-semibold text-primary"
+          class="mb-2 text-lg font-semibold text-color"
         >
           ${title}
         </div>

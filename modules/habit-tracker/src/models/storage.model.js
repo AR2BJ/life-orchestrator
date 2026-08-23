@@ -2,7 +2,7 @@ import { CoreStore } from "@life-orchestrator/core-store";
 import { formatDate } from "@/utils/helpers.js";
 
 export const HABIT_NAMESPACE = "habit_tracker";
-export const STORAGE_VERSION = 4;
+export const STORAGE_VERSION = 1;
 
 function migrateHabit(habit) {
   return {

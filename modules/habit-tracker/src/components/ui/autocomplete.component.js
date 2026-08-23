@@ -68,9 +68,9 @@ export class AutocompleteComponent {
           }
           <div
             id="autocomplete-container-${uuid}"
-            class=" ${
+            class="${
               this.options.containerClass
-            } relative min-h-10 w-full flex flex-wrap items-center content-start gap-1.5 rounded-xl border border-border bg-surface-2 p-1.75 pe-10 focus-within:border-brand/80 focus-within:ring-1 focus-within:ring-brand/30 transition group cursor-pointer"
+            } relative min-h-10 w-full flex flex-wrap items-center content-start gap-1.5 rounded-xl border border-border bg-surface-2 p-1.75 pe-10 transition group cursor-pointer text-sm text-color placeholder:text-secondary/70 focus-within:border-brand/80 focus-within:outline-none"
           >
             <div
               id="autocomplete-chips-${uuid}"
@@ -87,7 +87,7 @@ export class AutocompleteComponent {
               }"
               class="${
                 this.options.inputClass
-              } flex-1 min-w-25 ps-2 pe-10 truncate bg-transparent text-sm text-primary placeholder:text-secondary/70 outline-none pb-0.5 h-7 cursor-pointer focus:outline-none"
+              } flex-1 min-w-25 ps-2 pe-10 truncate bg-transparent text-sm text-color placeholder:text-secondary/70 outline-none pb-0.5 h-7 cursor-pointer focus:outline-none"
               autocomplete="off"
             />
 
@@ -105,7 +105,7 @@ export class AutocompleteComponent {
             <button
               type="button"
               id="autocomplete-arrow-${uuid}"
-              class="absolute right-3 top-1/2 -translate-y-1/2 flex text-secondary hover:text-primary transition duration-200 pointer-events-none z-10"
+              class="absolute right-3 top-1/2 -translate-y-1/2 flex text-secondary hover:text-color transition duration-200 pointer-events-none z-10"
               tabindex="-1"
             >
               <i
@@ -375,8 +375,8 @@ export class AutocompleteComponent {
           return `
             <div
               data-value="${this.getItemValue(item)}"
-              class="autocomplete-item px-3.5 py-2 text-xs font-medium text-primary hover:bg-brand/10 hover:text-brand cursor-pointer flex items-center justify-between transition border-b border-border/30 last:border-none ${
-                isSelected ? "bg-brand/10 text-brand" : ""
+              class="autocomplete-item px-3.5 py-2 text-xs font-medium text-color hover:bg-brand/10 hover:text-brand cursor-pointer flex items-center justify-between transition border-b border-border/30 last:border-none ${
+                isSelected ? "bg-brand/10 text-brand/80" : ""
               }"
             >
               <span class="flex items-center gap-1.5">
@@ -385,7 +385,7 @@ export class AutocompleteComponent {
               </span>
               ${
                 isSelected
-                  ? `<i class="fa-regular fa-check text-brand text-xs"></i>`
+                  ? `<i class="fa-regular fa-check text-brand/80 text-xs"></i>`
                   : ""
               }
             </div>
@@ -420,9 +420,9 @@ export class AutocompleteComponent {
         (s) => String(this.getItemValue(s)) === value,
       );
       if (isSelected) {
-        item.classList.add("bg-brand/10", "text-brand");
+        item.classList.add("bg-brand/10", "text-brand/80");
       } else {
-        item.classList.remove("bg-brand/10", "text-brand");
+        item.classList.remove("bg-brand/10", "text-brand/80");
       }
     });
   }
@@ -447,7 +447,7 @@ export class AutocompleteComponent {
     );
 
     items.forEach((item) => {
-      item.classList.remove("bg-brand/15", "border-brand/20", "text-brand");
+      item.classList.remove("bg-brand/15", "border-brand/20", "text-brand/80");
     });
 
     this.activeIndex = -1;
@@ -461,7 +461,7 @@ export class AutocompleteComponent {
       if (i === index) {
         el.classList.add("bg-brand/15", "border-brand/20", "text-brand");
       } else {
-        el.classList.remove("bg-brand/15", "border-brand/20", "text-brand");
+        el.classList.remove("bg-brand/15", "border-brand/20", "text-brand/80");
       }
     });
 
@@ -495,6 +495,7 @@ export class AutocompleteComponent {
       const text = this.getItemText(item);
       this.inputValue = text;
       this.elements.input.value = text;
+      this.elements.input.blur();
       this.searchQuery = text;
       this.closeDropdown();
       this.updateClearButton();
@@ -534,7 +535,7 @@ export class AutocompleteComponent {
 
     chipsContainer.innerHTML = "";
 
-    const chipClasses = `${this.options.chipClass} autocomplete-chip flex items-center gap-1.5 px-2.5 py-0.5 rounded-lg bg-brand/10 text-brand font-medium text-xs border border-brand/20 select-none animate-fadeIn`;
+    const chipClasses = `${this.options.chipClass} autocomplete-chip flex items-center gap-1.5 px-2.5 py-0.5 rounded-lg bg-brand/10 text-brand/80 font-medium text-xs border border-brand/20 select-none animate-fadeIn`;
 
     this.selectedItems.forEach((item) => {
       const chip = document.createElement("span");

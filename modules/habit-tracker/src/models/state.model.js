@@ -70,6 +70,6 @@ export const StateManager = {
 
   save(habits) {
     state.habits = habits;
-    saveToStorage({ habits: state.habits });
+    saveToStorage(state.habits);
   },
 };
