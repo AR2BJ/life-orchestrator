@@ -1,5 +1,6 @@
 import { StateManager, state } from "@/models/state.model.js";
 
+import { CoreStore } from "@life-orchestrator/core-store";
 import { GlobalLoaderService } from "@/services/loader.service.js";
 import { NoteController } from "../note.controller";
 import { NoteModel } from "@/models/note.model";
@@ -68,7 +69,7 @@ export const SettingsResetController = {
   },
 
   executeApplicationReset() {
-    const previousPayload = localStorage.getItem(TIME_NAMESPACE);
+    const previousPayload = CoreStore.getNamespace(TIME_NAMESPACE);
 
     const previousState = {
       tasks: (state.tasks || []).map((t) => ({ ...t })),
@@ -104,7 +105,7 @@ export const SettingsResetController = {
             setTimeout(() => {
               try {
                 if (previousPayload) {
-                  localStorage.setItem(TIME_NAMESPACE, previousPayload);
+                  CoreStore.setNamespace(TIME_NAMESPACE, previousPayload);
                 }
 
                 state.tasks = previousState.tasks;
