@@ -1,0 +1,273 @@
+@import "tailwindcss";
+
+/* ============================================ */
+/* THEME 2: EMERALD / DARK SLATE VISION         */
+/* ============================================ */
+
+@theme {
+  --color-bg: #090d16;
+  --color-surface: #111827;
+  --color-surface-2: #1e293b;
+  --color-surface-3: #334155;
+  --color-surface-4: #475569;
+  --color-primary: #f8fafc;
+  --color-secondary: #94a3b8;
+  --color-tertiary: #64748b;
+  --color-inverse: #ffffff;
+  --color-border: #1e293b;
+  --color-brand: #10b981;
+  --breakpoint-xs: 23.4375rem;
+}
+
+/* ============================================ */
+/* DARK THEME - EMERALD & DEEP CYEAN           */
+/* ============================================ */
+.dark {
+  /* ===== BASE BACKGROUNDS ===== */
+  --color-bg: #06090e;
+  --color-surface: #0f172a;
+  --color-surface-2: #1e293b;
+  --color-surface-3: #334155;
+  --color-surface-4: #475569;
+
+  /* ===== TEXT COLORS ===== */
+  --color-primary: #f8fafc;
+  --color-secondary: #94a3b8;
+  --color-tertiary: #64748b;
+  --color-inverse: #ffffff;
+
+  /* ===== BORDERS & DIVIDERS ===== */
+  --color-border: #1e293b;
+  --color-border-light: #0f172a;
+  --color-border-strong: #334155;
+
+  /* ===== BRAND & ACTIONS (Emerald Focus) ===== */
+  --color-brand: #10b981;
+  --color-brand-hover: #34d399;
+  --color-brand-active: #6ee7b7;
+  --color-brand-light: rgba(16, 185, 129, 0.15);
+
+  /* ===== BUTTONS ===== */
+  --color-btn-primary-bg: #10b981;
+  --color-btn-primary-text: #022c22;
+  --color-btn-primary-hover: #34d399;
+  --color-btn-primary-active: #6ee7b7;
+
+  --color-btn-secondary-bg: #1e293b;
+  --color-btn-secondary-text: #f8fafc;
+  --color-btn-secondary-border: #334155;
+  --color-btn-secondary-hover: #334155;
+  --color-btn-secondary-active: #475569;
+
+  /* ===== STATES ===== */
+  --color-hover: #1e293b;
+  --color-active: #334155;
+  --color-focus-ring: #10b981;
+  --color-disabled: #1e293b;
+  --color-disabled-text: #475569;
+
+  /* ===== SUCCESS / ERROR / WARNING ===== */
+  --color-success: #10b981;
+  --color-success-light: rgba(16, 185, 129, 0.15);
+  --color-error: #f43f5e;
+  --color-error-light: rgba(244, 63, 94, 0.15);
+  --color-warning: #f59e0b;
+  --color-warning-light: rgba(245, 158, 11, 0.15);
+
+  /* ===== SHADOWS ===== */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.6);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.6);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.7);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.8);
+
+  .apexcharts-legend-text {
+    color: #f8fafc !important;
+  }
+
+  .text-color {
+    color: var(--color-primary);
+  }
+}
+
+/* ============================================ */
+/* LIGHT THEME - TEAL & SLATE PREMIUM           */
+/* ============================================ */
+.light {
+  /* ===== BASE BACKGROUNDS ===== */
+  --color-bg: #f0fdf4;
+  --color-surface: #ffffff;
+  --color-surface-2: #e6f4ea;
+  --color-surface-3: #d1e7dd;
+  --color-surface-4: #b7d8cb;
+
+  /* ===== TEXT COLORS ===== */
+  --color-primary: #064e3b;
+  --color-secondary: #166534;
+  --color-tertiary: #2d6a4f;
+  --color-inverse: #ffffff;
+
+  /* ===== BORDERS & DIVIDERS ===== */
+  --color-border: #a7f3d0;
+  --color-border-light: #d1fae5;
+  --color-border-strong: #6ee7b7;
+
+  /* ===== BRAND & ACTIONS ===== */
+  --color-brand: #059669;
+  --color-brand-hover: #047857;
+  --color-brand-active: #065f46;
+  --color-brand-light: #ecfdf5;
+
+  /* ===== BUTTONS ===== */
+  --color-btn-primary-bg: #059669;
+  --color-btn-primary-text: #ffffff;
+  --color-btn-primary-hover: #047857;
+  --color-btn-primary-active: #065f46;
+
+  --color-btn-secondary-bg: #ffffff;
+  --color-btn-secondary-text: #064e3b;
+  --color-btn-secondary-border: #a7f3d0;
+  --color-btn-secondary-hover: #f0fdf4;
+  --color-btn-secondary-active: #e6f4ea;
+
+  --color-btn-ghost-text: #166534;
+  --color-btn-ghost-hover: #f0fdf4;
+  --color-btn-ghost-active: #e6f4ea;
+
+  /* ===== STATES ===== */
+  --color-hover: #f0fdf4;
+  --color-active: #e6f4ea;
+  --color-focus-ring: #059669;
+  --color-disabled: #e6f4ea;
+  --color-disabled-text: #6ee7b7;
+
+  /* ===== SUCCESS / ERROR / WARNING ===== */
+  --color-success: #10b981;
+  --color-success-light: #d1fae5;
+  --color-error: #f43f5e;
+  --color-error-light: #ffe4e6;
+  --color-warning: #f59e0b;
+  --color-warning-light: #fef3c7;
+
+  /* ===== SHADOWS ===== */
+  --shadow-sm: 0 1px 3px rgba(6, 78, 59, 0.05);
+  --shadow-md: 0 4px 12px -2px rgba(6, 78, 59, 0.08);
+  --shadow-lg: 0 12px 24px -4px rgba(6, 78, 59, 0.12);
+  --shadow-xl: 0 24px 36px -6px rgba(6, 78, 59, 0.15);
+
+  .apexcharts-legend-text {
+    color: #064e3b !important;
+  }
+
+  .text-color {
+    color: var(--color-primary);
+  }
+}
+
+/* ============================================ */
+/* GLOBAL UTILITIES & BASE STYLES               */
+/* ============================================ */
+
+body {
+  background: var(--color-bg);
+  color: var(--color-primary);
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  font-family: "Roboto Condensed", sans-serif;
+  transition:
+    background 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.btn-primary {
+  background: color-mix(in oklab, var(--color-btn-primary-bg) 90%, transparent);
+  color: var(--color-btn-primary-text);
+  transition: all 0.2s ease;
+}
+
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-md);
+  transition: all 0.3s ease;
+}
+
+.text-secondary {
+  color: var(--color-secondary);
+}
+
+.text-stat-title {
+  color: var(--color-tertiary);
+  font-weight: 600;
+}
+
+/* ============================================ */
+/* NAVIGATION & COMPONENT STYLES                */
+/* ============================================ */
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 54px;
+  border-radius: 16px;
+  color: var(--color-secondary);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.nav-item:hover {
+  background: var(--color-surface-2);
+  color: var(--color-primary);
+  transform: translateY(-1px);
+}
+
+.nav-item.active {
+  background-color: var(--color-brand);
+  color: var(--color-btn-primary-text);
+  border-radius: 0.75rem;
+  transition: all 0.3s ease;
+}
+
+.mobile-nav-btn {
+  position: relative;
+  width: 64px;
+  height: 48px;
+  border: none;
+  background: transparent;
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+
+.mobile-nav-btn.active {
+  color: var(--color-brand);
+}
+
+.mobile-nav-btn.active i {
+  transform: scale(1.1);
+  color: var(--color-brand);
+  text-shadow: 0 0 12px rgba(16, 185, 129, 0.4);
+}
+
+@keyframes micro-ping {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1.1);
+    opacity: 0;
+  }
+}
+
+.animate-micro-ping {
+  animation: micro-ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@media (max-width: 1023px) {
+  body {
+    padding-bottom: 80px;
+  }
+}
