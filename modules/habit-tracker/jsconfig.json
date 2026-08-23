@@ -11,7 +11,7 @@
       ],
       "@life-orchestrator/ui-theme/*": ["../../packages/ui-theme/src/*"]
     },
-    "rootDir": "./src",
+    "rootDir": "./src"
   },
   "include": ["src/**/*"],
   "exclude": ["dist", "node_modules"]

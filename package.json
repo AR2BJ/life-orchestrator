@@ -9,16 +9,13 @@
     "orchestrator-app"
   ],
   "scripts": {
-    "dev:orchestrator": "npm run dev --workspace=orchestrator-app",
-    "dev:habit": "npm run dev --workspace=@life-orchestrator/habit-tracker",
-    "dev:task": "npm run dev --prefix modules/task-manager",
-    "dev:time": "npm run dev --prefix modules/time-manager",
-    "dev:all": "concurrently \"npm:dev:habit\" \"npm:dev:task\"",
-    "build:all": "npm run build --workspaces --if-present"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "devDependencies": {
-    "concurrently": "10.0.4",
-    "vite": "^8.1.5"
+    "vite": "^8.1.5",
+    "vite-jsconfig-paths": "^2.0.1"
   },
   "author": "Arman Birjandi",
   "license": "MIT"
