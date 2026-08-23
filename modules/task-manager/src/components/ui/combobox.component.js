@@ -90,7 +90,7 @@ export class ComboboxComponent {
               }"
               class="${
                 this.options.inputClass
-              } flex-1 min-w-25 ps-2 pe-16 truncate bg-transparent text-sm text-primary placeholder:text-secondary/70 outline-none pb-0.5 h-7 cursor-text focus:outline-none"
+              } flex-1 min-w-25 ps-2 pe-16 truncate bg-transparent text-sm text-color placeholder:text-secondary/70 outline-none pb-0.5 h-7 cursor-text focus:outline-none"
               autocomplete="off"
             />
 
@@ -108,7 +108,7 @@ export class ComboboxComponent {
             <button
               type="button"
               id="combobox-arrow-${uuid}"
-              class="absolute right-3 top-1/2 -translate-y-1/2 flex text-secondary hover:text-primary transition duration-200 pointer-events-none z-10"
+              class="absolute right-3 top-1/2 -translate-y-1/2 flex text-secondary hover:text-color transition duration-200 pointer-events-none z-10"
               tabindex="-1"
             >
               <i
@@ -370,7 +370,7 @@ export class ComboboxComponent {
           return `
           <div
             data-value="${this.getItemValue(item)}"
-            class="combobox-item px-3.5 py-2 text-xs font-medium text-primary hover:bg-brand/10 hover:text-brand cursor-pointer flex items-center justify-between transition border-b border-border/30 last:border-none"
+            class="combobox-item px-3.5 py-2 text-xs font-medium text-color hover:bg-brand/10 hover:text-brand cursor-pointer flex items-center justify-between transition border-b border-border/30 last:border-none"
           >
             <span class="flex items-center gap-1.5">
               <i class="${icon} text-sm"></i>
@@ -498,6 +498,7 @@ export class ComboboxComponent {
       this.selectedItems = [item];
       const text = this.getItemText(item);
       this.elements.input.value = text;
+      this.elements.input.blur();
       this.searchQuery = text;
       this.closeDropdown();
       this.updateClearButton();

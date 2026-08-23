@@ -33,7 +33,7 @@ export const TaskService = {
 
     if (sameDateTasks.length >= LIMITS.total) {
       throw new Error(
-        `Daily capacity reached! Maximum total tasks allowed for ${targetDate} is ${LIMITS.total}.`,
+        `Daily capacity reached! Maximum total tasks allowed for ${targetDate} is ${LIMITS.total}`,
       );
     }
 
@@ -52,7 +52,7 @@ export const TaskService = {
 
     if (currentCount >= maxAllowed) {
       throw new Error(
-        `Priority capacity exceeded! You can only set up to ${maxAllowed} ${targetPriority.toUpperCase()} priority tasks for ${targetDate}.`,
+        `Priority capacity exceeded! You can only set up to ${maxAllowed} ${targetPriority.toUpperCase()} priority tasks for ${targetDate}`,
       );
     }
   },
@@ -62,7 +62,7 @@ export const TaskService = {
     const cleanedTitle = (rawTitle || "").trim().replace(/\s+/g, " ");
 
     if (!cleanedTitle || cleanedTitle.length < 2 || cleanedTitle.length > 120) {
-      throw new Error("Task title must be between 2 and 120 characters.");
+      throw new Error("Task title must be between 2 and 120 characters");
     }
 
     const alreadyExists = currentTasks.some(
@@ -71,7 +71,7 @@ export const TaskService = {
         !task.archived,
     );
     if (alreadyExists) {
-      throw new Error("An active task with this title already exists.");
+      throw new Error("An active task with this title already exists");
     }
 
     const taskDate = taskData.dueDate || todayISO();
@@ -141,7 +141,7 @@ export const TaskService = {
   updateTaskStatus(currentTasks, id, newStatus) {
     const validStatuses = ["todo", "in_progress", "done", "blocked"];
     if (!validStatuses.includes(newStatus)) {
-      throw new Error("Invalid task status.");
+      throw new Error("Invalid task status");
     }
 
     const today = todayISO();
@@ -160,13 +160,13 @@ export const TaskService = {
 
   editTask(currentTasks, id, updatedFields) {
     const task = currentTasks.find((t) => t.id === id);
-    if (!task) throw new Error("Task not found.");
+    if (!task) throw new Error("Task not found");
 
     let cleanedTitle = task.title;
     if (updatedFields.title) {
       cleanedTitle = updatedFields.title.trim().replace(/\s+/g, " ");
       if (cleanedTitle.length < 2 || cleanedTitle.length > 120) {
-        throw new Error("Task title must be between 2 and 120 characters.");
+        throw new Error("Task title must be between 2 and 120 characters");
       }
     }
 
@@ -188,7 +188,7 @@ export const TaskService = {
       (t) => t.id !== id && t.title.toLowerCase() === cleanedTitle.toLowerCase(),
     );
     if (alreadyExists) {
-      throw new Error("Task already exists.");
+      throw new Error("Task already exists");
     }
 
     return currentTasks.map((t) => {
@@ -256,7 +256,7 @@ export const TaskService = {
 
   addSubtask(currentTasks, taskId, subtaskTitle) {
     const cleaned = subtaskTitle.trim();
-    if (!cleaned) throw new Error("Subtask title cannot be empty.");
+    if (!cleaned) throw new Error("Subtask title cannot be empty");
 
     return currentTasks.map((task) => {
       if (task.id !== taskId) return task;

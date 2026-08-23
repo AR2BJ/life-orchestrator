@@ -92,12 +92,12 @@ export class DatePickerComponent {
             autocomplete="off"
             class="h-11 w-full rounded-xl border border-border bg-${
               this.background
-            } px-4 text-sm text-primary placeholder:text-secondary/70 transition focus:border-brand/80 focus:outline-none"
+            } px-4 text-sm text-color placeholder:text-secondary/70 transition focus:border-brand/80 focus:outline-none"
           />
           <button
             type="button"
             id="${this.id}-calendar-btn"
-            class="absolute right-2 p-1.5 pt-1 text-secondary hover:text-primary focus:outline-none hover:scale-110 transition cursor-pointer"
+            class="absolute right-2 p-1.5 pt-1 text-secondary hover:text-color focus:outline-none hover:scale-110 transition cursor-pointer"
             tabindex="-1"
           >
             <i class="fa-regular fa-calendar text-base"></i>
@@ -121,21 +121,21 @@ export class DatePickerComponent {
         <button
           type="button"
           id="${this.id}-month-year"
-          class="text-xs font-bold text-primary hover:text-brand hover:bg-surface-2 px-2 py-1 rounded-lg transition cursor-pointer select-none"
+          class="text-xs font-bold text-color hover:text-brand hover:bg-surface-2 px-2 py-1 rounded-lg transition cursor-pointer select-none"
         ></button>
 
         <div class="flex items-center gap-1">
           <button
             type="button"
             id="${this.id}-prev-btn"
-            class="p-1 text-secondary hover:text-primary hover:bg-surface-2 rounded-md transition cursor-pointer"
+            class="p-1 text-secondary hover:text-color hover:bg-surface-2 rounded-md transition cursor-pointer"
           >
             <i class="fa-regular fa-chevron-left text-xs"></i>
           </button>
           <button
             type="button"
             id="${this.id}-next-btn"
-            class="p-1 text-secondary hover:text-primary hover:bg-surface-2 rounded-md transition cursor-pointer"
+            class="p-1 text-secondary hover:text-color hover:bg-surface-2 rounded-md transition cursor-pointer"
           >
             <i class="fa-regular fa-chevron-right text-xs"></i>
           </button>
@@ -244,7 +244,7 @@ export class DatePickerComponent {
         );
         btn.classList.remove(
           "hover:bg-surface-2",
-          "hover:text-primary",
+          "hover:text-color",
           "cursor-pointer",
         );
       } else {
@@ -255,7 +255,7 @@ export class DatePickerComponent {
         );
         btn.classList.add(
           "hover:bg-surface-2",
-          "hover:text-primary",
+          "hover:text-color",
           "cursor-pointer",
         );
       }
@@ -586,14 +586,15 @@ export class DatePickerComponent {
         "h-7 w-7 mx-auto flex items-center justify-center text-xs rounded-lg cursor-pointer transition-all ";
 
       if (isSelected) {
-        classNames += "bg-brand/80 text-white font-bold shadow-md shadow-brand/20";
+        classNames +=
+          "bg-brand/80 text-white font-bold shadow-md shadow-brand/20";
       } else if (isToday) {
         classNames +=
           "border border-brand/80 text-brand/80 font-semibold hover:bg-brand/10";
       } else if (isFriday) {
         classNames += "text-rose-400 font-medium hover:bg-rose-500/10";
       } else {
-        classNames += "text-primary hover:bg-surface-2";
+        classNames += "text-color hover:bg-surface-2";
       }
 
       gridHTML += `<div
@@ -649,9 +650,10 @@ export class DatePickerComponent {
         "py-2 text-center text-xs rounded-xl cursor-pointer font-medium transition-all ";
 
       if (isCurrentMonth) {
-        classNames += "bg-brand/15 text-brand/80 font-bold border border-brand/30";
+        classNames +=
+          "bg-brand/15 text-brand/80 font-bold border border-brand/30";
       } else {
-        classNames += "text-primary hover:bg-surface-2";
+        classNames += "text-color hover:bg-surface-2";
       }
 
       html += `<div
@@ -686,9 +688,10 @@ export class DatePickerComponent {
         "py-2 text-center text-xs rounded-xl cursor-pointer font-medium transition-all ";
 
       if (isCurrentYear) {
-        classNames += "bg-brand/15 text-brand/80 font-bold border border-brand/30";
+        classNames +=
+          "bg-brand/15 text-brand/80 font-bold border border-brand/30";
       } else {
-        classNames += "text-primary hover:bg-surface-2";
+        classNames += "text-color hover:bg-surface-2";
       }
 
       html += `<div

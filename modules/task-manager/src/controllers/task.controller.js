@@ -94,7 +94,7 @@ export const TaskController = {
           itemTitle: "title",
           itemValue: "value",
           itemIcon: "icon",
-          containerClass: "min-h-8!",
+          containerClass: "min-h-8! bg-surface!",
           inputClass: "h-5! pb-0! w-full lg:w-36 text-xs sm:text-sm",
           onChange: (selectedVal) => {
             GlobalLoaderService.show("Filtering tasks by date...");
@@ -155,7 +155,7 @@ export const TaskController = {
           itemTitle: "title",
           itemValue: "value",
           itemIcon: "icon",
-          containerClass: "min-h-8!",
+          containerClass: "min-h-8! bg-surface!",
           inputClass: "h-5! pb-0! w-full lg:w-36 text-xs sm:text-sm",
           onChange: (selectedVal) => {
             GlobalLoaderService.show("Sorting tasks...");
@@ -518,34 +518,26 @@ export const TaskController = {
           "content-help-shortcuts",
         );
 
-        if (
-          !btnSafeguard ||
-          !btnShortcuts ||
-          !contentSafeguard ||
-          !contentShortcuts
-        )
-          return;
+        if (!btnSafeguard || !btnShortcuts) return;
 
         if (tabName === "safeguard") {
           // Safeguard Active State
           btnSafeguard.className =
-            "w-full md:flex-1 text-center py-2 sm:py-2.5 text-xs sm:text-sm font-bold rounded-lg bg-brand/30 text-primary border border-brand/40 transition cursor-pointer";
+            "flex-1 py-2 text-xs font-bold rounded-lg bg-brand text-white transition cursor-pointer";
           btnShortcuts.className =
-            "w-full md:flex-1 text-center py-2 sm:py-2.5 text-xs sm:text-sm font-bold rounded-lg text-secondary hover:text-primary border border-transparent transition cursor-pointer";
+            "flex-1 py-2 text-xs font-bold rounded-lg text-secondary hover:text-color transition cursor-pointer";
 
           contentSafeguard.classList.remove("hidden");
-          contentSafeguard.classList.add("flex");
           contentShortcuts.classList.add("hidden");
         } else if (tabName === "shortcuts") {
           // Shortcuts Active State
           btnShortcuts.className =
-            "w-full md:flex-1 text-center py-2 sm:py-2.5 text-xs sm:text-sm font-bold rounded-lg bg-brand/30 text-primary border border-brand/40 transition cursor-pointer";
+            "flex-1 py-2 text-xs font-bold rounded-lg bg-brand text-white transition cursor-pointer";
           btnSafeguard.className =
-            "w-full md:flex-1 text-center py-2 sm:py-2.5 text-xs sm:text-sm font-bold rounded-lg text-secondary hover:text-primary border border-transparent transition cursor-pointer";
+            "flex-1 py-2 text-xs font-bold rounded-lg text-secondary hover:text-color transition cursor-pointer";
 
           contentShortcuts.classList.remove("hidden");
           contentSafeguard.classList.add("hidden");
-          contentSafeguard.classList.remove("flex");
         }
       };
 

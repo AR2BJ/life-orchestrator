@@ -31,7 +31,7 @@ export function renderEisenhowerGrid(tasks) {
             </div>
             <div>
               <h3
-                class="text-sm font-bold text-primary flex items-center gap-2"
+                class="text-sm font-bold text-color flex items-center gap-2"
               >
                 ${title}
                 <span
@@ -62,7 +62,7 @@ export function renderEisenhowerGrid(tasks) {
                         class="fa-regular fa-clipboard-list-check text-brand/60"
                       ></i>
                     </div>
-                    <h2 class="text-xs font-bold text-primary">
+                    <h2 class="text-xs font-bold text-color">
                       No tasks in this quadrant
                     </h2>
                     <p class="text-[10px] mt-1 text-secondary max-w-sm mx-auto">
@@ -193,7 +193,7 @@ export function renderAbcdeList(tasks) {
                     >
                       ${cat.key}
                     </span>
-                    <span class="text-xs font-bold text-primary"
+                    <span class="text-xs font-bold text-color"
                       >${cat.label}</span
                     >
                   </div>
@@ -226,7 +226,7 @@ export function renderAbcdeList(tasks) {
                             class="fa-regular fa-clipboard-list-check text-brand/60"
                           ></i>
                         </div>
-                        <h2 class="text-xs font-bold text-primary">
+                        <h2 class="text-xs font-bold text-color">
                           No tasks in this quadrant
                         </h2>
                         <p

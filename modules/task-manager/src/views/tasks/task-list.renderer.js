@@ -46,7 +46,7 @@ export function renderTaskList(tasks, activeTab = "active") {
         class="min-h-80 bg-surface border border-dashed border-border rounded-2xl p-16 text-center"
       >
         <div class="text-6xl mb-6">${currentEmptyState.icon}</div>
-        <h2 class="text-2xl font-bold text-primary">
+        <h2 class="text-2xl font-bold text-color">
           ${currentEmptyState.title}
         </h2>
         <p class="mt-3 text-secondary max-w-sm mx-auto">

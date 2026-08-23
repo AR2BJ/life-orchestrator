@@ -50,13 +50,13 @@ export const TaskCardComponent = {
             </div>
 
             <h4
-              class="block lg:hidden text-xs font-bold text-primary group-hover:text-brand transition-colors truncate mb-1 cursor-pointer"
+              class="block lg:hidden text-xs font-bold text-color group-hover:text-brand transition-colors truncate mb-1 cursor-pointer"
               data-tooltip-title="${task.title}"
             >
               ${task.title}
             </h4>
             <h4
-              class="hidden lg:block text-xs font-bold text-primary group-hover:text-brand transition-colors truncate mb-1"
+              class="hidden lg:block text-xs font-bold text-color group-hover:text-brand transition-colors truncate mb-1"
               title="${task.title}"
             >
               ${task.title}
@@ -127,7 +127,7 @@ export const TaskCardComponent = {
                         ${
                           matchedTags.length > 1
                             ? `<span
-                                class="hidden sm:inline-flex text-[10px] bg-surface-3/60 hover:bg-surface-2 text-secondary p-0.5 rounded border border-border/40 font-mono font-bold cursor-pointer"
+                                class="hidden sm:inline-flex text-[10px] bg-surface-3/60 hover:bg-surface-2 text-secondary p-0.5 rounded border border-border/40 font-bold cursor-pointer"
                                 data-tooltip-title="${matchedTags
                                   .slice(1)
                                   .map((t) => t.name)
@@ -139,7 +139,7 @@ export const TaskCardComponent = {
                         }
 
                         <span
-                          class="sm:hidden inline-flex text-[10px] bg-surface-3/60 hover:bg-surface-2 text-secondary p-0.5 rounded border border-border/40 font-mono font-bold cursor-pointer items-center gap-0.5"
+                          class="sm:hidden inline-flex text-[10px] bg-surface-3/60 hover:bg-surface-2 text-secondary p-0.5 rounded border border-border/40 font-bold cursor-pointer items-center gap-0.5"
                           data-tooltip-title="${matchedTags
                             .map((t) => t.name)
                             .join(", ")}"

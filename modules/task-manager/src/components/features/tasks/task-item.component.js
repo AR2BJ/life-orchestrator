@@ -133,7 +133,7 @@ export const TaskItemComponent = {
                     `
               }
               <div
-                class="absolute top-full left-1/2 -translate-x-1/2 mt-2 px-2 py-1 rounded bg-surface-2 text-xs text-primary opacity-0 cursor-default peer-hover:opacity-100 transition z-10 whitespace-nowrap pointer-events-none border border-border/60"
+                class="absolute top-full left-1/2 -translate-x-1/2 mt-2 px-2 py-1 rounded bg-surface-2 text-xs text-color opacity-0 cursor-default peer-hover:opacity-100 transition z-10 whitespace-nowrap pointer-events-none border border-border/60"
               >
                 ${checkTooltip}
               </div>
@@ -169,7 +169,7 @@ export const TaskItemComponent = {
               </div>
 
               <h2
-                class="text-sm lg:text-base font-bold mt-2 text-primary tracking-tight leading-snug wrap-break-word ${
+                class="text-sm lg:text-base font-bold mt-2 text-color tracking-tight leading-snug wrap-break-word ${
                   isCompleted ? "line-through opacity-60" : ""
                 }"
               >
@@ -228,7 +228,7 @@ export const TaskItemComponent = {
                   <i class="fa-regular ${actionIcon} text-base"></i>
                 </button>
                 <div
-                  class="absolute top-full left-1/2 -translate-x-1/2 mt-2 px-2 py-1 rounded bg-surface-2 text-xs text-primary opacity-0 cursor-default peer-hover:opacity-100 transition z-10"
+                  class="absolute top-full left-1/2 -translate-x-1/2 mt-2 px-2 py-1 rounded bg-surface-2 text-xs text-color opacity-0 cursor-default peer-hover:opacity-100 transition z-10"
                 >
                   ${actionTooltip}
                 </div>
@@ -244,7 +244,7 @@ export const TaskItemComponent = {
                   ></i>
                 </button>
                 <div
-                  class="absolute top-full left-1/2 -translate-x-1/2 mt-2 px-2 py-1 rounded bg-surface-2 text-xs text-primary opacity-0 cursor-default peer-hover:opacity-100 transition z-10 whitespace-nowrap pointer-events-none border border-border/60"
+                  class="absolute top-full left-1/2 -translate-x-1/2 mt-2 px-2 py-1 rounded bg-surface-2 text-xs text-color opacity-0 cursor-default peer-hover:opacity-100 transition z-10 whitespace-nowrap pointer-events-none border border-border/60"
                 >
                   Edit
                 </div>
@@ -260,7 +260,7 @@ export const TaskItemComponent = {
                   ></i>
                 </button>
                 <div
-                  class="absolute top-full left-1/2 -translate-x-1/2 mt-2 px-2 py-1 rounded bg-surface-2 text-xs text-primary opacity-0 cursor-default peer-hover:opacity-100 transition z-10 whitespace-nowrap pointer-events-none border border-border/60"
+                  class="absolute top-full left-1/2 -translate-x-1/2 mt-2 px-2 py-1 rounded bg-surface-2 text-xs text-color opacity-0 cursor-default peer-hover:opacity-100 transition z-10 whitespace-nowrap pointer-events-none border border-border/60"
                 >
                   Delete
                 </div>
@@ -270,7 +270,7 @@ export const TaskItemComponent = {
             <div class="flex md:hidden relative dropdown-container">
               <button
                 data-id="${task.id}"
-                class="dropdown-toggle-btn h-9 w-9 rounded-lg border border-border text-secondary hover:text-primary hover:bg-surface flex items-center justify-center transition shadow-sm cursor-pointer"
+                class="dropdown-toggle-btn h-9 w-9 rounded-lg border border-border text-secondary hover:text-color hover:bg-surface flex items-center justify-center transition shadow-sm cursor-pointer"
               >
                 <i class="fa-regular fa-ellipsis-vertical text-lg"></i>
               </button>
@@ -283,7 +283,7 @@ export const TaskItemComponent = {
                   data-id="${task.id}"
                   class="${
                     isArchived ? "restore-btn" : "archive-btn"
-                  } flex w-full items-center gap-2 rounded-lg px-2.5 py-1.5 text-left text-xs font-medium border-0 bg-transparent text-secondary hover:text-primary hover:bg-surface-2 transition cursor-pointer"
+                  } flex w-full items-center gap-2 rounded-lg px-2.5 py-1.5 text-left text-xs font-medium border-0 bg-transparent text-secondary hover:text-color hover:bg-surface-2 transition cursor-pointer"
                 >
                   <i class="fa-regular ${actionIcon} text-xs"></i>
                   <span>${isArchived ? "Restore Task" : "Archive Task"}</span>
@@ -291,7 +291,7 @@ export const TaskItemComponent = {
 
                 <button
                   data-id="${task.id}"
-                  class="edit-btn flex w-full items-center gap-2 rounded-lg px-2.5 py-1.5 text-left text-xs font-medium border-0 bg-transparent text-secondary hover:text-primary hover:bg-surface-2 transition cursor-pointer"
+                  class="edit-btn flex w-full items-center gap-2 rounded-lg px-2.5 py-1.5 text-left text-xs font-medium border-0 bg-transparent text-secondary hover:text-color hover:bg-surface-2 transition cursor-pointer"
                 >
                   <i
                     class="fa-regular fa-pen-to-square text-xs text-blue-500/80"
@@ -327,7 +327,7 @@ export const TaskItemComponent = {
                     >
                       <i class="fa-regular fa-list-check text-brand/80"></i>
                       <span
-                        class="text-[11px] sm:text-xs font-bold text-secondary group-hover/sub-hdr:text-primary transition"
+                        class="text-[11px] sm:text-xs font-bold text-secondary group-hover/sub-hdr:text-color transition"
                       >
                         Subtasks
                         (${subtaskProgress.completedCount}/${subtaskProgress.totalCount})
@@ -345,12 +345,12 @@ export const TaskItemComponent = {
                       </div>
 
                       <span
-                        class="text-[11px] font-mono font-bold ${subtaskPercentColor}"
+                        class="text-[11px] font-bold ${subtaskPercentColor}"
                         >${subtaskProgress.percentage}%</span
                       >
 
                       <div
-                        class="subtask-chevron w-5 h-5 rounded-md flex items-center justify-center text-secondary group-hover/sub-hdr:text-primary transition-transform duration-300 ${
+                        class="subtask-chevron w-5 h-5 rounded-md flex items-center justify-center text-secondary group-hover/sub-hdr:text-color transition-transform duration-300 ${
                           isExpanded ? "rotate-180" : ""
                         }"
                       >
@@ -396,7 +396,7 @@ export const TaskItemComponent = {
                           <span
                             data-task-id="${task.id}"
                             data-subtask-id="${st.id}"
-                            class="subtask-toggle text-sm text-primary truncate ${
+                            class="subtask-toggle text-sm text-color truncate ${
                               st.completed ? "line-through opacity-50" : ""
                             }"
                           >

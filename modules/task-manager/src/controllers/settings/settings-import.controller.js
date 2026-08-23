@@ -54,7 +54,7 @@ export const SettingsImportController = {
       NotificationService.show({
         type: "error",
         message:
-          "Invalid format! Only structural JSON, MD, or CSV files are permitted.",
+          "Invalid format! Only structural JSON, MD, or CSV files are permitted",
         icon: "fa-circle-xmark",
         iconColor: "text-red-500/80",
         duration: 5000,
@@ -94,7 +94,7 @@ export const SettingsImportController = {
             !Array.isArray(importedTasks) ||
             (importedTasks.length === 0 && importedTags.length === 0)
           ) {
-            throw new Error("No structured data could be extracted.");
+            throw new Error("No structured data could be extracted");
           }
 
           StateManager.save(importedTasks, importedTags);
@@ -109,7 +109,7 @@ export const SettingsImportController = {
 
           NotificationService.show({
             type: "success",
-            message: `Data ledger parsed and synchronized from ${format.toUpperCase()} file.`,
+            message: `Data ledger parsed and synchronized from ${format.toUpperCase()} file`,
             icon: "fa-circle-check",
             iconColor: "text-emerald-500/80",
             duration: 5000,
@@ -118,7 +118,7 @@ export const SettingsImportController = {
           console.error("Parser failure:", err);
           NotificationService.show({
             type: "error",
-            message: "Failed to parse structural integrity of the file.",
+            message: "Failed to parse structural integrity of the file",
             icon: "fa-triangle-exclamation",
             iconColor: "text-red-500/80",
             duration: 5000,

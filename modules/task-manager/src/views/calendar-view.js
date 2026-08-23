@@ -11,7 +11,7 @@ export const CalendarView = {
           <div>
             <h1
               id="calendar-header-title"
-              class="text-lg sm:text-xl font-bold text-primary flex items-center gap-2"
+              class="text-lg sm:text-xl font-bold text-color flex items-center gap-2"
             >
             </h1>
             <p
@@ -74,20 +74,20 @@ export const CalendarView = {
 
             <h2
               id="calendar-current-label-mobile"
-              class="block sm:hidden text-center text-xs xs:text-sm font-extrabold text-primary"
+              class="block sm:hidden text-center text-xs xs:text-sm font-extrabold text-color"
             ></h2>
 
             <div class="flex flex-row justify-center gap-1 sm:gap-1.5">
               <button
                 id="calendar-btn-prev"
-                class="w-6 h-6 xs:w-8 xs:h-8 rounded-md xs:rounded-lg bg-surface border border-border flex items-center justify-center text-secondary hover:text-primary transition cursor-pointer"
+                class="w-6 h-6 xs:w-8 xs:h-8 rounded-md xs:rounded-lg bg-surface border border-border flex items-center justify-center text-secondary hover:text-color transition cursor-pointer"
               >
                 <i class="fa-regular fa-chevron-left text-[10px] xs:text-xs"></i>
               </button>
 
               <button
                 id="calendar-btn-next"
-                class="w-6 h-6 xs:w-8 xs:h-8 rounded-md xs:rounded-lg bg-surface border border-border flex items-center justify-center text-secondary hover:text-primary transition cursor-pointer"
+                class="w-6 h-6 xs:w-8 xs:h-8 rounded-md xs:rounded-lg bg-surface border border-border flex items-center justify-center text-secondary hover:text-color transition cursor-pointer"
               >
                 <i class="fa-regular fa-chevron-right text-[10px] xs:text-xs"></i>
               </button>
@@ -96,7 +96,7 @@ export const CalendarView = {
 
           <h2
             id="calendar-current-label"
-            class="hidden sm:block text-center text-base font-extrabold text-primary"
+            class="hidden sm:block text-center text-base font-extrabold text-color"
           ></h2>
         </div>
 

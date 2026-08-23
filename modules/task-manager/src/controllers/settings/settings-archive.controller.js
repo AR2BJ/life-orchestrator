@@ -42,7 +42,7 @@ export const SettingsArchiveController = {
 
     NotificationService.show({
       type: "info",
-      message: `Autonomous archiving pipeline has been ${nextState ? "activated" : "deactivated"}.`,
+      message: `Autonomous archiving pipeline has been ${nextState ? "activated" : "deactivated"}`,
       icon: "fa-robot",
       iconColor: "text-brand/80",
       duration: 5000,
@@ -93,7 +93,7 @@ export const SettingsArchiveController = {
       NotificationService.show({
         type: "info",
         message:
-          "Stale tasks exceeding 30 days structural limits auto-archived.",
+          "Stale tasks exceeding 30 days structural limits auto-archived",
         icon: "fa-box-archive",
         iconColor: "text-brand/80",
         duration: 5000,

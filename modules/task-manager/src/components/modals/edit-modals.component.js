@@ -19,7 +19,7 @@ export const EditModalsComponent = {
               </div>
               <div class="min-w-0">
                 <h3
-                  class="text-sm lg:text-base font-bold text-primary truncate"
+                  class="text-sm lg:text-base font-bold text-color truncate"
                 >
                   Edit Task Details
                 </h3>
@@ -34,7 +34,7 @@ export const EditModalsComponent = {
             <button
               id="cancel-edit-modal"
               type="button"
-              class="w-8 h-8 lg:w-9 lg:h-9 rounded-lg lg:rounded-xl bg-surface-2 hover:bg-red-600/10 border border-border text-secondary hover:text-primary flex items-center justify-center transition cursor-pointer shrink-0"
+              class="w-8 h-8 lg:w-9 lg:h-9 rounded-lg lg:rounded-xl bg-surface-2 hover:bg-red-600/10 border border-border text-secondary hover:text-color flex items-center justify-center transition cursor-pointer shrink-0"
             >
               <i class="fa-regular fa-xmark text-sm"></i>
             </button>
@@ -60,7 +60,7 @@ export const EditModalsComponent = {
                     ></i>
                   </div>
                   <div>
-                    <h4 class="text-xs lg:text-sm font-semibold text-primary">
+                    <h4 class="text-xs lg:text-sm font-semibold text-color">
                       Basic Information
                     </h4>
                     <p class="text-[10px] lg:text-xs leading-4 text-secondary">
@@ -86,7 +86,7 @@ export const EditModalsComponent = {
                       id="edit-task-title"
                       type="text"
                       placeholder="E.g., Implement OAuth2 authentication flow"
-                      class="h-10 lg:h-11 w-full rounded-xl bg-surface border border-border px-3.5 text-xs lg:text-sm text-primary placeholder:text-secondary/70 outline-none focus:border-brand/80 transition"
+                      class="h-10 lg:h-11 w-full rounded-xl bg-surface border border-border px-3.5 text-xs lg:text-sm text-color placeholder:text-secondary/70 outline-none focus:border-brand/80 transition"
                     />
                   </div>
 
@@ -112,7 +112,7 @@ export const EditModalsComponent = {
                     id="edit-task-desc"
                     rows="2"
                     placeholder="Add detailed acceptance criteria or execution notes..."
-                    class="w-full scrollbar-thin scrollbar-thumb-surface rounded-xl bg-surface border border-border p-3 text-xs lg:text-sm text-primary placeholder:text-secondary/70 outline-none focus:border-brand/80 transition resize-none"
+                    class="w-full scrollbar-thin scrollbar-thumb-surface rounded-xl bg-surface border border-border p-3 text-xs lg:text-sm text-color placeholder:text-secondary/70 outline-none focus:border-brand/80 transition resize-none"
                   ></textarea>
                 </div>
               </div>
@@ -132,7 +132,7 @@ export const EditModalsComponent = {
                     <i class="fa-regular fa-sliders text-sm lg:text-base"></i>
                   </div>
                   <div>
-                    <h4 class="text-xs lg:text-sm font-semibold text-primary">
+                    <h4 class="text-xs lg:text-sm font-semibold text-color">
                       Priority & Organization
                     </h4>
                     <p class="text-[10px] lg:text-xs leading-4 text-secondary">
@@ -178,7 +178,7 @@ export const EditModalsComponent = {
                     ></i>
                   </div>
                   <div>
-                    <h4 class="text-xs lg:text-sm font-semibold text-primary">
+                    <h4 class="text-xs lg:text-sm font-semibold text-color">
                       Subtasks Management
                     </h4>
                     <p class="text-[10px] lg:text-xs leading-4 text-secondary">
@@ -190,7 +190,7 @@ export const EditModalsComponent = {
                 <div class="flex items-center gap-2 lg:gap-3">
                   <span
                     id="subtask-progress-badge"
-                    class="text-[10px] lg:text-xs font-mono text-secondary px-2 lg:px-3 py-1 rounded-lg bg-surface border border-border shrink-0"
+                    class="text-[10px] lg:text-xs text-secondary px-2 lg:px-3 py-1 rounded-lg bg-surface border border-border shrink-0"
                   >
                     0/0 Done
                   </span>
@@ -210,7 +210,7 @@ export const EditModalsComponent = {
                     id="new-subtask-input"
                     type="text"
                     placeholder="Add a new subtask item..."
-                    class="w-full h-10 lg:h-11 flex-1 rounded-xl bg-transparent px-3.5 pe-23 text-xs lg:text-sm text-primary placeholder:text-secondary/70 outline-none focus:border-brand/80 transition"
+                    class="w-full h-10 lg:h-11 flex-1 rounded-xl bg-transparent px-3.5 pe-23 text-xs lg:text-sm text-color placeholder:text-secondary/70 outline-none focus:border-brand/80 transition"
                   />
                   <button
                     id="add-subtask-btn"
@@ -234,7 +234,7 @@ export const EditModalsComponent = {
               <button
                 id="cancel-edit-mobile"
                 type="button"
-                class="h-10 lg:h-11 rounded-lg lg:rounded-xl bg-surface-2 hover:border-primary text-secondary hover:text-primary font-medium text-xs lg:text-sm transition border border-border cursor-pointer flex items-center justify-center"
+                class="h-10 lg:h-11 rounded-lg lg:rounded-xl bg-surface-2 hover:border-primary text-secondary hover:text-color font-medium text-xs lg:text-sm transition border border-border cursor-pointer flex items-center justify-center"
               >
                 Cancel
               </button>
@@ -255,7 +255,7 @@ export const EditModalsComponent = {
             <button
               id="cancel-edit"
               type="button"
-              class="h-10 lg:h-11 rounded-lg lg:rounded-xl bg-surface-2 hover:border-primary text-secondary hover:text-primary font-medium text-xs lg:text-sm transition border border-border cursor-pointer flex items-center justify-center"
+              class="h-10 lg:h-11 rounded-lg lg:rounded-xl bg-surface-2 hover:border-primary text-secondary hover:text-color font-medium text-xs lg:text-sm transition border border-border cursor-pointer flex items-center justify-center"
             >
               Cancel
             </button>

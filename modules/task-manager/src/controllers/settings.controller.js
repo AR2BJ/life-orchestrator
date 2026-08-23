@@ -49,7 +49,7 @@ export const SettingsController = {
     document
       .getElementById("sett-export-csv-btn")
       ?.addEventListener("click", () =>
-        SettingsExportController.handleDataExport("notion"),
+        SettingsExportController.handleDataExport("csv"),
       );
 
     // Window resize handler for theme
@@ -81,7 +81,7 @@ export const SettingsController = {
         indicator.classList.add("translate-y-full");
       }
 
-      btnDark.classList.replace("text-secondary", "text-primary");
+      btnDark.classList.replace("text-secondary", "text-color");
       btnLight.classList.replace("text-white", "text-secondary");
     } else {
       if (isDesktop) {
@@ -91,7 +91,7 @@ export const SettingsController = {
       }
 
       btnLight.classList.replace("text-secondary", "text-white");
-      btnDark.classList.replace("text-primary", "text-secondary");
+      btnDark.classList.replace("text-color", "text-secondary");
     }
   },
 

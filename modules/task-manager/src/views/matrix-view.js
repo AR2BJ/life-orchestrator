@@ -9,7 +9,7 @@ export const MatrixView = {
           <div>
             <h1
               id="matrix-header-title"
-              class="text-lg sm:text-xl font-bold text-primary flex items-center gap-2"
+              class="text-lg sm:text-xl font-bold text-color flex items-center gap-2"
             >
             </h1>
             <p 

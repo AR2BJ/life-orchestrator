@@ -2,10 +2,11 @@ export const NotificationService = {
   show({
     type,
     message,
-    duration = 4000,
+    duration = 5000,
     undoAction = null,
     icon = null,
     iconColor = "",
+    actionButton = null,
   }) {
     const container = document.getElementById("notification-container");
     if (!container) return;
@@ -69,7 +70,7 @@ export const NotificationService = {
           undoAction
             ? `<span
                 id="${countdownId}"
-                class="text-xs font-mono ${toastTimerClass} px-1.5 py-0.5 rounded"
+                class="text-xs ${toastTimerClass} px-1.5 py-0.5 rounded"
                 >${duration / 1000}s</span
               >`
             : iconHTML
@@ -88,6 +89,21 @@ export const NotificationService = {
         this.removeToast(toast);
       });
       toast.appendChild(undoBtn);
+    }
+
+    if (actionButton) {
+      const actionBtn = document.createElement("button");
+      actionBtn.className = `min-w-fit h-8 px-3 transition flex items-center justify-center gap-1 cursor-pointer rounded-lg ${toastUndoClass} text-sm font-medium`;
+      actionBtn.innerHTML = `<i class="fa-regular ${actionButton.icon || "fa-arrow-right"} text-xs"></i><span class="text-xs font-semibold">${actionButton.text || "Action"}</span>`;
+
+      actionBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        if (typeof actionButton.onClick === "function") {
+          actionButton.onClick();
+        }
+        this.removeToast(toast);
+      });
+      toast.appendChild(actionBtn);
     }
 
     container.appendChild(toast);

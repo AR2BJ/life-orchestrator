@@ -13,7 +13,7 @@ export const TagDeleteModalComponent = {
           </div>
 
           <div class="text-center flex flex-col gap-1">
-            <h3 class="text-lg font-bold text-primary">Delete Tag</h3>
+            <h3 class="text-lg font-bold text-color">Delete Tag</h3>
             <p id="tag-delete-modal-msg" class="text-sm text-secondary leading-relaxed">
               Are you sure you want to delete this tag?
             </p>
@@ -22,7 +22,7 @@ export const TagDeleteModalComponent = {
           <div class="grid grid-cols-2 gap-3 mt-2">
             <button
               id="cancel-tag-delete"
-              class="px-4 py-2.5 rounded-xl bg-surface-3 hover:border-primary text-secondary hover:text-primary! font-medium text-sm transition border border-border cursor-pointer"
+              class="px-4 py-2.5 rounded-xl bg-surface-3 hover:border-primary text-secondary hover:text-color! font-medium text-sm transition border border-border cursor-pointer"
             >
               Cancel
             </button>

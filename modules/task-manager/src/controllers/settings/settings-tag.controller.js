@@ -72,7 +72,7 @@ export const SettingsTagController = {
                 type="text"
                 value="${(tag.name || "").replace(/"/g, "&quot;")}"
                 data-action="edit-tag-name"
-                class="tag-name-input bg-transparent rounded-lg p-1 text-xs sm:text-sm font-medium text-primary outline-none border border-transparent transition w-full truncate"
+                class="tag-name-input bg-transparent rounded-lg p-1 text-xs sm:text-sm font-medium text-color outline-none border border-transparent transition w-full truncate"
                 readonly
               />
             </div>
@@ -114,7 +114,7 @@ export const SettingsTagController = {
     if (!name) {
       NotificationService.show({
         type: "error",
-        message: "Tag name cannot be empty.",
+        message: "Tag name cannot be empty",
         duration: 5000,
       });
       return;
@@ -128,7 +128,7 @@ export const SettingsTagController = {
     if (exists) {
       NotificationService.show({
         type: "error",
-        message: "A tag with this name already exists.",
+        message: "A tag with this name already exists",
         duration: 5000,
       });
       return;
@@ -148,7 +148,7 @@ export const SettingsTagController = {
 
     NotificationService.show({
       type: "success",
-      message: `Tag "${name}" created successfully.`,
+      message: `Tag "${name}" created successfully`,
       icon: "fa-check",
       duration: 5000,
     });
@@ -209,7 +209,7 @@ export const SettingsTagController = {
     if (!newName) {
       NotificationService.show({
         type: "error",
-        message: "Tag name cannot be empty.",
+        message: "Tag name cannot be empty",
         duration: 5000,
       });
       return;
@@ -230,7 +230,7 @@ export const SettingsTagController = {
 
       NotificationService.show({
         type: "success",
-        message: "Tag updated successfully.",
+        message: "Tag updated successfully",
         icon: "fa-check",
         duration: 5000,
       });
@@ -277,9 +277,9 @@ export const SettingsTagController = {
 
     if (msgEl) {
       if (usageCount > 0) {
-        msgEl.innerHTML = `Are you sure you want to delete <strong class="text-primary">"<i class="fa-regular fa-tag text-sm me-1"></i>${targetTag.name}"</strong>? <br/><br/> It is currently used in <span class="text-red-500 font-semibold">${usageCount} task(s)</span>.`;
+        msgEl.innerHTML = `Are you sure you want to delete <strong class="text-color">"<i class="fa-regular fa-tag text-sm me-1"></i>${targetTag.name}"</strong>? <br/><br/> It is currently used in <span class="text-red-500 font-semibold">${usageCount} task(s)</span>.`;
       } else {
-        msgEl.innerHTML = `Are you sure you want to delete <strong class="text-primary">"<i class="fa-regular fa-tag text-sm me-1"></i>${targetTag.name}"</strong>?`;
+        msgEl.innerHTML = `Are you sure you want to delete <strong class="text-color">"<i class="fa-regular fa-tag text-sm me-1"></i>${targetTag.name}"</strong>?`;
       }
     }
 
@@ -333,7 +333,7 @@ export const SettingsTagController = {
 
     NotificationService.show({
       type: "error",
-      message: `Tag "${targetTag.name}" deleted.`,
+      message: `Tag "${targetTag.name}" deleted`,
       icon: "fa-tag",
       duration: 5000,
       undoAction: () => {
@@ -344,7 +344,7 @@ export const SettingsTagController = {
 
         NotificationService.show({
           type: "success",
-          message: `Tag "${targetTag.name}" restored.`,
+          message: `Tag "${targetTag.name}" restored`,
           icon: "fa-check",
           duration: 5000,
         });

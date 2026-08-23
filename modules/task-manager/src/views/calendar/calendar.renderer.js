@@ -51,7 +51,7 @@ export function renderMonthGrid(currentDate, tasks) {
         data-calendar-date="${cellDateStr}"
       >
         <div class="flex justify-between items-center mb-0.5 sm:mb-1">
-          <span class="text-[10px] sm:text-xs font-black ${isToday ? "text-brand/80" : "text-primary"}">${day}</span>
+          <span class="text-[10px] sm:text-xs font-black ${isToday ? "text-brand/80" : "text-color"}">${day}</span>
           ${
             dayTasks.length > 0
               ? `<span class="hidden sm:inline-block text-[10px] font-bold px-1.5 py-0.2 rounded bg-brand/10 text-brand/80">${dayTasks.length}</span>`
@@ -135,7 +135,7 @@ export function renderDayList(currentDate, tasks) {
   return `
     <div class="flex flex-col gap-4 bg-surface-2 border border-border/80 rounded-2xl p-4 shadow-sm">
       <div class="flex items-center justify-between pb-3 border-b border-border/60">
-        <h3 class="text-sm font-bold text-primary flex items-center gap-2">
+        <h3 class="text-sm font-bold text-color flex items-center gap-2">
           Scheduled Tasks
           <span class="text-xs px-2 py-0.5 rounded bg-brand/10 text-brand/80 font-bold">${dayTasks.length}</span>
         </h3>
@@ -155,7 +155,7 @@ export function renderDayList(currentDate, tasks) {
                     <i
                       class="fa-regular fa-calendar-xmark text-4xl text-brand/60"
                     ></i>
-                    <h2 class="text-lg font-bold text-primary">
+                    <h2 class="text-lg font-bold text-color">
                       No active tasks
                     </h2>
                     <p class="text-xs font-semibold">
@@ -221,7 +221,7 @@ export function renderYearHeatmap(currentDate, tasks) {
           data-year-month="${mIdx}"
         >
           <div class="flex items-center justify-between">
-            <span class="text-xs font-bold text-primary group-hover:text-brand transition">${mName}</span>
+            <span class="text-xs font-bold text-color group-hover:text-brand transition">${mName}</span>
             <i class="fa-regular fa-arrow-right text-[10px] text-tertiary opacity-0 group-hover:opacity-100 transition"></i>
           </div>
           <div class="flex flex-wrap gap-1">

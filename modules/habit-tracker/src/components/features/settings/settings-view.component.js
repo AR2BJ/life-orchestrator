@@ -130,7 +130,7 @@ export const SettingsViewComponent = {
                 </button>
 
                 <button
-                  id="sett-export-notion-btn"
+                  id="sett-export-csv-btn"
                   class="w-full px-3 py-2.5 bg-surface-2 hover:bg-surface-3 border border-border rounded-xl text-color text-xs font-semibold flex items-center justify-center gap-2 transition cursor-pointer group"
                 >
                   <i

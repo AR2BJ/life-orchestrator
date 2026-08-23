@@ -5,7 +5,7 @@ export const HeaderComponent = {
         <div class="flex min-w-0 items-center gap-3">
           <button
             id="menu-toggle"
-            class="hidden h-10 w-10 flex-row items-center justify-center rounded-xl border border-border bg-surface text-primary transition cursor-pointer hover:bg-slate-600/10 lg:flex shadow-sm"
+            class="hidden h-10 w-10 flex-row items-center justify-center rounded-xl border border-border bg-surface text-color transition cursor-pointer hover:bg-slate-600/10 lg:flex shadow-sm"
           >
             <i class="fa-regular fa-bars"></i>
           </button>
@@ -25,13 +25,13 @@ export const HeaderComponent = {
           </div>
 
           <h1
-            class="truncate block xs:hidden text-xl font-bold tracking-tight text-primary sm:text-2xl lg:text-3xl cursor-pointer"
+            class="truncate block xs:hidden text-xl font-bold tracking-tight text-color sm:text-2xl lg:text-3xl cursor-pointer"
             data-tooltip-title="Task Manager"
           >
             Task Manager
           </h1>
           <h1
-            class="truncate hidden xs:block text-xl font-bold tracking-tight text-primary sm:text-2xl lg:text-3xl"
+            class="truncate hidden xs:block text-xl font-bold tracking-tight text-color sm:text-2xl lg:text-3xl"
           >
             Task Manager
           </h1>
@@ -48,7 +48,7 @@ export const HeaderComponent = {
 
           <button
             id="theme-toggle"
-            class="flex h-9 w-9 flex-row items-center justify-center rounded-xl border border-border bg-surface text-primary transition cursor-pointer hover:bg-yellow-600/10 sm:h-10 sm:w-10 shadow-sm"
+            class="flex h-9 w-9 flex-row items-center justify-center rounded-xl border border-border bg-surface text-color transition cursor-pointer hover:bg-yellow-600/10 sm:h-10 sm:w-10 shadow-sm"
             title="Theme Toggle"
           >
             <i class="fa-regular fa-sun text-yellow-500/80"></i>

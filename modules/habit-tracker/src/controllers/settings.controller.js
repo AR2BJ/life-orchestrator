@@ -41,8 +41,8 @@ export const SettingsController = {
       ?.addEventListener("click", () => this.handleDataExport("markdown"));
 
     document
-      .getElementById("sett-export-notion-btn")
-      ?.addEventListener("click", () => this.handleDataExport("notion"));
+      .getElementById("sett-export-csv-btn")
+      ?.addEventListener("click", () => this.handleDataExport("csv"));
 
     this.initImportDropzone();
 
@@ -202,11 +202,11 @@ export const SettingsController = {
     const dateStr = formatDate(new Date());
 
     if (format === "json") {
-      fileContent = JSON.stringify(habits, null, 2);
+      fileContent = JSON.stringify(localData, null, 2);
       fileName = `Habits_Backup_${dateStr}_v${STORAGE_VERSION}.json`;
       contentType = "application/json";
     } else if (format === "markdown") {
-      fileContent = `# 📊 Habit Tracker Workspace Progress Report\n\nGenerated: ${new Date().toLocaleDateString()}\n\n---\n\n`;
+      fileContent = `# 📊 Habit Tracker Workspace Progress Report\n\nGenerated: ${new Date().toLocaleDateString()}\n\n **Storage Version:** ${STORAGE_VERSION}\n\n---\n\n`;
       habits.forEach((habit) => {
         fileContent += `## #️⃣ ${habit.id}\n`;
         fileContent += `## 🎯 ${habit.name}\n`;
@@ -236,11 +236,13 @@ export const SettingsController = {
       });
       fileName = `Habits_Backup_${dateStr}_v${STORAGE_VERSION}.md`;
       contentType = "text/markdown";
-    } else if (format === "notion") {
+    } else if (format === "csv") {
       const escapeCsvValue = (value) => {
         const text = value == null ? "" : String(value);
         return `"${text.replace(/"/g, '""')}"`;
       };
+
+      let content = `# VERSION: ${STORAGE_VERSION}\n`;
 
       const headers = [
         "Id",
@@ -255,20 +257,21 @@ export const SettingsController = {
         "Allowed Skips/Month",
       ];
 
-      const rows = habits.map((h) => [
-        escapeCsvValue(h.id),
-        escapeCsvValue(h.name),
-        escapeCsvValue(h.category),
-        escapeCsvValue(h.frequency),
-        escapeCsvValue(h.createdAt),
-        escapeCsvValue(h.archived ? "Archived" : "Active"),
-        escapeCsvValue((h.completedDates || []).join(";")),
-        escapeCsvValue((h.skippedDates || []).join(";")),
-      ]);
+      habits.map((h) => {
+        const rows = [
+          escapeCsvValue(h.id),
+          escapeCsvValue(h.name),
+          escapeCsvValue(h.category),
+          escapeCsvValue(h.frequency),
+          escapeCsvValue(h.createdAt),
+          escapeCsvValue(h.archived ? "Archived" : "Active"),
+          escapeCsvValue((h.completedDates || []).join(";")),
+          escapeCsvValue((h.skippedDates || []).join(";")),
+        ];
+        content += rows.join(",") + "\n";
+      });
 
-      fileContent = [headers.join(","), ...rows.map((e) => e.join(","))].join(
-        "\n",
-      );
+      fileContent = content;
       fileName = `Habits_Backup_${dateStr}_v${STORAGE_VERSION}.csv`;
       contentType = "text/csv;charset=utf-8;";
     }
@@ -489,13 +492,7 @@ export const SettingsController = {
           if (!Array.isArray(importedHabits) || importedHabits.length === 0)
             throw new Error("No structured data could be extracted");
 
-          const parsedData = {
-            version: STORAGE_VERSION,
-            habits: importedHabits,
-          };
-
-         CoreStore.setNamespace(HABIT_NAMESPACE, JSON.stringify(parsedData));
-          StateManager.save(parsedData.habits);
+          StateManager.save(importedHabits);
 
           state.activeTab = "active";
           state.currentView = "habits";
@@ -720,7 +717,10 @@ export const SettingsController = {
                 state.currentView = "habits";
                 state.currentCategory = "all";
 
-                renderHabitList(StateManager.getFilteredHabits(), state.activeTab);
+                renderHabitList(
+                  StateManager.getFilteredHabits(),
+                  state.activeTab,
+                );
                 HabitController.refreshUI();
               } finally {
                 GlobalLoaderService.hide();

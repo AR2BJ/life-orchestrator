@@ -14,8 +14,8 @@ export const MatrixTaskCardComponent = {
 
     const footerExtraHtml = `
       <div class="flex items-center gap-2 font-semibold shrink-0">
-        <span class="text-tertiary">Imp: <strong class="text-primary">${importance}</strong></span>
-        <span class="text-tertiary">Urg: <strong class="text-primary">${urgency}</strong></span>
+        <span class="text-tertiary">Imp: <strong class="text-color">${importance}</strong></span>
+        <span class="text-tertiary">Urg: <strong class="text-color">${urgency}</strong></span>
       </div>
     `;
 

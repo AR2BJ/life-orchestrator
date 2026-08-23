@@ -310,7 +310,7 @@ export const TaskFormController = {
                     data-action="edit-text"
                     data-tooltip-title="${subtask.title}"
                     value="${(subtask.title ?? "").replace(/"/g, "&quot;")}"
-                    class="subtask-title-input flex sm:hidden truncate text-sm text-primary mx-3 bg-transparent outline-none w-full border-b min-h-7 py-1 cursor-pointer ${
+                    class="subtask-title-input flex sm:hidden truncate text-sm text-color mx-3 bg-transparent outline-none w-full border-b min-h-7 py-1 cursor-pointer ${
                       subtask.isEditing
                         ? "border-brand/50"
                         : "border-transparent"
@@ -321,7 +321,7 @@ export const TaskFormController = {
                     type="text"
                     data-action="edit-text"
                     value="${(subtask.title ?? "").replace(/"/g, "&quot;")}"
-                    class="subtask-title-input hidden sm:flex text-sm text-primary mx-3 bg-transparent outline-none w-full border-b min-h-7 py-1 ${
+                    class="subtask-title-input hidden sm:flex text-sm text-color mx-3 bg-transparent outline-none w-full border-b min-h-7 py-1 ${
                       subtask.isEditing
                         ? "border-brand/50"
                         : "border-transparent"
@@ -496,7 +496,7 @@ export const TaskFormController = {
       if (!title) {
         NotificationService.show({
           type: "error",
-          message: "Task title cannot be empty.",
+          message: "Task title cannot be empty",
           icon: "fa-triangle-exclamation",
           duration: 5000,
         });
@@ -741,7 +741,7 @@ export const TaskFormController = {
     if (!newTitle) {
       NotificationService.show({
         type: "error",
-        message: "Task title cannot be empty.",
+        message: "Task title cannot be empty",
         icon: "fa-triangle-exclamation",
         duration: 5000,
       });

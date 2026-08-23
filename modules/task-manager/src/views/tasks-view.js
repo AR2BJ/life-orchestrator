@@ -48,7 +48,7 @@ export const TasksView = {
               type="text"
               id="search-tasks"
               placeholder="Search tasks...."
-              class="w-full ps-10 pe-10 py-3 text-sm rounded-xl border border-border bg-surface text-primary placeholder:text-muted/70 focus:outline-none focus:border-brand/50 transition-all shadow-sm"
+              class="w-full ps-10 pe-10 py-3 text-sm rounded-xl border border-border bg-surface text-color placeholder:text-muted/70 focus:outline-none focus:border-brand/50 transition-all shadow-sm"
             />
 
             <div
@@ -56,7 +56,7 @@ export const TasksView = {
             >
               <button
                 id="clear-search-btn"
-                class="hidden opacity-0 scale-75 h-5 w-5 cursor-pointer items-center justify-center rounded-full border border-border bg-surface-2 hover:bg-surface-4 text-secondary hover:text-primary transition-all duration-200 ease-out"
+                class="hidden opacity-0 scale-75 h-5 w-5 cursor-pointer items-center justify-center rounded-full border border-border bg-surface-2 hover:bg-surface-4 text-secondary hover:text-color transition-all duration-200 ease-out"
                 title="Clear Search"
               >
                 <i class="fa-regular fa-xmark text-[10px]"></i>
@@ -64,7 +64,7 @@ export const TasksView = {
 
               <kbd class="flex items-center pointer-events-none">
                 <span
-                  class="px-1.25 py-1 text-[9px] font-mono bg-surface-2 border border-border text-muted rounded-md shadow-2xs flex flex-row justify-center items-center"
+                  class="px-1.25 py-1 text-[9px] bg-surface-2 border border-border text-muted rounded-md shadow-2xs flex flex-row justify-center items-center"
                   ><i class="fa-regular fa-slash-forward"></i
                 ></span>
               </kbd>
@@ -114,7 +114,7 @@ export const TasksView = {
                     id="task-title-input"
                     type="text"
                     placeholder="E.g., Implement OAuth2 authentication flow"
-                    class="h-11 w-full rounded-xl border border-border bg-surface-2 px-4 text-sm text-primary placeholder:text-secondary/70 transition focus:border-brand/80 focus:outline-none"
+                    class="h-11 w-full rounded-xl border border-border bg-surface-2 px-4 text-sm text-color placeholder:text-secondary/70 transition focus:border-brand/80 focus:outline-none"
                   />
                 </div>
 
@@ -139,7 +139,7 @@ export const TasksView = {
                   id="task-desc-input"
                   rows="2"
                   placeholder="Add detailed acceptance criteria or execution notes..."
-                  class="w-full scrollbar-thin scrollbar-thumb-surface rounded-xl border border-border bg-surface-2 p-3 text-sm text-primary placeholder:text-secondary/70 transition focus:border-brand/80 focus:outline-none resize-none"
+                  class="w-full scrollbar-thin scrollbar-thumb-surface rounded-xl border border-border bg-surface-2 p-3 text-sm text-color placeholder:text-secondary/70 transition focus:border-brand/80 focus:outline-none resize-none"
                 ></textarea>
               </div>
 
@@ -189,7 +189,7 @@ export const TasksView = {
                 <button
                   id="btn-scroll-left"
                   type="button"
-                  class="absolute left-0 z-20 hidden h-7 w-7 items-center justify-center rounded-lg border border-border bg-surface/95 backdrop-blur-xl shadow-2xl text-secondary hover:text-primary hover:border-brand/50 transition-all cursor-pointer"
+                  class="absolute left-0 z-20 hidden h-7 w-7 items-center justify-center rounded-lg border border-border bg-surface/95 backdrop-blur-xl shadow-2xl text-secondary hover:text-color hover:border-brand/50 transition-all cursor-pointer"
                 >
                   <i class="fa-regular fa-chevron-left text-xs"></i>
                 </button>
@@ -209,7 +209,7 @@ export const TasksView = {
                 <button
                   id="btn-scroll-right"
                   type="button"
-                  class="absolute right-0 z-20 hidden h-7 w-7 items-center justify-center rounded-lg border border-border bg-surface/95 backdrop-blur-xl shadow-2xl text-secondary hover:text-primary hover:border-brand/50 transition-all cursor-pointer"
+                  class="absolute right-0 z-20 hidden h-7 w-7 items-center justify-center rounded-lg border border-border bg-surface/95 backdrop-blur-xl shadow-2xl text-secondary hover:text-color hover:border-brand/50 transition-all cursor-pointer"
                 >
                   <i class="fa-regular fa-chevron-right text-xs"></i>
                 </button>
@@ -235,7 +235,7 @@ export const TasksView = {
 
               <div
                 id="task-count-badge"
-                class="shrink-0 flex justify-center items-center gap-1.5 px-4 py-1.5 bg-surface-3 rounded-xl text-xs font-bold text-primary select-none w-full sm:w-36 lg:w-auto"
+                class="shrink-0 flex justify-center items-center gap-1.5 px-4 py-1.5 bg-surface-3 rounded-xl text-xs font-bold text-color select-none w-full sm:w-36 lg:w-auto"
               >
                 0 Tasks
               </div>

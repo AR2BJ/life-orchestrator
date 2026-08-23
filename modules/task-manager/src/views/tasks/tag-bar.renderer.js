@@ -20,7 +20,7 @@ export function renderTagFilterBar() {
       class="tag-filter-btn h-8 shrink-0 whitespace-nowrap rounded-lg px-3.5 text-xs font-semibold transition cursor-pointer ${
         selectedTag === "all"
           ? "bg-brand/80 text-white shadow-brand/10 shadow-sm"
-          : "bg-surface border border-border text-secondary hover:text-primary hover:bg-surface-2"
+          : "bg-surface border border-border text-secondary hover:text-color hover:bg-surface-2"
       }"
     >
       All Tasks
@@ -36,7 +36,7 @@ export function renderTagFilterBar() {
         class="tag-filter-btn h-8 shrink-0 whitespace-nowrap rounded-lg px-3.5 text-xs font-semibold transition cursor-pointer flex items-center gap-1.5 ${
           isSelected
             ? "bg-brand/80 text-white shadow-brand/10 shadow-sm"
-            : "bg-surface border border-border text-secondary hover:text-primary hover:bg-surface-2"
+            : "bg-surface border border-border text-secondary hover:text-color hover:bg-surface-2"
         }"
       >
         <span class="flex flex-row justify-center items-center gap-1">

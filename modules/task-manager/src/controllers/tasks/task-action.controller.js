@@ -45,8 +45,8 @@ export const TaskActionController = {
               NotificationService.show({
                 type: isNowCompleted ? "success" : "info",
                 message: isNowCompleted
-                  ? `Task completed: "${task.title}" ✨`
-                  : `Reopened task: "${task.title}".`,
+                  ? `Task completed: "${task.title}"`
+                  : `Reopened task: "${task.title}"`,
                 icon: isNowCompleted ? "fa-circle-check" : "fa-circle",
                 iconColor: isNowCompleted
                   ? "text-emerald-500/80"
@@ -56,7 +56,7 @@ export const TaskActionController = {
             } catch (error) {
               NotificationService.show({
                 type: "error",
-                message: error.message || "Failed to update task.",
+                message: error.message || "Failed to update task",
               });
             } finally {
               GlobalLoaderService.hide();

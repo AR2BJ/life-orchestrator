@@ -117,7 +117,7 @@ export const DashboardComponent = {
           <div class="z-10 mt-3">
             <div
               class="text-3xl font-black ${
-                criticalCount > 0 ? "text-yellow-400" : "text-primary"
+                criticalCount > 0 ? "text-yellow-400" : "text-color"
               } tracking-tight"
             >
               ${criticalCount}
@@ -145,7 +145,7 @@ export const DashboardComponent = {
             >
           </div>
           <div class="z-10 mt-3">
-            <div class="text-3xl font-black text-primary tracking-tight">
+            <div class="text-3xl font-black text-color tracking-tight">
               ${totalTasksCount}
             </div>
             <p class="text-[11px] text-secondary/80 font-medium mt-1">
@@ -171,7 +171,7 @@ export const DashboardComponent = {
             >
           </div>
           <div class="z-10 mt-3">
-            <div class="text-3xl font-black text-primary tracking-tight">
+            <div class="text-3xl font-black text-color tracking-tight">
               ${overallCompletionRate}%
             </div>
             <div
@@ -209,7 +209,7 @@ export const DashboardComponent = {
           <div class="z-10 mt-3">
             <div
               class="text-3xl font-black ${
-                overdueCount > 0 ? "text-orange-400" : "text-primary"
+                overdueCount > 0 ? "text-orange-400" : "text-color"
               } tracking-tight"
             >
               ${overdueCount}
@@ -241,7 +241,7 @@ export const DashboardComponent = {
             >
           </div>
           <div class="z-10 mt-3">
-            <div class="text-3xl font-black text-primary tracking-tight">
+            <div class="text-3xl font-black text-color tracking-tight">
               ${subtaskRate}%
             </div>
             <p class="text-[11px] text-secondary/80 font-medium mt-1">
@@ -267,7 +267,7 @@ export const DashboardComponent = {
             >
           </div>
           <div class="z-10 mt-3">
-            <div class="text-3xl font-black text-primary tracking-tight">
+            <div class="text-3xl font-black text-color tracking-tight">
               ${unscheduledCount}
             </div>
             <p class="text-[11px] text-secondary/80 font-medium mt-1">
@@ -300,7 +300,7 @@ export const DashboardComponent = {
           <div class="z-10 mt-3">
             <div
               class="text-3xl font-black ${
-                BlockedCount > 0 ? "text-red-400" : "text-primary"
+                BlockedCount > 0 ? "text-red-400" : "text-color"
               } tracking-tight"
             >
               ${BlockedCount}
@@ -351,7 +351,7 @@ export const DashboardComponent = {
             >
               <div>
                 <h4
-                  class="text-lg font-bold text-primary flex items-center gap-2"
+                  class="text-lg font-bold text-color flex items-center gap-2"
                 >
                   <i class="fa-regular fa-chart-network text-brand/80 text-xl"></i>
                   Sprint & Execution Heatmap
@@ -365,7 +365,7 @@ export const DashboardComponent = {
               <div class="relative flex items-center justify-end">
                 <button
                   id="heatmap-mobile-menu-toggle"
-                  class="sm:hidden inline-flex items-center justify-center h-8 w-8 rounded-lg border border-border bg-surface text-secondary hover:text-primary transition shadow-sm cursor-pointer"
+                  class="sm:hidden inline-flex items-center justify-center h-8 w-8 rounded-lg border border-border bg-surface text-secondary hover:text-color transition shadow-sm cursor-pointer"
                   aria-label="Open view menu"
                 >
                   <i class="fa-regular fa-ellipsis-vertical text-lg"></i>
@@ -444,7 +444,7 @@ export const DashboardComponent = {
           >
             <div>
               <h4
-                class="text-lg font-bold text-primary flex items-center gap-2"
+                class="text-lg font-bold text-color flex items-center gap-2"
               >
                 <i
                   class="fa-regular fa-chart-simple text-amber-400 text-xl"
@@ -476,7 +476,7 @@ export const DashboardComponent = {
             <div class="flex items-start justify-between gap-2">
               <div>
                 <h4
-                  class="text-lg font-bold text-primary flex items-center gap-2"
+                  class="text-lg font-bold text-color flex items-center gap-2"
                 >
                   <i
                     class="fa-regular fa-arrow-down-small-big text-amber-400 text-xl"
@@ -513,7 +513,7 @@ export const DashboardComponent = {
             >
               <div>
                 <h4
-                  class="text-lg font-bold text-primary flex items-center gap-2"
+                  class="text-lg font-bold text-color flex items-center gap-2"
                 >
                   <i class="fa-regular fa-tags text-sky-400 text-xl"></i>
                   Tag Velocity
@@ -540,7 +540,7 @@ export const DashboardComponent = {
             <div class="flex items-start justify-between gap-2">
               <div>
                 <h4
-                  class="text-lg font-bold text-primary flex items-center gap-2"
+                  class="text-lg font-bold text-color flex items-center gap-2"
                 >
                   <i
                     class="fa-regular fa-bar-progress text-emerald-400 text-xl"
@@ -577,7 +577,7 @@ export const DashboardComponent = {
             >
               <div>
                 <h4
-                  class="text-lg font-bold text-primary flex items-center gap-2"
+                  class="text-lg font-bold text-color flex items-center gap-2"
                 >
                   <i class="fa-regular fa-tags text-sky-400 text-xl"></i>
                   Tag Velocity
@@ -600,7 +600,7 @@ export const DashboardComponent = {
         </div>
 
         <div
-          class="w-full col-span-2 sm:col-span-full mt-4 bg-surface-2 rounded-2xl"
+          class="w-full col-span-2 sm:col-span-full mt-4 bg-surface-2 border border-border/70 rounded-2xl"
         >
           <div class="w-full col-span-full bg-surface-2 rounded-2xl p-6">
             <div
@@ -608,7 +608,7 @@ export const DashboardComponent = {
             >
               <div>
                 <h4
-                  class="text-lg font-bold text-primary flex items-center gap-2"
+                  class="text-lg font-bold text-color flex items-center gap-2"
                 >
                   <i class="fa-regular fa-sliders text-brand/80 text-xl"></i>
                   Task-Level Execution & Subtask Progress
@@ -637,7 +637,7 @@ export const DashboardComponent = {
                             class="fa-regular fa-clipboard-list-check text-brand/60"
                           ></i>
                         </div>
-                        <h2 class="text-2xl font-bold text-primary">
+                        <h2 class="text-2xl font-bold text-color">
                           No active tasks
                         </h2>
                         <p class="mt-3 text-secondary max-w-sm mx-auto">
@@ -775,12 +775,12 @@ export const DashboardComponent = {
 
                               <h5
                                 data-tooltip-title="${task.title}"
-                                class="sm:hidden block text-sm font-bold text-primary truncate cursor-pointer"
+                                class="sm:hidden block text-sm font-bold text-color truncate cursor-pointer"
                               >
                                 ${task.title}
                               </h5>
                               <h5
-                                class="hidden sm:flex text-sm font-bold text-primary"
+                                class="hidden sm:flex text-sm font-bold text-color"
                               >
                                 ${task.title}
                               </h5>
@@ -847,7 +847,7 @@ export const DashboardComponent = {
                                     >Subtasks</span
                                   >
                                   <span
-                                    class="font-mono font-bold ${subtaskPercentColor}"
+                                    class="font-bold ${subtaskPercentColor}"
                                     >${subtaskInfo.completedCount}/${subtaskInfo.totalCount}
                                     (${subtaskInfo.percentage}%)</span
                                   >
@@ -868,7 +868,7 @@ export const DashboardComponent = {
                                   >Created</span
                                 >
                                 <span
-                                  class="text-xs font-mono font-medium text-primary"
+                                  class="text-xs font-medium text-color"
                                   >${task.createdAt || "N/A"}</span
                                 >
                               </div>
