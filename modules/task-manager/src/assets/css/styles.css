@@ -84,6 +84,10 @@
   .apexcharts-legend-text {
     color: #e2e8f0 !important;
   }
+
+  .text-color {
+    color: var(--color-primary);
+  }
 }
 
 /* ============================================ */
@@ -154,6 +158,10 @@
   .apexcharts-legend-text {
     color: #161f30 !important;
   }
+
+  .text-color {
+    color: var(--color-secondary);
+  }
 }
 
 /* ============================= */
@@ -167,6 +175,7 @@ body {
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
+  font-family: "Roboto Condensed";
   transition:
     background 0.3s ease,
     color 0.3s ease,
