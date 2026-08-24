@@ -18,10 +18,10 @@ export const HeaderComponent = {
             <div
               class="w-10 h-10 lg:hidden flex flex-row justify-center items-center shrink-0"
             >
-              <a href="/">
+              <a href="/time-manager">
                 <img
                   id="logo"
-                  src="/picture/logo.png"
+                  src="/modules/time-manager/public/picture/logo.png"
                   class="logo h-full justify-center shadow-brand/10"
                   title="Time Manager"
                   alt="Time Manager Logo"

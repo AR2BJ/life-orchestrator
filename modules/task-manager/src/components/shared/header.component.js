@@ -13,10 +13,10 @@ export const HeaderComponent = {
           <div
             class="w-10 h-10 lg:hidden flex flex-row justify-center items-center"
           >
-            <a href="/" class="w-10 h-10 flex flex-row justify-center items-center">
+            <a href="/task-manager" class="w-10 h-10 flex flex-row justify-center items-center">
               <img
                 id="logo"
-                src="/picture/logo.png"
+                src="/modules/task-manager/public/picture/logo.png"
                 class="logo w-10 h-10 justify-center shadow-brand/10"
                 title="Task Manager"
                 alt="Task Manager Logo"

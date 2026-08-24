@@ -7,10 +7,10 @@ export const DesktopNavComponent = {
       >
         <div class="flex flex-col items-center gap-6 w-full px-3">
           <div class="w-13.5 h-13.5 flex flex-row justify-center items-center">
-            <a href="/">
+            <a href="/time-manager">
               <img
                 id="logo"
-                src="/picture/logo.png"
+                src="/modules/time-manager/public/picture/logo.png"
                 class="logo h-full justify-center shadow-brand/10"
                 title="Time Manager"
                 alt="Time Manager Logo"
