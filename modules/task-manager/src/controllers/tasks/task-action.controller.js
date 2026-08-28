@@ -114,7 +114,7 @@ export const TaskActionController = {
           const updatedTask = updated.find((t) => t.id === taskId);
 
           if (updatedTask && updatedTask.status === "done") {
-            openSubtasksState.delete(taskId);
+            openSubtasksState.expandedTaskIds.delete(taskId);
           }
 
           StateManager.save(updated);

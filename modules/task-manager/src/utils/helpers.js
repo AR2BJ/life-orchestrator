@@ -1,8 +1,13 @@
-export const openSubtasksState = new Set();
+export const openSubtasksState = {
+  expandedTaskIds: new Set(),
 
-export function clearOpenSubtasksState() {
-  openSubtasksState.clear();
-}
+  subtasksMemory: new Map(),
+
+  clear() {
+    this.expandedTaskIds.clear();
+    this.subtasksMemory.clear();
+  },
+};
 
 export function getTaskMatrixAttributes(task) {
   // 1. Calculate Importance Score (1 to 5)

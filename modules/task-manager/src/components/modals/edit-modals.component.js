@@ -91,12 +91,6 @@ export const EditModalsComponent = {
                   </div>
 
                   <div class="lg:col-span-1">
-                    <label
-                      for="edit-task-duedate"
-                      class="mb-1.5 block ps-3 text-xs font-semibold text-secondary"
-                    >
-                      Due Date
-                    </label>
                     <div id="edit-datepicker-container"></div>
                   </div>
                 </div>

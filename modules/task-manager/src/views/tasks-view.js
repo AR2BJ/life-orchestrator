@@ -119,11 +119,6 @@ export const TasksView = {
                 </div>
 
                 <div class="w-full">
-                  <label
-                    for="task-duedate-input"
-                    class="mb-1.5 block ps-3 text-xs font-semibold text-secondary"
-                    >Due Date</label
-                  >
                   <div id="create-datepicker-container"></div>
                 </div>
               </div>

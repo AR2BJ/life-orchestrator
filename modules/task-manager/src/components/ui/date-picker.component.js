@@ -1,4 +1,4 @@
-import { formatDate, generateId, todayISO } from "@/utils/helpers";
+import { generateId, todayISO } from "@/utils/helpers";
 
 export class DatePickerComponent {
   constructor({
@@ -6,13 +6,18 @@ export class DatePickerComponent {
     value = "",
     placeholder = "YYYY-MM-DD",
     background = "surface-2",
+    label = "date picker",
+    isRow = false,
     onChange,
   }) {
     this.id = id;
     this.value = value;
     this.placeholder = placeholder;
     this.background = background;
+    this.label = label;
     this.onChange = onChange;
+
+    this.isRow = isRow;
 
     const today = new Date();
     this.minYear = today.getFullYear();
@@ -78,30 +83,48 @@ export class DatePickerComponent {
 
   render() {
     return `
-      <div
-        id="${this.id}-container"
-        class="relative w-full"
-      >
-        <div class="relative flex items-center">
-          <input
-            type="text"
-            id="${this.id}"
-            value="${this.value}"
-            placeholder="${this.placeholder}"
-            maxlength="10"
-            autocomplete="off"
-            class="h-11 w-full rounded-xl border border-border bg-${
-              this.background
-            } px-4 text-sm text-color placeholder:text-secondary/70 transition focus:border-brand/80 focus:outline-none"
-          />
-          <button
-            type="button"
-            id="${this.id}-calendar-btn"
-            class="absolute right-2 p-1.5 pt-1 text-secondary hover:text-color focus:outline-none hover:scale-110 transition cursor-pointer"
-            tabindex="-1"
+      <div class="relative flex flex-col justify-center items-stretch gap-1">
+        <div
+          class="flex ${
+            this.isRow ? "flex-row" : "flex-col"
+          } justify-center items-stretch"
+        >
+          ${
+            this.label
+              ? `<label
+                  for="${this.id}"
+                  class="${this.isRow ? "pe-2 hidden sm:flex flex-row justify-center items-center" : "mb-1.5 ps-3 flex flex-row justify-start items-center"} text-xs font-semibold text-secondary"
+                >
+                  ${this.label}${this.isRow ? ":" : ""}
+                </label>`
+              : ""
+          }
+          <div
+            id="${this.id}-container"
+            class="relative w-full"
           >
-            <i class="fa-regular fa-calendar text-base"></i>
-          </button>
+            <div class="relative flex items-center">
+              <input
+                type="text"
+                id="${this.id}"
+                value="${this.value}"
+                placeholder="${this.placeholder}"
+                maxlength="10"
+                autocomplete="off"
+                class="h-11 w-full rounded-xl border border-border bg-${
+                  this.background
+                } px-4 text-sm text-color placeholder:text-secondary/70 transition focus:border-brand/80 focus:outline-none"
+              />
+              <button
+                type="button"
+                id="${this.id}-calendar-btn"
+                class="absolute right-2 p-1.5 pt-1 text-secondary hover:text-color focus:outline-none hover:scale-110 transition cursor-pointer"
+                tabindex="-1"
+              >
+                <i class="fa-regular fa-calendar text-base"></i>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     `;

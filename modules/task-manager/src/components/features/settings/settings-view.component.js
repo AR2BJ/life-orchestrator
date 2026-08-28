@@ -144,12 +144,12 @@ export const SettingsViewComponent = {
             </div>
 
             <div class="flex flex-col gap-2">
-              <label
+              <div
                 class="text-[10px] sm:text-[11px] font-bold text-secondary uppercase tracking-wider flex items-center gap-1.5"
               >
                 <i class="fa-regular fa-file-export opacity-70"></i>
                 <span>Export Application Ledger</span>
-              </label>
+              </div>
               <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
                 <button
                   id="sett-export-json-btn"
@@ -184,12 +184,12 @@ export const SettingsViewComponent = {
             </div>
 
             <div class="flex flex-col gap-2 border-t border-border/60 pt-4">
-              <label
+              <div
                 class="text-[10px] sm:text-[11px] font-bold text-secondary uppercase tracking-wider flex items-center gap-1.5"
               >
                 <i class="fa-regular fa-file-import opacity-70"></i>
                 <span>Import Database Snapshot</span>
-              </label>
+              </div>
               <div
                 id="sett-dropzone"
                 class="border-2 border-dashed border-border hover:border-brand/60 rounded-xl p-4 sm:p-5 flex flex-col items-center justify-center gap-2 bg-surface-2/40 hover:bg-surface-2 transition cursor-pointer group text-center"

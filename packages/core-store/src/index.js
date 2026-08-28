@@ -1,4 +1,4 @@
-const ROOT_KEY = "LIFE_ORCHESTRATOR_STORAGE";
+export const ROOT_KEY = "LIFE_ORCHESTRATOR_STORAGE";
 const STORAGE_VERSION = 1;
 
 export class CoreStore {

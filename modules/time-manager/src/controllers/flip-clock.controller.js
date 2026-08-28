@@ -206,8 +206,7 @@ export const FlipClockController = {
               text: "Create Task",
               icon: "fa-plus",
               onClick: async () => {
-                if (document.fullscreenElement) await document.exitFullscreen();
-                ModalController.openTaskModal();
+                window.open("/task-manager", "_blank");
               },
             },
           });

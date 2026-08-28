@@ -69,6 +69,7 @@ export const SettingsTagController = {
             <div class="flex items-center gap-1 min-w-0 flex-1 ps-1">
               <i class="fa-regular fa-tag text-brand/80 text-sm"></i>
               <input
+                id="${tag.id}"
                 type="text"
                 value="${(tag.name || "").replace(/"/g, "&quot;")}"
                 data-action="edit-tag-name"

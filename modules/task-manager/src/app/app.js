@@ -1,6 +1,8 @@
 import "@life-orchestrator/ui-theme/fontawesome/js/all.js";
 import "@life-orchestrator/ui-theme/assets/css/font.css";
 
+import { StateManager, state } from "@/models/state.model";
+
 import { CalendarController } from "@/controllers/calendar.controller";
 import { GlobalLoaderService } from "@/services/loader.service";
 import { MatrixController } from "@/controllers/matrix.controller";
@@ -9,7 +11,6 @@ import { SettingsController } from "@/controllers/settings.controller";
 import { TaskController } from "@/controllers/task.controller.js";
 import { ThemeController } from "@/controllers/theme.controller.js";
 import { TooltipController } from "@/controllers/tooltip.controller";
-import { state } from "@/models/state.model";
 
 const loader = document.querySelector("#app-loader");
 const app = document.querySelector("#app");
