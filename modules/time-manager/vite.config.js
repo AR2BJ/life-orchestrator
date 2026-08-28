@@ -24,6 +24,10 @@ export default defineConfig({
         __dirname,
         "../../packages/ui-theme/src",
       ),
+      "@life-orchestrator/event-bus": path.resolve(
+        __dirname,
+        "../../packages/event-bus/src",
+      ),
     },
   },
   server: {

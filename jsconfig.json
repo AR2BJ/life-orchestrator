@@ -17,7 +17,8 @@
       { "path": "./modules/task-manager" },
       { "path": "./modules/time-manager" },
       { "path": "./packages/core-store" },
-      { "path": "./packages/ui-theme" }
+      { "path": "./packages/ui-theme" },
+      { "path": "./packages/event-bus" }
     ]
   },
   "exclude": ["node_modules", "dist"]

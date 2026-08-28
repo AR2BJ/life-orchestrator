@@ -6,10 +6,9 @@
     "moduleResolution": "bundler",
     "paths": {
       "@/*": ["./src/*"],
-      "@life-orchestrator/core-store": [
-        "../../packages/core-store/src/index.js"
-      ],
-      "@life-orchestrator/ui-theme/*": ["../../packages/ui-theme/src/*"]
+      "@life-orchestrator/core-store": ["../../packages/core-store/src/*"],
+      "@life-orchestrator/ui-theme": ["../../packages/ui-theme/src/*"],
+      "@life-orchestrator/event-bus": ["../../packages/event-bus/src/*"]
     },
     "rootDir": "./src"
   },
