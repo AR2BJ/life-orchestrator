@@ -1,5 +1,4 @@
 import { StateManager, state } from "@/models/state.model.js";
-import { clearOpenSubtasksState, openSubtasksState } from "@/utils/helpers.js";
 
 import { AnalyticsController } from "./analytics.controller.js";
 import { AnalyticsView } from "@/views/analytics-view.js";
@@ -16,12 +15,14 @@ import { MatrixController } from "./matrix.controller.js";
 import { MatrixView } from "@/views/matrix-view.js";
 import { MobileNavComponent } from "@/components/layout/mobile-nav.component.js";
 import { SettingsArchiveController } from "./settings/settings-archive.controller.js";
-import { SettingsController } from "./settings.controller.js";
 import { SettingsTagController } from "./settings/settings-tag.controller.js";
 import { SettingsViewComponent } from "@/components/features/settings/settings-view.component.js";
 import { TaskActionController } from "./tasks/task-action.controller.js";
 import { TaskFormController } from "./tasks/task-form.controller.js";
+import { TaskService } from "@/services/task.service.js";
 import { TasksView } from "@/views/tasks-view.js";
+import { eventBus } from "@/services/event-bus.service.js";
+import { openSubtasksState } from "@/utils/helpers.js";
 import { renderTagFilterBar } from "@/views/tasks/tag-bar.renderer.js";
 import { renderTaskList } from "@/views/tasks/task-list.renderer.js";
 
@@ -43,6 +44,7 @@ export const TaskController = {
     this.bindMenuToggle();
     this.bindActionMenuToggle();
     this.setupTabIndicatorObserver();
+    this.subscribeToDataChanges();
 
     requestAnimationFrame(() => {
       this.updateTabStyles(state.activeTab);
@@ -198,6 +200,15 @@ export const TaskController = {
       if (container && typeof renderFn === "function") {
         container.innerHTML = renderFn();
       }
+    });
+  },
+
+  subscribeToDataChanges() {
+    eventBus.subscribe("store:changed", ({ tasks, tags }) => {
+      state.tasks = tasks;
+      state.tags = tags;
+
+      this.refreshUI();
     });
   },
 
@@ -450,7 +461,7 @@ export const TaskController = {
           try {
             StateManager.setView(v);
 
-            clearOpenSubtasksState();
+            openSubtasksState.expandedTaskIds.clear();
 
             navButtons.forEach((nav) => {
               const dEl = document.getElementById(`nav-${nav}`);
@@ -489,11 +500,11 @@ export const TaskController = {
         if (isHidden) {
           container.classList.remove("hidden");
           chevron?.classList.add("rotate-180");
-          openSubtasksState.add(taskId);
+          openSubtasksState.expandedTaskIds.add(taskId);
         } else {
           container.classList.add("hidden");
           chevron?.classList.remove("rotate-180");
-          openSubtasksState.delete(taskId);
+          openSubtasksState.expandedTaskIds.delete(taskId);
         }
       }
     });
@@ -627,7 +638,7 @@ export const TaskController = {
   },
 
   handleTabSwitch(tab) {
-    clearOpenSubtasksState();
+    openSubtasksState.expandedTaskIds.clear();
     StateManager.setTab(tab);
     this.updateTabStyles(tab);
     this.refreshUI();

@@ -5,17 +5,6 @@ import { CoreStore } from "@life-orchestrator/core-store";
 export const TIME_NAMESPACE = "time_manager";
 export const STORAGE_VERSION = 1;
 
-function normalizeTask(task) {
-  return {
-    id: String(task.id || generateId()),
-    title: task.title || "Untitled Task",
-    status: task.status || "todo",
-    estimatedFocusUnits: Number(task.estimatedFocusUnits) || 1,
-    completedFocusUnits: Number(task.completedFocusUnits) || 0,
-    createdAt: task.createdAt || todayISO(),
-  };
-}
-
 function normalizeSession(session) {
   return {
     id: String(session.id || generateId()),
@@ -38,8 +27,8 @@ function normalizeNote(note) {
 function normalizeTimer(timer, defaultWorkTime = 25) {
   const fallbackSecs = defaultWorkTime * 60;
   return {
-    isRunning: false,
-    isPaused: Boolean(timer?.isRunning || timer?.isPaused),
+    isRunning: Boolean(timer?.isRunning),
+    isPaused: Boolean(timer?.isPaused),
     timeRemaining: Number(timer?.timeRemaining) ?? fallbackSecs,
     duration: Number(timer?.duration) ?? fallbackSecs,
     flowTime: Number(timer?.flowTime) || 0,
@@ -49,7 +38,6 @@ function normalizeTimer(timer, defaultWorkTime = 25) {
 }
 
 function migrateData(data) {
-  const tasks = Array.isArray(data.tasks) ? data.tasks : [];
   const sessions = Array.isArray(data.sessions) ? data.sessions : [];
   const notes = Array.isArray(data.notes) ? data.notes : [];
   const settings = data.settings || {};
@@ -59,7 +47,6 @@ function migrateData(data) {
     version: STORAGE_VERSION,
     activeMode: data.activeMode === "flow" ? "flow" : "pomodoro",
     activeTaskId: data.activeTaskId ? String(data.activeTaskId) : null,
-    tasks: tasks.map(normalizeTask),
     sessions: sessions.map(normalizeSession),
     notes: notes.map(normalizeNote),
     timer: normalizeTimer(data.timer, pomodoroWorkTime),
@@ -89,7 +76,6 @@ export function saveToStorage(data) {
     version: STORAGE_VERSION,
     activeMode: data.activeMode || "pomodoro",
     activeTaskId: data.activeTaskId ? String(data.activeTaskId) : null,
-    tasks: data.tasks || [],
     sessions: data.sessions || [],
     notes: data.notes || [],
     timer: data.timer || {},
@@ -104,6 +90,6 @@ export function loadFromStorage() {
   return migrateData(data);
 }
 
-export function clearTaskStorage() {
+export function clearTimeStorage() {
   CoreStore.clearNamespace(TIME_NAMESPACE);
 }

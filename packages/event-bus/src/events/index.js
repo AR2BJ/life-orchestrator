@@ -4,6 +4,8 @@ export const SYSTEM_EVENTS = Object.freeze({
   TASK_DELETED: "system:task-deleted",
   TASK_UPDATED: "system:task-updated",
   TASK_CREATED: "system:task-created",
+  TASK_ARCHIVE: "system:task-archive",
+  TASK_RESTORE: "system:task-restore",
   TASK_UPDATED_STATUS: "system:task-updated-status",
 
   // Note Events

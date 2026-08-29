@@ -1,8 +1,18 @@
-import { formatDate, generateId, todayISO } from "@/utils/helpers.js";
-import { loadFromStorage, saveToStorage } from "./storage.model.js";
+import "@/services/store.service";
 
+import { TIME_MANAGER_EVENTS, eventBus } from "@/services/event-bus.service.js";
+import {
+  TIME_NAMESPACE,
+  loadFromStorage,
+  saveToStorage,
+} from "./storage.model.js";
+import { formatDate, generateId, todayISO } from "@/utils/helpers.js";
+
+import { CoreStore } from "@life-orchestrator/core-store";
 import { NoteModel } from "./note.model.js";
 import { SoundModel } from "./sound.model.js";
+
+export const TASK_NAMESPACE = "task_manager";
 
 export const DEFAULT_SETTINGS = {
   pomodoroWorkTime: 25,
@@ -34,7 +44,6 @@ export const state = {
     pomodoroSessionCount: 0,
     currentPhase: "work",
   },
-  tasks: [],
   sessions: [],
   notes: [],
   settings: { ...DEFAULT_SETTINGS },
@@ -43,17 +52,31 @@ export const state = {
 const listeners = new Set();
 let isInitialized = false;
 
+const taskData = CoreStore.getNamespace(TASK_NAMESPACE);
+
 export const StateManager = {
+  _rawCache: {},
+
   init() {
     if (isInitialized) return state;
+    this.reloadFromStorage(false);
+    isInitialized = true;
+    return state;
+  },
 
+  reloadFromStorage(notify = true) {
     const saved = loadFromStorage();
+
+    const currentTaskData = CoreStore.getNamespace(TASK_NAMESPACE);
+    const tasks = currentTaskData?.tasks || [];
+
     if (saved) {
       state.activeMode = saved.activeMode || "pomodoro";
-      state.tasks = saved.tasks || [];
       state.sessions = saved.sessions || [];
       state.notes = saved.notes || [];
-      state.activeTaskId = saved.activeTaskId || null;
+      state.activeTaskId = saved.activeTaskId
+        ? String(saved.activeTaskId)
+        : null;
 
       if (saved.settings) {
         state.settings = {
@@ -80,16 +103,44 @@ export const StateManager = {
       SoundModel.init(DEFAULT_SETTINGS);
     }
 
-    const hasActiveTask = state.tasks.some(
-      (t) => String(t.id) === String(state.activeTaskId),
-    );
-    if (!hasActiveTask) {
-      const firstTask = state.tasks.find((t) => t.status !== "done");
-      state.activeTaskId = firstTask ? String(firstTask.id) : null;
+    if (state.activeTaskId && Array.isArray(tasks) && tasks.length > 0) {
+      const exists = tasks.some(
+        (t) => String(t.id) === String(state.activeTaskId),
+      );
+
+      if (!exists) {
+        const firstValid = tasks.find((t) => t.status !== "done");
+        state.activeTaskId = firstValid ? String(firstValid.id) : null;
+      }
     }
 
-    isInitialized = true;
-    return state;
+    this._rawCache = CoreStore.getNamespace(TIME_NAMESPACE) || {};
+
+    if (notify) {
+      this.notify();
+      this.dispatchStateEvents();
+    }
+  },
+
+  dispatchStateEvents() {
+    eventBus.emit(TIME_MANAGER_EVENTS.TASKS_CHANGED, taskData?.tasks);
+    eventBus.emit(TIME_MANAGER_EVENTS.NOTES_CHANGED, state.notes);
+    eventBus.emit(TIME_MANAGER_EVENTS.SESSIONS_CHANGED, state.sessions);
+    eventBus.emit(TIME_MANAGER_EVENTS.SETTINGS_CHANGED, state.settings);
+    eventBus.emit(TIME_MANAGER_EVENTS.TIMER_CHANGED, state.timer);
+
+    const currentSoundId = state.settings.currentSoundId || "none";
+    const volume = state.settings.volume ?? 50;
+
+    eventBus.emit(TIME_MANAGER_EVENTS.SOUND_TRACK_CHANGED, currentSoundId);
+    eventBus.emit(TIME_MANAGER_EVENTS.SOUND_VOLUME_CHANGED, volume);
+    eventBus.emit(TIME_MANAGER_EVENTS.SOUND_CHANGED, {
+      currentSoundId,
+      volume,
+      soundState: SoundModel.getState(),
+    });
+
+    eventBus.emit(TIME_MANAGER_EVENTS.STORE_CHANGED, state);
   },
 
   getState() {
@@ -149,7 +200,6 @@ export const StateManager = {
   updateTimerState(newTimerState) {
     state.timer = { ...state.timer, ...newTimerState };
     this.save();
-    this.notify();
   },
 
   updateSettings(newSettings = {}) {
@@ -173,7 +223,6 @@ export const StateManager = {
     }
 
     this.save();
-    this.notify();
   },
 
   resetTimer() {
@@ -191,12 +240,10 @@ export const StateManager = {
     }
 
     this.save();
-    this.notify();
   },
 
   resetToDefaults() {
     state.settings = { ...DEFAULT_SETTINGS };
-    state.tasks = [];
     state.sessions = [];
     state.notes = [];
     state.activeTaskId = null;
@@ -217,15 +264,17 @@ export const StateManager = {
     NoteModel.reset();
 
     this.save();
-    this.notify();
 
     window.dispatchEvent(new CustomEvent("notesChanged"));
   },
 
   addSession(sessionData = {}) {
-    const activeTask = state.tasks.find(
+    const currentTaskData = CoreStore.getNamespace(TASK_NAMESPACE);
+    const tasks = currentTaskData?.tasks || [];
+    const activeTask = tasks.find(
       (t) => String(t.id) === String(state.activeTaskId),
     );
+
     const session = {
       id: generateId(),
       taskId: sessionData.taskId || state.activeTaskId || null,
@@ -238,9 +287,7 @@ export const StateManager = {
     };
 
     state.sessions.push(session);
-
     this.save();
-    this.notify();
   },
 
   save() {
@@ -257,11 +304,14 @@ export const StateManager = {
     saveToStorage({
       activeMode: state.activeMode,
       activeTaskId: state.activeTaskId,
-      tasks: state.tasks,
       sessions: state.sessions,
       notes: state.notes,
       timer: state.timer,
       settings: state.settings,
     });
+
+    this._rawCache = CoreStore.getNamespace(TIME_NAMESPACE) || {};
+    this.notify();
+    this.dispatchStateEvents();
   },
 };

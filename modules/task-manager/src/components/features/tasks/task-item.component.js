@@ -21,25 +21,25 @@ export const TaskItemComponent = {
 
       if (isCompleted) {
         dueDateBadge = `
-      <span class="inline-flex items-center gap-1 rounded-md border border-border bg-emerald-500/10 px-2 py-0.5 text-[10px] font-medium text-emerald-500">
+      <span class="inline-flex items-center gap-1 rounded-md border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 text-[10px] font-medium text-emerald-500/80">
         <i class="fa-regular fa-calendar-check"></i> ${task.dueDate}
       </span>
     `;
       } else if (overdue || daysRemaining < 0) {
         dueDateBadge = `
-      <span class="inline-flex items-center gap-1 rounded-md border border-red-500/30 bg-red-500/10 px-2 py-0.5 text-[10px] font-semibold text-red-500 ${isArchived ? "" : "animate-pulse"}">
+      <span class="inline-flex items-center gap-1 rounded-md border border-red-500/30 bg-red-500/10 px-2 py-0.5 text-[10px] font-semibold text-red-500/80 ${isArchived ? "" : "animate-pulse"}">
         <i class="fa-regular fa-clock"></i> Overdue (${absDays}d ago)
       </span>
     `;
       } else if (daysRemaining === 0) {
         dueDateBadge = `
-      <span class="inline-flex items-center gap-1 rounded-md border border-amber-500/30 bg-amber-500/10 px-2 py-0.5 text-[10px] font-semibold text-amber-500">
+      <span class="inline-flex items-center gap-1 rounded-md border border-amber-500/30 bg-amber-500/10 px-2 py-0.5 text-[10px] font-semibold text-amber-500/80">
         <i class="fa-regular fa-clock"></i> Due Today
       </span>
     `;
       } else {
         dueDateBadge = `
-      <span class="inline-flex items-center gap-1 rounded-md border border-border bg-surface-2 px-2 py-0.5 text-[10px] font-medium text-secondary">
+      <span class="inline-flex items-center gap-1 rounded-md border border-secondary/30 bg-secondary/10 px-2 py-0.5 text-[10px] font-medium text-secondary/80">
         <i class="fa-regular fa-calendar-day"></i> Due in ${daysRemaining}d
       </span>
     `;
@@ -64,6 +64,9 @@ export const TaskItemComponent = {
     const subtaskProgress = calculateSubtaskProgress(task.subtasks);
     const hasSubtasks =
       Array.isArray(task.subtasks) && task.subtasks.length > 0;
+
+    const completed = task.completedFocusUnits || 0;
+    const estimated = task.estimatedFocusUnits || 1;
 
     const subtaskProgressColor =
       subtaskProgress.percentage === 100
@@ -96,7 +99,7 @@ export const TaskItemComponent = {
       : "fa-box-archive text-amber-500/80";
 
     const checkTooltip = isCompleted ? "Uncheck Task" : "Check Task";
-    const isExpanded = openSubtasksState.has(task.id);
+    const isExpanded = openSubtasksState.expandedTaskIds.has(task.id);
 
     return `
       <div
@@ -104,7 +107,9 @@ export const TaskItemComponent = {
         class="task-item group relative flex flex-col gap-4 p-3 md:p-4 rounded-xl bg-surface-2/40 hover:bg-surface-2/60 transition-all"
       >
         <div
-          class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between"
+          class="flex flex-col ${
+            estimated ? "gap-4" : ""
+          } md:flex-row md:justify-between"
         >
           <div
             class="flex flex-wrap sm:flex-nowrap justify-start items-start gap-3 min-w-0 flex-1"
@@ -186,7 +191,9 @@ export const TaskItemComponent = {
                   : ""
               }
 
-              <div class="flex items-center gap-3 mt-2 text-[11px] lg:text-xs text-muted">
+              <div
+                class="flex items-center gap-3 mt-2 text-[11px] lg:text-xs text-muted"
+              >
                 <span
                   ><i class="fa-regular fa-clock me-1"></i>Created
                   ${task.createdAt}</span
@@ -215,108 +222,129 @@ export const TaskItemComponent = {
               }
             </div>
           </div>
+          <div class="flex flex-col justify-between">
+            <div
+              class="absolute top-3 right-3 md:static md:top-auto md:right-auto flex self-start z-20 shrink-0"
+            >
+              <div class="hidden md:flex items-center gap-2">
+                <div class="relative">
+                  <button
+                    data-id="${task.id}"
+                    class="${actionButtonClass} w-9 h-9 rounded-lg bg-surface-2 border border-border flex items-center justify-center hover:cursor-pointer peer transition"
+                  >
+                    <i class="fa-regular ${actionIcon} text-base"></i>
+                  </button>
+                  <div
+                    class="absolute top-full left-1/2 -translate-x-1/2 mt-2 px-2 py-1 rounded bg-surface-2 text-xs text-color opacity-0 cursor-default peer-hover:opacity-100 transition z-10"
+                  >
+                    ${actionTooltip}
+                  </div>
+                </div>
 
-          <div
-            class="absolute top-3 right-3 md:static flex self-start md:top-auto md:right-auto z-20 shrink-0"
-          >
-            <div class="hidden md:flex items-center gap-2">
-              <div class="relative">
-                <button
-                  data-id="${task.id}"
-                  class="${actionButtonClass} w-9 h-9 rounded-lg bg-surface-2 border border-border flex items-center justify-center hover:cursor-pointer peer transition"
-                >
-                  <i class="fa-regular ${actionIcon} text-base"></i>
-                </button>
-                <div
-                  class="absolute top-full left-1/2 -translate-x-1/2 mt-2 px-2 py-1 rounded bg-surface-2 text-xs text-color opacity-0 cursor-default peer-hover:opacity-100 transition z-10"
-                >
-                  ${actionTooltip}
+                ${
+                  isCompleted && !isArchived
+                    ? ""
+                    : ` <div class="relative">
+                      <button
+                        data-id="${task.id}"
+                        class="edit-btn w-9 h-9 rounded-lg bg-surface-2 hover:bg-blue-600/10 border border-border flex items-center justify-center hover:cursor-pointer peer transition"
+                      >
+                        <i
+                          class="fa-regular fa-pen-to-square text-blue-500/80 text-base"
+                        ></i>
+                      </button>
+                      <div
+                        class="absolute top-full left-1/2 -translate-x-1/2 mt-2 px-2 py-1 rounded bg-surface-2 text-xs text-color opacity-0 cursor-default peer-hover:opacity-100 transition z-10 whitespace-nowrap pointer-events-none border border-border/60"
+                      >
+                        Edit
+                      </div>
+                    </div>`
+                }
+
+                <div class="relative">
+                  <button
+                    data-id="${task.id}"
+                    class="delete-btn w-9 h-9 rounded-lg bg-surface-2 hover:bg-red-600/10 border border-border flex items-center justify-center hover:cursor-pointer peer transition"
+                  >
+                    <i
+                      class="fa-regular fa-trash-can text-red-500/80 text-base"
+                    ></i>
+                  </button>
+                  <div
+                    class="absolute top-full left-1/2 -translate-x-1/2 mt-2 px-2 py-1 rounded bg-surface-2 text-xs text-color opacity-0 cursor-default peer-hover:opacity-100 transition z-10 whitespace-nowrap pointer-events-none border border-border/60"
+                  >
+                    Delete
+                  </div>
                 </div>
               </div>
 
-              <div class="relative">
+              <div class="flex md:hidden relative dropdown-container">
                 <button
                   data-id="${task.id}"
-                  class="edit-btn w-9 h-9 rounded-lg bg-surface-2 hover:bg-blue-600/10 border border-border flex items-center justify-center hover:cursor-pointer peer transition"
+                  class="dropdown-toggle-btn h-9 w-9 rounded-lg border border-border text-secondary hover:text-color hover:bg-surface flex items-center justify-center transition shadow-sm cursor-pointer"
                 >
-                  <i
-                    class="fa-regular fa-pen-to-square text-blue-500/80 text-base"
-                  ></i>
+                  <i class="fa-regular fa-ellipsis-vertical text-lg"></i>
                 </button>
-                <div
-                  class="absolute top-full left-1/2 -translate-x-1/2 mt-2 px-2 py-1 rounded bg-surface-2 text-xs text-color opacity-0 cursor-default peer-hover:opacity-100 transition z-10 whitespace-nowrap pointer-events-none border border-border/60"
-                >
-                  Edit
-                </div>
-              </div>
 
-              <div class="relative">
-                <button
-                  data-id="${task.id}"
-                  class="delete-btn w-9 h-9 rounded-lg bg-surface-2 hover:bg-red-600/10 border border-border flex items-center justify-center hover:cursor-pointer peer transition"
-                >
-                  <i
-                    class="fa-regular fa-trash-can text-red-500/80 text-base"
-                  ></i>
-                </button>
                 <div
-                  class="absolute top-full left-1/2 -translate-x-1/2 mt-2 px-2 py-1 rounded bg-surface-2 text-xs text-color opacity-0 cursor-default peer-hover:opacity-100 transition z-10 whitespace-nowrap pointer-events-none border border-border/60"
+                  data-id="${task.id}"
+                  class="dropdown-menu absolute right-0 mt-1.5 w-45 rounded-xl border border-border bg-surface p-1 shadow-xl hidden z-30 flex-col gap-0.5"
                 >
-                  Delete
+                  <button
+                    data-id="${task.id}"
+                    class="${
+                      isArchived ? "restore-btn" : "archive-btn"
+                    } flex w-full items-center gap-2 rounded-lg px-2.5 py-1.5 text-left text-xs font-medium border-0 bg-transparent text-secondary hover:text-color hover:bg-surface-2 transition cursor-pointer"
+                  >
+                    <i class="fa-regular ${actionIcon} text-xs"></i>
+                    <span>${isArchived ? "Restore Task" : "Archive Task"}</span>
+                  </button>
+
+                  ${
+                    isCompleted && !isArchived
+                      ? ""
+                      : ` <button
+                      data-id="${task.id}"
+                      class="edit-btn flex w-full items-center gap-2 rounded-lg px-2.5 py-1.5 text-left text-xs font-medium border-0 bg-transparent text-secondary hover:text-color hover:bg-surface-2 transition cursor-pointer"
+                    >
+                      <i
+                        class="fa-regular fa-pen-to-square text-xs text-blue-500/80"
+                      ></i>
+                      <span>Edit Task</span>
+                    </button>`
+                  }
+
+                  <div class="my-0.5 border-t border-border/40"></div>
+
+                  <button
+                    data-id="${task.id}"
+                    class="delete-btn flex w-full items-center gap-2 rounded-lg px-2.5 py-1.5 text-left text-xs font-medium border-0 bg-transparent text-red-500/80 hover:bg-red-500/5 transition cursor-pointer"
+                  >
+                    <i class="fa-regular fa-trash-can text-xs"></i>
+                    <span>Delete Permanently</span>
+                  </button>
                 </div>
               </div>
             </div>
 
-            <div class="flex md:hidden relative dropdown-container">
-              <button
-                data-id="${task.id}"
-                class="dropdown-toggle-btn h-9 w-9 rounded-lg border border-border text-secondary hover:text-color hover:bg-surface flex items-center justify-center transition shadow-sm cursor-pointer"
-              >
-                <i class="fa-regular fa-ellipsis-vertical text-lg"></i>
-              </button>
-
-              <div
-                data-id="${task.id}"
-                class="dropdown-menu absolute right-0 mt-1.5 w-45 rounded-xl border border-border bg-surface p-1 shadow-xl hidden z-30 flex-col gap-0.5"
-              >
-                <button
-                  data-id="${task.id}"
-                  class="${
-                    isArchived ? "restore-btn" : "archive-btn"
-                  } flex w-full items-center gap-2 rounded-lg px-2.5 py-1.5 text-left text-xs font-medium border-0 bg-transparent text-secondary hover:text-color hover:bg-surface-2 transition cursor-pointer"
-                >
-                  <i class="fa-regular ${actionIcon} text-xs"></i>
-                  <span>${isArchived ? "Restore Task" : "Archive Task"}</span>
-                </button>
-
-                <button
-                  data-id="${task.id}"
-                  class="edit-btn flex w-full items-center gap-2 rounded-lg px-2.5 py-1.5 text-left text-xs font-medium border-0 bg-transparent text-secondary hover:text-color hover:bg-surface-2 transition cursor-pointer"
-                >
-                  <i
-                    class="fa-regular fa-pen-to-square text-xs text-blue-500/80"
-                  ></i>
-                  <span>Edit Title</span>
-                </button>
-
-                <div class="my-0.5 border-t border-border/40"></div>
-
-                <button
-                  data-id="${task.id}"
-                  class="delete-btn flex w-full items-center gap-2 rounded-lg px-2.5 py-1.5 text-left text-xs font-medium border-0 bg-transparent text-red-500/80 hover:bg-red-500/5 transition cursor-pointer"
-                >
-                  <i class="fa-regular fa-trash-can text-xs"></i>
-                  <span>Delete Permanently</span>
-                </button>
-              </div>
-            </div>
+            ${
+              estimated !== 0
+                ? ` <div class="flex md:self-end z-20 shrink-0">
+                    <span
+                      class="text-[11px] font-bold text-brand bg-brand/10 px-2 py-1 rounded-md border flex flex-row justify-center items-center border-brand/20"
+                    >
+                      ${completed}/${estimated} Units
+                    </span>
+                  </div>`
+                : ""
+            }
           </div>
         </div>
 
         ${
           hasSubtasks
             ? `
-                <div class="mt-2 border-t border-border/60 pt-2">
+                <div class="border-t border-border/60 pt-2">
                   <button
                     type="button"
                     data-task-id="${task.id}"
@@ -368,43 +396,49 @@ export const TaskItemComponent = {
                     ${task.subtasks
                       .map(
                         (st) => `
-                      <div
-                        class="flex items-center justify-between gap-1 group/st rounded-lg p-2 hover:bg-surface-2/60 border border-transparent hover:border-border/50 transition cursor-pointer"
-                      >
-                        <div
-                          class="relative flex flex-row justify-start items-center gap-2 shrink-0 min-w-0 flex-1"
-                        >
-                          ${
-                            isArchived
-                              ? ""
-                              : `
-                          <button
-                            type="button"
-                            data-task-id="${task.id}"
-                            data-subtask-id="${st.id}"
-                            class="subtask-toggle w-6 h-6 shrink-0 rounded-md border-2 flex items-center justify-center transition peer hover:cursor-pointer ${
-                              st.completed
-                                ? "bg-brand/80 border-brand/80 text-(--color-btn-primary-text) shadow-lg shadow-brand/20"
-                                : "border-border text-secondary hover:border-brand/80 hover:text-brand/80"
-                            }"
+                          <div
+                            class="flex items-center justify-between gap-1 group/st rounded-lg p-2 hover:bg-surface-2/60 border border-transparent hover:border-border/50 transition cursor-pointer"
                           >
-                            <i class="fa-regular ${st.completed ? "fa-check text-xs md:text-sm font-bold" : "fa-square text-[10px]"}"></i>
-                          </button>
-              `
-                          }
+                            <div
+                              class="relative flex flex-row justify-start items-center gap-2 shrink-0 min-w-0 flex-1"
+                            >
+                              ${
+                                isArchived
+                                  ? ""
+                                  : `
+                                  <button
+                                    type="button"
+                                    data-task-id="${task.id}"
+                                    data-subtask-id="${st.id}"
+                                    class="subtask-toggle w-6 h-6 shrink-0 rounded-md border-2 flex items-center justify-center transition peer hover:cursor-pointer ${
+                                      st.completed
+                                        ? "bg-brand/80 border-brand/80 text-(--color-btn-primary-text) shadow-lg shadow-brand/20"
+                                        : "border-border text-secondary hover:border-brand/80 hover:text-brand/80"
+                                    }"
+                                  >
+                                    <i
+                                      class="fa-regular ${
+                                        st.completed
+                                          ? "fa-check text-xs md:text-sm font-bold"
+                                          : "fa-square text-[10px]"
+                                      }"
+                                    ></i>
+                                  </button>
+                                `
+                              }
 
-                          <span
-                            data-task-id="${task.id}"
-                            data-subtask-id="${st.id}"
-                            class="subtask-toggle text-sm text-color truncate ${
-                              st.completed ? "line-through opacity-50" : ""
-                            }"
-                          >
-                            ${st.title}
-                          </span>
-                        </div>
-                      </div>
-                    `,
+                              <span
+                               ${isArchived ? "" : `data-task-id="${task.id}"`}
+                                ${isArchived ? "" : `data-subtask-id="${st.id}"`}
+                                class="subtask-toggle text-sm text-color truncate ${
+                                  st.completed ? "line-through opacity-50" : ""
+                                }"
+                              >
+                                ${st.title}
+                              </span>
+                            </div>
+                          </div>
+                        `,
                       )
                       .join("")}
                   </div>

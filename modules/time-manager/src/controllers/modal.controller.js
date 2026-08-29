@@ -1,12 +1,13 @@
 import { ConfirmModalComponent } from "@/components/modals/confirm-modal.component.js";
 import { InfoModalComponent } from "@/components/modals/info-modal.component";
-import { TaskController } from "./task.controller";
+import { StateManager } from "@/models/state.model";
 import { TaskModalComponent } from "@/components/modals/task-modal.component.js";
 import { TaskService } from "@/services/task.service.js";
 
 export const ModalController = {
   confirmCallback: null,
   editingTask: null,
+  openPomoInputs: {},
 
   init() {
     this.bindGlobalTriggers();
@@ -79,17 +80,6 @@ export const ModalController = {
           this.closeConfirmModal();
           return;
         }
-
-        if (isTaskOpen) {
-          e.preventDefault();
-          const taskForm = document.querySelector(
-            "#task-modal-wrapper #form-task-action",
-          );
-          if (taskForm) {
-            taskForm.requestSubmit();
-          }
-          return;
-        }
       }
     });
   },
@@ -108,12 +98,6 @@ export const ModalController = {
       document.body.appendChild(modalWrapper);
     }
 
-    // Auto Focus on Title Input for Seamless UX
-    const titleInput = modalWrapper.querySelector("#input-task-title");
-    if (titleInput) {
-      setTimeout(() => titleInput.focus(), 50);
-    }
-
     this.bindTaskModalEvents(modalWrapper);
   },
 
@@ -126,137 +110,129 @@ export const ModalController = {
   },
 
   bindTaskModalEvents(wrapper) {
-    // 1. Validation for Pomodoro Input Field (Strict max 20, digits only)
-    const unitInput = wrapper.querySelector("#input-task-focus-units");
-    if (unitInput) {
-      unitInput.addEventListener("input", (e) => {
+    // 1. Validation for Pomodoro Input Field
+    const pomoInputs = wrapper.querySelector("#pomo-input");
+    if (pomoInputs) {
+      pomoInputs.addEventListener("input", (e) => {
         let val = e.target.value.replace(/\D/g, "");
-
         if (val !== "") {
           let num = parseInt(val, 10);
           if (num > 20) num = 20;
           if (num < 1) num = 1;
           val = String(num);
         }
-
         e.target.value = val;
       });
 
-      unitInput.addEventListener("blur", (e) => {
+      pomoInputs.addEventListener("blur", (e) => {
         if (!e.target.value.trim() || parseInt(e.target.value, 10) < 1) {
           e.target.value = "1";
         }
       });
     }
 
-    // 2. Close Modal & Cancel Edit
-    const closeBtn = wrapper.querySelector("#close-task-modal");
-    if (closeBtn) {
-      closeBtn.addEventListener("click", () => this.closeTaskModal());
-    }
-
-    const backdrop = wrapper.querySelector("#task-modal-backdrop");
-    if (backdrop) {
-      backdrop.addEventListener("click", () => this.closeTaskModal());
-    }
-
-    const cancelBtn = wrapper.querySelector("#btn-cancel-edit");
-    if (cancelBtn) {
-      cancelBtn.addEventListener("click", () => this.openTaskModal(null));
-    }
-
-    // 3. Edit & Delete Tasks (Event Delegation)
     wrapper.addEventListener("click", (e) => {
-      const btnEdit = e.target.closest(".btn-edit-task");
-      if (btnEdit) {
+      if (
+        e.target.closest("#close-task-modal") ||
+        e.target.id === "task-modal-backdrop"
+      ) {
+        e.preventDefault();
+        e.stopPropagation();
+        this.closeTaskModal();
+        return;
+      }
+
+      const btnSetPomo = e.target.closest(".btn-set-pomo");
+      if (btnSetPomo) {
         e.preventDefault();
         e.stopPropagation();
 
-        const taskId = btnEdit.dataset.editTaskId;
-        const targetTask = TaskService.getTasks().find(
-          (t) => String(t.id) === String(taskId),
+        const taskId = btnSetPomo.dataset.setPomo;
+        const pomoInput = wrapper.querySelector(
+          `[data-pomo-input="${taskId}"]`,
         );
+        const saveBtn = wrapper.querySelector(`[data-save-pomo="${taskId}"]`);
 
-        if (targetTask) {
-          this.openTaskModal(targetTask);
+        if (pomoInput && saveBtn) {
+          const task = TaskService.getTasks().find(
+            (t) => String(t.id) === String(taskId),
+          );
+
+          pomoInput.value = task?.estimatedFocusUnits || 1;
+          this.openPomoInputs[taskId] = true;
+
+          Object.keys(this.openPomoInputs).forEach((id) => {
+            if (id !== taskId) {
+              this.openPomoInputs[id] = false;
+              const otherInput = wrapper.querySelector(
+                `[data-pomo-input="${id}"]`,
+              );
+              const otherSave = wrapper.querySelector(
+                `[data-save-pomo="${id}"]`,
+              );
+              const otherSet = wrapper.querySelector(`[data-set-pomo="${id}"]`);
+
+              if (otherInput) otherInput.classList.add("hidden");
+              if (otherSave) otherSave.classList.add("hidden");
+              if (otherSet) otherSet.classList.remove("hidden");
+            }
+          });
+
+          pomoInput.classList.remove("hidden");
+          saveBtn.classList.remove("hidden");
+          btnSetPomo.classList.add("hidden");
+          pomoInput.focus();
         }
         return;
       }
 
-      const btnDelete = e.target.closest(".btn-delete-task");
-      if (btnDelete) {
+      const btnSavePomo = e.target.closest(".btn-save-pomo");
+      if (btnSavePomo) {
         e.preventDefault();
         e.stopPropagation();
 
-        const taskId = btnDelete.dataset.deleteTaskId;
+        const taskId = btnSavePomo.dataset.savePomo;
+        const pomoInput = wrapper.querySelector(
+          `[data-pomo-input="${taskId}"]`,
+        );
+        const setBtn = wrapper.querySelector(`[data-set-pomo="${taskId}"]`);
+        const count = parseInt(pomoInput?.value, 10) || 1;
 
-        TaskController.deleteTask(taskId);
+        if (count > 0 && count <= 20) {
+          TaskService.setEstimatedPomodoros(taskId, count);
+
+          this.openPomoInputs[taskId] = false;
+          pomoInput.classList.add("hidden");
+          btnSavePomo.classList.add("hidden");
+          setBtn.classList.remove("hidden");
+
+          StateManager.notify();
+          this.refreshTaskModal();
+        }
+        return;
+      }
+
+      if (e.target.closest(".pomo-input")) {
+        e.stopPropagation();
         return;
       }
 
       const taskItem = e.target.closest(".task-item-row");
       if (taskItem) {
-        const isDone = taskItem.dataset.isDone === "true";
-
-        // Ignore clicks on completed tasks
-        if (isDone) return;
-
-        const taskId = taskItem.dataset.taskId;
-        TaskService.setActiveTask(taskId);
-        this.closeTaskModal();
-      }
-    });
-
-    // 4. Submit Action (Create / Update)
-    const submitBtn = wrapper.querySelector("#btn-submit-task");
-    if (submitBtn) {
-      submitBtn.replaceWith(submitBtn.cloneNode(true));
-      const freshSubmitBtn = wrapper.querySelector("#btn-submit-task");
-
-      freshSubmitBtn.addEventListener("click", (e) => {
         e.preventDefault();
         e.stopPropagation();
 
-        const titleInput = wrapper.querySelector("#input-task-title");
-        const unitVal = Number(unitInput?.value) || 1;
+        const isDone = taskItem.dataset.isDone === "true";
+        const isArchive = taskItem.dataset.isArchive === "true";
+        if (isDone || isArchive) return;
 
-        if (this.editingTask) {
-          const success = TaskController.updateTask(
-            this.editingTask.id,
-            titleInput ? titleInput.value.trim() : "",
-            unitVal,
-          );
-          if (success) {
-            this.closeTaskModal();
-          }
-        } else {
-          const newTask = TaskController.createTask(
-            titleInput ? titleInput.value.trim() : "",
-            unitVal,
-          );
-          if (newTask) {
-            TaskService.setActiveTask(newTask.id);
-            this.closeTaskModal();
-          }
-        }
-      });
-    }
+        const taskId = String(taskItem.dataset.taskId);
 
-    const titleInput = wrapper.querySelector("#input-task-title");
-    if (titleInput) {
-      titleInput.addEventListener("keydown", (e) => {
-        // Ctrl+Enter یا Cmd+Enter
-        if ((e.ctrlKey || e.metaKey) && e.key === "Enter") {
-          e.preventDefault();
-          e.stopPropagation();
+        TaskService.setActiveTask(taskId);
 
-          const submitButton = wrapper.querySelector("#btn-submit-task");
-          if (submitButton) {
-            submitButton.click();
-          }
-        }
-      });
-    }
+        this.closeTaskModal();
+      }
+    });
   },
 
   refreshTaskModal() {

@@ -4,16 +4,17 @@ export const ActiveTaskCardComponent = {
   render() {
     const activeTask = TaskService.getActiveTask();
     const allTasks = TaskService.getTasks();
-    const hasTasks = allTasks.some((t) => t.status !== "done") && allTasks > 0;
+    const hasTasks =
+      Array.isArray(allTasks) &&
+      allTasks.length > 0 &&
+      allTasks.some((t) => t.status !== "done" && !t.archived);
 
     if (!activeTask) {
-      const buttonText = hasTasks ? "Select" : "Create";
-      const boxTitle = hasTasks
-        ? "Select or create task..."
-        : "Create a task...";
+      const buttonText = "Select";
+      const boxTitle = hasTasks ? "Select a task..." : "No active task";
       const boxSubtitle = hasTasks
-        ? "Link sessions to monitor progress."
-        : "Add your first task to start tracking.";
+        ? "Choose a task to start tracking."
+        : "Create a task in Task Manager to begin.";
 
       return `
         <div class="bg-surface border border-border rounded-3xl p-5 shadow-xs">

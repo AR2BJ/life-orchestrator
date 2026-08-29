@@ -656,6 +656,9 @@ export const DashboardComponent = {
                         const isDone = task.status === "done";
                         const absDays = Math.abs(daysRemaining);
 
+                        const completed = task.completedFocusUnits || 0;
+                        const estimated = task.estimatedFocusUnits || 1;
+
                         const subtaskProgressColor =
                           subtaskInfo.percentage === 100
                             ? "bg-emerald-500/80"
@@ -771,6 +774,19 @@ export const DashboardComponent = {
                                       >`
                                     : ""
                                 }
+                                ${
+                                  estimated !== 0
+                                    ? ` <div
+                                        class="flex md:self-end z-20 shrink-0"
+                                      >
+                                        <span
+                                          class="text-[9px] font-bold text-brand bg-brand/10 px-2 py-0.5 rounded border flex flex-row justify-center items-center border-brand/20"
+                                        >
+                                          ${completed}/${estimated} Units
+                                        </span>
+                                      </div>`
+                                    : ""
+                                }
                               </div>
 
                               <h5
@@ -846,8 +862,7 @@ export const DashboardComponent = {
                                   <span class="text-secondary font-medium"
                                     >Subtasks</span
                                   >
-                                  <span
-                                    class="font-bold ${subtaskPercentColor}"
+                                  <span class="font-bold ${subtaskPercentColor}"
                                     >${subtaskInfo.completedCount}/${subtaskInfo.totalCount}
                                     (${subtaskInfo.percentage}%)</span
                                   >
@@ -867,8 +882,7 @@ export const DashboardComponent = {
                                   class="text-[10px] text-secondary/60 block uppercase font-bold"
                                   >Created</span
                                 >
-                                <span
-                                  class="text-xs font-medium text-color"
+                                <span class="text-xs font-medium text-color"
                                   >${task.createdAt || "N/A"}</span
                                 >
                               </div>

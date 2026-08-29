@@ -67,3 +67,18 @@ export function isOverdue(dueDateStr, status) {
 
   return due < today;
 }
+
+export function getDaysRemaining(dueDateStr) {
+  if (!dueDateStr) return null;
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const due = new Date(dueDateStr);
+  due.setHours(0, 0, 0, 0);
+
+  const diffTime = due.getTime() - today.getTime();
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+  return diffDays;
+}

@@ -1,3 +1,4 @@
+import { SYSTEM_EVENTS, globalEventBus } from "@life-orchestrator/event-bus";
 import { StateManager, state } from "@/models/state.model.js";
 
 import { CoreStore } from "@life-orchestrator/core-store";
@@ -92,6 +93,8 @@ export const SettingsResetController = {
         state.currentView = "tasks";
 
         renderTaskList([], state.activeTab);
+
+        globalEventBus.emit(SYSTEM_EVENTS.TASKS_RESET);
 
         TaskController.refreshUI();
 

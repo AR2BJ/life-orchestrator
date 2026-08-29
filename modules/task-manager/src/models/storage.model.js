@@ -1,42 +1,44 @@
+import { formatDate, generateId, todayISO } from "@/utils/helpers.js";
+
 import { CoreStore } from "@life-orchestrator/core-store";
-import { formatDate } from "@/utils/helpers.js";
 
 export const TASK_NAMESPACE = "task_manager";
 export const STORAGE_VERSION = 1;
 
 function normalizeTag(tag) {
   if (typeof tag === "string") {
-    return { id: crypto.randomUUID(), name: tag.trim() };
+    return { id: generateId(), name: tag.trim() };
   }
   return {
-    id: String(tag.id || crypto.randomUUID()),
+    id: String(tag.id || generateId()),
     name: String(tag.name || tag.title || "").trim(),
   };
 }
 
 function normalizeTask(task) {
   return {
-    id: String(task.id || crypto.randomUUID()),
+    id: String(task.id || generateId()),
     title: task.title || "Untitled Task",
     description: task.description || "",
     status: task.status || "todo",
     priority: task.priority || "low",
     dueDate: task.dueDate || null,
-    createdAt: task.createdAt || formatDate(new Date()),
-    updatedAt: task.updatedAt || formatDate(new Date()) || null,
+    createdAt: task.createdAt || todayISO(),
+    updatedAt: task.updatedAt || todayISO() || null,
     completedAt: task.completedAt || null,
-    estimatedMinutes: Number(task.estimatedMinutes) || 0,
+    estimatedFocusUnits: Number(task.estimatedFocusUnits) || 1,
+    completedFocusUnits: Number(task.completedFocusUnits) || 0,
     archived: Boolean(task.archived),
     tags: Array.isArray(task.tags)
       ? task.tags.map((t) => (typeof t === "object" ? t.id : String(t)))
       : [],
     subtasks: Array.isArray(task.subtasks)
       ? task.subtasks.map((st) => ({
-          id: String(st.id || crypto.randomUUID()),
+          id: String(st.id || generateId()),
           title: st.title || "",
           completed: Boolean(st.completed),
-          createdAt: task.createdAt || formatDate(new Date()),
-          updatedAt: task.updatedAt || formatDate(new Date()) || null,
+          createdAt: task.createdAt || todayISO(),
+          updatedAt: task.updatedAt || todayISO() || null,
         }))
       : [],
   };
@@ -65,7 +67,9 @@ export function loadFromStorage() {
   const data = CoreStore.getNamespace(TASK_NAMESPACE);
   if (!data) return null;
 
-  return migrateData(data);
+  const migrated = migrateData(data);
+
+  return migrated;
 }
 
 export function clearTaskStorage() {

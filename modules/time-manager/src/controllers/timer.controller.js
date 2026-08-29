@@ -1,8 +1,10 @@
-import { StateManager, state } from "@/models/state.model.js";
+import { SYSTEM_EVENTS, globalEventBus } from "@life-orchestrator/event-bus";
+import { StateManager, TASK_NAMESPACE, state } from "@/models/state.model.js";
 
 import { ActiveTaskCardComponent } from "@/components/features/tasks/active-task-card.component";
 import { AnalyticsController } from "./analytics.controller";
 import { AnalyticsView } from "@/views/analytics-view.js";
+import { CoreStore } from "@life-orchestrator/core-store";
 import { DesktopNavComponent } from "@/components/layout/desktop-nav.component.js";
 import { FlipClockController } from "./flip-clock.controller";
 import { HeaderComponent } from "@/components/shared/header.component.js";
@@ -12,6 +14,7 @@ import { NoteController } from "./note.controller";
 import { NotificationService } from "@/services/notification.service";
 import { SettingsViewComponent } from "@/components/features/settings/settings-view.component.js";
 import { SoundModel } from "@/models/sound.model.js";
+import { TaskModel } from "@/models/task.model";
 import { TaskService } from "@/services/task.service";
 import { TimerView } from "@/views/timer-view.js";
 import { TodayOverviewComponent } from "@/components/features/tasks/today-overview.component";
@@ -42,6 +45,7 @@ export const TimerController = {
     this.bindTimerShortcuts();
     this.bindMenuToggle();
     this.startHeaderClock();
+    this.subscribeToDataChanges();
 
     this.refreshUI();
 
@@ -76,6 +80,63 @@ export const TimerController = {
     this.renderTaskWidgets();
   },
 
+  subscribeToDataChanges() {
+    globalEventBus.on(SYSTEM_EVENTS.TASK_DELETED, ({ taskId }) => {
+      const currentActiveId = state.activeTaskId
+        ? String(state.activeTaskId)
+        : null;
+
+      if (currentActiveId && currentActiveId === String(taskId)) {
+        const taskData = CoreStore.getNamespace(TASK_NAMESPACE);
+        const remainingTasks = taskData?.tasks || [];
+
+        const nextTask = remainingTasks.find((t) => t.status !== "done");
+
+        state.activeTaskId = nextTask ? String(nextTask.id) : null;
+
+        StateManager.save();
+        StateManager.notify();
+      } else {
+        state.activeTaskId = null;
+
+        StateManager.save();
+        StateManager.notify();
+      }
+    });
+
+    globalEventBus.on(
+      SYSTEM_EVENTS.TASK_UPDATED_STATUS,
+      ({ taskId, newStatus }) => {
+        const task = TaskModel.getById(taskId);
+
+        if (newStatus === "todo") {
+          TaskModel.update(taskId, {
+            completedFocusUnits: 0,
+          });
+        } else {
+          TaskModel.update(taskId, {
+            completedFocusUnits: task.estimatedFocusUnits,
+          });
+          TaskService.autoSelectNextTask();
+        }
+      },
+    );
+
+    globalEventBus.on(SYSTEM_EVENTS.TASK_ARCHIVE, () => {
+      TaskService.setNextActiveTask();
+
+      StateManager.save();
+      StateManager.notify();
+    });
+
+    globalEventBus.on(SYSTEM_EVENTS.TASKS_RESET, () => {
+      state.activeTaskId = null;
+
+      StateManager.save();
+      StateManager.notify();
+    });
+  },
+
   bindTimerEvents() {
     const btnPomodoro = document.getElementById("mode-pomodoro");
     const btnFlow = document.getElementById("mode-flow");
@@ -104,8 +165,7 @@ export const TimerController = {
               text: "Create Task",
               icon: "fa-plus",
               onClick: async () => {
-                if (document.fullscreenElement) await document.exitFullscreen();
-                ModalController.openTaskModal();
+                window.open("/task-manager", "_blank");
               },
             },
           });

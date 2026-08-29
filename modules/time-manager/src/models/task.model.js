@@ -1,13 +1,19 @@
-import { StateManager, state } from "./state.model.js";
+import { StateManager, state } from "./state.model";
+
+import { CoreStore } from "@life-orchestrator/core-store";
+
+const TASK_NAMESPACE = "task_manager";
 
 export const TaskModel = {
   getTasks() {
-    return state.tasks || [];
+    const data = CoreStore.getNamespace(TASK_NAMESPACE);
+    return data?.tasks || [];
   },
 
   getById(taskId) {
     const targetIdStr = String(taskId);
-    return state.tasks.find((t) => String(t.id) === targetIdStr) || null;
+    const data = CoreStore.getNamespace(TASK_NAMESPACE);
+    return data?.tasks?.find((t) => String(t.id) === targetIdStr) || null;
   },
 
   getActiveTaskId() {
@@ -15,19 +21,10 @@ export const TaskModel = {
   },
 
   setActiveTaskId(taskId) {
-    state.activeTaskId = taskId ? String(taskId) : null;
-    this.commit();
-  },
+    const nextId = taskId ? String(taskId) : null;
 
-  insert(taskData) {
-    state.tasks.unshift(taskData);
-    state.activeTaskId = String(taskData.id);
-    this.commit();
-    return taskData;
-  },
+    state.activeTaskId = nextId;
 
-  insertAt(taskData, index) {
-    state.tasks.splice(index, 0, taskData);
     this.commit();
   },
 
@@ -35,19 +32,16 @@ export const TaskModel = {
     const task = this.getById(taskId);
     if (!task) return null;
 
-    Object.assign(task, updatedFields);
-    this.commit();
-    return task;
-  },
+    const data = CoreStore.getNamespace(TASK_NAMESPACE);
+    const taskIndex = data.tasks.findIndex(
+      (t) => String(t.id) === String(taskId),
+    );
+    data.tasks[taskIndex] = { ...task, ...updatedFields };
+    CoreStore.setNamespace(TASK_NAMESPACE, data);
 
-  remove(taskId) {
-    const targetIdStr = String(taskId);
-    const index = state.tasks.findIndex((t) => String(t.id) === targetIdStr);
-    if (index === -1) return null;
-
-    const [deletedTask] = state.tasks.splice(index, 1);
     this.commit();
-    return { deletedTask, index };
+
+    return data.tasks[taskIndex];
   },
 
   commit() {

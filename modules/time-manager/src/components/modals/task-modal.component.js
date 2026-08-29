@@ -1,3 +1,5 @@
+import { getDaysRemaining, isOverdue } from "@/utils/helpers";
+
 import { TaskService } from "@/services/task.service.js";
 
 export const TaskModalComponent = {
@@ -19,7 +21,7 @@ export const TaskModalComponent = {
         ></div>
 
         <div
-          class="relative w-full max-w-xl bg-surface border border-border rounded-3xl p-6 shadow-2xl flex flex-col max-h-[85dvh]"
+          class="relative w-full max-w-3xl bg-surface border border-border rounded-3xl p-6 shadow-2xl flex flex-col max-h-[85dvh]"
         >
           <div
             class="flex items-center justify-between border-b border-border pb-4 mb-4 shrink-0"
@@ -32,14 +34,10 @@ export const TaskModalComponent = {
               </div>
               <div>
                 <h3 class="text-base font-bold text-color">
-                  ${isEditing ? "Edit Task" : "Select Active Task"}
+                  Select Active Task
                 </h3>
                 <p class="text-xs text-secondary">
-                  ${
-                    isEditing
-                      ? "Update task details below."
-                      : "Choose an existing task, manage, or create a new item."
-                  }
+                  Choose a task and set its estimated pomodoros.
                 </p>
               </div>
             </div>
@@ -51,69 +49,6 @@ export const TaskModalComponent = {
             >
               <i class="fa-regular fa-xmark text-sm"></i>
             </button>
-          </div>
-
-          <div class="pb-4 border-b border-border flex flex-col gap-3 shrink-0">
-            <div class="grid grid-cols-2 gap-3">
-              <div>
-                <label
-                  for="input-task-title"
-                  class="block text-xs font-semibold text-secondary mb-1 ps-1"
-                >
-                  ${isEditing ? "Task Title" : "Create New Task Title"}
-                </label>
-                <input
-                  id="input-task-title"
-                  type="text"
-                  maxlength="60"
-                  value="${isEditing ? editingTask.title : ""}"
-                  placeholder="E.g., Design System Refactoring"
-                  class="w-full h-10 rounded-xl bg-surface-2 border border-border px-3 text-xs text-color placeholder:text-muted focus:outline-none focus:border-brand transition"
-                />
-              </div>
-              <div>
-                <label
-                  for="input-task-focus-units"
-                  class="block text-xs font-semibold text-secondary mb-1 ps-1"
-                >
-                  Est. Units (Max 20)
-                </label>
-                <input
-                  id="input-task-focus-units"
-                  type="text"
-                  inputmode="numeric"
-                  value="${isEditing ? editingTask.estimatedFocusUnits : "1"}"
-                  maxlength="2"
-                  class="w-full h-10 rounded-xl bg-surface-2 border border-border px-3 text-xs text-color focus:outline-none focus:border-brand transition"
-                />
-              </div>
-            </div>
-
-            <div class="flex items-center gap-2">
-              <button
-                id="btn-submit-task"
-                type="button"
-                class="flex-1 h-10 rounded-xl bg-brand hover:bg-(--color-brand-hover) text-white font-semibold text-xs transition cursor-pointer shadow-sm flex items-center justify-center gap-1.5"
-              >
-                ${
-                  isEditing
-                    ? `<i class="fa-regular fa-check"></i> Save Changes`
-                    : `<i class="fa-regular fa-plus"></i> Add & Select`
-                }
-              </button>
-
-              ${
-                isEditing
-                  ? `<button
-                      id="btn-cancel-edit"
-                      type="button"
-                      class="h-10 px-4 rounded-xl bg-surface-2 hover:bg-surface-3 border border-border text-secondary text-xs font-semibold transition cursor-pointer"
-                     >
-                       Cancel
-                     </button>`
-                  : ""
-              }
-            </div>
           </div>
 
           <div
@@ -139,13 +74,98 @@ export const TaskModalComponent = {
                     .map((t) => {
                       const isActive = String(t.id) === activeTaskId;
                       const isDone = t.status === "done";
+                      const isArchived = t.archived;
+
+                      const overdue = isOverdue(t.dueDate, t.status);
+                      const daysRemaining = getDaysRemaining(t.dueDate);
+
+                      const completedPomos = t.completedFocusUnits || 0;
+                      const estimatedPomos = t.estimatedFocusUnits || 1;
+
+                      let dueDateBadge = "";
+                      if (t.dueDate) {
+                        const absDays = Math.abs(daysRemaining);
+
+                        if (isDone) {
+                          dueDateBadge = `
+                            <span
+                              class="inline-flex items-center gap-1 rounded-md border border-emerald-500/20 bg-emerald-500/10 px-2 py-1.25 text-[10px] font-medium text-emerald-500 ${
+                                isDone || isArchived ? "opacity-50" : ""
+                              }"
+                            >
+                              <i class="fa-regular fa-calendar-check"></i>
+                              ${t.dueDate}
+                            </span>
+                          `;
+                        } else if (overdue || daysRemaining < 0) {
+                          dueDateBadge = `
+                            <span
+                              class="inline-flex items-center gap-1 rounded-md border border-red-500/20 bg-red-500/10 px-2 py-1.25 text-[10px] font-semibold text-red-500 ${
+                                isArchived ? "" : "animate-pulse"
+                              } ${isDone || isArchived ? "opacity-50" : ""}"
+                            >
+                              <i class="fa-regular fa-clock"></i> Overdue
+                              (${absDays}d ago)
+                            </span>
+                          `;
+                        } else if (daysRemaining === 0) {
+                          dueDateBadge = `
+                            <span
+                              class="inline-flex items-center gap-1 rounded-md border border-amber-500/20 bg-amber-500/10 px-2 py-1.25 text-[10px] font-semibold text-amber-500 ${
+                                isDone || isArchived ? "opacity-50" : ""
+                              }"
+                            >
+                              <i class="fa-regular fa-clock"></i> Due Today
+                            </span>
+                          `;
+                        } else {
+                          dueDateBadge = `
+                            <span
+                              class="inline-flex items-center gap-1 rounded-md border border-secondary/20 bg-secondary/10 px-2 py-1.25 text-[10px] font-medium text-secondary/80 ${
+                                isDone || isArchived ? "opacity-50" : ""
+                              }"
+                            >
+                              <i class="fa-regular fa-calendar-day"></i> Due in
+                              ${daysRemaining}d
+                            </span>
+                          `;
+                        }
+                      }
+
+                      let priorityClass =
+                        "text-lime-500/80 bg-lime-500/10 border-lime-500/20";
+                      if (t.priority === "medium") {
+                        priorityClass =
+                          "text-amber-500/80 bg-amber-500/10 border-amber-500/20";
+                      } else if (t.priority === "high") {
+                        priorityClass =
+                          "text-red-500/80 bg-red-500/10 border-red-500/20";
+                      }
+
+                      let statusLabel = "Todo";
+                      let statusClass =
+                        "text-brand/80 bg-brand/10 border-brand/20";
+                      if (t.status === "done") {
+                        statusLabel = "Done";
+                        statusClass =
+                          "text-emerald-500/80 bg-emerald-500/10 border-emerald-500/20";
+                      } else if (t.status === "in_progress") {
+                        statusLabel = "In Progress";
+                        statusClass =
+                          "text-orange-500/80 bg-orange-500/10 border-orange-500/20";
+                      } else if (t.status === "blocked") {
+                        statusLabel = "Blocked";
+                        statusClass =
+                          "text-pink-500/80 bg-pink-500/10 border-pink-500/20";
+                      }
 
                       return `
                         <div
                           data-task-id="${t.id}"
                           data-is-done="${isDone}"
+                          data-is-archive="${isArchived}"
                           class="task-item-row group flex items-center justify-between p-3 rounded-2xl transition border ${
-                            isDone
+                            isDone || isArchived
                               ? "bg-surface-2/60 border-border cursor-not-allowed select-none"
                               : isActive
                                 ? "bg-brand/5 border-brand/60 shadow-xs cursor-pointer"
@@ -154,7 +174,9 @@ export const TaskModalComponent = {
                         >
                           <div
                             class="flex items-center gap-2.5 min-w-0 ${
-                              isDone ? "opacity-50 pointer-events-none" : ""
+                              isDone || isArchived
+                                ? "opacity-50 pointer-events-none"
+                                : ""
                             }"
                           >
                             ${
@@ -176,51 +198,86 @@ export const TaskModalComponent = {
                           </div>
 
                           <div class="flex items-center gap-2 shrink-0">
-                            <span
-                              class="text-[10px] font-bold ${
-                                isDone
-                                  ? "text-emerald-500 bg-emerald-500/10 border-emerald-500/20"
-                                  : isActive
-                                    ? "text-brand bg-brand/15 border-brand/30"
-                                    : "text-brand bg-brand/10 border-brand/20"
-                              } px-2 py-1.25 rounded-md border ${
-                                isDone ? "opacity-50" : ""
-                              }"
-                            >
-                              ${
-                                isDone
-                                  ? "Completed"
-                                  : `${t.completedFocusUnits || 0}/${t.estimatedFocusUnits || 1} Units`
-                              }
-                            </span>
-
                             ${
-                              !isDone
+                              !isDone && !isArchived
                                 ? `
-                                    <button
-                                      type="button"
-                                      data-edit-task-id="${t.id}"
-                                      class="btn-edit-task w-7 h-7 rounded-lg bg-surface-2 hover:bg-blue-600/10 border border-border flex items-center justify-center hover:cursor-pointer transition text-secondary"
-                                      title="Edit Task"
-                                    >
-                                      <i
-                                        class="fa-regular fa-pen-to-square text-blue-500/80 text-xs"
-                                      ></i>
-                                    </button>
+                                    <div class="flex items-center gap-1.5">
+                                      <input
+                                        type="text"
+                                        inputmode="numeric"
+                                        maxlength="2"
+                                        value="${
+                                          isEditing && editingTask?.id === t.id
+                                            ? editingTask.estimatedFocusUnits
+                                            : estimatedPomos
+                                        }"
+                                        data-pomo-input="${t.id}"
+                                        id="pomo-input"
+                                        class="pomo-input w-14 h-7 text-center text-xs font-bold bg-surface-1 border border-border rounded-lg text-color focus:outline-none focus:border-brand/60 transition hidden"
+                                        onclick="event.stopPropagation()"
+                                      />
+                                      <button
+                                        type="button"
+                                        data-set-pomo="${t.id}"
+                                        class="btn-set-pomo w-7 h-7 rounded-lg bg-surface-2 hover:bg-brand/10 border border-border text-secondary hover:text-brand flex items-center justify-center transition cursor-pointer"
+                                        title="Set Pomodoros"
+                                      >
+                                        <i
+                                          class="fa-regular fa-clock text-xs"
+                                        ></i>
+                                      </button>
+                                      <button
+                                        type="button"
+                                        data-save-pomo="${t.id}"
+                                        class="btn-save-pomo w-7 h-7 rounded-lg bg-brand/10 hover:bg-brand/20 border border-brand/20 text-brand items-center justify-center transition cursor-pointer hidden"
+                                        title="Save Pomodoros"
+                                      >
+                                        <i
+                                          class="fa-solid fa-check text-xs"
+                                        ></i>
+                                      </button>
+                                    </div>
                                   `
                                 : ""
                             }
 
-                            <button
-                              type="button"
-                              data-delete-task-id="${t.id}"
-                              class="btn-delete-task w-7 h-7 rounded-lg bg-surface-2 hover:bg-red-600/10 border border-border flex items-center justify-center hover:cursor-pointer transition"
-                              title="Delete Task"
+                            ${
+                              isArchived
+                                ? ` <span
+                                    class="text-[10px] text-secondary/80 bg-secondary/10 border-secondary/20 px-2 py-1.25 rounded-md border uppercase font-semibold tracking-wider ${
+                                      isDone || isArchived ? "opacity-50" : ""
+                                    }"
+                                  >
+                                    Archived
+                                  </span>`
+                                : ""
+                            }
+
+                            ${dueDateBadge}
+
+                            <span
+                              class="text-[10px] ${priorityClass} px-2 py-1.25 rounded-md border uppercase font-semibold tracking-wider ${
+                                isDone || isArchived ? "opacity-50" : ""
+                              }"
                             >
-                              <i
-                                class="fa-regular fa-trash-can text-red-500/80 text-xs"
-                              ></i>
-                            </button>
+                              ${t.priority}
+                            </span>
+                            
+                            <span
+                              class="text-[10px] ${statusClass} px-2 py-1.25 rounded-md border uppercase font-semibold tracking-wider ${
+                                isDone || isArchived ? "opacity-50" : ""
+                              }"
+                            >
+                              ${statusLabel}
+                            </span>
+
+                            <span
+                              class="text-[10px] font-bold text-brand/80 bg-brand/10 border-brand/20 px-2 py-1.25 rounded-md border ${
+                                isDone || isArchived ? "opacity-50" : ""
+                              }"
+                            >
+                              ${`${completedPomos}/${estimatedPomos} Units`}
+                            </span>
                           </div>
                         </div>
                       `;

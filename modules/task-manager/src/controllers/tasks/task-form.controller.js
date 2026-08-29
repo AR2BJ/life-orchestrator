@@ -396,14 +396,19 @@ export const TaskFormController = {
       const target = e.target.closest("[data-action]");
       if (!target) return;
 
+      e.stopPropagation();
+      e.preventDefault();
+
       const subtaskCard = target.closest("[data-subtask-id]");
       if (!subtaskCard) return;
 
-      const subtaskId = subtaskCard.dataset.subtaskId;
+      const subtaskId = String(subtaskCard.dataset.subtaskId);
       const action = target.dataset.action;
 
       if (action === "delete") {
-        const index = currentModalSubtasks.findIndex((s) => s.id === subtaskId);
+        const index = currentModalSubtasks.findIndex(
+          (s) => String(s.id) === subtaskId,
+        );
         if (index === -1) return;
 
         const removedSubtask = currentModalSubtasks[index];
@@ -428,7 +433,9 @@ export const TaskFormController = {
           },
         });
       } else if (action === "edit") {
-        const subtask = currentModalSubtasks.find((s) => s.id === subtaskId);
+        const subtask = currentModalSubtasks.find(
+          (s) => String(s.id) === subtaskId,
+        );
         if (subtask) {
           subtask.isEditing = !subtask.isEditing;
           this.renderModalSubtasks();
@@ -444,7 +451,9 @@ export const TaskFormController = {
           }
         }
       } else if (action === "toggle") {
-        const subtask = currentModalSubtasks.find((s) => s.id === subtaskId);
+        const subtask = currentModalSubtasks.find(
+          (s) => String(s.id) === subtaskId,
+        );
         if (subtask) {
           subtask.completed = !subtask.completed;
           this.renderModalSubtasks();
@@ -690,7 +699,7 @@ export const TaskFormController = {
     if (!id) return;
 
     const currentTasks = StateManager.getTasks();
-    const taskToDelete = currentTasks.find((h) => h.id === id);
+    const taskToDelete = currentTasks.find((h) => String(h.id) === String(id));
 
     if (taskToDelete) {
       const capturedTask = { ...taskToDelete };
@@ -701,8 +710,14 @@ export const TaskFormController = {
 
       setTimeout(() => {
         try {
-          const updated = TaskService.deleteTask(currentTasks, id);
-          StateManager.save(updated);
+          const updatedTasks = TaskService.deleteTask(
+            currentTasks,
+            taskToDelete.id,
+          );
+
+          const currentTags = StateManager.getTags();
+          StateManager.save(updatedTasks, currentTags);
+
           this.mainController.toggleModal("delete-modal", false);
           pendingDeleteId = null;
           this.mainController.refreshUI();
@@ -728,6 +743,8 @@ export const TaskFormController = {
           GlobalLoaderService.hide();
         }
       }, 30);
+    } else {
+      this.mainController.toggleModal("delete-modal", false);
     }
   },
 
@@ -842,6 +859,7 @@ export const TaskFormController = {
 
       createDatePicker = new DatePickerComponent({
         id: "task-duedate-input",
+        label: "Due Date",
         value: initialValue,
         placeholder: "YYYY-MM-DD",
       });
@@ -854,6 +872,7 @@ export const TaskFormController = {
 
       editDatePicker = new DatePickerComponent({
         id: "edit-task-duedate",
+        label: "Due Date",
         value: initialValue,
         placeholder: "YYYY-MM-DD",
         background: "surface",

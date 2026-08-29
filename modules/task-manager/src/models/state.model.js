@@ -1,4 +1,13 @@
-import { loadFromStorage, saveToStorage } from "./storage.model.js";
+import "@/services/store.service";
+
+import {
+  TASK_NAMESPACE,
+  loadFromStorage,
+  saveToStorage,
+} from "./storage.model.js";
+
+import { CoreStore } from "@life-orchestrator/core-store";
+import { eventBus } from "@/services/event-bus.service.js";
 
 export const state = {
   tasks: [],
@@ -17,13 +26,34 @@ export const state = {
 };
 
 export const StateManager = {
+  _rawCache: "",
+
   init() {
+    this.reloadFromStorage(false);
+    return state;
+  },
+
+  reloadFromStorage(notify = true) {
     const saved = loadFromStorage();
     if (saved) {
       state.tasks = saved.tasks || [];
       state.tags = saved.tags || [];
+    } else {
+      state.tasks = [];
+      state.tags = [];
     }
-    return state;
+
+    this._rawCache = CoreStore.getNamespace(TASK_NAMESPACE) || {};
+
+    if (notify) {
+      this.dispatchStateEvents();
+    }
+  },
+
+  dispatchStateEvents() {
+    eventBus.emit("store:tasks:changed", state.tasks);
+    eventBus.emit("store:tags:changed", state.tags);
+    eventBus.emit("store:changed", { tasks: state.tasks, tags: state.tags });
   },
 
   getTasks() {
@@ -166,6 +196,10 @@ export const StateManager = {
   save(tasks = state.tasks, tags = state.tags) {
     state.tasks = tasks;
     state.tags = tags;
+
     saveToStorage({ tasks: state.tasks, tags: state.tags });
+
+    this._rawCache = CoreStore.getNamespace(TASK_NAMESPACE) || {};
+    this.dispatchStateEvents();
   },
 };
