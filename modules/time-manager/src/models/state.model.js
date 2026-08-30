@@ -11,6 +11,7 @@ import { formatDate, generateId, todayISO } from "@/utils/helpers.js";
 import { CoreStore } from "@life-orchestrator/core-store";
 import { NoteModel } from "./note.model.js";
 import { SoundModel } from "./sound.model.js";
+import { TaskModel } from "./task.model.js";
 
 export const TASK_NAMESPACE = "task_manager";
 
@@ -269,18 +270,9 @@ export const StateManager = {
   },
 
   addSession(sessionData = {}) {
-    const currentTaskData = CoreStore.getNamespace(TASK_NAMESPACE);
-    const tasks = currentTaskData?.tasks || [];
-    const activeTask = tasks.find(
-      (t) => String(t.id) === String(state.activeTaskId),
-    );
-
     const session = {
       id: generateId(),
-      taskId: sessionData.taskId || state.activeTaskId || null,
-      taskTitle:
-        sessionData.taskTitle ||
-        (activeTask ? activeTask.title : "Untitled Session"),
+      task: sessionData.task,
       type: sessionData.type || state.activeMode,
       durationSeconds: sessionData.durationSeconds || 0,
       completedAt: todayISO(),

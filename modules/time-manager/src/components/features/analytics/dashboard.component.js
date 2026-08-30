@@ -1,4 +1,12 @@
-import { formatDate, formatTime, todayISO } from "@/utils/helpers.js";
+import {
+  formatDate,
+  formatTime,
+  getDaysRemaining,
+  isOverdue,
+  todayISO,
+} from "@/utils/helpers.js";
+
+import { TaskService } from "@/services/task.service";
 
 export const DashboardComponent = {
   render(sessions) {
@@ -457,21 +465,83 @@ export const DashboardComponent = {
                         flow: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
                       };
 
+                      const activeTask = TaskService.getActiveTask();
+                      const activeTaskId = activeTask
+                        ? String(activeTask.id)
+                        : null;
+
+                      const isActive = String(session.task.id) === activeTaskId;
+
+                      const overdue = isOverdue(
+                        session.task.dueDate,
+                        session.task.status,
+                      );
+                      const daysRemaining = getDaysRemaining(
+                        session.task.dueDate,
+                      );
+
+                      let dueDateBadge = "";
+                      if (session.task.dueDate) {
+                        const absDays = Math.abs(daysRemaining);
+
+                        if (overdue || daysRemaining < 0) {
+                          dueDateBadge = `
+                            <span
+                              class="inline-flex items-center gap-1 rounded border border-red-500/20 bg-red-500/10 px-2 py-0.5 text-[9px] font-semibold text-red-500"
+                            >
+                              <i class="fa-regular fa-clock"></i> Overdue
+                              (${absDays}d ago)
+                            </span>
+                          `;
+                        } else if (daysRemaining === 0) {
+                          dueDateBadge = `
+                            <span
+                              class="inline-flex items-center gap-1 rounded border border-amber-500/20 bg-amber-500/10 px-2 py-0.5 text-[9px] font-semibold text-amber-500"
+                            >
+                              <i class="fa-regular fa-clock"></i> Due Today
+                            </span>
+                          `;
+                        } else {
+                          dueDateBadge = `
+                            <span
+                              class="inline-flex items-center gap-1 rounded border border-secondary/20 bg-secondary/10 px-2 py-0.5 text-[9px] font-medium text-secondary/80"
+                            >
+                              <i class="fa-regular fa-calendar-day"></i> Due in
+                              ${daysRemaining}d
+                            </span>
+                          `;
+                        }
+                      }
+
+                      let priorityClass =
+                        "text-lime-500/80 bg-lime-500/10 border-lime-500/20";
+                      if (session.task.priority === "medium") {
+                        priorityClass =
+                          "text-amber-500/80 bg-amber-500/10 border-amber-500/20";
+                      } else if (session.task.priority === "high") {
+                        priorityClass =
+                          "text-red-500/80 bg-red-500/10 border-red-500/20";
+                      }
+
                       return `
                         <div
                           class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 bg-surface/80 hover:bg-surface p-4 rounded-xl border border-border/40 transition"
                         >
                           <div class="flex flex-col gap-1.5 min-w-0 flex-1">
-                            <div class="flex items-center gap-2 flex-wrap">
+                            <div class="flex items-center gap-1 flex-wrap">
                               <span
                                 class="inline-flex items-center rounded px-2 py-0.5 text-[9px] uppercase font-bold tracking-wider border ${
                                   typeBadgeStyles[session.type] ||
                                   typeBadgeStyles.pomodoro
                                 }"
                               >
-                                ${session.type === "pomodoro" ? "Pomodoro" : "Flow"}
+                                ${
+                                  session.type === "pomodoro"
+                                    ? "Pomodoro"
+                                    : "Flow"
+                                }
                               </span>
-                              
+
                               <span
                                 class="text-[9px] text-secondary/80 font-medium border border-border/40 px-2 py-0.5 rounded bg-surface-2/50"
                               >
@@ -479,15 +549,27 @@ export const DashboardComponent = {
                               </span>
                             </div>
 
-                            <div class="flex items-center gap-2 text-[13px] font-bold text-color">
-                              ${session.taskTitle}
+                            <div class="flex text-[13px] font-bold text-color">
+                              ${session.task.title}
+                            </div>
+
+                            <div class="flex items-center gap-1">
+                              ${dueDateBadge}
+
+                              <span
+                                class="text-[9px] border ${priorityClass} px-2 py-0.5 rounded uppercase font-medium tracking-wider"
+                              >
+                                ${session.task.priority}
+                              </span>
                             </div>
 
                             <div
                               class="flex items-center gap-4 text-[11px] text-secondary/80 font-medium flex-wrap"
                             >
                               <span>
-                                <i class="fa-regular fa-calendar me-1 text-brand/80"></i>
+                                <i
+                                  class="fa-regular fa-calendar me-1 text-brand/80"
+                                ></i>
                                 ${session.completedAt}
                               </span>
                             </div>

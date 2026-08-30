@@ -352,9 +352,7 @@ export const TaskService = {
     const targetIdStr = String(id);
 
     setTimeout(() => {
-      globalEventBus.emit(SYSTEM_EVENTS.TASK_DELETED, {
-        taskId: id,
-      });
+      globalEventBus.emit(SYSTEM_EVENTS.TASK_DELETED, { taskId: id });
     }, 500);
 
     return currentTasks.filter((task) => String(task.id) !== targetIdStr);

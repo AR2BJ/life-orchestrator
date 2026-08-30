@@ -1,6 +1,7 @@
 import { generateId, todayISO } from "@/utils/helpers.js";
 
 import { CoreStore } from "@life-orchestrator/core-store";
+import { TaskModel } from "./task.model";
 
 export const TIME_NAMESPACE = "time_manager";
 export const STORAGE_VERSION = 1;
@@ -8,8 +9,7 @@ export const STORAGE_VERSION = 1;
 function normalizeSession(session) {
   return {
     id: String(session.id || generateId()),
-    taskId: session.taskId ? String(session.taskId) : null,
-    taskTitle: session.taskTitle || "Untitled Task",
+    task: session.task,
     type: session.type || "pomodoro",
     durationSeconds: Number(session.durationSeconds) || 0,
     completedAt: session.completedAt || todayISO(),

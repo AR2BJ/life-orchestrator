@@ -2,6 +2,7 @@ import { StateManager, state } from "@/models/state.model.js";
 
 import { NotificationService } from "./notification.service.js";
 import { SoundModel } from "@/models/sound.model.js";
+import { TaskModel } from "@/models/task.model.js";
 import { TaskService } from "./task.service.js";
 import { soundService } from "./sound.service.js";
 
@@ -100,8 +101,7 @@ class TimerService {
       const workSecs = (state.settings.pomodoroWorkTime || 25) * 60;
 
       StateManager.addSession({
-        taskId: currentTaskId,
-        taskTitle: currentTask ? currentTask.title : "Untitled Session",
+        task: currentTask,
         type: "pomodoro",
         durationSeconds: workSecs,
       });
@@ -229,6 +229,9 @@ class TimerService {
   }
 
   _handleFlowStop() {
+    const currentTaskId = state.activeTaskId;
+    const currentTask = TaskService.getActiveTask();
+
     const flowTime = state.timer.flowTime || 0;
     const isBreak = state.timer.currentPhase === "break";
 
@@ -256,8 +259,7 @@ class TimerService {
 
     if (flowTime >= 1500) {
       StateManager.addSession({
-        taskId: currentTaskId,
-        taskTitle: currentTask ? currentTask.title : "Untitled Session",
+        task: currentTask,
         type: "flow",
         durationSeconds: flowTime,
       });

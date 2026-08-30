@@ -24,19 +24,22 @@ export const TaskModalComponent = {
           class="relative w-full max-w-3xl bg-surface border border-border rounded-3xl p-6 shadow-2xl flex flex-col max-h-[85dvh]"
         >
           <div
-            class="flex items-center justify-between border-b border-border pb-4 mb-4 shrink-0"
+            class="flex items-center justify-between border-b border-border pb-4 mb-4 shrink-0 gap-3"
           >
-            <div class="flex items-center gap-3">
+            <div class="min-w-0 flex-1 flex items-center gap-3">
               <div
                 class="w-10 h-10 rounded-xl bg-brand/10 text-brand flex items-center justify-center text-base shrink-0"
               >
                 <i class="fa-regular fa-bullseye-arrow"></i>
               </div>
-              <div>
-                <h3 class="text-base font-bold text-color">
+              <div class="min-w-0">
+                <h3 class="text-base font-bold text-color truncate">
                   Select Active Task
                 </h3>
-                <p class="text-xs text-secondary">
+                <p class="hidden sm:block text-xs text-secondary truncate">
+                  Choose a task and set its estimated pomodoros.
+                </p>
+                <p class="block sm:hidden text-xs text-secondary truncate cursor-pointer" data-tooltip-title="Choose a task and set its estimated pomodoros.">
                   Choose a task and set its estimated pomodoros.
                 </p>
               </div>
@@ -45,7 +48,7 @@ export const TaskModalComponent = {
             <button
               id="close-task-modal"
               type="button"
-              class="w-8 h-8 rounded-xl bg-surface-2 hover:bg-surface-3 border border-border text-secondary hover:text-color flex items-center justify-center transition cursor-pointer"
+              class="w-8 h-8 rounded-xl bg-surface-2 hover:bg-surface-3 border border-border text-secondary hover:text-color flex items-center justify-center transition cursor-pointer shrink-0"
             >
               <i class="fa-regular fa-xmark text-sm"></i>
             </button>
@@ -164,7 +167,7 @@ export const TaskModalComponent = {
                           data-task-id="${t.id}"
                           data-is-done="${isDone}"
                           data-is-archive="${isArchived}"
-                          class="task-item-row group flex items-center justify-between p-3 rounded-2xl transition border ${
+                          class="task-item-row group flex flex-wrap items-center gap-2 justify-between p-3 rounded-2xl transition border ${
                             isDone || isArchived
                               ? "bg-surface-2/60 border-border cursor-not-allowed select-none"
                               : isActive
@@ -197,7 +200,7 @@ export const TaskModalComponent = {
                             </span>
                           </div>
 
-                          <div class="flex items-center gap-2 shrink-0">
+                          <div class="flex flex-wrap items-center gap-2">
                             ${
                               !isDone && !isArchived
                                 ? `
