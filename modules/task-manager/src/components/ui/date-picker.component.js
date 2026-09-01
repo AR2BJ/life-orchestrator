@@ -751,10 +751,10 @@ export class DatePickerComponent {
   }
 
   reset() {
-    this.value = "";
+    this.value = todayISO();
 
     const input = document.getElementById(this.id);
-    if (input) input.value = "";
+    if (input) input.value = todayISO();
 
     const now = new Date();
     this.currentYear = now.getFullYear();
