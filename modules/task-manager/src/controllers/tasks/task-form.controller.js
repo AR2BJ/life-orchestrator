@@ -109,7 +109,7 @@ export const TaskFormController = {
       );
     }
 
-    this.setupDatePicker("create");
+    this.setupDatePicker("create", todayISO());
     this.setupCreateAutocompletes();
     this.bindFormEvents();
     this.bindSubtaskEvents();
