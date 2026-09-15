@@ -691,7 +691,7 @@ export const TaskController = {
         MatrixController.updateTabStyles(state.matrixMode);
       }
       if (currentView === "calendar") {
-        MatrixController.updateTabStyles(state.calendarMode);
+        CalendarController.updateTabStyles(state.calendarMode);
       }
     });
   },
