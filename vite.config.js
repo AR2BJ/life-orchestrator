@@ -25,6 +25,11 @@ export default defineConfig({
             rawUrl === "/time-manager/"
           ) {
             req.url = "/modules/time-manager/index.html";
+          } else if (
+            rawUrl === "/life-planner" ||
+            rawUrl === "/life-planner/"
+          ) {
+            req.url = "/modules/life-planner/index.html";
           }
 
           next();
@@ -57,6 +62,7 @@ export default defineConfig({
         habit: path.resolve(__dirname, "modules/habit-tracker/index.html"),
         task: path.resolve(__dirname, "modules/task-manager/index.html"),
         time: path.resolve(__dirname, "modules/time-manager/index.html"),
+        plan: path.resolve(__dirname, "modules/life-planner/index.html"),
       },
     },
   },
