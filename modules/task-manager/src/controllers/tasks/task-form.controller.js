@@ -201,6 +201,7 @@ export const TaskFormController = {
           itemTitle: "title",
           itemValue: "value",
           itemIcon: "icon",
+          containerClass: "bg-surface!",
         },
       );
       if (task.priority) {
@@ -218,6 +219,7 @@ export const TaskFormController = {
           itemTitle: "title",
           itemValue: "value",
           itemIcon: "icon",
+          containerClass: "bg-surface!",
         },
       );
       if (task.status) {
@@ -237,6 +239,7 @@ export const TaskFormController = {
         iconClass: "fa-regular fa-tag text-brand/80",
         itemTitle: "name",
         itemValue: "id",
+        containerClass: "bg-surface!",
         multiple: true,
         chips: true,
       });
