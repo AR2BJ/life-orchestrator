@@ -17,6 +17,7 @@
       { "path": "./modules/task-manager" },
       { "path": "./modules/time-manager" },
       { "path": "./modules/life-planner" },
+      { "path": "./modules/mind-manager" },
       { "path": "./packages/core-store" },
       { "path": "./packages/ui-theme" },
       { "path": "./packages/event-bus" }

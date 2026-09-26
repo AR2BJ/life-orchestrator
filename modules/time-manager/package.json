@@ -1,7 +1,7 @@
 {
   "name": "@life-orchestrator/time-manager",
   "version": "1.0.0",
-  "description": "Time manager Module for Life Orchestrator",
+  "description": "Time Manager Module for Life Orchestrator",
   "main": "index.html",
   "type": "module",
   "private": true,

@@ -175,11 +175,17 @@ body {
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
-  font-family: "Roboto Condensed", sans-serif;
+  font-family: "Roboto Condensed", "IranYekanRegular", sans-serif;
   transition:
     background 0.3s ease,
     color 0.3s ease,
     border-color 0.3s ease;
+}
+
+input,
+select,
+textarea {
+  font-family: "Roboto Condensed", "IranYekanRegular", sans-serif;
 }
 
 .card {

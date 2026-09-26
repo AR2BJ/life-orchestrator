@@ -1,7 +1,7 @@
 {
   "name": "@life-orchestrator/task-manager",
   "version": "1.0.0",
-  "description": "Task manager Module for Life Orchestrator",
+  "description": "Task Manager Module for Life Orchestrator",
   "main": "index.html",
   "type": "module",
   "private": true,

@@ -30,6 +30,11 @@ export default defineConfig({
             rawUrl === "/life-planner/"
           ) {
             req.url = "/modules/life-planner/index.html";
+          } else if (
+            rawUrl === "/mind-manager" ||
+            rawUrl === "/mind-manager/"
+          ) {
+            req.url = "/modules/mind-manager/index.html";
           }
 
           next();
@@ -63,6 +68,7 @@ export default defineConfig({
         task: path.resolve(__dirname, "modules/task-manager/index.html"),
         time: path.resolve(__dirname, "modules/time-manager/index.html"),
         plan: path.resolve(__dirname, "modules/life-planner/index.html"),
+        mind: path.resolve(__dirname, "modules/mind-manager/index.html"),
       },
     },
   },

@@ -1,0 +1,17 @@
+{
+  "extends": "../../jsconfig.json",
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@life-orchestrator/core-store": ["../../packages/core-store/src/*"],
+      "@life-orchestrator/ui-theme": ["../../packages/ui-theme/src/*"],
+      "@life-orchestrator/event-bus": ["../../packages/event-bus/src/*"]
+    },
+    "rootDir": "./src"
+  },
+  "include": ["src/**/*"],
+  "exclude": ["dist", "node_modules"]
+}

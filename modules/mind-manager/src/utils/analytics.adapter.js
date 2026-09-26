@@ -1,0 +1,471 @@
+import { formatDate } from "./helpers.js";
+
+const weekdayNames = ["Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"];
+const monthNames = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+];
+
+function getDaysInMonth(year, month) {
+  return new Date(year, month + 1, 0).getDate();
+}
+
+function extractAllItems(
+  tags = [],
+  notes = [],
+  snippets = [],
+  bookmarks = [],
+  cheatsheets = [],
+) {
+  const safeTags = Array.isArray(tags) ? tags : [];
+  const safeNotes = Array.isArray(notes) ? notes : [];
+  const safeSnippets = Array.isArray(snippets) ? snippets : [];
+  const safeBookmarks = Array.isArray(bookmarks) ? bookmarks : [];
+  const safeCheatsheets = Array.isArray(cheatsheets) ? cheatsheets : [];
+  return [
+    ...safeTags,
+    ...safeNotes,
+    ...safeSnippets,
+    ...safeBookmarks,
+    ...safeCheatsheets,
+  ];
+}
+
+function getActivityMap(
+  tags = [],
+  notes = [],
+  snippets = [],
+  bookmarks = [],
+  cheatsheets = [],
+) {
+  const map = {};
+  const allItems = extractAllItems(
+    tags,
+    notes,
+    snippets,
+    bookmarks,
+    cheatsheets,
+  );
+
+  allItems.forEach((item) => {
+    const dateStr = item?.createdAt || item?.updatedAt || item?.date;
+    if (dateStr) {
+      const isoKey = String(dateStr).split("T")[0];
+      map[isoKey] = (map[isoKey] || 0) + 1;
+    }
+  });
+
+  return map;
+}
+
+export const AnalyticsAdapter = {
+  generateHeatmapSeries(
+    tags = [],
+    notes = [],
+    snippets = [],
+    bookmarks = [],
+    cheatsheets = [],
+    view = "weekly",
+  ) {
+    let startDate = new Date();
+    const allItems = extractAllItems(
+      tags,
+      notes,
+      snippets,
+      bookmarks,
+      cheatsheets,
+    );
+
+    if (allItems.length > 0) {
+      const validDates = allItems
+        .map((item) => {
+          const d = item?.createdAt || item?.updatedAt || item?.date;
+          return d ? new Date(d).getTime() : null;
+        })
+        .filter((time) => time && !isNaN(time));
+
+      if (validDates.length > 0) {
+        startDate = new Date(Math.min(...validDates));
+      } else {
+        startDate.setDate(startDate.getDate() - 90);
+      }
+    } else {
+      startDate.setDate(startDate.getDate() - 90);
+    }
+    startDate.setHours(0, 0, 0, 0);
+
+    const today = new Date();
+    today.setHours(23, 59, 59, 999);
+
+    const globalActivityMap = getActivityMap(
+      tags,
+      notes,
+      snippets,
+      bookmarks,
+      cheatsheets,
+    );
+
+    if (view === "weekly") {
+      const startSaturday = new Date(startDate);
+      const dayOfWeek = startSaturday.getDay();
+      const offsetToSaturday = (dayOfWeek + 1) % 7;
+      startSaturday.setDate(startDate.getDate() - offsetToSaturday);
+
+      const totalWeeksToShow = 12;
+
+      return weekdayNames.map((dayName, dayIdx) => {
+        const rowData = [];
+        for (let w = 0; w < totalWeeksToShow; w++) {
+          const currentTarget = new Date(startSaturday);
+          currentTarget.setDate(startSaturday.getDate() + w * 7 + dayIdx);
+
+          const isoStr = formatDate(currentTarget);
+          const count =
+            currentTarget < startDate || currentTarget > today
+              ? 0
+              : globalActivityMap[isoStr] || 0;
+
+          const monthName = currentTarget.toLocaleString("en-US", {
+            month: "short",
+          });
+
+          rowData.push({ x: `${monthName} W${w + 1}`, y: count });
+        }
+        return { name: dayName, data: rowData };
+      });
+    }
+
+    if (view === "monthly") {
+      const startMonth = startDate.getMonth();
+      const startYear = startDate.getFullYear();
+      const endMonth = today.getMonth();
+      const endYear = today.getFullYear();
+
+      const activeMonthsRange = [];
+      let curY = startYear;
+      let curM = startMonth;
+
+      while (curY < endYear || (curY === endYear && curM <= endMonth)) {
+        activeMonthsRange.push({
+          year: curY,
+          month: curM,
+          name: monthNames[curM],
+        });
+        curM++;
+        if (curM > 11) {
+          curM = 0;
+          curY++;
+        }
+      }
+
+      while (activeMonthsRange.length < 6) {
+        let last = activeMonthsRange[activeMonthsRange.length - 1];
+        let nextM = last.month + 1;
+        let nextY = last.year;
+        if (nextM > 11) {
+          nextM = 0;
+          nextY++;
+        }
+        activeMonthsRange.push({
+          year: nextY,
+          month: nextM,
+          name: monthNames[nextM],
+        });
+      }
+
+      const weekLabels = ["Week 1", "Week 2", "Week 3", "Week 4", "Week 5"];
+
+      return weekLabels.map((weekLabel, weekIdx) => {
+        const rowData = activeMonthsRange.map((mInfo) => {
+          let weeklyTicks = 0;
+          const daysInMonth = getDaysInMonth(mInfo.year, mInfo.month);
+
+          const startDay = weekIdx * 7 + 1;
+          const endDay = Math.min(startDay + 6, daysInMonth);
+
+          if (startDay <= daysInMonth) {
+            for (let d = startDay; d <= endDay; d++) {
+              const targetDate = new Date(mInfo.year, mInfo.month, d);
+              if (targetDate >= startDate && targetDate <= today) {
+                const isoStr = formatDate(targetDate);
+                if (globalActivityMap[isoStr]) {
+                  weeklyTicks += globalActivityMap[isoStr];
+                }
+              }
+            }
+          }
+
+          return { x: `${mInfo.name} ${mInfo.year}`, y: weeklyTicks };
+        });
+
+        return { name: weekLabel, data: rowData };
+      });
+    }
+
+    if (view === "yearly") {
+      const startYear = startDate.getFullYear();
+      const endYear = today.getFullYear();
+      const yearsRange = [];
+      for (let y = startYear; y <= endYear; y++) {
+        yearsRange.push(y);
+      }
+
+      return yearsRange.map((year) => {
+        const rowData = monthNames.map((monthName, mIdx) => {
+          let monthlyTotalTicks = 0;
+          const daysInMonth = getDaysInMonth(year, mIdx);
+
+          for (let d = 1; d <= daysInMonth; d++) {
+            const targetDate = new Date(year, mIdx, d);
+            if (targetDate >= startDate && targetDate <= today) {
+              const isoStr = formatDate(targetDate);
+              if (globalActivityMap[isoStr]) {
+                monthlyTotalTicks += globalActivityMap[isoStr];
+              }
+            }
+          }
+
+          return { x: monthName, y: monthlyTotalTicks };
+        });
+
+        return { name: String(year), data: rowData };
+      });
+    }
+
+    return [];
+  },
+
+  generateWeekdayCounts(
+    tags = [],
+    notes = [],
+    snippets = [],
+    bookmarks = [],
+    cheatsheets = [],
+  ) {
+    const weekdayCounts = Array(7).fill(0);
+    const allItems = extractAllItems(
+      tags,
+      notes,
+      snippets,
+      bookmarks,
+      cheatsheets,
+    );
+
+    allItems.forEach((item) => {
+      const dateStr = item?.createdAt || item?.updatedAt || item?.date;
+      if (dateStr) {
+        const dayIndex = new Date(dateStr).getDay();
+        const shiftedIndex = (dayIndex + 1) % 7;
+
+        if (shiftedIndex >= 0 && shiftedIndex <= 6) {
+          weekdayCounts[shiftedIndex]++;
+        }
+      }
+    });
+
+    return weekdayCounts;
+  },
+
+  generateModuleAnalytics(
+    tags = [],
+    notes = [],
+    snippets = [],
+    bookmarks = [],
+    cheatsheets = [],
+  ) {
+    const safeTags = Array.isArray(tags) ? tags : [];
+    const safeNotes = Array.isArray(notes) ? notes : [];
+    const safeSnippets = Array.isArray(snippets) ? snippets : [];
+    const safeBookmarks = Array.isArray(bookmarks) ? bookmarks : [];
+    const safeCheatsheets = Array.isArray(cheatsheets) ? cheatsheets : [];
+
+    return {
+      labels: ["Tags", "Notes", "Snippets", "Bookmarks", "CheatSheets"],
+      series: [
+        safeTags.length,
+        safeNotes.length,
+        safeSnippets.length,
+        safeBookmarks.length,
+        safeCheatsheets.length,
+      ],
+    };
+  },
+
+  generateTagsAnalytics(
+    tags = [],
+    notes = [],
+    snippets = [],
+    bookmarks = [],
+    cheatsheets = [],
+  ) {
+    const safeTags = Array.isArray(tags) ? tags : [];
+
+    const tagLookup = new Map();
+    safeTags.forEach((tag) => {
+      if (tag?.id && tag?.name) {
+        tagLookup.set(String(tag.id), String(tag.name).trim());
+      }
+    });
+
+    const contentItems = [
+      ...(Array.isArray(notes) ? notes : []),
+      ...(Array.isArray(snippets) ? snippets : []),
+      ...(Array.isArray(bookmarks) ? bookmarks : []),
+      ...(Array.isArray(cheatsheets) ? cheatsheets : []),
+    ];
+
+    const tagCountMap = {};
+
+    contentItems.forEach((item) => {
+      if (Array.isArray(item?.tagIds)) {
+        item.tagIds.forEach((tagId) => {
+          const tagName = tagLookup.get(String(tagId));
+          if (tagName) {
+            tagCountMap[tagName] = (tagCountMap[tagName] || 0) + 1;
+          }
+        });
+      }
+    });
+
+    const sortedTags = Object.entries(tagCountMap)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 5);
+
+    const categories = sortedTags.map(([tag]) => tag);
+    const seriesData = sortedTags.map(([, count]) => count);
+
+    return {
+      categories: categories.length ? categories : ["No Tags"],
+      series: [
+        {
+          name: "Usage Count",
+          data: seriesData.length ? seriesData : [0],
+        },
+      ],
+    };
+  },
+
+  generateMetricsAnalytics(
+    tags = [],
+    notes = [],
+    snippets = [],
+    bookmarks = [],
+    cheatsheets = [],
+  ) {
+    const allItems = extractAllItems(
+      tags,
+      notes,
+      snippets,
+      bookmarks,
+      cheatsheets,
+    );
+
+    const categories = ["Total Items", "Favorite/Pinned", "Archived"];
+    let total = allItems.length;
+    let pinned = 0;
+    let archived = 0;
+
+    allItems.forEach((item) => {
+      if (item?.pinned || item?.isFavorite) pinned++;
+      if (item?.archived || item?.isArchived) archived++;
+    });
+
+    return {
+      categories,
+      series: [
+        {
+          name: "Items Count",
+          data: [total, pinned, archived],
+        },
+      ],
+    };
+  },
+
+  getColorRanges(view, maxVal = 10, isDark = false) {
+    const safeMax = Math.max(maxVal, 1);
+
+    if (view === "yearly") {
+      return [
+        {
+          from: 0,
+          to: 0,
+          color: isDark ? "#1f2937" : "#e2e8f0",
+          name: "none",
+        },
+        {
+          from: 1,
+          to: Math.ceil(safeMax * 0.2),
+          color: isDark ? "#064e3b" : "#dcfae9",
+          name: "low",
+        },
+        {
+          from: Math.ceil(safeMax * 0.2) + 1,
+          to: Math.ceil(safeMax * 0.5),
+          color: isDark ? "#047857" : "#9be9a8",
+          name: "medium",
+        },
+        {
+          from: Math.ceil(safeMax * 0.5) + 1,
+          to: safeMax,
+          color: "#10b981",
+          name: "high",
+        },
+      ];
+    }
+
+    if (view === "monthly") {
+      const step = Math.max(1, Math.ceil(safeMax / 4));
+      return [
+        {
+          from: 0,
+          to: 0,
+          color: isDark ? "#111827" : "#f3f4f6",
+          name: "none",
+        },
+        {
+          from: 1,
+          to: step,
+          color: isDark ? "#064e3b" : "#dcfae9",
+          name: "low",
+        },
+        {
+          from: step + 1,
+          to: step * 2,
+          color: isDark ? "#047857" : "#9be9a8",
+          name: "medium",
+        },
+        {
+          from: step * 2 + 1,
+          to: safeMax,
+          color: "#10b981",
+          name: "high",
+        },
+      ];
+    }
+
+    return [
+      {
+        from: 0,
+        to: 0,
+        color: isDark ? "#1f2937" : "#e2e8f0",
+        name: "none",
+      },
+      {
+        from: 1,
+        to: safeMax,
+        color: "#10b981",
+        name: "active",
+      },
+    ];
+  },
+};
