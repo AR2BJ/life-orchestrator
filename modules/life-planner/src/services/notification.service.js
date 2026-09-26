@@ -84,7 +84,7 @@ export const NotificationService = {
     const countdownId = `toast-cd-${Math.random().toString(36).slice(2, 11)}`;
 
     const iconHTML = icon
-      ? `<i class="fa-regular ${icon} ${toastIconColor} text-lg"></i>`
+      ? `<i class="ti ${icon} ${toastIconColor} text-lg"></i>`
       : "";
 
     toast.innerHTML = `
@@ -114,7 +114,7 @@ export const NotificationService = {
         opacity-0 group-hover:opacity-100 group-hover:cursor-pointer
         pointer-events-none group-hover:pointer-events-auto`;
       closeBtn.setAttribute("aria-label", "Close notification");
-      closeBtn.innerHTML = `<i class="fa-regular fa-xmark text-xs"></i>`;
+      closeBtn.innerHTML = `<i class="ti ti-x text-xs"></i>`;
 
       closeBtn.addEventListener("click", (e) => {
         e.stopPropagation();
@@ -128,7 +128,7 @@ export const NotificationService = {
       const undoBtn = document.createElement("button");
       undoBtn.className = `h-8 px-3 transition flex items-center justify-center gap-1 cursor-pointer rounded-lg ${toastUndoClass} text-sm font-medium`;
 
-      undoBtn.innerHTML = `<i class="fa-regular fa-rotate-left text-xs"></i><span class="text-xs font-semibold">Undo</span>`;
+      undoBtn.innerHTML = `<i class="ti ti-arrow-back-up text-sm lg:text-base"></i><span class="text-xs font-semibold">Undo</span>`;
 
       undoBtn.addEventListener("click", () => {
         undoAction();
@@ -140,7 +140,7 @@ export const NotificationService = {
     if (actionButton) {
       const actionBtn = document.createElement("button");
       actionBtn.className = `min-w-fit h-8 px-3 transition flex items-center justify-center gap-1 cursor-pointer rounded-lg ${toastUndoClass} text-sm font-medium`;
-      actionBtn.innerHTML = `<i class="fa-regular ${actionButton.icon || "fa-arrow-right"} text-xs"></i><span class="text-xs font-semibold">${actionButton.text || "Action"}</span>`;
+      actionBtn.innerHTML = `<i class="ti ${actionButton.icon || "ti-arrow-right"} text-xs"></i><span class="text-xs font-semibold">${actionButton.text || "Action"}</span>`;
 
       actionBtn.addEventListener("click", (e) => {
         e.stopPropagation();

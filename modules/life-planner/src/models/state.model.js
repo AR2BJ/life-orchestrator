@@ -73,8 +73,8 @@ export const StateManager = {
     eventBus.emit("store:plans:changed", state.plans);
     eventBus.emit("store:logs:changed", state.logs);
     eventBus.emit("store:templates:changed", state.templates);
-    eventBus.emit("store:changed", state);
     eventBus.emit("ui:tab:changed", state.activeTab);
+    eventBus.emit("store:changed", state);
   },
 
   setupReactiveEngine() {

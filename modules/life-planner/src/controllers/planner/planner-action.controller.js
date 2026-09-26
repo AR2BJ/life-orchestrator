@@ -76,7 +76,7 @@ export const PlannerActionController = {
     NotificationService.show({
       type: "info",
       message: `Objective updated for "${targetPlan.title}"`,
-      icon: "fa-list-check",
+      icon: "ti-list-check",
       duration: 5000,
     });
   },
@@ -124,7 +124,7 @@ export const PlannerActionController = {
       message: !targetTemplate.isFavorite
         ? `Marked "${targetTemplate.title}" as favorite`
         : `Removed "${targetTemplate.title}" from favorites`,
-      icon: "fa-star",
+      icon: "ti-star",
       duration: 5000,
     });
   },
@@ -151,7 +151,7 @@ export const PlannerActionController = {
         NotificationService.show({
           type: "info",
           message: `Plan status reverted to Active`,
-          icon: "fa-arrow-rotate-left",
+          icon: "ti-arrow-back-up",
           duration: 5000,
         });
       }
@@ -181,7 +181,7 @@ export const PlannerActionController = {
       message: createdLog
         ? `Plan "${targetPlan.title}" completed & auto-logged!`
         : `Plan "${targetPlan.title}" marked as COMPLETED!`,
-      icon: "fa-circle-check",
+      icon: "ti-circle-check",
       duration: 5000,
     });
   },
@@ -199,7 +199,7 @@ export const PlannerActionController = {
     NotificationService.show({
       type: "info",
       message: `Plan status left unchanged.`,
-      icon: "fa-info-circle",
+      icon: "ti-info-circle",
       duration: 5000,
     });
   },
@@ -237,7 +237,7 @@ export const PlannerActionController = {
           ? " and all objectives marked as completed!"
           : ""
       }`,
-      icon: "fa-arrows-rotate",
+      icon: "ti-refresh",
       duration: 5000,
     });
   },
@@ -259,7 +259,7 @@ export const PlannerActionController = {
     NotificationService.show({
       type: "info",
       message: `Mood updated to "${nextMood.toUpperCase()}"`,
-      icon: "fa-face-smile",
+      icon: "ti-mood-smile",
       duration: 5000,
     });
   },
@@ -281,7 +281,7 @@ export const PlannerActionController = {
     NotificationService.show({
       type: "info",
       message: `Energy updated to ${nextEnergy}/5`,
-      icon: "fa-bolt",
+      icon: "ti-bolt",
       duration: 5000,
     });
   },
@@ -407,7 +407,7 @@ export const PlannerActionController = {
         if (!logId) return;
 
         const container = document.getElementById(`metrics-dropdown-${logId}`);
-        const icon = toggleMetricsBtn.querySelector(".fa-chevron-down");
+        const icon = toggleMetricsBtn.querySelector(".ti-chevron-down");
         const label = toggleMetricsBtn.querySelector(".btn-label");
 
         if (container) {
@@ -520,7 +520,7 @@ export const PlannerActionController = {
         NotificationService.show({
           type: "success",
           message: `Plan created from "${targetTemplate.title}" with ${generatedObjectives.length} objectives`,
-          icon: "fa-rocket",
+          icon: "ti-rocket",
           duration: 4000,
         });
         return;
@@ -603,7 +603,7 @@ export const PlannerActionController = {
         NotificationService.show({
           type: "info",
           message: "Item deleted successfully",
-          icon: "fa-trash-can",
+          icon: "ti-trash",
           duration: 5000,
         });
       }

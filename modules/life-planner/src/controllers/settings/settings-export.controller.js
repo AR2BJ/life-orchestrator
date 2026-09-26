@@ -17,7 +17,7 @@ export const SettingsExportController = {
       NotificationService.show({
         type: "info",
         message: "There is no data to export",
-        icon: "fa-circle-info",
+        icon: "ti-info-circle",
         iconColor: "text-sky-500/80",
         duration: 5000,
       });
@@ -49,7 +49,7 @@ export const SettingsExportController = {
     NotificationService.show({
       type: "success",
       message: `Database layer exported successfully as ${format.toUpperCase()}`,
-      icon: "fa-file-arrow-down",
+      icon: "ti-file-download",
       iconColor: "text-emerald-500/80",
       duration: 5000,
     });

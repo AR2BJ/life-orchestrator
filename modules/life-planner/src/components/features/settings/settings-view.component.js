@@ -30,7 +30,7 @@ export const SettingsViewComponent = {
               <div
                 class="w-8 h-8 rounded-lg bg-amber-400/10 flex items-center justify-center text-amber-400/80 shrink-0"
               >
-                <i class="fa-regular fa-palette text-sm"></i>
+                <i class="ti ti-palette text-sm lg:text-base"></i>
               </div>
               <div class="min-w-0">
                 <h3
@@ -49,7 +49,7 @@ export const SettingsViewComponent = {
             >
               <div
                 id="theme-tab-indicator"
-                class="absolute top-1 left-1 h-[calc(50%-4px)] w-[calc(100%-8px)] rounded-lg bg-brand/80 transition-all duration-300 xs:h-[calc(100%-8px)] xs:w-[calc(50%-4px)] ${
+                class="absolute top-1 left-1 h-[calc(50%-4px)] w-[calc(100%-8px)] rounded-lg bg-amber-400/80 transition-all duration-300 xs:h-[calc(100%-8px)] xs:w-[calc(50%-4px)] ${
                   isDark
                     ? "translate-y-full xs:translate-x-full"
                     : "translate-y-0 xs:translate-x-0"
@@ -60,7 +60,7 @@ export const SettingsViewComponent = {
                 id="sett-theme-light"
                 class="relative z-10 w-full py-2.5 text-xs xs:text-sm font-medium rounded-lg transition cursor-pointer flex items-center justify-center gap-1 xs:w-1/2 text-white"
               >
-                <i class="fa-regular fa-sun text-base"></i>
+                <i class="ti ti-sun text-base lg:text-lg"></i>
                 <span>Light Mode</span>
               </button>
 
@@ -68,7 +68,7 @@ export const SettingsViewComponent = {
                 id="sett-theme-dark"
                 class="relative z-10 w-full py-2.5 text-xs xs:text-sm font-medium rounded-lg transition cursor-pointer flex items-center justify-center gap-1 xs:w-1/2 text-secondary"
               >
-                <i class="fa-regular fa-moon text-base"></i>
+                <i class="ti ti-moon text-base lg:text-lg"></i>
                 <span>Dark Mode</span>
               </button>
             </div>
@@ -81,7 +81,7 @@ export const SettingsViewComponent = {
               <div
                 class="w-8 h-8 rounded-lg bg-blue-500/10 text-blue-500/80 flex items-center justify-center shrink-0"
               >
-                <i class="fa-regular fa-coins text-sm"></i>
+                <i class="ti ti-coins text-sm lg:text-base"></i>
               </div>
               <div class="min-w-0">
                 <h3
@@ -105,9 +105,9 @@ export const SettingsViewComponent = {
           >
             <div class="flex items-center gap-3 border-b border-border pb-3">
               <div
-                class="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-500/80 flex items-center justify-center shrink-0"
+                class="w-8 h-8 rounded-lg bg-violet-500/10 text-violet-500/80 flex items-center justify-center shrink-0"
               >
-                <i class="fa-regular fa-share text-sm"></i>
+                <i class="ti ti-share text-sm lg:text-base"></i>
               </div>
               <div class="min-w-0">
                 <h3
@@ -125,7 +125,9 @@ export const SettingsViewComponent = {
               <div
                 class="text-[10px] sm:text-[11px] font-bold text-secondary uppercase tracking-wider flex items-center gap-1.5"
               >
-                <i class="fa-regular fa-file-export opacity-70"></i>
+                <i
+                  class="ti ti-file-export opacity-70 text-xs lg:text-sm pb-0.5"
+                ></i>
                 <span>Export Application Ledger</span>
               </div>
               <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
@@ -134,7 +136,7 @@ export const SettingsViewComponent = {
                   class="w-full px-3 py-2.5 bg-surface-2 hover:bg-surface-3 border border-border rounded-xl text-color text-xs font-semibold flex items-center justify-center gap-2 transition cursor-pointer group"
                 >
                   <i
-                    class="fa-regular fa-file-code text-amber-500/80 text-sm group-hover:scale-105 transition"
+                    class="ti ti-braces text-amber-500/80 text-sm lg:text-base group-hover:scale-105 transition"
                   ></i>
                   <span>JSON Ledger</span>
                 </button>
@@ -144,7 +146,7 @@ export const SettingsViewComponent = {
                   class="w-full px-3 py-2.5 bg-surface-2 hover:bg-surface-3 border border-border rounded-xl text-color text-xs font-semibold flex items-center justify-center gap-2 transition cursor-pointer group"
                 >
                   <i
-                    class="fa-brands fa-markdown text-sky-500/80 text-sm group-hover:scale-105 transition"
+                    class="ti ti-markdown text-sky-500/80 text-sm lg:text-base group-hover:scale-105 transition"
                   ></i>
                   <span>Markdown Log</span>
                 </button>
@@ -154,7 +156,7 @@ export const SettingsViewComponent = {
                   class="w-full px-3 py-2.5 bg-surface-2 hover:bg-surface-3 border border-border rounded-xl text-color text-xs font-semibold flex items-center justify-center gap-2 transition cursor-pointer group"
                 >
                   <i
-                    class="fa-regular fa-table text-emerald-500/80 text-sm group-hover:scale-105 transition"
+                    class="ti ti-file-type-csv text-emerald-500/80 text-sm lg:text-base group-hover:scale-105 transition"
                   ></i>
                   <span>Spreadsheet CSV</span>
                 </button>
@@ -165,19 +167,21 @@ export const SettingsViewComponent = {
               <div
                 class="text-[10px] sm:text-[11px] font-bold text-secondary uppercase tracking-wider flex items-center gap-1.5"
               >
-                <i class="fa-regular fa-file-import opacity-70"></i>
+                <i
+                  class="ti ti-file-import opacity-70 text-xs lg:text-sm pb-0.5"
+                ></i>
                 <span>Import Database Snapshot</span>
               </div>
               <div
                 id="sett-dropzone"
-                class="border-2 border-dashed border-border hover:border-brand/60 rounded-xl p-4 sm:p-5 flex flex-col items-center justify-center gap-2 bg-surface-2/40 hover:bg-surface-2 transition cursor-pointer group text-center"
+                class="border-2 border-dashed border-border hover:border-violet-500/60 rounded-xl p-4 sm:p-5 flex flex-col items-center justify-center gap-2 bg-surface-2/40 hover:bg-surface-2 transition cursor-pointer group text-center"
               >
                 <i
-                  class="fa-regular fa-cloud-arrow-up text-lg sm:text-xl text-secondary group-hover:text-brand/80 transition animate-pulse"
+                  class="ti ti-cloud-upload text-lg sm:text-xl text-secondary group-hover:text-violet-500/80 transition animate-pulse"
                 ></i>
                 <span class="text-xs font-semibold text-color px-2">
                   Drag & drop file here or
-                  <span class="text-brand/80 font-bold"
+                  <span class="text-violet-500/80 font-bold"
                     >browse local files</span
                   >
                 </span>
@@ -202,7 +206,7 @@ export const SettingsViewComponent = {
               <div
                 class="w-8 h-8 rounded-lg bg-red-500/10 text-red-500/80 flex items-center justify-center shrink-0"
               >
-                <i class="fa-regular fa-database text-sm"></i>
+                <i class="ti ti-database text-sm lg:text-base"></i>
               </div>
               <div class="min-w-0">
                 <h3
@@ -236,7 +240,7 @@ export const SettingsViewComponent = {
                 id="trigger-reset-btn"
                 class="w-full lg:w-36 px-4 py-2.5 rounded-xl bg-red-600/80 hover:bg-red-800/80 text-white font-medium text-xs sm:text-sm transition shadow-sm cursor-pointer flex items-center justify-center gap-2 shrink-0"
               >
-                <i class="fa-regular fa-trash-can text-xs"></i>
+                <i class="ti ti-trash text-sm lg:text-base"></i>
                 <span>Reset Data</span>
               </button>
             </div>

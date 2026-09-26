@@ -15,19 +15,19 @@ export class CalendarController {
       title: "Daily Overview",
       description:
         "Detailed breakdown of plans, objectives, and auto-logs for a specific date.",
-      icon: "fa-calendar-day",
+      icon: "ti-calendar",
     },
     month: {
       title: "Monthly Overview",
       description:
         "Visual distribution of scheduled plans and logs across days and weeks.",
-      icon: "fa-calendar-week",
+      icon: "ti-calendar-week",
     },
     year: {
       title: "Yearly Overview",
       description:
         "High-level visual density map of logged activities and plans across the year.",
-      icon: "fa-calendar-days",
+      icon: "ti-calendar-month",
     },
   };
 
@@ -105,7 +105,7 @@ export class CalendarController {
     const config = this.calendarConfigs[mode] || this.calendarConfigs.day;
 
     if (titleEl) {
-      const newTitleHtml = `<i class="fa-regular ${config.icon} text-brand/80"></i> ${config.title}`;
+      const newTitleHtml = `<i class="ti ${config.icon} text-brand/80"></i> ${config.title}`;
       if (titleEl.innerHTML !== newTitleHtml) {
         titleEl.innerHTML = newTitleHtml;
       }

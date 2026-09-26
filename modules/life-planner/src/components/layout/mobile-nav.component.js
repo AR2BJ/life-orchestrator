@@ -8,7 +8,7 @@ export const MobileNavComponent = {
           id="mobile-planner"
           class="mobile-nav-btn flex flex-col items-center justify-center gap-2 text-secondary"
         >
-          <i class="fa-regular fa-clipboard-list text-2xl"></i>
+          <i class="ti ti-clipboard-list text-2xl"></i>
           <span class="text-xs font-medium tracking-wide">Planner</span>
         </button>
 
@@ -16,7 +16,7 @@ export const MobileNavComponent = {
           id="mobile-analytics"
           class="mobile-nav-btn flex flex-col items-center justify-center gap-2 text-secondary"
         >
-          <i class="fa-regular fa-chart-line text-2xl"></i>
+          <i class="ti ti-chart-line text-2xl"></i>
           <span class="text-xs font-medium tracking-wide">Analytics</span>
         </button>
 
@@ -24,7 +24,7 @@ export const MobileNavComponent = {
           id="mobile-calendar"
           class="mobile-nav-btn flex flex-col items-center justify-center gap-2 text-secondary"
         >
-          <i class="fa-regular fa-calendar text-2xl"></i>
+          <i class="ti ti-calendar text-2xl"></i>
           <span class="text-xs font-medium tracking-wide">Calendar</span>
         </button>
 
@@ -32,7 +32,7 @@ export const MobileNavComponent = {
           id="mobile-settings"
           class="mobile-nav-btn flex flex-col items-center justify-center gap-2 text-secondary"
         >
-          <i class="fa-regular fa-gear text-2xl"></i>
+          <i class="ti ti-settings text-2xl"></i>
           <span class="text-xs font-medium tracking-wide">Settings</span>
         </button>
       </nav>

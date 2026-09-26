@@ -346,7 +346,12 @@ export const AnalyticsAdapter = {
 
     if (view === "yearly") {
       return [
-        { from: 0, to: 0, color: isDark ? "#1f2937" : "#e2e8f0", name: "none" },
+        {
+          from: 0,
+          to: 0,
+          color: isDark ? "#1f2937" : "#e2e8f0",
+          name: "none",
+        },
         {
           from: 1,
           to: Math.ceil(safeMax * 0.2),
@@ -371,7 +376,12 @@ export const AnalyticsAdapter = {
     if (view === "monthly") {
       const step = Math.max(1, Math.ceil(safeMax / 4));
       return [
-        { from: 0, to: 0, color: isDark ? "#111827" : "#f3f4f6", name: "none" },
+        {
+          from: 0,
+          to: 0,
+          color: isDark ? "#111827" : "#f3f4f6",
+          name: "none",
+        },
         {
           from: 1,
           to: step,
@@ -394,8 +404,18 @@ export const AnalyticsAdapter = {
     }
 
     return [
-      { from: 0, to: 0, color: isDark ? "#1f2937" : "#e2e8f0", name: "none" },
-      { from: 1, to: safeMax, color: "#10b981", name: "active" },
+      {
+        from: 0,
+        to: 0,
+        color: isDark ? "#1f2937" : "#e2e8f0",
+        name: "none",
+      },
+      {
+        from: 1,
+        to: safeMax,
+        color: "#10b981",
+        name: "active",
+      },
     ];
   },
 };

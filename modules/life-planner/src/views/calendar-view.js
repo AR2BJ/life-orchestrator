@@ -13,14 +13,11 @@ export const CalendarView = {
               id="calendar-header-title"
               class="text-lg sm:text-xl font-bold text-color flex items-center gap-2"
             >
-              <i class="fa-regular fa-calendar-day text-brand/80"></i>
-              Daily Overview
             </h1>
             <p
               id="calendar-header-description"
               class="text-xs sm:text-sm text-secondary mt-1"
             >
-              Detailed breakdown of plans, objectives, and auto-logs for a specific date.
             </p>
           </div>
 
@@ -88,7 +85,7 @@ export const CalendarView = {
                 aria-label="Previous Period"
                 class="w-6 h-6 xs:w-8 xs:h-8 rounded-md xs:rounded-lg bg-surface border border-border flex items-center justify-center text-secondary hover:text-color transition cursor-pointer"
               >
-                <i class="fa-regular fa-chevron-left text-[10px] xs:text-xs"></i>
+                <i class="ti ti-chevron-left text-sm lg:text-base"></i>
               </button>
 
               <button
@@ -96,7 +93,7 @@ export const CalendarView = {
                 aria-label="Next Period"
                 class="w-6 h-6 xs:w-8 xs:h-8 rounded-md xs:rounded-lg bg-surface border border-border flex items-center justify-center text-secondary hover:text-color transition cursor-pointer"
               >
-                <i class="fa-regular fa-chevron-right text-[10px] xs:text-xs"></i>
+                <i class="ti ti-chevron-right text-sm lg:text-base"></i>
               </button>
             </div>
           </div>

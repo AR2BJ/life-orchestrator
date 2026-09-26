@@ -202,7 +202,7 @@ function renderChartEmptyState(chartEl, title, icon, subtitle) {
   chartEl.innerHTML = `
     <div class="empty-state-box flex w-full h-full min-h-60 items-center justify-center rounded-2xl border border-dashed border-border/80 bg-surface p-6 text-center">
       <div class="max-w-xs">
-        <i class="text-4xl mb-3 fa-regular ${icon} text-brand/60"></i>
+        <i class="text-4xl mb-3 ti ${icon} text-brand/60"></i>
         <div class="mb-2 text-lg font-semibold text-color">
           ${title}
         </div>
@@ -219,32 +219,32 @@ function renderNoDataState() {
     {
       id: "apex-heatmap-chart",
       title: "Activity Heatmap",
-      icon: "fa-table-cells",
+      icon: "ti-chart-cohort",
       subtitle:
         "Add plans or logs to see your weekly, monthly, and yearly activity trend.",
     },
     {
       id: "apex-weekday-chart",
       title: "Weekly Activity",
-      icon: "fa-calendar-days",
+      icon: "ti-calendar",
       subtitle: "Your activity by weekday will appear here once data exists.",
     },
     {
       id: "apex-lifearea-chart",
       title: "Life Area Distribution",
-      icon: "fa-compass",
+      icon: "ti-chart-pie",
       subtitle: "Assign life areas to your plans to see domain distribution.",
     },
     {
       id: "apex-mood-chart",
       title: "Mood Spectrum",
-      icon: "fa-face-smile",
+      icon: "ti-mood-smile",
       subtitle: "Log your mood state entries to track emotional spectrum.",
     },
     {
       id: "apex-energy-chart",
       title: "Energy Distribution",
-      icon: "fa-battery-three-quarters",
+      icon: "ti-battery-3",
       subtitle: "Log your energy metrics to view battery level trends.",
     },
   ];
@@ -384,7 +384,11 @@ export function renderAnalyticsCharts(
     },
     yaxis: {
       labels: {
-        style: { colors: axisTextColor, fontSize: "12px", fontWeight: 700 },
+        style: {
+          colors: axisTextColor,
+          fontSize: "12px",
+          fontWeight: 700,
+        },
       },
     },
     grid: {
@@ -459,16 +463,34 @@ export function renderAnalyticsCharts(
     dataLabels: {
       enabled: true,
       offsetY: -18,
-      style: { colors: [axisTextColor], fontSize: "11px", fontWeight: "bold" },
+      style: {
+        colors: [axisTextColor],
+        fontSize: "11px",
+        fontWeight: "bold",
+      },
     },
     xaxis: {
       categories: moodData.categories,
       labels: {
-        style: { colors: axisTextColor, fontSize: "11px", fontWeight: 600 },
+        style: {
+          colors: axisTextColor,
+          fontSize: "11px",
+          fontWeight: 600,
+        },
       },
     },
-    yaxis: { labels: { style: { colors: axisTextColor, fontSize: "11px" } } },
-    grid: { borderColor: isDark ? "#334155" : "#e2e8f0", strokeDashArray: 4 },
+    yaxis: {
+      labels: {
+        style: {
+          colors: axisTextColor,
+          fontSize: "11px",
+        },
+      },
+    },
+    grid: {
+      borderColor: isDark ? "#334155" : "#e2e8f0",
+      strokeDashArray: 4,
+    },
     tooltip: { theme: isDark ? "dark" : "light" },
   };
 
@@ -495,16 +517,34 @@ export function renderAnalyticsCharts(
     dataLabels: {
       enabled: true,
       offsetY: -18,
-      style: { colors: [axisTextColor], fontSize: "11px", fontWeight: "bold" },
+      style: {
+        colors: [axisTextColor],
+        fontSize: "11px",
+        fontWeight: "bold",
+      },
     },
     xaxis: {
       categories: energyData.categories,
       labels: {
-        style: { colors: axisTextColor, fontSize: "11px", fontWeight: 600 },
+        style: {
+          colors: axisTextColor,
+          fontSize: "11px",
+          fontWeight: 600,
+        },
       },
     },
-    yaxis: { labels: { style: { colors: axisTextColor, fontSize: "11px" } } },
-    grid: { borderColor: isDark ? "#334155" : "#e2e8f0", strokeDashArray: 4 },
+    yaxis: {
+      labels: {
+        style: {
+          colors: axisTextColor,
+          fontSize: "11px",
+        },
+      },
+    },
+    grid: {
+      borderColor: isDark ? "#334155" : "#e2e8f0",
+      strokeDashArray: 4,
+    },
     tooltip: { theme: isDark ? "dark" : "light" },
   };
 

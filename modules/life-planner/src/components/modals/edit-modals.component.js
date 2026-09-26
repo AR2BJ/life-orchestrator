@@ -2,11 +2,11 @@ import { CURRENCY_OPTIONS } from "@/utils/constants/options-value.constants";
 import { formatNumberWithCommas } from "@/utils/helpers";
 
 export const EditModalsComponent = {
-  renderEmptyState(message, iconClass = "fa-regular fa-list-check") {
+  renderEmptyState(message, iconClass = "ti ti-list-check") {
     return `
       <div class="w-full h-full min-h-45 overflow-y-auto scrollbar-thumb-surface-2 scrollbar-thin bg-surface rounded-2xl border border-dashed border-border/70 p-4 text-center flex flex-col justify-center items-center">
         <div class="h-full flex flex-col justify-center items-center">
-          <div class="text-3xl text-brand/80">
+          <div class="text-4xl lg:text-5xl text-brand/80">
             <i class="${iconClass}"></i>
           </div>
           <p class="mt-3 text-secondary max-w-sm mx-auto text-xs lg:text-sm">
@@ -92,7 +92,7 @@ export const EditModalsComponent = {
             class="edit-btn h-7 w-7 sm:w-9 sm:h-9 flex items-center justify-center rounded-lg sm:rounded-xl border border-border bg-surface hover:bg-blue-600/10 hover:cursor-pointer transition"
             title="Edit Objective"
           >
-            <i class="fa-regular fa-pen-to-square text-blue-500/80 text-sm"></i>
+            <i class="ti ti-edit-circle text-blue-500/80 text-sm lg:text-base"></i>
           </button>
 
           <button
@@ -102,7 +102,7 @@ export const EditModalsComponent = {
             class="delete-btn flex h-7 w-7 sm:w-9 sm:h-9 items-center justify-center rounded-lg sm:rounded-xl border border-border bg-surface hover:bg-red-600/10 hover:cursor-pointer transition"
             title="Delete Objective"
           >
-            <i class="fa-regular fa-trash-can text-red-500/80 text-sm"></i>
+            <i class="ti ti-trash text-red-500/80 text-sm lg:text-base"></i>
           </button>
         </div>
       </div>
@@ -159,7 +159,7 @@ export const EditModalsComponent = {
             class="edit-btn flex h-7 w-7 sm:w-9 sm:h-9 items-center justify-center rounded-lg sm:rounded-xl border border-border bg-surface hover:bg-blue-600/10 hover:cursor-pointer transition"
             title="Edit Metric"
           >
-            <i class="fa-regular fa-pen-to-square text-blue-500/80 text-sm"></i>
+            <i class="ti ti-edit-circle text-blue-500/80 text-sm"></i>
           </button>
 
           <button
@@ -169,7 +169,7 @@ export const EditModalsComponent = {
             class="delete-btn flex h-7 w-7 sm:w-9 sm:h-9 items-center justify-center rounded-lg sm:rounded-xl border border-border bg-surface hover:bg-red-600/10 hover:cursor-pointer transition"
             title="Delete Metric"
           >
-            <i class="fa-regular fa-trash-can text-red-500/80 text-sm"></i>
+            <i class="ti ti-trash text-red-500/80 text-sm"></i>
           </button>
         </div>
       </div>
@@ -180,19 +180,19 @@ export const EditModalsComponent = {
     return `
       <div
         id="edit-modal"
-        class="fixed inset-0 z-50 hidden items-end lg:items-center justify-center p-0 lg:p-4 bg-black/60 backdrop-blur-sm animate-fade-in"
+        class="fixed inset-0 z-400 hidden items-center justify-center p-0 lg:p-4 bg-black/60 backdrop-blur-sm animate-fade-in"
       >
         <div
-          class="bg-surface xs:rounded-t-3xl lg:rounded-2xl p-4 lg:p-6 max-w-3xl w-full h-dvh xs:h-[96.5dvh] sm:h-[95dvh] lg:h-auto lg:max-h-[90vh] shadow-2xl flex flex-col border border-border overflow-hidden"
+          class="bg-surface rounded-2xl p-4 lg:p-6 max-w-3xl w-full h-auto shadow-2xl flex flex-col border border-border overflow-hidden"
         >
           <div
             class="flex items-center justify-between border-b border-border pb-4 shrink-0"
           >
             <div class="flex items-center gap-3 min-w-0">
               <div
-                class="w-10 h-10 lg:w-11 lg:h-11 rounded-xl lg:rounded-2xl bg-brand/10 text-brand/80 flex items-center justify-center text-base lg:text-lg shrink-0"
+                class="w-10 h-10 lg:w-11 lg:h-11 rounded-xl lg:rounded-2xl bg-brand/10 text-brand/80 flex items-center justify-center text-lg lg:text-xl shrink-0"
               >
-                <i class="fa-regular fa-pen-to-square"></i>
+                <i class="ti ti-edit-circle"></i>
               </div>
               <div class="min-w-0">
                 <h3 class="text-sm lg:text-base font-bold text-color truncate">
@@ -211,7 +211,7 @@ export const EditModalsComponent = {
               type="button"
               class="w-8 h-8 lg:w-9 lg:h-9 rounded-lg lg:rounded-xl bg-surface-2 hover:bg-red-600/10 border border-border text-secondary hover:text-color flex items-center justify-center transition cursor-pointer shrink-0"
             >
-              <i class="fa-regular fa-xmark text-sm"></i>
+              <i class="ti ti-x text-sm lg:text-base"></i>
             </button>
           </div>
 
@@ -231,7 +231,7 @@ export const EditModalsComponent = {
                     class="flex h-9 w-9 lg:h-10 lg:w-10 self-start shrink-0 items-center justify-center rounded-lg lg:rounded-xl bg-brand/10 text-brand/80"
                   >
                     <i
-                      class="fa-regular fa-file-lines text-sm lg:text-base"
+                      class="ti ti-file-description text-base lg:text-lg"
                     ></i>
                   </div>
                   <div>
@@ -244,7 +244,7 @@ export const EditModalsComponent = {
                   </div>
                 </div>
                 <i
-                  class="accordion-icon fa-regular fa-chevron-up text-secondary text-xs lg:text-sm transition-transform duration-200"
+                  class="accordion-icon ti ti-chevron-up text-secondary text-lg lg:text-xl transition-transform duration-200"
                 ></i>
               </button>
 
@@ -264,7 +264,7 @@ export const EditModalsComponent = {
                     id="edit-item-title"
                     type="text"
                     placeholder="Enter title..."
-                    class="h-10 lg:h-11 w-full rounded-xl border border-border bg-surface px-4 text-sm text-color placeholder:text-secondary/70 transition focus:border-brand/80 focus:outline-none"
+                    class="h-11 w-full rounded-xl border border-border bg-surface px-4 text-sm text-color placeholder:text-secondary/70 transition focus:border-brand/80 focus:outline-none"
                   />
                 </div>
 
@@ -351,7 +351,7 @@ export const EditModalsComponent = {
                   <div
                     class="flex h-9 w-9 lg:h-10 lg:w-10 shrink-0 self-start items-center justify-center rounded-lg lg:rounded-xl bg-brand/10 text-brand/80"
                   >
-                    <i class="fa-regular fa-sliders text-sm lg:text-base"></i>
+                    <i class="ti ti-adjustments-horizontal text-base lg:text-lg"></i>
                   </div>
                   <div>
                     <h4 class="text-xs lg:text-sm font-semibold text-color">
@@ -363,7 +363,7 @@ export const EditModalsComponent = {
                   </div>
                 </div>
                 <i
-                  class="accordion-icon fa-regular fa-chevron-down text-secondary text-xs lg:text-sm transition-transform duration-200"
+                  class="accordion-icon ti ti-chevron-down text-secondary text-lg lg:text-xl transition-transform duration-200"
                 ></i>
               </button>
 
@@ -404,7 +404,7 @@ export const EditModalsComponent = {
                     class="flex h-9 w-9 lg:h-10 lg:w-10 shrink-0 self-start items-center justify-center rounded-lg lg:rounded-xl bg-brand/10 text-brand/80"
                   >
                     <i
-                      class="fa-regular fa-bars-staggered text-sm lg:text-base"
+                      class="ti ti-menu-3 text-base lg:text-lg"
                     ></i>
                   </div>
                   <div>
@@ -420,12 +420,12 @@ export const EditModalsComponent = {
                 <div class="flex items-center gap-2 lg:gap-3">
                   <span
                     id="objective-progress-badge"
-                    class="text-[10px] lg:text-xs text-secondary px-2 lg:px-3 py-1 rounded-lg bg-surface border border-border shrink-0"
+                    class="hidden xs:flex text-[10px] lg:text-xs text-secondary px-2 lg:px-3 py-1 rounded-lg bg-surface border border-border shrink-0"
                   >
                     0/0 Done
                   </span>
                   <i
-                    class="accordion-icon fa-regular fa-chevron-down text-secondary text-xs lg:text-sm transition-transform duration-200"
+                    class="accordion-icon ti ti-chevron-down text-secondary text-lg lg:text-xl transition-transform duration-200"
                   ></i>
                 </div>
               </button>
@@ -436,7 +436,7 @@ export const EditModalsComponent = {
                     id="new-objective-input"
                     type="text"
                     placeholder="Objective title..."
-                    class="w-full h-10 lg:h-11 rounded-xl border border-border bg-surface px-3 text-xs lg:text-sm text-color placeholder:text-secondary/70 focus:border-brand/80 focus:outline-none"
+                    class="w-full h-11 rounded-xl border border-border bg-surface px-3 text-sm text-color placeholder:text-secondary/70 focus:border-brand/80 focus:outline-none"
                   />
 
                   <div
@@ -447,7 +447,7 @@ export const EditModalsComponent = {
 
                 <div
                   id="objective-numeric-field"
-                  class="flex items-center gap-2 w-full mt-3.5"
+                  class="flex items-center gap-2 w-full mt-2"
                 >
                   <div class="flex-1 min-w-0">
                     <div
@@ -465,7 +465,7 @@ export const EditModalsComponent = {
                     maxlength="7"
                     min="1"
                     pattern="^[0-9]*.?[0-9]*$"
-                    class="w-20 shrink-0 h-10 lg:h-11 rounded-xl border border-border bg-surface px-3 text-xs lg:text-sm text-center text-color placeholder:text-secondary/70 focus:border-brand/80 focus:outline-none transition-all duration-200"
+                    class="w-20 shrink-0 h-11 rounded-xl border border-border bg-surface px-3 text-sm text-center text-color placeholder:text-secondary/70 focus:border-brand/80 focus:outline-none transition-all duration-200"
                   />
                 </div>
 
@@ -478,7 +478,7 @@ export const EditModalsComponent = {
                     type="button"
                     class="w-full h-10 rounded-xl bg-brand/10 text-brand/80 hover:bg-brand/20 font-semibold text-xs lg:text-sm flex items-center justify-center gap-1.5 transition cursor-pointer"
                   >
-                    <i class="fa-regular fa-plus"></i> Add Objective
+                    <i class="ti ti-plus"></i> Add Objective
                   </button>
                 </div>
 
@@ -503,7 +503,7 @@ export const EditModalsComponent = {
                     class="flex h-9 w-9 lg:h-10 lg:w-10 shrink-0 self-start items-center justify-center rounded-lg lg:rounded-xl bg-brand/10 text-brand/80"
                   >
                     <i
-                      class="fa-regular fa-calendar-day text-sm lg:text-base"
+                      class="ti ti-calendar text-sm lg:text-base"
                     ></i>
                   </div>
                   <div>
@@ -517,7 +517,7 @@ export const EditModalsComponent = {
                   </div>
                 </div>
                 <i
-                  class="accordion-icon fa-regular fa-chevron-down text-secondary text-xs lg:text-sm transition-transform duration-200"
+                  class="accordion-icon ti ti-chevron-down text-secondary text-lg lg:text-xl transition-transform duration-200"
                 ></i>
               </button>
 
@@ -558,7 +558,7 @@ export const EditModalsComponent = {
                     class="flex h-9 w-9 lg:h-10 lg:w-10 shrink-0 self-start items-center justify-center rounded-lg lg:rounded-xl bg-brand/10 text-brand/80"
                   >
                     <i
-                      class="fa-regular fa-chart-line text-sm lg:text-base"
+                      class="ti ti-chart-line text-sm lg:text-base"
                     ></i>
                   </div>
                   <div>
@@ -571,7 +571,7 @@ export const EditModalsComponent = {
                   </div>
                 </div>
                 <i
-                  class="accordion-icon fa-regular fa-chevron-down text-secondary text-xs lg:text-sm transition-transform duration-200"
+                  class="accordion-icon ti ti-chevron-down text-secondary text-lg lg:text-xl transition-transform duration-200"
                 ></i>
               </button>
 
@@ -582,7 +582,7 @@ export const EditModalsComponent = {
                       id="new-metric-key"
                       type="text"
                       placeholder="Metric key (e.g. sleep_hours)..."
-                      class="w-full h-10 lg:h-11 rounded-xl border border-border bg-surface px-3 text-xs lg:text-sm text-color placeholder:text-secondary/70 focus:border-brand/80 focus:outline-none"
+                      class="w-full h-11 rounded-xl border border-border bg-surface px-3 text-sm text-color placeholder:text-secondary/70 focus:border-brand/80 focus:outline-none"
                     />
                   </div>
 
@@ -595,7 +595,7 @@ export const EditModalsComponent = {
                     maxlength="7"
                     min="1"
                     pattern="^[0-9]*.?[0-9]*$"
-                    class="w-20 shrink-0 h-10 lg:h-11 rounded-xl border border-border bg-surface px-3 text-xs lg:text-sm text-center text-color placeholder:text-secondary/70 focus:border-brand/80 focus:outline-none field-sizing-content transition-all duration-200"
+                    class="w-20 shrink-0 h-11 rounded-xl border border-border bg-surface px-3 text-sm text-center text-color placeholder:text-secondary/70 focus:border-brand/80 focus:outline-none field-sizing-content transition-all duration-200"
                   />
 
                   <div class="flex-1 min-w-0">
@@ -615,7 +615,7 @@ export const EditModalsComponent = {
                     type="button"
                     class="w-full h-10 rounded-xl bg-brand/10 text-brand/80 hover:bg-brand/20 font-semibold text-xs lg:text-sm flex items-center justify-center gap-1.5 transition cursor-pointer"
                   >
-                    <i class="fa-regular fa-plus"></i> Add Metric
+                    <i class="ti ti-plus"></i> Add Metric
                   </button>
                 </div>
 
@@ -639,7 +639,7 @@ export const EditModalsComponent = {
                   <div
                     class="flex h-9 w-9 lg:h-10 lg:w-10 shrink-0 self-start items-center justify-center rounded-lg lg:rounded-xl bg-brand/10 text-brand/80"
                   >
-                    <i class="fa-regular fa-compass text-sm lg:text-base"></i>
+                    <i class="ti ti-compass text-sm lg:text-base"></i>
                   </div>
                   <div>
                     <h4 class="text-xs lg:text-sm font-semibold text-color">
@@ -652,7 +652,7 @@ export const EditModalsComponent = {
                   </div>
                 </div>
                 <i
-                  class="accordion-icon fa-regular fa-chevron-down text-secondary text-xs lg:text-sm transition-transform duration-200"
+                  class="accordion-icon ti ti-chevron-down text-secondary text-lg lg:text-xl transition-transform duration-200"
                 ></i>
               </button>
 
@@ -669,7 +669,7 @@ export const EditModalsComponent = {
                       id="edit-template-baseline"
                       type="text"
                       placeholder="e.g. Minimum acceptable standard"
-                      class="h-10 lg:h-11 w-full rounded-xl border border-border bg-surface px-4 text-sm text-color placeholder:text-secondary/70 focus:border-brand/80 focus:outline-none"
+                      class="h-11 w-full rounded-xl border border-border bg-surface px-4 text-sm text-color placeholder:text-secondary/70 focus:border-brand/80 focus:outline-none"
                     />
                   </div>
                   <div class="w-full flex flex-col">
@@ -683,7 +683,7 @@ export const EditModalsComponent = {
                       id="edit-template-optimal"
                       type="text"
                       placeholder="e.g. Best performance target"
-                      class="h-10 lg:h-11 w-full rounded-xl border border-border bg-surface px-4 text-sm text-color placeholder:text-secondary/70 focus:border-brand/80 focus:outline-none"
+                      class="h-11 w-full rounded-xl border border-border bg-surface px-4 text-sm text-color placeholder:text-secondary/70 focus:border-brand/80 focus:outline-none"
                     />
                   </div>
                 </div>
@@ -691,7 +691,7 @@ export const EditModalsComponent = {
             </div>
 
             <div
-              class="grid grid-cols-2 gap-3 pt-3 border-t border-border shrink-0 w-full bg-surface mt-auto"
+              class="grid grid-cols-2 gap-3 pt-3 border-t border-border shrink-0 w-full bg-surface"
             >
               <button
                 id="cancel-edit"
@@ -706,7 +706,7 @@ export const EditModalsComponent = {
                 type="button"
                 class="h-10 lg:h-11 rounded-lg lg:rounded-xl bg-brand/80 hover:bg-brand text-white font-medium text-xs lg:text-sm transition shadow-md shadow-brand/10 cursor-pointer flex items-center justify-center gap-2"
               >
-                <i class="fa-regular fa-check"></i> Save Changes
+                <i class="ti ti-check"></i> Save Changes
               </button>
             </div>
           </div>

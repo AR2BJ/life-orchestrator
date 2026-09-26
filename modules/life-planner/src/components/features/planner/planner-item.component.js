@@ -12,10 +12,8 @@ import { StateManager } from "@/models/state.model.js";
 export const PlannerItemComponent = {
   // --- HELPERS ---
   _normalizeIconClass(iconString) {
-    if (!iconString) return "fa-regular fa-folder";
-    return iconString.includes("fa-solid")
-      ? iconString.replace("fa-solid", "fa-regular")
-      : iconString;
+    if (!iconString) return "ti ti-folder";
+    return iconString;
   },
 
   _getLifeAreaBadgeHtml(lifeAreaId) {
@@ -24,7 +22,7 @@ export const PlannerItemComponent = {
     );
     const areaData = matched || {
       name: lifeAreaId || "General",
-      icon: "fa-regular fa-folder text-secondary",
+      icon: "ti ti-folder text-secondary",
       class: "bg-surface text-secondary border-border/60",
     };
 
@@ -32,9 +30,9 @@ export const PlannerItemComponent = {
 
     return `
       <span
-        class="inline-flex items-center gap-1 rounded-md border ${areaData.class} px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider"
+        class="min-h-5.5 inline-flex items-center gap-1 rounded-md border ${areaData.class} px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider"
       >
-        <i class="${iconClass} text-[9px]"></i>
+        <i class="${iconClass} text-[10px] lg:text-xs pb-px"></i>
         <span>${areaData.name}</span>
       </span>
     `;
@@ -44,7 +42,7 @@ export const PlannerItemComponent = {
     const matched = PLAN_STATES.find((s) => s.id === stateKey);
     const stateData = matched || {
       name: stateKey || "active",
-      icon: "fa-regular fa-circle text-secondary",
+      icon: "ti ti-circle text-secondary",
       class: "bg-surface text-secondary border-border/60",
     };
 
@@ -55,11 +53,11 @@ export const PlannerItemComponent = {
         type="button"
         data-plan-id="${planId}"
         data-current-state="${stateData.id}"
-        class="state-cycle-btn inline-flex items-center gap-1.5 rounded-md border ${stateData.class} px-2 py-0.5 text-[10px] uppercase font-bold tracking-wider cursor-pointer hover:opacity-80 active:scale-95 transition-all select-none"
+        class="state-cycle-btn min-h-5.5 inline-flex items-center gap-1 rounded-md border ${stateData.class} px-2 py-0.5 text-[10px] uppercase font-bold tracking-wider cursor-pointer hover:opacity-80 active:scale-95 transition-all select-none"
         title="Click to cycle status"
       >
         <i
-          class="${iconClass} text-[10px] transition-transform duration-300"
+          class="${iconClass} text-[10px] lg:text-xs pb-px transition-transform duration-300"
         ></i>
         <span>${stateData.name}</span>
       </button>
@@ -72,7 +70,7 @@ export const PlannerItemComponent = {
     );
     const moodData = matched || {
       label: moodValue || "Neutral",
-      icon: "fa-regular fa-face-meh text-secondary",
+      icon: "ti ti-mood-empty text-secondary",
       class: "bg-surface text-secondary border-border/60",
     };
 
@@ -83,11 +81,11 @@ export const PlannerItemComponent = {
         type="button"
         data-log-id="${logId}"
         data-current-mood="${moodData.value || moodValue}"
-        class="mood-cycle-btn inline-flex items-center gap-1 rounded-md border ${moodData.class} px-2 py-0.5 text-[10px] uppercase font-semibold cursor-pointer hover:opacity-80 active:scale-95 transition-all select-none"
+        class="mood-cycle-btn min-h-5.5 inline-flex items-center gap-1 rounded-md border ${moodData.class} px-2 py-0.5 text-[10px] uppercase font-semibold cursor-pointer hover:opacity-80 active:scale-95 transition-all select-none"
         title="Click to cycle mood"
       >
         <i
-          class="${iconClass} text-[9px] transition-transform duration-300"
+          class="${iconClass} text-[10px] lg:text-xs pb-px transition-transform duration-300"
         ></i>
         <span>${moodData.label}</span>
       </button>
@@ -100,7 +98,7 @@ export const PlannerItemComponent = {
     );
     const energyData = matched || {
       label: `Energy: ${energyValue}/5`,
-      icon: "fa-regular fa-bolt text-secondary",
+      icon: "ti ti-bolt text-secondary",
       class: "bg-surface text-secondary border-border/60",
     };
 
@@ -111,11 +109,11 @@ export const PlannerItemComponent = {
         type="button"
         data-log-id="${logId}"
         data-current-energy="${energyValue}"
-        class="energy-cycle-btn inline-flex items-center gap-1 rounded-md border ${energyData.class} px-2 py-0.5 text-[10px] uppercase font-semibold cursor-pointer hover:opacity-80 active:scale-95 transition-all select-none"
+        class="energy-cycle-btn min-h-5.5 inline-flex items-center gap-1 rounded-md border ${energyData.class} px-2 py-0.5 text-[10px] uppercase font-semibold cursor-pointer hover:opacity-80 active:scale-95 transition-all select-none"
         title="Click to cycle energy level"
       >
         <i
-          class="${iconClass} text-[9px] transition-transform duration-300"
+          class="${iconClass} text-xs lg:text-sm pb-px transition-transform duration-300"
         ></i>
         <span>${energyData.label}</span>
       </button>
@@ -190,7 +188,7 @@ export const PlannerItemComponent = {
           <span
             class="text-[11px] font-bold text-secondary uppercase tracking-widest flex items-center gap-1.5"
           >
-            <i class="fa-regular fa-chart-simple text-brand/80"></i> Metrics
+            <i class="ti ti-chart-line text-brand/80"></i> Metrics
             (${keys.length})
           </span>
         </div>
@@ -212,7 +210,7 @@ export const PlannerItemComponent = {
                       >Show ${hiddenKeys.length} more metrics...</span
                     >
                     <i
-                      class="fa-regular fa-chevron-down text-xs transition-transform duration-300"
+                      class="ti ti-chevron-down text-xs lg:text-sm transition-transform duration-300"
                     ></i>
                   </button>
 
@@ -237,26 +235,26 @@ export const PlannerItemComponent = {
           ${
             tab === "templates"
               ? `
-                    <div class="relative">
-                      <button
-                        type="button"
-                        data-id="${data.id}"
-                        class="favorite-btn w-8 h-8 md:w-9 md:h-9 rounded-lg bg-surface-2 hover:bg-amber-600/10 border border-border flex items-center justify-center cursor-pointer transition group"
-                        title="Toggle Favorite"
-                      >
-                        <i
-                          class="${
-                            data.isFavorite ? "fa-solid" : "fa-regular"
-                          } fa-star text-amber-400/80 text-sm md:text-base pointer-events-none transition-all group-hover:text-amber-400/80"
-                        ></i>
-                      </button>
-                      <div
-                        class="absolute top-full left-1/2 -translate-x-1/2 mt-1 px-2 py-1 rounded bg-surface-2 text-xs text-color opacity-0 cursor-default peer-hover:opacity-100 transition z-10 whitespace-nowrap pointer-events-none border border-border/60"
-                      >
-                        Favorite
-                      </div>
+                  <div class="relative">
+                    <button
+                      type="button"
+                      data-id="${data.id}"
+                      class="favorite-btn w-8 h-8 md:w-9 md:h-9 rounded-lg bg-surface-2 hover:bg-amber-600/10 border border-border flex items-center justify-center cursor-pointer transition group"
+                      title="Toggle Favorite"
+                    >
+                      <i
+                        class="ti ${
+                          data.isFavorite ? "ti-star-filled" : "ti-star"
+                        } text-amber-400/80 text-sm md:text-base pointer-events-none transition-all group-hover:text-amber-400/80"
+                      ></i>
+                    </button>
+                    <div
+                      class="absolute top-full left-1/2 -translate-x-1/2 mt-1 px-2 py-1 rounded bg-surface-2 text-xs text-color opacity-0 cursor-default peer-hover:opacity-100 transition z-10 whitespace-nowrap pointer-events-none border border-border/60"
+                    >
+                      Favorite
                     </div>
-                  `
+                  </div>
+                `
               : ""
           }
 
@@ -266,7 +264,7 @@ export const PlannerItemComponent = {
               class="edit-btn w-9 h-9 rounded-lg bg-surface-2 hover:bg-blue-600/10 border border-border flex items-center justify-center hover:cursor-pointer peer transition"
             >
               <i
-                class="fa-regular fa-pen-to-square text-blue-500/80 text-base"
+                class="ti ti-edit-circle text-blue-500/80 text-base md:text-lg"
               ></i>
             </button>
             <div
@@ -281,7 +279,7 @@ export const PlannerItemComponent = {
               data-id="${data.id}"
               class="delete-btn w-9 h-9 rounded-lg bg-surface-2 hover:bg-red-600/10 border border-border flex items-center justify-center hover:cursor-pointer peer transition"
             >
-              <i class="fa-regular fa-trash-can text-red-500/80 text-base"></i>
+              <i class="ti ti-trash text-red-500/80 text-base md:text-lg"></i>
             </button>
             <div
               class="absolute top-full left-1/2 -translate-x-1/2 mt-1 px-2 py-1 rounded bg-surface-2 text-xs text-color opacity-0 cursor-default peer-hover:opacity-100 transition z-10 whitespace-nowrap pointer-events-none border border-border/60"
@@ -296,7 +294,7 @@ export const PlannerItemComponent = {
             data-id="${data.id}"
             class="dropdown-toggle-btn h-8 w-8 rounded-lg border border-border text-secondary hover:text-color hover:bg-surface flex items-center justify-center transition shadow-sm cursor-pointer"
           >
-            <i class="fa-regular fa-ellipsis-vertical text-base"></i>
+            <i class="ti ti-dots-vertical text-base"></i>
           </button>
 
           <div
@@ -311,9 +309,9 @@ export const PlannerItemComponent = {
                     class="favorite-btn flex w-full items-center gap-2 rounded-lg px-2.5 py-1.5 text-left text-xs font-medium border-0 bg-transparent text-secondary hover:text-color hover:bg-surface-2 transition cursor-pointer"
                   >
                     <i
-                      class="${
-                        data.isFavorite ? "fa-solid" : "fa-regular"
-                      } fa-star text-xs text-amber-400/80"
+                      class="ti ${
+                        data.isFavorite ? "ti-star-filled" : "ti-star"
+                      } text-xs text-amber-400/80"
                     ></i>
                     <span
                       >${data.isFavorite ? "Remove from" : "Add to"}
@@ -329,7 +327,7 @@ export const PlannerItemComponent = {
               class="edit-btn flex w-full items-center gap-2 rounded-lg px-2.5 py-1.5 text-left text-xs font-medium border-0 bg-transparent text-secondary hover:text-color hover:bg-surface-2 transition cursor-pointer"
             >
               <i
-                class="fa-regular fa-pen-to-square text-xs text-blue-500/80"
+                class="ti ti-edit-circle text-xs text-blue-500/80"
               ></i>
               <span>Edit Title</span>
             </button>
@@ -340,7 +338,7 @@ export const PlannerItemComponent = {
               data-id="${data.id}"
               class="delete-btn flex w-full items-center gap-2 rounded-lg px-2.5 py-1.5 text-left text-xs font-medium border-0 bg-transparent text-red-500/80 hover:bg-red-500/5 transition cursor-pointer"
             >
-              <i class="fa-regular fa-trash-can text-xs"></i>
+              <i class="ti ti-trash text-xs"></i>
               <span>Delete Permanently</span>
             </button>
           </div>
@@ -376,10 +374,8 @@ export const PlannerItemComponent = {
           }"
         >
           <i
-            class="fa-regular ${
-              obj.completed
-                ? "fa-check text-xs font-bold"
-                : "fa-hashtag text-[10px]"
+            class="ti ${
+              obj.completed ? "ti-check text-sm font-bold" : "ti-hash text-xs"
             }"
           ></i>
         </button>
@@ -399,10 +395,10 @@ export const PlannerItemComponent = {
           }"
         >
           <i
-            class="fa-regular ${
+            class="ti ${
               obj.completed
-                ? "fa-check text-xs font-bold"
-                : "fa-flag text-[10px]"
+                ? "ti-check text-sm font-bold"
+                : "ti-flag text-[10px]"
             }"
           ></i>
         </button>
@@ -421,10 +417,10 @@ export const PlannerItemComponent = {
         }"
       >
         <i
-          class="fa-regular ${
+          class="ti ${
             obj.completed
-              ? "fa-check text-xs font-bold"
-              : "fa-square text-[10px]"
+              ? "ti-check text-sm font-bold"
+              : "ti-square text-[10px]"
           }"
         ></i>
       </button>
@@ -442,7 +438,7 @@ export const PlannerItemComponent = {
           <div
             class="mx-auto flex h-10 w-10 items-center justify-center rounded-full bg-emerald-500/10 text-emerald-500"
           >
-            <i class="fa-solid fa-flag-checkered text-base"></i>
+            <i class="ti ti-flag-2 text-base"></i>
           </div>
 
           <div class="space-y-1">
@@ -579,7 +575,7 @@ export const PlannerItemComponent = {
                     startDate
                       ? `<span class="flex items-center gap-1.5"
                           ><i
-                            class="fa-regular fa-calendar-check text-emerald-500/80"
+                            class="ti ti-calendar-check text-emerald-500/80"
                           ></i>
                           Start:
                           <strong class="text-color">${startDate}</strong></span
@@ -590,7 +586,7 @@ export const PlannerItemComponent = {
                     endDate
                       ? `<span class="flex items-center gap-1.5 sm:ms-2"
                           ><i
-                            class="fa-regular fa-calendar-xmark text-red-500/80"
+                            class="ti ti-calendar-x text-red-500/80"
                           ></i>
                           End:
                           <strong class="text-color">${endDate}</strong></span
@@ -617,7 +613,7 @@ export const PlannerItemComponent = {
                         class="w-full sm:w-fit flex justify-center xs:justify-start items-center gap-2"
                       >
                         <i
-                          class="fa-regular fa-bullseye-arrow text-brand/80"
+                          class="ti ti-target-arrow text-brand/80"
                         ></i>
                         <span
                           class="text-[11px] sm:text-xs font-bold text-secondary group-hover/sub-hdr:text-color transition"
@@ -646,7 +642,7 @@ export const PlannerItemComponent = {
                             isExpanded ? "rotate-180" : ""
                           }"
                         >
-                          <i class="fa-regular fa-chevron-down text-xs"></i>
+                          <i class="ti ti-chevron-down text-xs lg:text-sm"></i>
                         </div>
                       </div>
                     </button>
@@ -835,9 +831,9 @@ export const PlannerItemComponent = {
       if (linkedPlan) {
         linkedPlanBadgeHtml = `
           <span
-            class="inline-flex items-center gap-1 rounded-md border border-brand/30 bg-brand/10 px-2 py-0.5 text-[10px] font-semibold text-brand/90"
+            class="min-h-5.5 inline-flex items-center gap-1 rounded-md border border-brand/30 bg-brand/10 px-2 py-0.5 text-[10px] font-semibold text-brand/90"
           >
-            <i class="fa-regular fa-bullseye text-[9px]"></i>
+            <i class="ti ti-target text-[10px] lg:text-xs pb-px"></i>
             <span>${linkedPlan.title}</span>
           </span>
         `;
@@ -859,11 +855,9 @@ export const PlannerItemComponent = {
               ${moodBadge} ${energyBadge}
 
               <span
-                class="inline-flex items-center gap-1 rounded-md border border-secondary/30 bg-secondary/10 px-2 py-0.5 text-[10px] font-medium text-secondary/80"
+                class="min-h-5.5 inline-flex items-center gap-1 rounded-md border border-secondary/30 bg-secondary/10 px-2 py-0.5 text-[10px] font-medium text-secondary/80"
               >
-                <i class="fa-regular fa-calendar"></i> ${
-                  log.date || log.createdAt
-                }
+                <i class="ti ti-calendar text-[10px] lg:text-xs pb-px"></i> ${log.date || log.createdAt}
               </span>
 
               ${linkedPlanBadgeHtml} ${lifeAreaBadgeHtml}
@@ -900,18 +894,18 @@ export const PlannerItemComponent = {
           <div class="flex flex-col min-w-0 w-full gap-1.5">
             <div class="flex items-center gap-2 flex-wrap">
               <span
-                class="inline-flex items-center gap-1.5 rounded-md border border-violet-500/30 bg-violet-500/10 px-2.5 py-0.5 text-[10px] uppercase font-semibold tracking-wider text-violet-400"
+                class="min-h-5.5 inline-flex items-center gap-1.5 rounded-md border border-violet-500/30 bg-violet-500/10 px-2.5 py-0.5 text-[10px] uppercase font-semibold tracking-wider text-violet-400"
               >
-                <i class="fa-regular fa-cubes text-[10px]"></i> Template
+                <i class="ti ti-packages text-[10px] lg:text-xs pb-px"></i> Template
               </span>
 
               ${lifeAreaBadge}
               ${
                 template.isFavorite
                   ? `<span
-                    class="inline-flex items-center gap-1 rounded-md border border-amber-500/30 bg-amber-500/10 px-2 py-0.5 text-[10px] font-semibold text-amber-400 uppercase tracking-wider"
+                    class="min-h-5.5 inline-flex items-center gap-1 rounded-md border border-amber-500/30 bg-amber-500/10 px-2 py-0.5 text-[10px] font-semibold text-amber-400 uppercase tracking-wider"
                   >
-                    <i class="fa-solid fa-star text-[9px]"></i> Favorite
+                    <i class="ti ti-star-filled text-[10px] lg:text-xs pb-px"></i> Favorite
                   </span>`
                   : ""
               }
@@ -942,7 +936,7 @@ export const PlannerItemComponent = {
                     class="flex items-center justify-between text-[10px] font-extrabold uppercase tracking-wider text-slate-400"
                   >
                     <span class="flex items-center gap-1.5">
-                      <i class="fa-regular fa-gauge-min text-slate-400"></i>
+                      <i class="ti ti-gauge text-slate-400 scale-y-[-1] rotate-180 text-sm lg:text-base"></i>
                       Baseline
                     </span>
                     <span
@@ -967,7 +961,7 @@ export const PlannerItemComponent = {
                     class="flex items-center justify-between text-[10px] font-extrabold uppercase tracking-wider text-emerald-400"
                   >
                     <span class="flex items-center gap-1.5">
-                      <i class="fa-regular fa-gauge-max text-emerald-400"></i>
+                      <i class="ti ti-gauge text-emerald-400 text-sm lg:text-base"></i>
                       Optimal
                     </span>
                     <span
@@ -991,7 +985,7 @@ export const PlannerItemComponent = {
           <span
             class="text-[11px] font-medium text-muted flex items-center gap-1.5"
           >
-            <i class="fa-regular fa-chart-line-up text-brand/80"></i>
+            <i class="ti ti-chart-line text-brand/80"></i>
             Used
             <strong class="text-color">${template.usageCount || 0}</strong>
             times
@@ -1002,7 +996,7 @@ export const PlannerItemComponent = {
             data-id="${template.id}"
             class="use-template-btn inline-flex items-center gap-2 bg-brand hover:bg-brand/90 active:scale-95 text-white text-xs font-bold px-3.5 py-2 rounded-xl transition shadow-md shadow-brand/20 cursor-pointer"
           >
-            <i class="fa-regular fa-rocket text-xs pointer-events-none"></i>
+            <i class="ti ti-rocket text-xs lg:text-sm pointer-events-none"></i>
             <span>Use Template</span>
           </button>
         </div>

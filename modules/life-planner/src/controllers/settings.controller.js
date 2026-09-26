@@ -49,7 +49,7 @@ export const SettingsController = {
         placeholder: "Search currency...",
         itemTitle: "title",
         itemValue: "value",
-        iconClass: "fa-regular fa-coins text-blue-500/80",
+        iconClass: "ti ti-coins text-blue-500/80 lg:text-base",
         clearable: false,
         onChange: (value) => {
           if (!value) return;

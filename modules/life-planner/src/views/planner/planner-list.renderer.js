@@ -28,17 +28,17 @@ export function renderPlannerList(items, activeTab = "plans") {
 
   const emptyStateConfig = {
     plans: {
-      icon: "<i class='fa-regular fa-compass text-brand/60'></i>",
+      icon: "<i class='ti ti-compass text-brand/60'></i>",
       title: "No operational plans found",
       description: "Create structured execution plans for your life areas.",
     },
     logs: {
-      icon: "<i class='fa-regular fa-calendar-day text-brand/60'></i>",
+      icon: "<i class='ti ti-calendar text-brand/60'></i>",
       title: "No log entries",
       description: "Log energy, mood, and progress alignment.",
     },
     templates: {
-      icon: "<i class='fa-regular fa-layer-group text-brand/60'></i>",
+      icon: "<i class='ti ti-stack-2 text-brand/60'></i>",
       title: "No templates saved",
       description: "Save baseline and optimal performance strategies.",
     },
@@ -48,10 +48,14 @@ export function renderPlannerList(items, activeTab = "plans") {
     const currentEmpty = emptyStateConfig[activeTab] || emptyStateConfig.plans;
 
     container.innerHTML = `
-      <div class="min-h-72 bg-surface border border-dashed border-border rounded-2xl p-12 text-center flex flex-col items-center justify-center">
-        <div class="text-5xl mb-4 text-brand/70">${currentEmpty.icon}</div>
+      <div
+        class="min-h-72 bg-surface border border-dashed border-border rounded-2xl p-12 text-center flex flex-col items-center justify-center"
+      >
+        <div class="text-6xl mb-2 text-brand/70">${currentEmpty.icon}</div>
         <h2 class="text-xl font-bold text-color">${currentEmpty.title}</h2>
-        <p class="mt-2 text-sm text-secondary max-w-sm mx-auto">${currentEmpty.description}</p>
+        <p class="mt-2 text-sm text-secondary max-w-sm mx-auto">
+          ${currentEmpty.description}
+        </p>
       </div>
     `;
     return;
@@ -87,14 +91,19 @@ export function renderPlannerList(items, activeTab = "plans") {
             type="button"
             class="group relative bg-surface hover:bg-surface-2 transition px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-muted flex items-center gap-2 rounded-full border border-border/60 shadow-xs cursor-pointer select-none"
           >
-            <i class="fa-regular fa-circle-check text-emerald-500"></i>
+            <i class="ti ti-circle-check text-xs lg:text-sm text-emerald-500"></i>
             <span>Completed Plans (${completedPlans.length})</span>
-            <span class="inline-flex transition duration-300 group-[.is-collapsed]:rotate-180">
-              <i class="fa-regular fa-chevron-down text-[10px] text-muted"></i>
+            <span
+              class="inline-flex transition duration-300 group-[.is-collapsed]:rotate-180"
+            >
+              <i class="ti ti-chevron-down text-[11px] lg:text-xs text-muted"></i>
             </span>
           </button>
         </div>
-        <div id="completed-plans-container" class="flex flex-col gap-4 transition-all duration-300"></div>
+        <div
+          id="completed-plans-container"
+          class="flex flex-col gap-4 transition-all duration-300"
+        ></div>
       `;
 
       container.appendChild(separatorWrapper);

@@ -4,47 +4,47 @@ export const HELP_SHORTCUTS = [
     items: [
       {
         label: "Go to Plans View",
-        icon: "fa-list-check",
+        icon: "ti-list-check",
         keys: [["Shift", "P"]],
       },
       {
         label: "Go to Analytics View",
-        icon: "fa-chart-pie",
+        icon: "ti-chart-pie",
         keys: [["Shift", "A"]],
       },
       {
         label: "Go to Calendar View",
-        icon: "fa-calendar",
+        icon: "ti-calendar",
         keys: [["Shift", "C"]],
       },
       {
         label: "Go to Settings View",
-        icon: "fa-gear",
+        icon: "ti-settings",
         keys: [["Shift", "S"]],
       },
       {
         label: "Toggle Navigation Menu",
-        icon: "fa-bars",
+        icon: "ti-menu-4",
         keys: [["Alt", "N"]],
       },
       {
         label: "Toggle Theme (Light / Dark)",
-        icon: "fa-moon",
+        icon: "ti-brightness",
         keys: [["Alt", "T"]],
       },
       {
         label: "Focus Search Bar",
-        icon: "fa-magnifying-glass",
+        icon: "ti-search",
         keys: [["/"]],
       },
       {
         label: "Open Help Center",
-        icon: "fa-circle-question",
+        icon: "ti-question-mark",
         keys: [["?"]],
       },
       {
         label: "Close Modals / Blur Focus",
-        icon: "fa-xmark",
+        icon: "ti-x",
         keys: [["Esc"]],
       },
     ],
@@ -54,47 +54,42 @@ export const HELP_SHORTCUTS = [
     items: [
       {
         label: "Switch to Plans Tab",
-        icon: "fa-folder",
+        icon: "ti-folder",
         keys: [["Alt", "P"]],
       },
       {
         label: "Switch to Logs Tab",
-        icon: "fa-clipboard-list",
+        icon: "ti-clipboard-list",
         keys: [["Alt", "L"]],
       },
       {
         label: "Switch to Templates Tab",
-        icon: "fa-copy",
+        icon: "ti-copy",
         keys: [["Alt", "X"]],
       },
       {
         label: "Toggle Create Plan Form",
-        icon: "fa-plus-square",
+        icon: "ti-square-rounded-plus",
         keys: [["Alt", "C"]],
       },
       {
         label: "Scroll to Top",
-        icon: "fa-arrow-up",
+        icon: "ti-arrow-up",
         keys: [["Alt", "B"]],
       },
       {
         label: "Reset / Purge Terminal",
-        icon: "fa-triangle-exclamation",
+        icon: "ti-alert-triangle",
         keys: [["Alt", "R"]],
       },
       {
         label: "Switch Chart Views (Analytics)",
-        icon: "fa-chart-column",
-        keys: [["Alt", "1 - 3"]],
-      },
-      {
-        label: "Switch Calendar View (Daily / Monthly / Yearly)",
-        icon: "fa-calendar-days",
+        icon: "ti-chart-column",
         keys: [["Alt", "1 - 3"]],
       },
       {
         label: "Filter Life Area (0 - 10)",
-        icon: "fa-layer-group",
+        icon: "ti-stack-3",
         keys: [["0 - 9"], ["10"]],
       },
     ],

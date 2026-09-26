@@ -7,6 +7,24 @@ import {
 
 import { StateManager } from "@/models/state.model";
 
+const emptyStateConfig = {
+  plans: {
+    icon: "<i class='ti ti-compass text-brand/60'></i>",
+    title: "No operational plans found",
+    description: "Create structured execution plans for your life areas.",
+  },
+  logs: {
+    icon: "<i class='ti ti-calendar text-brand/60'></i>",
+    title: "No log entries",
+    description: "Log energy, mood, and progress alignment.",
+  },
+  templates: {
+    icon: "<i class='ti ti-stack-2 text-brand/60'></i>",
+    title: "No templates saved",
+    description: "Save baseline and optimal performance strategies.",
+  },
+};
+
 export const DashboardComponent = {
   render(plans = [], logs = [], templates = []) {
     const safePlans = Array.isArray(plans) ? plans : [];
@@ -57,7 +75,7 @@ export const DashboardComponent = {
           class="col-span-2 md:col-span-1 relative overflow-hidden bg-surface-2 border border-border/70 hover:-translate-y-1 hover:border-yellow-500/30 rounded-2xl p-6 transition-all duration-300 flex flex-col justify-between min-h-36 group"
         >
           <i
-            class="fa-solid fa-bullseye-arrow absolute -right-4 -bottom-6 text-[10rem] text-yellow-500 opacity-[0.04] dark:opacity-[0.06] rotate-15 pointer-events-none group-hover:scale-110 group-hover:rotate-5 transition-transform duration-500"
+            class="ti ti-clipboard-list-filled absolute -right-4 -bottom-6 text-[11rem] text-yellow-500 opacity-[0.04] dark:opacity-[0.06] rotate-15 pointer-events-none group-hover:scale-110 group-hover:rotate-5 transition-transform duration-500"
           ></i>
           <div class="flex items-center justify-between z-10">
             <span
@@ -91,7 +109,7 @@ export const DashboardComponent = {
           class="col-span-2 md:col-span-1 relative overflow-hidden bg-surface-2 border border-border/70 hover:-translate-y-1 hover:border-purple-500/30 rounded-2xl p-6 transition-all duration-300 flex flex-col justify-between min-h-36 group"
         >
           <i
-            class="fa-solid fa-circle-check absolute -right-4 -bottom-6 text-[10rem] text-purple-500 opacity-[0.04] dark:opacity-[0.06] rotate-20 pointer-events-none group-hover:scale-110 group-hover:rotate-10 transition-transform duration-500"
+            class="ti ti-circle-check-filled absolute -right-4 -bottom-6 text-[11rem] text-purple-500 opacity-[0.04] dark:opacity-[0.06] rotate-20 pointer-events-none group-hover:scale-110 group-hover:rotate-10 transition-transform duration-500"
           ></i>
           <div class="flex items-center justify-between z-10">
             <span
@@ -130,7 +148,7 @@ export const DashboardComponent = {
           class="col-span-2 md:col-span-1 relative overflow-hidden bg-surface-2 border border-border/70 hover:-translate-y-1 hover:border-emerald-500/30 rounded-2xl p-6 transition-all duration-300 flex flex-col justify-between min-h-36 group"
         >
           <i
-            class="fa-solid fa-bolt absolute -right-4 -bottom-6 text-[10rem] text-emerald-500 opacity-[0.04] dark:opacity-[0.06] rotate-15 pointer-events-none group-hover:scale-110 group-hover:rotate-5 transition-transform duration-500"
+            class="ti ti-bolt-filled absolute -right-4 -bottom-6 text-[11rem] text-emerald-500 opacity-[0.04] dark:opacity-[0.06] rotate-15 pointer-events-none group-hover:scale-110 group-hover:rotate-5 transition-transform duration-500"
           ></i>
           <div class="flex items-center justify-between z-10">
             <span
@@ -162,7 +180,7 @@ export const DashboardComponent = {
           class="col-span-2 md:col-span-1 relative overflow-hidden bg-surface-2 border border-border/70 hover:-translate-y-1 hover:border-sky-500/30 rounded-2xl p-6 transition-all duration-300 flex flex-col justify-between min-h-36 group"
         >
           <i
-            class="fa-solid fa-layer-group absolute -right-4 -bottom-6 text-[10rem] text-sky-500 opacity-[0.04] dark:opacity-[0.06] rotate-15 pointer-events-none group-hover:scale-110 group-hover:rotate-5 transition-transform duration-500"
+            class="ti ti-stack-2-filled absolute -right-4 -bottom-6 text-[12rem] text-sky-500 opacity-[0.04] dark:opacity-[0.06] rotate-15 pointer-events-none group-hover:scale-110 group-hover:rotate-5 transition-transform duration-500"
           ></i>
           <div class="flex items-center justify-between z-10">
             <span
@@ -202,7 +220,7 @@ export const DashboardComponent = {
           >
             <div>
               <h4 class="text-lg font-bold text-color flex items-center gap-2">
-                <i class="fa-regular fa-chart-network text-brand text-xl"></i>
+                <i class="ti ti-affiliate text-brand text-xl"></i>
                 Execution Velocity & Heatmap
               </h4>
               <p class="text-xs text-secondary mt-1">
@@ -217,7 +235,7 @@ export const DashboardComponent = {
                 class="sm:hidden inline-flex items-center justify-center h-8 w-8 rounded-lg border border-border bg-surface text-secondary hover:text-color transition shadow-sm cursor-pointer"
                 aria-label="Open view menu"
               >
-                <i class="fa-regular fa-ellipsis-vertical text-lg"></i>
+                <i class="ti ti-dots-vertical text-lg"></i>
               </button>
 
               <div
@@ -293,7 +311,7 @@ export const DashboardComponent = {
         >
           <div>
             <h4 class="text-lg font-bold text-color flex items-center gap-2">
-              <i class="fa-regular fa-chart-simple text-brand text-xl"></i>
+              <i class="ti ti-chart-bar rotate-90 text-brand text-xl"></i>
               Weekday Distribution
             </h4>
             <p class="text-xs text-secondary mt-1">
@@ -320,7 +338,7 @@ export const DashboardComponent = {
         >
           <div>
             <h4 class="text-lg font-bold text-color flex items-center gap-2">
-              <i class="fa-regular fa-compass text-brand text-xl"></i>
+              <i class="ti ti-compass text-brand text-xl"></i>
               Life Area Distribution
             </h4>
             <p class="text-xs text-secondary mt-1">
@@ -347,7 +365,7 @@ export const DashboardComponent = {
         >
           <div>
             <h4 class="text-lg font-bold text-color flex items-center gap-2">
-              <i class="fa-regular fa-face-smile text-brand text-xl"></i>
+              <i class="ti ti-mood-smile text-brand text-xl"></i>
               Mood Spectrum
             </h4>
             <p class="text-xs text-secondary mt-1">
@@ -370,7 +388,7 @@ export const DashboardComponent = {
           <div>
             <h4 class="text-lg font-bold text-color flex items-center gap-2">
               <i
-                class="fa-regular fa-battery-three-quarters text-brand text-xl"
+                class="ti ti-battery-3 text-brand text-xl"
               ></i>
               Energy Level Distribution
             </h4>
@@ -397,7 +415,7 @@ export const DashboardComponent = {
         >
           <div>
             <h4 class="text-lg font-bold text-color flex items-center gap-2">
-              <i class="fa-regular fa-layer-group text-brand text-xl"></i>
+              <i class="ti ti-stack-3 text-brand text-xl"></i>
               Entities Detailed Breakdown
             </h4>
             <p class="text-xs text-secondary mt-0.5">
@@ -460,10 +478,8 @@ export const DashboardComponent = {
   },
 
   _normalizeIconClass(iconString) {
-    if (!iconString) return "fa-regular fa-folder";
-    return iconString.includes("fa-solid")
-      ? iconString.replace("fa-solid", "fa-regular")
-      : iconString;
+    if (!iconString) return "ti ti-folder";
+    return iconString;
   },
 
   _getLifeAreaBadgeHtml(lifeAreaId) {
@@ -472,7 +488,7 @@ export const DashboardComponent = {
     );
     const areaData = matched || {
       name: lifeAreaId || "General",
-      icon: "fa-regular fa-folder text-secondary",
+      icon: "ti ti-folder text-secondary",
       class: "bg-surface text-secondary border-border/60",
     };
 
@@ -480,9 +496,9 @@ export const DashboardComponent = {
 
     return `
         <span
-          class="inline-flex items-center gap-1 rounded-md border ${areaData.class} px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider"
+          class="min-h-5.5 inline-flex items-center gap-1 rounded-md border ${areaData.class} px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider"
         >
-          <i class="${iconClass} text-[9px]"></i>
+          <i class="${iconClass} text-[10px] lg:text-xs pb-px"></i>
           <span>${areaData.name}</span>
         </span>
       `;
@@ -492,7 +508,7 @@ export const DashboardComponent = {
     const matched = PLAN_STATES.find((s) => s.id === stateKey);
     const stateData = matched || {
       name: stateKey || "active",
-      icon: "fa-regular fa-circle text-secondary",
+      icon: "ti ti-circle text-secondary",
       class: "bg-surface text-secondary border-border/60",
     };
 
@@ -502,11 +518,11 @@ export const DashboardComponent = {
       <div
         data-plan-id="${planId}"
         data-current-state="${stateData.id}"
-        class="state-cycle-btn inline-flex items-center gap-1.5 rounded-md border ${stateData.class} px-2 py-0.5 text-[10px] uppercase font-bold tracking-wider transition-all"
+        class="state-cycle-btn min-h-5.5 inline-flex items-center gap-1.5 rounded-md border ${stateData.class} px-2 py-0.5 text-[10px] uppercase font-bold tracking-wider transition-all"
         title="Click to cycle status"
       >
         <i
-          class="${iconClass} text-[10px] transition-transform duration-300"
+          class="${iconClass} text-[10px] lg:text-xs pb-px transition-transform duration-300"
         ></i>
         <span>${stateData.name}</span>
       </div>
@@ -519,7 +535,7 @@ export const DashboardComponent = {
     );
     const moodData = matched || {
       label: moodValue || "Neutral",
-      icon: "fa-regular fa-face-meh text-secondary",
+      icon: "ti ti-mood-empty text-secondary",
       class: "bg-surface text-secondary border-border/60",
     };
 
@@ -529,10 +545,10 @@ export const DashboardComponent = {
       <div
         data-log-id="${logId}"
         data-current-mood="${moodData.value || moodValue}"
-        class="mood-cycle inline-flex items-center gap-1 rounded-md border ${moodData.class} px-2 py-0.5 text-[10px] uppercase font-semibold transition-all"
+        class="mood-cycle min-h-5.5 inline-flex items-center gap-1 rounded-md border ${moodData.class} px-2 py-0.5 text-[10px] uppercase font-semibold transition-all"
       >
         <i
-          class="${iconClass} text-[9px] transition-transform duration-300"
+          class="${iconClass} text-[10px] lg:text-xs pb-px transition-transform duration-300"
         ></i>
         <span>${moodData.label}</span>
       </div>
@@ -545,7 +561,7 @@ export const DashboardComponent = {
     );
     const energyData = matched || {
       label: `Energy: ${energyValue}/5`,
-      icon: "fa-regular fa-bolt text-secondary",
+      icon: "ti ti-bolt text-secondary",
       class: "bg-surface text-secondary border-border/60",
     };
 
@@ -555,10 +571,10 @@ export const DashboardComponent = {
       <div
         data-log-id="${logId}"
         data-current-energy="${energyValue}"
-        class="energy-cycle inline-flex items-center gap-1 rounded-md border ${energyData.class} px-2 py-0.5 text-[10px] uppercase font-semibold transition-all"
+        class="energy-cycle min-h-5.5 inline-flex items-center gap-1 rounded-md border ${energyData.class} px-2 py-0.5 text-[10px] uppercase font-semibold transition-all"
       >
         <i
-          class="${iconClass} text-[9px] transition-transform duration-300"
+          class="${iconClass} text-xs lg:text-sm pb-px transition-transform duration-300"
         ></i>
         <span>${energyData.label}</span>
       </div>
@@ -629,11 +645,17 @@ export const DashboardComponent = {
   },
 
   renderPlansList(plans) {
+    const currentEmpty = emptyStateConfig["plans"];
+
     if (!Array.isArray(plans) || plans.length === 0) {
       return `<div
-        class="p-12 text-center text-secondary text-sm border border-dashed border-border/80 rounded-2xl bg-surface/30"
+        class="min-h-72 bg-surface border border-dashed border-border rounded-2xl p-12 text-center flex flex-col items-center justify-center"
       >
-        No execution plans registered in current state repository.
+        <div class="text-5xl mb-4 text-brand/70">${currentEmpty.icon}</div>
+        <h2 class="text-xl font-bold text-color">${currentEmpty.title}</h2>
+        <p class="mt-2 text-sm text-secondary max-w-sm mx-auto">
+          ${currentEmpty.description}
+        </p>
       </div>`;
     }
     return plans
@@ -704,7 +726,7 @@ export const DashboardComponent = {
               <span
                 class="inline-flex items-center gap-1 rounded-md border border-border/40 bg-surface px-2.5 py-1 text-[11px] font-medium text-secondary/60"
               >
-                <i class="fa-regular fa-square text-[10px] pb-1"></i> No
+                <i class="ti ti-square text-xs pb-1"></i> No
                 Objectives
               </span>
             </div>
@@ -744,11 +766,17 @@ export const DashboardComponent = {
   },
 
   renderLogsList(logs) {
+    const currentEmpty = emptyStateConfig["logs"];
+
     if (!Array.isArray(logs) || logs.length === 0) {
       return `<div
-        class="p-12 text-center text-secondary text-sm border border-dashed border-border/80 rounded-2xl bg-surface/30"
+        class="min-h-72 bg-surface border border-dashed border-border rounded-2xl p-12 text-center flex flex-col items-center justify-center"
       >
-        No execution logs or reflections recorded yet.
+        <div class="text-5xl mb-4 text-brand/70">${currentEmpty.icon}</div>
+        <h2 class="text-xl font-bold text-color">${currentEmpty.title}</h2>
+        <p class="mt-2 text-sm text-secondary max-w-sm mx-auto">
+          ${currentEmpty.description}
+        </p>
       </div>`;
     }
     return logs
@@ -768,9 +796,9 @@ export const DashboardComponent = {
           if (linkedPlan) {
             linkedPlanBadgeHtml = `
                   <span
-                    class="inline-flex items-center gap-1 rounded-md border border-brand/30 bg-brand/10 px-2 py-0.5 text-[10px] font-semibold text-brand/90"
+                    class="min-h-5.5 inline-flex items-center gap-1 rounded-md border border-brand/30 bg-brand/10 px-2 py-0.5 text-[10px] font-semibold text-brand/90"
                   >
-                    <i class="fa-regular fa-bullseye text-[9px]"></i>
+                    <i class="ti ti-target text-[10px] lg:text-xs pb-px"></i>
                     <span>${linkedPlan.title}</span>
                   </span>
                 `;
@@ -794,11 +822,9 @@ export const DashboardComponent = {
                 ${energyBadge}
 
                 <span
-                  class="inline-flex items-center gap-1 rounded-md border border-secondary/30 bg-secondary/10 px-2 py-0.5 text-[10px] font-medium text-secondary/80"
+                  class="min-h-5.5 inline-flex items-center gap-1 rounded-md border border-secondary/30 bg-secondary/10 px-2 py-0.5 text-[10px] font-medium text-secondary/80"
                 >
-                  <i class="fa-regular fa-calendar"></i> ${
-                    log.date || log.createdAt
-                  }
+                  <i class="ti ti-calendar text-[10px] lg:text-xs pb-px"></i> ${log.date || log.createdAt}
                 </span>
 
                 ${linkedPlanBadgeHtml}
@@ -834,11 +860,17 @@ export const DashboardComponent = {
   },
 
   renderTemplatesList(templates) {
+    const currentEmpty = emptyStateConfig["templates"];
+
     if (!Array.isArray(templates) || templates.length === 0) {
       return `<div
-        class="p-12 text-center text-secondary text-sm border border-dashed border-border/80 rounded-2xl bg-surface/30"
+        class="min-h-72 bg-surface border border-dashed border-border rounded-2xl p-12 text-center flex flex-col items-center justify-center"
       >
-        No execution templates/blueprints configured.
+        <div class="text-5xl mb-4 text-brand/70">${currentEmpty.icon}</div>
+        <h2 class="text-xl font-bold text-color">${currentEmpty.title}</h2>
+        <p class="mt-2 text-sm text-secondary max-w-sm mx-auto">
+          ${currentEmpty.description}
+        </p>
       </div>`;
     }
 
@@ -856,9 +888,9 @@ export const DashboardComponent = {
                 ${
                   tpl.isFavorite
                     ? `<span
-                        class="inline-flex items-center gap-1 rounded-md border border-amber-500/30 bg-amber-500/10 px-2 py-0.5 text-[10px] font-semibold text-amber-400 uppercase tracking-wider"
+                        class="min-h-5.5 inline-flex items-center gap-1 rounded-md border border-amber-500/30 bg-amber-500/10 px-2 py-0.5 text-[10px] font-semibold text-amber-400 uppercase tracking-wider"
                       >
-                        <i class="fa-solid fa-star text-[9px]"></i> Favorite
+                        <i class="ti ti-star-filled text-[10px] lg:text-xs pb-px"></i> Favorite
                       </span>`
                     : ""
                 }

@@ -1,5 +1,26 @@
 import { ActivityCardComponent } from "@/components/shared/activity-card.component.js";
 
+function getPreviewItems(dayItems) {
+  const preview = [];
+
+  const firstPlan = dayItems.find((item) => item.calendarType === "plan");
+  const firstLog = dayItems.find((item) => item.calendarType === "log");
+
+  if (firstPlan) preview.push(firstPlan);
+  if (firstLog) preview.push(firstLog);
+
+  if (preview.length < 2) {
+    for (const item of dayItems) {
+      if (preview.length >= 2) break;
+      if (!preview.includes(item)) {
+        preview.push(item);
+      }
+    }
+  }
+
+  return preview;
+}
+
 function formatDateKey(date) {
   const y = date.getFullYear();
   const m = String(date.getMonth() + 1).padStart(2, "0");
@@ -16,17 +37,17 @@ function buildCalendarMap(data) {
     map.get(dateStr).push(item);
   };
 
-  if (Array.isArray(data.logs)) {
-    data.logs.forEach((log) => {
-      if (log.date) addItemToMap(log.date, { ...log, calendarType: "log" });
-    });
-  }
-
   if (Array.isArray(data.plans)) {
     data.plans.forEach((plan) => {
       if (plan.period?.startDate) {
         addItemToMap(plan.period.startDate, { ...plan, calendarType: "plan" });
       }
+    });
+  }
+
+  if (Array.isArray(data.logs)) {
+    data.logs.forEach((log) => {
+      if (log.date) addItemToMap(log.date, { ...log, calendarType: "log" });
     });
   }
 
@@ -78,22 +99,21 @@ export function renderMonthGrid(currentDate, data) {
           }
         </div>
 
-        <div class="hidden sm:flex flex-1 flex-col gap-1 overflow-y-auto max-h-20 scrollbar-none">
-          ${dayItems
-            .slice(0, 2)
+        <div class="hidden sm:flex flex-1 flex-col gap-1.25 pt-1 overflow-y-auto max-h-20 scrollbar-none">
+          ${getPreviewItems(dayItems)
             .map((item) => {
               const isPlan = item.calendarType === "plan";
               const itemStyle = isPlan
                 ? "border-brand/30 bg-brand/10 text-brand/90"
                 : "border-blue-500/30 bg-blue-500/10 text-blue-400";
-              const iconClass = isPlan ? "fa-bullseye" : "fa-pen-to-square";
+              const iconClass = isPlan ? "ti-target" : "ti-edit-circle";
 
               return `
               <div 
-                class="text-[10px] font-bold truncate px-1.5 py-0.5 rounded border ${itemStyle} transition hover:scale-[1.02] flex items-center gap-1" 
+                class="text-[10px] font-bold truncate px-1.5 py-0.5 rounded border ${itemStyle} transition hover:-translate-y-0.5 flex items-center gap-1" 
                 title="${item.title}"
               >
-                <i class="fa-regular ${iconClass} text-[9px]"></i>
+                <i class="ti ${iconClass} text-xs"></i>
                 <span class="truncate">${item.title}</span>
               </div>
             `;
@@ -164,7 +184,7 @@ export function renderDayList(currentDate, data) {
           ? `
             <div class="col-span-full min-h-20 bg-surface border border-dashed border-border rounded-2xl p-12 text-center">
               <div class="text-center flex flex-col items-center justify-center gap-3 text-tertiary">
-                <i class="fa-regular fa-calendar-xmark text-4xl text-brand/60"></i>
+                <i class="ti ti-calendar-x text-4xl text-brand/60"></i>
                 <h2 class="text-lg font-bold text-color">No activities logged</h2>
                 <p class="text-xs font-semibold">No plans starting or logs recorded for this date.</p>
               </div>
@@ -177,7 +197,7 @@ export function renderDayList(currentDate, data) {
                   ? `
                     <div class="flex flex-col gap-2">
                       <h4 class="text-xs font-bold text-tertiary uppercase tracking-wider flex items-center gap-1.5">
-                        <i class="fa-regular fa-bullseye text-brand"></i> Plans (${plans.length})
+                        <i class="ti ti-target text-brand"></i> Plans (${plans.length})
                       </h4>
                       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                         ${plans
@@ -194,7 +214,7 @@ export function renderDayList(currentDate, data) {
                   ? `
                     <div class="flex flex-col gap-2">
                       <h4 class="text-xs font-bold text-tertiary uppercase tracking-wider flex items-center gap-1.5">
-                        <i class="fa-regular fa-pen-to-square text-blue-400"></i> Logs (${logs.length})
+                        <i class="ti ti-edit-circle text-blue-400"></i> Logs (${logs.length})
                       </h4>
                       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                         ${logs
@@ -261,7 +281,7 @@ export function renderYearHeatmap(currentDate, data) {
         >
           <div class="flex items-center justify-between">
             <span class="text-xs font-bold text-color group-hover:text-brand transition">${mName}</span>
-            <i class="fa-regular fa-arrow-right text-[10px] text-tertiary opacity-0 group-hover:opacity-100 transition"></i>
+            <i class="ti ti-arrow-narrow-right text-sm lg:text-base text-tertiary opacity-0 group-hover:opacity-100 transition"></i>
           </div>
           <div class="flex flex-wrap gap-1">
             ${renderMonthDots(currentYear, mIdx, false)}

@@ -185,8 +185,8 @@ export const PlannerFormController = {
         }
 
         itemHeader?.classList.toggle("border-b", index === currentIndex);
-        icon?.classList.toggle("fa-chevron-up", index === currentIndex);
-        icon?.classList.toggle("fa-chevron-down", index !== currentIndex);
+        icon?.classList.toggle("ti-chevron-up", index === currentIndex);
+        icon?.classList.toggle("ti-chevron-down", index !== currentIndex);
       });
     });
   },
@@ -205,15 +205,15 @@ export const PlannerFormController = {
         content.classList.remove("hidden");
         header.classList.add("border-b");
         if (icon) {
-          icon.classList.remove("fa-chevron-down");
-          icon.classList.add("fa-chevron-up");
+          icon.classList.remove("ti-chevron-down");
+          icon.classList.add("ti-chevron-up");
         }
       } else {
         content.classList.add("hidden");
         header.classList.remove("border-b");
         if (icon) {
-          icon.classList.remove("fa-chevron-up");
-          icon.classList.add("fa-chevron-down");
+          icon.classList.remove("ti-chevron-up");
+          icon.classList.add("ti-chevron-down");
         }
       }
     });
@@ -236,20 +236,20 @@ export const PlannerFormController = {
     if (total === 0) {
       container.innerHTML = EditModalsComponent.renderEmptyState(
         "No objectives defined yet.",
-        "fa-regular fa-bullseye-arrow",
+        "ti ti-target-arrow",
       );
       return;
     }
 
     container.innerHTML = `
-    <div
-      class="w-full h-full max-h-40 sm:max-h-35 lg:max-h-33 overflow-y-auto scrollbar-thumb-surface-2 scrollbar-thin bg-surface rounded-2xl border border-border/60 p-2.5 flex flex-col justify-start gap-2.5"
-    >
-      ${activeModalObjectives
-        .map((obj) => EditModalsComponent.renderObjectiveItem(obj))
-        .join("")}
-    </div>
-  `;
+      <div
+        class="w-full h-full max-h-40 sm:max-h-35 lg:max-h-33 overflow-y-auto scrollbar-thumb-surface-2 scrollbar-thin bg-surface rounded-2xl border border-border/60 p-2.5 flex flex-col justify-start gap-2.5"
+      >
+        ${activeModalObjectives
+          .map((obj) => EditModalsComponent.renderObjectiveItem(obj))
+          .join("")}
+      </div>
+    `;
   },
 
   renderModalMetrics() {
@@ -261,7 +261,7 @@ export const PlannerFormController = {
     if (keys.length === 0) {
       container.innerHTML = EditModalsComponent.renderEmptyState(
         "No quantitative metrics recorded.",
-        "fa-regular fa-chart-simple",
+        "ti ti-chart-simple",
       );
       return;
     }
@@ -297,7 +297,7 @@ export const PlannerFormController = {
         type="button"
         class="w-full h-10 rounded-xl bg-brand/10 text-brand/80 hover:bg-brand/20 font-semibold text-xs lg:text-sm flex items-center justify-center gap-1.5 transition cursor-pointer"
       >
-        <i class="fa-regular fa-plus"></i> Add Metric
+        <i class="ti ti-plus"></i> Add Metric
       </button>
     `;
     }
@@ -312,7 +312,7 @@ export const PlannerFormController = {
       NotificationService.show({
         type: "warning",
         message: "Metric key is required",
-        icon: "fa-triangle-exclamation",
+        icon: "ti-alert-triangle",
       });
       return;
     }
@@ -406,7 +406,7 @@ export const PlannerFormController = {
         NotificationService.show({
           type: "error",
           message: `Metric "${key}" deleted`,
-          icon: "fa-trash-can",
+          icon: "ti-trash",
           duration: 5000,
           undoAction: () => {
             activeModalMetrics[key] = deletedMetricData;
@@ -452,7 +452,7 @@ export const PlannerFormController = {
               type="button"
               class="h-10 rounded-xl bg-blue-600/20 border border-blue-500/30 text-blue-400 hover:bg-blue-600/30 font-semibold text-xs lg:text-sm flex items-center justify-center gap-1.5 transition cursor-pointer"
             >
-              <i class="fa-regular fa-floppy-disk"></i> Save Metric
+              <i class="ti ti-device-floppy"></i> Save Metric
             </button>
           </div>
         `;
@@ -504,7 +504,7 @@ export const PlannerFormController = {
       NotificationService.show({
         type: "warning",
         message: "Objective title is required",
-        icon: "fa-triangle-exclamation",
+        icon: "ti-alert-triangle",
       });
       return;
     }
@@ -630,7 +630,7 @@ export const PlannerFormController = {
         NotificationService.show({
           type: "error",
           message: `Objective deleted`,
-          icon: "fa-trash-can",
+          icon: "ti-trash",
           duration: 5000,
           undoAction: () => {
             activeModalObjectives.splice(targetIndex, 0, deletedItem);
@@ -675,7 +675,7 @@ export const PlannerFormController = {
               type="button"
               class="h-10 rounded-xl bg-blue-600/20 border border-blue-500/30 text-blue-400 hover:bg-blue-600/30 font-semibold text-xs lg:text-sm flex items-center justify-center gap-1.5 transition cursor-pointer"
             >
-              <i class="fa-regular fa-floppy-disk"></i> Save Objective
+              <i class="ti ti-device-floppy"></i> Save Objective
             </button>
           </div>
         `;
@@ -710,7 +710,7 @@ export const PlannerFormController = {
         type="button"
         class="w-full h-10 rounded-xl bg-brand/10 text-brand/80 hover:bg-brand/20 font-semibold text-xs lg:text-sm flex items-center justify-center gap-1.5 transition cursor-pointer"
       >
-        <i class="fa-regular fa-plus"></i> Add Objective
+        <i class="ti ti-plus"></i> Add Objective
       </button>
     `;
     }
@@ -849,7 +849,7 @@ export const PlannerFormController = {
       const planOptions = plans.map((p) => ({
         id: p.id,
         title: p.title,
-        icon: "fa-regular fa-bullseye text-brand/80",
+        icon: "ti ti-target text-brand/80",
       }));
 
       createLogPlanLinkAutocomplete = new AutocompleteComponent(
@@ -1179,7 +1179,7 @@ export const PlannerFormController = {
         const planOptions = plans.map((p) => ({
           id: p.id,
           title: p.title,
-          icon: "fa-regular fa-bullseye text-brand/80",
+          icon: "ti ti-target text-brand/80",
         }));
 
         editLogPlanLinkAutocomplete = new AutocompleteComponent(
@@ -1355,14 +1355,14 @@ export const PlannerFormController = {
           NotificationService.show({
             type: "success",
             message: `Item created successfully!`,
-            icon: "fa-check",
+            icon: "ti-check",
             duration: 5000,
           });
         } catch (error) {
           NotificationService.show({
             type: "error",
             message: error.message || "Failed to create item",
-            icon: "fa-triangle-exclamation",
+            icon: "ti-alert-triangle",
             duration: 5000,
           });
         } finally {
@@ -1495,7 +1495,7 @@ export const PlannerFormController = {
           NotificationService.show({
             type: "error",
             message: `Item deleted successfully`,
-            icon: "fa-trash-can",
+            icon: "ti-trash",
             duration: 5000,
             undoAction: () => {
               const restoredState = StateManager.getState();
@@ -1635,14 +1635,14 @@ export const PlannerFormController = {
         NotificationService.show({
           type: "success",
           message: `Record updated successfully!`,
-          icon: "fa-check",
+          icon: "ti-check",
           duration: 5000,
         });
       } catch (error) {
         NotificationService.show({
           type: "error",
           message: error.message || "Failed to update item",
-          icon: "fa-triangle-exclamation",
+          icon: "ti-alert-triangle",
           duration: 5000,
         });
       } finally {

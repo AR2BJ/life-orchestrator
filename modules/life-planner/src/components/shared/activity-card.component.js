@@ -33,9 +33,8 @@ export const ActivityCardComponent = {
       : energyConfig?.label || `Energy: ${item.energy || 3} / 5`;
 
     const mainBadgeIcon = isPlan
-      ? planStateConfig.icon.replace("fa-solid", "fa-regular")
-      : energyConfig?.icon.replace("fa-solid", "fa-regular") ||
-        "fa-regular fa-battery-half text-blue-400";
+      ? planStateConfig.icon
+      : energyConfig?.icon || "ti ti-battery-2 text-blue-400";
 
     return `
       <div
@@ -48,9 +47,9 @@ export const ActivityCardComponent = {
             <div class="flex items-center justify-between gap-1 mb-1.5 min-w-0">
               <div class="flex items-center gap-1.5 min-w-0 truncate flex-wrap">
                 <span
-                  class="inline-flex items-center gap-1 rounded border px-1.5 py-0.5 text-[9px] uppercase font-bold tracking-wider shrink-0 ${mainBadgeStyle}"
+                  class="min-h-5.5 inline-flex items-center gap-1 rounded-md px-2 py-0.5 text-[10px] uppercase font-semibold border ${mainBadgeStyle}"
                 >
-                  <i class="${mainBadgeIcon} text-[9px]"></i>
+                  <i class="${mainBadgeIcon} ${isPlan ? "text-[10px] lg:text-xs pb-px" : "text-xs lg:text-sm pb-px"}"></i>
                   ${mainBadgeText}
                 </span>
 
@@ -58,13 +57,10 @@ export const ActivityCardComponent = {
                   !isPlan && moodConfig
                     ? `
                         <span
-                          class="inline-flex items-center gap-1 rounded border px-1.5 py-0.5 text-[9px] uppercase font-bold tracking-wider shrink-0 ${moodConfig.class}"
+                          class="min-h-5.5 inline-flex items-center gap-1 rounded-md px-2 py-0.5 text-[10px] uppercase font-semibold border ${moodConfig.class}"
                         >
                           <i
-                            class="${moodConfig.icon.replace(
-                              "fa-solid",
-                              "fa-regular",
-                            )} text-[9px]"
+                            class="${moodConfig.icon} text-[10px] lg:text-xs pb-px"
                           ></i>
                           ${moodConfig.label}
                         </span>
@@ -75,13 +71,10 @@ export const ActivityCardComponent = {
                   isPlan && lifeAreaConfig
                     ? `
                         <span
-                          class="inline-flex items-center gap-1 rounded border px-1.5 py-0.5 text-[9px] uppercase font-bold tracking-wider shrink-0 ${lifeAreaConfig.class}"
+                          class="min-h-5.5 inline-flex items-center gap-1 rounded-md px-2 py-0.5 text-[10px] font-medium border  ${lifeAreaConfig.class}"
                         >
                           <i
-                            class="${lifeAreaConfig.icon.replace(
-                              "fa-solid",
-                              "fa-regular",
-                            )} text-[9px]"
+                            class="${lifeAreaConfig.icon} text-[10px] lg:text-xs pb-px"
                           ></i>
                           ${lifeAreaConfig.name}
                         </span>
@@ -134,7 +127,7 @@ export const ActivityCardComponent = {
                       <span
                         class="text-[10px] text-tertiary font-medium flex items-center gap-1 whitespace-nowrap shrink-0"
                       >
-                        <i class="fa-regular fa-clock text-[10px]"></i>
+                        <i class="ti ti-clock text-[10px]"></i>
                         ${isPlan ? item.period.startDate : item.date}
                       </span>
                     `

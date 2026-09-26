@@ -333,8 +333,8 @@ export const PlannerController = {
         data-life-area="all"
         class="life-area-filter-btn h-8 shrink-0 whitespace-nowrap rounded-lg px-3.5 text-xs font-semibold transition cursor-pointer ${
           activeLifeArea === "all"
-            ? "bg-brand/80 text-white shadow-brand/10"
-            : "bg-surface-2 hover:bg-surface-3 text-secondary hover:text-color"
+            ? "bg-brand/80 text-white shadow-brand/10 shadow-sm"
+            : "bg-surface border border-border text-secondary hover:text-color hover:bg-surface-2"
         }"
       >
         All ${currentTab.charAt(0).toUpperCase() + currentTab.slice(1)}
@@ -345,24 +345,15 @@ export const PlannerController = {
       .map((cat) => {
         const isActive = String(activeLifeArea) === String(cat.id);
         const activeClasses = isActive
-          ? "bg-brand/80 text-white shadow-brand/10"
-          : "bg-surface-2 hover:bg-surface-3 text-secondary hover:text-color";
-
-        let iconClass = cat.icon
-          ? cat.icon.replace("fa-solid", "fa-regular")
-          : "";
-        if (isActive) {
-          iconClass =
-            iconClass.replace(/text-[a-zA-Z0-9\/\-]+/g, "").trim() +
-            " text-white";
-        }
+          ? "bg-brand/80 text-white shadow-brand/10 shadow-sm"
+          : "bg-surface border border-border text-secondary hover:text-color hover:bg-surface-2";
 
         return `
         <button
           data-life-area="${cat.id}"
           class="life-area-filter-btn flex items-center gap-1.5 h-8 shrink-0 whitespace-nowrap rounded-lg px-3.5 text-xs font-semibold transition cursor-pointer ${activeClasses}"
         >
-          ${cat.icon ? `<i class="${iconClass} text-[11px]"></i>` : ""}
+          ${cat.icon ? `<i class="${cat.icon} text-xs lg:text-sm pb-0.5"></i>` : ""}
           <span>${cat.name}</span>
         </button>
       `;
@@ -625,16 +616,16 @@ export const PlannerController = {
 
         if (tabName === "safeguard") {
           btnSafeguard.className =
-            "flex-1 py-2 text-xs font-bold rounded-lg bg-brand text-white transition cursor-pointer";
+            "flex-1 py-2 text-xs font-bold rounded-lg bg-brand text-white transition cursor-pointer flex justify-center items-center";
           btnShortcuts.className =
-            "flex-1 py-2 text-xs font-bold rounded-lg text-secondary hover:text-color transition cursor-pointer";
+            "flex-1 py-2 text-xs font-bold rounded-lg text-secondary hover:text-color transition cursor-pointer flex justify-center items-center";
           contentSafeguard?.classList.remove("hidden");
           contentShortcuts?.classList.add("hidden");
         } else if (tabName === "shortcuts") {
           btnShortcuts.className =
-            "flex-1 py-2 text-xs font-bold rounded-lg bg-brand text-white transition cursor-pointer";
+            "flex-1 py-2 text-xs font-bold rounded-lg bg-brand text-white transition cursor-pointer flex justify-center items-center";
           btnSafeguard.className =
-            "flex-1 py-2 text-xs font-bold rounded-lg text-secondary hover:text-color transition cursor-pointer";
+            "flex-1 py-2 text-xs font-bold rounded-lg text-secondary hover:text-color transition cursor-pointer flex justify-center items-center";
           contentShortcuts?.classList.remove("hidden");
           contentSafeguard?.classList.add("hidden");
         }
