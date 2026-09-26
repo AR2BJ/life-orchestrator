@@ -1,6 +1,8 @@
 import { generateId, todayISO } from "@/utils/helpers.js";
 
-export const STORAGE_KEY = "mind_manager";
+import { CoreStore } from "@life-orchestrator/core-store";
+
+export const MIND_NAMESPACE = "mind_manager";
 export const STORAGE_VERSION = 1;
 
 /**
@@ -125,16 +127,14 @@ const ENTITY_NORMALIZERS = {
  */
 export function saveToStorage(data = {}) {
   try {
-    const payload = {
+    CoreStore.setNamespace(MIND_NAMESPACE, {
       version: STORAGE_VERSION,
       tags: data.tags || [],
       notes: data.notes || [],
       snippets: data.snippets || [],
       bookmarks: data.bookmarks || [],
       cheatsheets: data.cheatsheets || [],
-    };
-
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+    });
   } catch (error) {
     console.error("Failed to save mind repository state:", error);
   }
@@ -145,10 +145,8 @@ export function saveToStorage(data = {}) {
  */
 export function loadFromStorage() {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
+    const raw = CoreStore.getNamespace(MIND_NAMESPACE);
     if (!raw) return null;
-
-    const data = JSON.parse(raw);
 
     const result = { version: STORAGE_VERSION };
 

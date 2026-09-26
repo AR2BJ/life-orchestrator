@@ -1,3 +1,4 @@
+import { CoreStore, ROOT_KEY } from "@life-orchestrator/core-store";
 import {
   PLAN_NAMESPACE,
   loadFromStorage,
@@ -5,9 +6,7 @@ import {
 } from "./storage.model.js";
 import { getPlanProgress, todayISO } from "@/utils/helpers.js";
 
-import { CoreStore } from "@life-orchestrator/core-store";
 import { LIFE_AREAS } from "@/utils/constants/options-value.constants.js";
-import { ROOT_KEY } from "@life-orchestrator/core-store";
 import { eventBus } from "@/services/event-bus.service.js";
 
 export const state = {

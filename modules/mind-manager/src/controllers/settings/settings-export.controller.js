@@ -1,11 +1,11 @@
-import { STORAGE_KEY, STORAGE_VERSION } from "@/models/storage.model.js";
+import { MIND_NAMESPACE, STORAGE_VERSION } from "@/models/storage.model.js";
 import { formatDate, todayISO } from "@/utils/helpers";
 
 import { NotificationService } from "@/services/notification.service.js";
 
 export const SettingsExportController = {
   handleDataExport(format = "json") {
-    const rawData = localStorage.getItem(STORAGE_KEY);
+    const rawData = CoreStore.getNamespace(MIND_NAMESPACE);
     const localData = rawData ? JSON.parse(rawData) : {};
 
     const tags = localData?.tags || [];

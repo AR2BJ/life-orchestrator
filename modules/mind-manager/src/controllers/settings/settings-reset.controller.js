@@ -1,9 +1,10 @@
 import { StateManager, state } from "@/models/state.model.js";
 
+import { CoreStore } from "@life-orchestrator/core-store";
 import { GlobalLoaderService } from "@/services/loader.service";
+import { MIND_NAMESPACE } from "@/models/storage.model.js";
 import { MindController } from "../mind.controller.js";
 import { NotificationService } from "@/services/notification.service.js";
-import { STORAGE_KEY } from "@/models/storage.model.js";
 import { renderMindList } from "@/views/mind/mind-list.renderer.js";
 
 export const SettingsResetController = {
@@ -70,7 +71,7 @@ export const SettingsResetController = {
   },
 
   executeApplicationReset() {
-    const previousPayload = localStorage.getItem(STORAGE_KEY);
+    const previousPayload = CoreStore.getNamespace(MIND_NAMESPACE);
     const previousTags = StateManager.getTags().map((tag) => ({ ...tag }));
     const previousNotes = StateManager.getNotes().map((note) => ({ ...note }));
     const previousSnippets = StateManager.getSnippets().map((snippet) => ({
@@ -91,7 +92,7 @@ export const SettingsResetController = {
 
     setTimeout(() => {
       try {
-        localStorage.removeItem(STORAGE_KEY);
+        CoreStore.clearNamespace(MIND_NAMESPACE);
 
         state.tags = [];
         state.notes = [];
@@ -119,9 +120,9 @@ export const SettingsResetController = {
             setTimeout(() => {
               try {
                 if (previousPayload) {
-                  localStorage.setItem(STORAGE_KEY, previousPayload);
+                  CoreStore.setNamespace(MIND_NAMESPACE, previousPayload);
                 } else {
-                  localStorage.removeItem(STORAGE_KEY);
+                  CoreStore.clearNamespace(MIND_NAMESPACE);
                 }
 
                 StateManager.save({

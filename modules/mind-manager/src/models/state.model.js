@@ -4,8 +4,9 @@ import {
   NOTE_CATEGORIES,
   SNIPPET_CATEGORIES,
 } from "@/utils/constants/options-value.constants.js";
+import { CoreStore, ROOT_KEY } from "@life-orchestrator/core-store";
 import {
-  STORAGE_KEY,
+  MIND_NAMESPACE,
   loadFromStorage,
   saveToStorage,
 } from "./storage.model.js";
@@ -74,7 +75,7 @@ export const StateManager = {
       state[entity] = saved?.[entity] || [];
     });
 
-    this._rawCache = localStorage.getItem(STORAGE_KEY) || "";
+    this._rawCache = CoreStore.getNamespace(MIND_NAMESPACE) || {};
 
     if (notify) this.dispatchStateEvents();
   },
@@ -91,7 +92,7 @@ export const StateManager = {
 
   setupReactiveEngine() {
     window.addEventListener("storage", (event) => {
-      if (event.key === STORAGE_KEY) {
+      if (event.key === ROOT_KEY) {
         try {
           this.reloadFromStorage(true);
         } catch (error) {
@@ -373,7 +374,7 @@ export const StateManager = {
       cheatsheets: state.cheatsheets,
     });
 
-    this._rawCache = localStorage.getItem(STORAGE_KEY) || "";
+    this._rawCache = CoreStore.getNamespace(MIND_NAMESPACE) || {};
     this.dispatchStateEvents();
   },
 };
