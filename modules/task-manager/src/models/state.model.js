@@ -76,7 +76,7 @@ export const StateManager = {
     }
 
     if (state.selectedTag && state.selectedTag !== "all") {
-      list = list.filter((task) => task.tags.includes(state.selectedTag));
+      list = list.filter((task) => task.tagIds.includes(state.selectedTag));
     }
 
     if (state.activeTab === "active" && state.currentStatus !== "todo") {
@@ -118,7 +118,7 @@ export const StateManager = {
         const title = (task.title || "").toLowerCase();
         const description = (task.description || "").toLowerCase();
 
-        const tagsMatch = task.tags?.some((tagId) => {
+        const tagsMatch = task.tagIds?.some((tagId) => {
           const tagObj = state.tags.find((t) => t.id === tagId);
           return tagObj ? tagObj.name.toLowerCase().includes(query) : false;
         });

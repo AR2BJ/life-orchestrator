@@ -20,17 +20,17 @@ export function renderTaskList(tasks, activeTab = "active") {
 
   const emptyStateConfig = {
     active: {
-      icon: "<i class='fa-regular fa-clipboard-list-check text-brand/60'></i>",
+      icon: "<i class='ti ti-clipboard-list text-brand/60'></i>",
       title: "No active tasks",
       description: "You're all caught up! Create a new task to get started.",
     },
     completed: {
-      icon: "<i class='fa-regular fa-circle-check text-brand/60'></i>",
+      icon: "<i class='ti ti-circle-check text-brand/60'></i>",
       title: "No completed tasks",
       description: "Mark tasks as finished to track your progress here.",
     },
     archived: {
-      icon: "<i class='fa-regular fa-box-open text-brand/60'></i>",
+      icon: "<i class='ti ti-package text-brand/60'></i>",
       title: "No archived tasks",
       description:
         "Tasks moved to archive will appear here for record-keeping.",
@@ -43,13 +43,13 @@ export function renderTaskList(tasks, activeTab = "active") {
   if (tasks.length === 0) {
     container.innerHTML = `
       <div
-        class="min-h-80 bg-surface border border-dashed border-border rounded-2xl p-16 text-center"
+        class="min-h-72 bg-surface border border-dashed border-border rounded-2xl p-12 text-center flex flex-col items-center justify-center"
       >
-        <div class="text-6xl mb-6">${currentEmptyState.icon}</div>
-        <h2 class="text-2xl font-bold text-color">
+        <div class="text-6xl mb-2">${currentEmptyState.icon}</div>
+        <h2 class="text-xl font-bold text-color">
           ${currentEmptyState.title}
         </h2>
-        <p class="mt-3 text-secondary max-w-sm mx-auto">
+        <p class="mt-2 text-sm text-secondary max-w-sm mx-auto">
           ${currentEmptyState.description}
         </p>
       </div>

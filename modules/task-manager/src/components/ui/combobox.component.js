@@ -14,7 +14,7 @@ export class ComboboxComponent {
       multiple: true,
       chips: true,
       chipRemovable: true,
-      iconClass: "fa-regular fa-list",
+      iconClass: "ti ti-list",
       containerClass: "",
       inputClass: "",
       dropdownClass: "",
@@ -99,10 +99,10 @@ export class ComboboxComponent {
               type="button"
               class="${
                 this.options.clearButtonClass
-              } absolute right-10 top-1/2 -translate-y-1/2 bg-brand/20 w-5.5 h-5.5 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-200 hover:bg-brand/40 text-muted p-1 items-center justify-center cursor-pointer flex z-10"
+              } absolute right-10 top-1/2 -translate-y-1/2 bg-brand/20 w-5.5 h-5.5 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-200 hover:bg-brand/40 text-muted items-center justify-center cursor-pointer flex z-10"
               title="Clear all"
             >
-              <i class="fa-regular fa-xmark-large text-[8px]"></i>
+              <i class="ti ti-x text-[11px]"></i>
             </button>
 
             <button
@@ -113,7 +113,7 @@ export class ComboboxComponent {
             >
               <i
                 id="combobox-arrow-icon-${uuid}"
-                class="fa-regular fa-chevron-down text-xs"
+                class="ti ti-chevron-down text-base lg:text-lg"
               ></i>
             </button>
           </div>
@@ -373,7 +373,7 @@ export class ComboboxComponent {
             class="combobox-item px-3.5 py-2 text-xs font-medium text-color hover:bg-brand/10 hover:text-brand cursor-pointer flex items-center justify-between transition border-b border-border/30 last:border-none"
           >
             <span class="flex items-center gap-1.5">
-              <i class="${icon} text-sm"></i>
+              <i class="${icon} text-base"></i>
               ${this.getItemText(item)}
             </span>
             <span class="text-[10px] text-muted"
@@ -403,7 +403,7 @@ export class ComboboxComponent {
             }"
           >
             <span class="flex items-center gap-1.5">
-              <i class="fa-regular fa-plus text-xs"></i>
+              <i class="ti ti-plus text-xs"></i>
               Create "${query}"
             </span>
             <span class="text-[10px] text-brand/80 font-bold"
@@ -438,9 +438,9 @@ export class ComboboxComponent {
 
     this.elements.dropdown.innerHTML = `
       <div
-        class="px-3.5 py-3 text-xs text-muted text-center flex items-center justify-center gap-1 select-none"
+        class="px-3.5 py-3 text-xs lg:text-sm text-muted text-center flex items-center justify-center gap-1 select-none"
       >
-        <i class="fa-regular fa-circle-info text-brand/60"></i>
+        <i class="ti ti-info-circle text-brand/60"></i>
         <span>${message}</span>
       </div>
     `;
@@ -561,7 +561,7 @@ export class ComboboxComponent {
             type="button"
             class="remove-chip-btn hover:text-red-500 transition cursor-pointer flex items-center justify-center"
           >
-            <i class="fa-regular fa-xmark text-[10px]"></i>
+            <i class="ti ti-x text-[11px] pb-px"></i>
           </button>
         `;
       } else {

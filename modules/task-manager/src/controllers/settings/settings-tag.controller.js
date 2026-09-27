@@ -44,7 +44,7 @@ export const SettingsTagController = {
         >
           <div class="h-full flex flex-col justify-center items-center">
             <div class="text-3xl">
-              <i class="fa-regular fa-tags text-brand/60"></i>
+              <i class="ti ti-tags text-brand/60"></i>
             </div>
             <p class="mt-3 text-secondary max-w-sm mx-auto text-sm">
               No tags defined yet.
@@ -58,7 +58,7 @@ export const SettingsTagController = {
     container.innerHTML = tags
       .map((tag) => {
         const usageCount = tasks.filter(
-          (task) => Array.isArray(task.tags) && task.tags.includes(tag.id),
+          (task) => Array.isArray(task.tagIds) && task.tagIds.includes(tag.id),
         ).length;
 
         return `
@@ -67,7 +67,7 @@ export const SettingsTagController = {
             class="flex flex-col xs:flex-row items-center justify-start xs:justify-between gap-2 p-2 rounded-xl bg-surface-2 border border-border/80 transition"
           >
             <div class="flex items-center gap-1 min-w-0 flex-1 ps-1">
-              <i class="fa-regular fa-tag text-brand/80 text-sm"></i>
+              <i class="ti ti-tag text-brand/80 text-sm md:text-base"></i>
               <input
                 id="${tag.id}"
                 type="text"
@@ -79,10 +79,10 @@ export const SettingsTagController = {
             </div>
             <div class="w-full xs:w-fit flex items-center gap-1 shrink-0">
               <div
-                class="min-w-0 sm:min-w-20 flex items-center gap-1 px-1.5 py-1 sm:py-1.75 rounded-md sm:rounded-lg bg-surface border border-border text-[9px] sm:text-xs font-semibold text-secondary"
+                class="w-fit flex items-center gap-1 px-1.5 py-1 sm:py-1.75 rounded-md sm:rounded-lg bg-surface border border-border text-[9px] sm:text-xs font-semibold text-secondary"
                 title="Used in ${usageCount} task${usageCount === 1 ? "" : "s"}"
               >
-                <i class="fa-regular fa-list-check text-[9px] sm:text-xs text-brand/80"></i>
+                <i class="ti ti-list-check text-[9px] sm:text-xs text-brand/80"></i>
                 <span>${usageCount} ${usageCount <= 1 ? "task" : "tasks"}</span>
               </div>
               <button
@@ -91,14 +91,14 @@ export const SettingsTagController = {
                 title="Edit tag name"
               >
                 <i
-                  class="fa-regular fa-pen-to-square text-xs text-brand/80"
+                  class="ti ti-edit-circle text-sm md:text-base text-brand/80"
                 ></i>
               </button>
               <button
                 data-action="delete-tag"
                 class="delete-btn flex h-6 w-6 sm:w-8 sm:h-8 items-center justify-center rounded-md sm:rounded-lg border border-border bg-surface hover:bg-red-600/10 hover:cursor-pointer transition"
               >
-                <i class="fa-regular fa-trash-can text-red-500/80 text-xs"></i>
+                <i class="ti ti-trash text-red-500/80 text-sm md:text-base"></i>
               </button>
             </div>
           </div>
@@ -150,7 +150,7 @@ export const SettingsTagController = {
     NotificationService.show({
       type: "success",
       message: `Tag "${name}" created successfully`,
-      icon: "fa-check",
+      icon: "ti-check",
       duration: 5000,
     });
   },
@@ -179,7 +179,7 @@ export const SettingsTagController = {
           nameInput.focus();
           nameInput.select();
           btn.setAttribute("title", "Save tag name");
-          btn.innerHTML = `<i class="fa-regular fa-floppy-disk text-xs text-brand/80"></i>`;
+          btn.innerHTML = `<i class="ti ti-device-floppy text-sm md:text-base text-brand/80"></i>`;
         } else {
           this.handleSaveTagEdit(tagId, nameInput.value, btn, nameInput);
         }
@@ -224,7 +224,7 @@ export const SettingsTagController = {
       StateManager.save(StateManager.getTasks(), currentTags);
 
       nameInput.setAttribute("readonly", "true");
-      btn.innerHTML = `<i class="fa-regular fa-pen-to-square text-xs"></i>`;
+      btn.innerHTML = `<i class="ti ti-edit-circle text-sm md:text-base"></i>`;
 
       this.renderTagsList();
       TaskController.refreshUI();
@@ -232,7 +232,7 @@ export const SettingsTagController = {
       NotificationService.show({
         type: "success",
         message: "Tag updated successfully",
-        icon: "fa-check",
+        icon: "ti-check",
         duration: 5000,
       });
     }
@@ -268,7 +268,7 @@ export const SettingsTagController = {
 
     const currentTasks = StateManager.getTasks() || [];
     const usageCount = currentTasks.filter(
-      (task) => Array.isArray(task.tags) && task.tags.includes(tagId),
+      (task) => Array.isArray(task.tagIds) && task.tagIds.includes(tagId),
     ).length;
 
     this.pendingDeleteTagId = tagId;
@@ -278,9 +278,9 @@ export const SettingsTagController = {
 
     if (msgEl) {
       if (usageCount > 0) {
-        msgEl.innerHTML = `Are you sure you want to delete <strong class="text-color">"<i class="fa-regular fa-tag text-sm me-1"></i>${targetTag.name}"</strong>? <br/><br/> It is currently used in <span class="text-red-500 font-semibold">${usageCount} task(s)</span>.`;
+        msgEl.innerHTML = `Are you sure you want to delete <strong class="text-color">"<i class="ti ti-tag text-sm me-1"></i>${targetTag.name}"</strong>? <br/><br/> It is currently used in <span class="text-red-500 font-semibold">${usageCount} task(s)</span>.`;
       } else {
-        msgEl.innerHTML = `Are you sure you want to delete <strong class="text-color">"<i class="fa-regular fa-tag text-sm me-1"></i>${targetTag.name}"</strong>?`;
+        msgEl.innerHTML = `Are you sure you want to delete <strong class="text-color">"<i class="ti ti-tag text-sm me-1"></i>${targetTag.name}"</strong>?`;
       }
     }
 
@@ -317,10 +317,10 @@ export const SettingsTagController = {
 
     const currentTasks = StateManager.getTasks() || [];
     const updatedTasks = currentTasks.map((task) => {
-      if (Array.isArray(task.tags) && task.tags.includes(tagId)) {
+      if (Array.isArray(task.tagIds) && task.tagIds.includes(tagId)) {
         return {
           ...task,
-          tags: task.tags.filter((id) => id !== tagId),
+          tags: task.tagIds.filter((id) => id !== tagId),
         };
       }
       return task;
@@ -335,7 +335,7 @@ export const SettingsTagController = {
     NotificationService.show({
       type: "error",
       message: `Tag "${targetTag.name}" deleted`,
-      icon: "fa-tag",
+      icon: "ti-tag",
       duration: 5000,
       undoAction: () => {
         const restoredTags = [...updatedTags, targetTag];
@@ -346,7 +346,7 @@ export const SettingsTagController = {
         NotificationService.show({
           type: "success",
           message: `Tag "${targetTag.name}" restored`,
-          icon: "fa-check",
+          icon: "ti-check",
           duration: 5000,
         });
       },

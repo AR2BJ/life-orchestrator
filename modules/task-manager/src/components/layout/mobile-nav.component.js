@@ -13,40 +13,40 @@ export const MobileNavComponent = {
             id="mobile-tasks"
             class="mobile-nav-btn snap-center shrink-0 flex flex-col items-center justify-center gap-1.5 text-secondary w-[23vw] max-w-21.25 xs:w-auto xs:max-w-none xs:flex-1 py-1"
           >
-            <i class="fa-regular fa-list text-xl xs:text-2xl"></i>
-            <span class="text-[10px] xs:text-xs font-medium tracking-wide whitespace-nowrap">Tasks</span>
+            <i class="ti ti-list text-2xl"></i>
+            <span class="text-xs font-medium tracking-wide whitespace-nowrap">Tasks</span>
           </button>
 
           <button
             id="mobile-analytics"
             class="mobile-nav-btn snap-center shrink-0 flex flex-col items-center justify-center gap-1.5 text-secondary w-[23vw] max-w-21.25 xs:w-auto xs:max-w-none xs:flex-1 py-1"
           >
-            <i class="fa-regular fa-chart-line text-xl xs:text-2xl"></i>
-            <span class="text-[10px] xs:text-xs font-medium tracking-wide whitespace-nowrap">Analytics</span>
+            <i class="ti ti-chart-line text-2xl"></i>
+            <span class="text-xs font-medium tracking-wide whitespace-nowrap">Analytics</span>
           </button>
           
           <button
             id="mobile-calendar"
             class="mobile-nav-btn snap-center shrink-0 flex flex-col items-center justify-center gap-1.5 text-secondary w-[23vw] max-w-21.25 xs:w-auto xs:max-w-none xs:flex-1 py-1"
           >
-            <i class="fa-regular fa-calendar text-xl xs:text-2xl"></i>
-            <span class="text-[10px] xs:text-xs font-medium tracking-wide whitespace-nowrap">Calendar</span>
+            <i class="ti ti-calendar text-2xl"></i>
+            <span class="text-xs font-medium tracking-wide whitespace-nowrap">Calendar</span>
           </button>
 
           <button
             id="mobile-matrix"
             class="mobile-nav-btn snap-center shrink-0 flex flex-col items-center justify-center gap-1.5 text-secondary w-[23vw] max-w-21.25 xs:w-auto xs:max-w-none xs:flex-1 py-1"
           >
-            <i class="fa-regular fa-table-cells text-xl xs:text-2xl"></i>
-            <span class="text-[10px] xs:text-xs font-medium tracking-wide whitespace-nowrap">Matrix</span>
+            <i class="ti ti-matrix text-2xl"></i>
+            <span class="text-xs font-medium tracking-wide whitespace-nowrap">Matrix</span>
           </button>
 
           <button
             id="mobile-settings"
             class="mobile-nav-btn snap-center shrink-0 flex flex-col items-center justify-center gap-1.5 text-secondary w-[23vw] max-w-21.25 xs:w-auto xs:max-w-none xs:flex-1 py-1"
           >
-            <i class="fa-regular fa-gear text-xl xs:text-2xl"></i>
-            <span class="text-[10px] xs:text-xs font-medium tracking-wide whitespace-nowrap">Settings</span>
+            <i class="ti ti-settings text-2xl"></i>
+            <span class="text-xs font-medium tracking-wide whitespace-nowrap">Settings</span>
           </button>
         </div>
       </nav>

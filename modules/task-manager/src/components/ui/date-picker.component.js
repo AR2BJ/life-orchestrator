@@ -118,10 +118,10 @@ export class DatePickerComponent {
               <button
                 type="button"
                 id="${this.id}-calendar-btn"
-                class="absolute right-2 p-1.5 pt-1 text-secondary hover:text-color focus:outline-none hover:scale-110 transition cursor-pointer"
+                class="absolute right-2 p-1.5 pt-1 text-secondary hover:text-color focus:outline-none hover:scale-110 transition flex items-center cursor-pointer"
                 tabindex="-1"
               >
-                <i class="fa-regular fa-calendar text-base"></i>
+                <i class="ti ti-calendar-event text-base"></i>
               </button>
             </div>
           </div>
@@ -137,7 +137,7 @@ export class DatePickerComponent {
     popover = document.createElement("div");
     popover.id = `${this.id}-popover`;
     popover.className =
-      "hidden fixed z-100 w-64 p-3 bg-surface border border-border rounded-xl shadow-xl backdrop-blur-md transition-opacity duration-200";
+      "hidden fixed z-500 w-64 p-3 bg-surface border border-border rounded-xl shadow-xl backdrop-blur-md transition-opacity duration-200";
 
     popover.innerHTML = `
       <div class="flex items-center justify-between mb-3 px-1">
@@ -151,16 +151,16 @@ export class DatePickerComponent {
           <button
             type="button"
             id="${this.id}-prev-btn"
-            class="p-1 text-secondary hover:text-color hover:bg-surface-2 rounded-md transition cursor-pointer"
+            class="p-1 text-secondary hover:text-color hover:bg-surface-2 rounded-md transition flex items cursor-pointer"
           >
-            <i class="fa-regular fa-chevron-left text-xs"></i>
+            <i class="ti ti-chevron-left text-sm lg:text-base"></i>
           </button>
           <button
             type="button"
             id="${this.id}-next-btn"
-            class="p-1 text-secondary hover:text-color hover:bg-surface-2 rounded-md transition cursor-pointer"
+            class="p-1 text-secondary hover:text-color hover:bg-surface-2 rounded-md transition flex items cursor-pointer"
           >
-            <i class="fa-regular fa-chevron-right text-xs"></i>
+            <i class="ti ti-chevron-right text-sm lg:text-base"></i>
           </button>
         </div>
       </div>
@@ -220,7 +220,7 @@ export class DatePickerComponent {
     popover.style.position = "fixed";
     popover.style.top = `${rect.bottom + 6}px`;
     popover.style.left = `${rect.right - popoverWidth}px`;
-    popover.style.zIndex = "100";
+    popover.style.zIndex = "500";
   }
 
   _handleScrollOrResize(e) {
@@ -425,7 +425,8 @@ export class DatePickerComponent {
 
     calendarBtn?.addEventListener("click", (e) => {
       e.stopPropagation();
-      togglePopover();
+      input.focus();
+      togglePopover(true);
     });
 
     input.addEventListener("focus", () => togglePopover(true));

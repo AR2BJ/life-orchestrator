@@ -12,19 +12,19 @@ export class CalendarController {
       title: "Daily Overview",
       description:
         "Detailed breakdown and manageable view of tasks scheduled for a specific day.",
-      icon: "fa-calendar-day",
+      icon: "ti-calendar",
     },
     month: {
       title: "Monthly Overview",
       description:
         "Visual distribution and workload management of scheduled tasks across days and weeks.",
-      icon: "fa-calendar-week",
+      icon: "ti-calendar-week",
     },
     year: {
       title: "Yearly Overview",
       description:
         "High-level visual density map of scheduled tasks across all months of the year.",
-      icon: "fa-calendar-days",
+      icon: "ti-calendar-month",
     },
   };
 
@@ -91,7 +91,7 @@ export class CalendarController {
     if (!config) return;
 
     if (titleEl) {
-      titleEl.innerHTML = `<i class="fa-regular ${config.icon} text-brand/80"></i> ${config.title}`;
+      titleEl.innerHTML = `<i class="ti ${config.icon} text-brand/80 text-xl lg:text-2xl"></i> ${config.title}`;
     }
 
     if (descEl) {

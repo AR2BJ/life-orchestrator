@@ -11,13 +11,13 @@ export class MatrixController {
       title: "Eisenhower Matrix",
       description:
         "Categorize tasks into 4 urgent/important quadrants for high-impact productivity.",
-      icon: "fa-table-cells-large",
+      icon: "ti-matrix",
     },
     abcde: {
       title: "ABCDE Method",
       description:
         "Prioritize tasks systematically from highest impact (A) to delegable/eliminable (D/E).",
-      icon: "fa-list-ol",
+      icon: "ti-list-numbers",
     },
   };
 
@@ -61,7 +61,7 @@ export class MatrixController {
     if (!config) return;
 
     if (titleEl) {
-      titleEl.innerHTML = `<i class="fa-regular ${config.icon} text-brand/80"></i> ${config.title}`;
+      titleEl.innerHTML = `<i class="ti ${config.icon} text-brand/80 text-xl lg:text-2xl"></i> ${config.title}`;
     }
 
     if (descEl) {

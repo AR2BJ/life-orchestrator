@@ -1,10 +1,13 @@
 import {
+  PRIORITY_OPTIONS,
+  STATUS_OPTIONS,
+} from "@/utils/constants/options-value.constants";
+import { StateManager, state } from "@/models/state.model";
+import {
   calculateSubtaskProgress,
   getDaysRemaining,
   isOverdue,
 } from "@/utils/helpers.js";
-
-import { state } from "@/models/state.model";
 
 export const DashboardComponent = {
   render(tasks = []) {
@@ -49,7 +52,7 @@ export const DashboardComponent = {
     // Extract Top Tags Count for Analytic Insight
     const tagCounts = {};
     activeTasks.forEach((task) => {
-      (state.tags.filter((t) => task.tags.includes(t.id)) || []).forEach(
+      (state.tags.filter((t) => task.tagIds.includes(t.id)) || []).forEach(
         (tag) => {
           tagCounts[tag.name] = (tagCounts[tag.name] || 0) + 1;
         },
@@ -92,7 +95,7 @@ export const DashboardComponent = {
           class="col-span-2 md:col-span-1 relative overflow-hidden bg-surface-2 border border-border/70 hover:-translate-y-1 hover:border-yellow-500/30 rounded-2xl p-6 transition-all duration-300 flex flex-col justify-between min-h-36 group"
         >
           <i
-            class="fa-solid fa-triangle-exclamation absolute -right-4 -bottom-6 text-[10rem] text-yellow-500 opacity-[0.04] dark:opacity-[0.06] rotate-15 pointer-events-none group-hover:scale-110 group-hover:rotate-5 transition-transform duration-500"
+            class="ti ti-alert-triangle-filled absolute -right-4 -bottom-6 text-[11rem] text-yellow-500 opacity-[0.04] dark:opacity-[0.06] rotate-15 pointer-events-none group-hover:scale-110 group-hover:rotate-5 transition-transform duration-500"
           ></i>
           <div class="flex items-center justify-between z-10">
             <span
@@ -132,7 +135,7 @@ export const DashboardComponent = {
           class="col-span-2 md:col-span-1 relative overflow-hidden bg-surface-2 border border-border/70 hover:-translate-y-1 hover:border-purple-500/30 rounded-2xl p-6 transition-all duration-300 flex flex-col justify-between min-h-36 group"
         >
           <i
-            class="fa-solid fa-layer-group absolute -right-4 -bottom-6 text-[10rem] text-purple-500 opacity-[0.04] dark:opacity-[0.06] rotate-20 pointer-events-none group-hover:scale-110 group-hover:rotate-10 transition-transform duration-500"
+            class="ti ti-stack-2-filled absolute -right-4 -bottom-6 text-[12rem] text-purple-500 opacity-[0.04] dark:opacity-[0.06] rotate-20 pointer-events-none group-hover:scale-110 group-hover:rotate-10 transition-transform duration-500"
           ></i>
           <div class="flex items-center justify-between z-10">
             <span
@@ -158,7 +161,7 @@ export const DashboardComponent = {
           class="col-span-2 md:col-span-1 relative overflow-hidden bg-surface-2 border border-border/70 hover:-translate-y-1 hover:border-emerald-500/30 rounded-2xl p-6 transition-all duration-300 flex flex-col justify-between min-h-36 group"
         >
           <i
-            class="fa-solid fa-circle-check absolute -right-4 -bottom-6 text-[10rem] text-emerald-500 opacity-[0.04] dark:opacity-[0.06] rotate-15 pointer-events-none group-hover:scale-110 group-hover:rotate-5 transition-transform duration-500"
+            class="ti ti-circle-check-filled absolute -right-4 -bottom-6 text-[11rem] text-emerald-500 opacity-[0.04] dark:opacity-[0.06] rotate-15 pointer-events-none group-hover:scale-110 group-hover:rotate-5 transition-transform duration-500"
           ></i>
           <div class="flex items-center justify-between z-10">
             <span
@@ -189,7 +192,7 @@ export const DashboardComponent = {
           class="col-span-2 md:col-span-1 relative overflow-hidden bg-surface-2 border border-border/70 hover:-translate-y-1 hover:border-orange-500/30 rounded-2xl p-6 transition-all duration-300 flex flex-col justify-between min-h-36 group"
         >
           <i
-            class="fa-solid fa-alarm-exclamation absolute -right-4 -bottom-6 text-[10rem] text-orange-500 opacity-[0.04] dark:opacity-[0.06] rotate-15 pointer-events-none group-hover:scale-110 group-hover:rotate-5 transition-transform duration-500"
+            class="ti ti-calendar-event-filled absolute -right-4 -bottom-6 text-[12rem] text-orange-500 opacity-[0.04] dark:opacity-[0.06] rotate-15 pointer-events-none group-hover:scale-110 group-hover:rotate-5 transition-transform duration-500"
           ></i>
           <div class="flex items-center justify-between z-10">
             <span
@@ -228,7 +231,7 @@ export const DashboardComponent = {
           class="col-span-2 md:col-span-1 relative overflow-hidden bg-surface-2 border border-border/70 hover:-translate-y-1 hover:border-indigo-500/30 rounded-2xl p-6 transition-all duration-300 flex flex-col justify-between min-h-36 group"
         >
           <i
-            class="fa-solid fa-list-check absolute -right-4 -bottom-6 text-[10rem] text-indigo-500 opacity-[0.04] dark:opacity-[0.06] rotate-15 pointer-events-none group-hover:scale-110 group-hover:rotate-5 transition-transform duration-500"
+            class="ti ti-list-check absolute -right-4 -bottom-6 text-[11rem] text-indigo-500 opacity-[0.04] dark:opacity-[0.06] rotate-15 pointer-events-none group-hover:scale-110 group-hover:rotate-5 transition-transform duration-500"
           ></i>
           <div class="flex items-center justify-between z-10">
             <span
@@ -254,7 +257,7 @@ export const DashboardComponent = {
           class="col-span-2 md:col-span-1 relative overflow-hidden bg-surface-2 border border-border/70 hover:-translate-y-1 hover:border-blue-500/30 rounded-2xl p-6 transition-all duration-300 flex flex-col justify-between min-h-36 group"
         >
           <i
-            class="fa-solid fa-calendar-xmark absolute -right-4 -bottom-6 text-[10rem] text-blue-500 opacity-[0.04] dark:opacity-[0.06] rotate-15 pointer-events-none group-hover:scale-110 group-hover:rotate-5 transition-transform duration-500"
+            class="ti ti-alert-circle-filled absolute -right-4 -bottom-6 text-[11rem] text-blue-500 opacity-[0.04] dark:opacity-[0.06] rotate-15 pointer-events-none group-hover:scale-110 group-hover:rotate-5 transition-transform duration-500"
           ></i>
           <div class="flex items-center justify-between z-10">
             <span
@@ -280,7 +283,7 @@ export const DashboardComponent = {
           class="col-span-2 md:col-span-1 relative overflow-hidden bg-surface-2 border border-border/70 hover:-translate-y-1 hover:border-red-500/30 rounded-2xl p-6 transition-all duration-300 flex flex-col justify-between min-h-36 group"
         >
           <i
-            class="fa-solid fa-ban absolute -right-4 -bottom-6 text-[10rem] text-red-500 opacity-[0.04] dark:opacity-[0.06] rotate-15 pointer-events-none group-hover:scale-110 group-hover:rotate-5 transition-transform duration-500"
+            class="ti ti-ban absolute -right-4 -bottom-6 text-[11rem] text-red-500 opacity-[0.04] dark:opacity-[0.06] rotate-15 pointer-events-none group-hover:scale-110 group-hover:rotate-5 transition-transform duration-500"
           ></i>
           <div class="flex items-center justify-between z-10">
             <span
@@ -315,7 +318,7 @@ export const DashboardComponent = {
           class="col-span-2 md:col-span-1 relative overflow-hidden bg-surface-2 border border-border/70 hover:-translate-y-1 hover:border-brand/30 rounded-2xl p-6 transition-all duration-300 flex flex-col justify-between min-h-36 group"
         >
           <i
-            class="fa-solid fa-tags absolute -right-4 -bottom-6 text-[10rem] text-brand/80 opacity-[0.04] dark:opacity-[0.06] rotate-15 pointer-events-none group-hover:scale-110 group-hover:rotate-5 transition-transform duration-500"
+            class="ti ti-tags-filled absolute -right-4 -bottom-6 text-[11rem] text-brand/80 opacity-[0.04] dark:opacity-[0.06] rotate-15 pointer-events-none group-hover:scale-110 group-hover:rotate-5 transition-transform duration-500"
           ></i>
           <div class="flex items-center justify-between z-10">
             <span
@@ -332,7 +335,7 @@ export const DashboardComponent = {
               class="text-2xl font-black text-brand/80 tracking-tight truncate max-w-45"
               title="${topTag[0]}"
             >
-              <i class="fa-regular fa-tag text-base me-2"></i>${topTag[0]}
+              <i class="ti ti-tag text-base me-2"></i>${topTag[0]}
             </div>
             <p class="text-[11px] text-secondary/80 font-medium mt-1">
               Leading focus area (${topTag[1]} tasks)
@@ -353,7 +356,7 @@ export const DashboardComponent = {
                 <h4
                   class="text-lg font-bold text-color flex items-center gap-2"
                 >
-                  <i class="fa-regular fa-chart-network text-brand/80 text-xl"></i>
+                  <i class="ti ti-affiliate text-brand/80 text-xl"></i>
                   Sprint & Execution Heatmap
                 </h4>
                 <p class="text-xs text-secondary mt-1">
@@ -368,7 +371,7 @@ export const DashboardComponent = {
                   class="sm:hidden inline-flex items-center justify-center h-8 w-8 rounded-lg border border-border bg-surface text-secondary hover:text-color transition shadow-sm cursor-pointer"
                   aria-label="Open view menu"
                 >
-                  <i class="fa-regular fa-ellipsis-vertical text-lg"></i>
+                  <i class="ti ti-dots-vertical text-lg"></i>
                 </button>
 
                 <div
@@ -446,9 +449,7 @@ export const DashboardComponent = {
               <h4
                 class="text-lg font-bold text-color flex items-center gap-2"
               >
-                <i
-                  class="fa-regular fa-chart-simple text-amber-400 text-xl"
-                ></i>
+              <i class="ti ti-chart-bar rotate-90 text-brand text-xl"></i>
                 Distribution Trends
               </h4>
               <p class="text-xs text-secondary mt-1">
@@ -479,7 +480,7 @@ export const DashboardComponent = {
                   class="text-lg font-bold text-color flex items-center gap-2"
                 >
                   <i
-                    class="fa-regular fa-arrow-down-small-big text-amber-400 text-xl"
+                    class="ti ti-sort-ascending-2 text-amber-400 text-xl"
                   ></i>
                   Priority Breakdown
                 </h4>
@@ -515,7 +516,7 @@ export const DashboardComponent = {
                 <h4
                   class="text-lg font-bold text-color flex items-center gap-2"
                 >
-                  <i class="fa-regular fa-tags text-sky-400 text-xl"></i>
+                  <i class="ti ti-tags text-sky-400 text-xl"></i>
                   Tag Velocity
                 </h4>
                 <p class="text-xs text-secondary mt-1">
@@ -543,7 +544,7 @@ export const DashboardComponent = {
                   class="text-lg font-bold text-color flex items-center gap-2"
                 >
                   <i
-                    class="fa-regular fa-bar-progress text-emerald-400 text-xl"
+                    class="ti ti-progress text-emerald-400 text-xl"
                   ></i>
                   Status Breakdown
                 </h4>
@@ -579,7 +580,7 @@ export const DashboardComponent = {
                 <h4
                   class="text-lg font-bold text-color flex items-center gap-2"
                 >
-                  <i class="fa-regular fa-tags text-sky-400 text-xl"></i>
+                  <i class="ti ti-tags text-sky-400 text-xl"></i>
                   Tag Velocity
                 </h4>
                 <p class="text-xs text-secondary mt-1">
@@ -610,7 +611,7 @@ export const DashboardComponent = {
                 <h4
                   class="text-lg font-bold text-color flex items-center gap-2"
                 >
-                  <i class="fa-regular fa-sliders text-brand/80 text-xl"></i>
+                  <i class="ti ti-adjustments-horizontal text-brand/80 text-xl"></i>
                   Task-Level Execution & Subtask Progress
                 </h4>
                 <p class="text-xs text-secondary/80 mt-0.5 font-medium">
@@ -634,7 +635,7 @@ export const DashboardComponent = {
                       >
                         <div class="text-6xl mb-6">
                           <i
-                            class="fa-regular fa-clipboard-list-check text-brand/60"
+                            class="ti ti-clipboard-list text-brand/60"
                           ></i>
                         </div>
                         <h2 class="text-2xl font-bold text-color">
@@ -648,6 +649,17 @@ export const DashboardComponent = {
                     `
                   : tasks
                       .map((task) => {
+                        const priorityBadge =
+                          DashboardComponent._getPriorityBadgeHtml(
+                            task.priority,
+                          );
+                        const statusBadge =
+                          DashboardComponent._getStatusBadgeHtml(task.status);
+
+                        const tagIdsHtml = DashboardComponent._renderTagsHtml(
+                          task.tagIds,
+                        );
+
                         const subtaskInfo = calculateSubtaskProgress(
                           task.subtasks,
                         );
@@ -691,50 +703,34 @@ export const DashboardComponent = {
                         if (task.dueDate) {
                           if (isDone) {
                             dueBadge = `
-                              <span class="text-emerald-400 font-semibold">
-                                <i class="fa-regular fa-calendar-check me-1"></i
+                              <span class="text-emerald-400 font-semibold text-[9px] lg:text-[11px]">
+                                <i class="ti ti-calendar-check me-1"></i
                                 >Completed (${task.dueDate})
                               </span>
                             `;
                           } else if (overdue || daysRemaining < 0) {
                             dueBadge = `
-                              <span class="text-red-400 font-bold">
-                                <i class="fa-regular fa-clock me-1"></i>Overdue
+                              <span class="text-red-400 font-bold text-[9px] lg:text-[11px]">
+                                <i class="ti ti-clock me-1"></i>Overdue
                                 (${absDays}d ago)
                               </span>
                             `;
                           } else if (daysRemaining === 0) {
                             dueBadge = `
-                              <span class="text-amber-400 font-bold">
-                                <i class="fa-regular fa-clock me-1"></i>Due
+                              <span class="text-yellow-400 font-bold text-[9px] lg:text-[11px]">
+                                <i class="ti ti-clock me-1"></i>Due
                                 Today
                               </span>
                             `;
                           } else {
                             dueBadge = `
-                              <span class="text-secondary">
-                                <i class="fa-regular fa-calendar me-1"></i
+                              <span class="text-sky-400 text-[9px] lg:text-[11px]">
+                                <i class="ti ti-calendar me-1"></i
                                 >${daysRemaining}d left
                               </span>
                             `;
                           }
                         }
-
-                        const priorityBadgeStyles = {
-                          low: "bg-lime-500/10 text-lime-400 border-lime-500/20",
-                          medium:
-                            "bg-amber-500/10 text-amber-400 border-amber-500/20",
-                          high: "bg-red-500/10 text-red-400 border-red-500/20",
-                        };
-
-                        const statusBadgeStyles = {
-                          todo: "bg-sky-500/10 text-sky-400 border-sky-500/20",
-                          in_progress:
-                            "bg-orange-500/10 text-orange-400 border-orange-500/20",
-                          done: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
-                          blocked:
-                            "bg-pink-500/10 text-pink-400 border-pink-500/20",
-                        };
 
                         return `
                           <div
@@ -742,34 +738,14 @@ export const DashboardComponent = {
                           >
                             <div class="flex flex-col gap-1.5 min-w-0 flex-1">
                               <div class="flex items-center gap-2 flex-wrap">
-                                <span
-                                  class="inline-flex items-center rounded px-2 py-0.5 text-[9px] uppercase font-bold tracking-wider border ${
-                                    statusBadgeStyles[task.status] ||
-                                    statusBadgeStyles.todo
-                                  }"
-                                >
-                                  ${(task.status || "todo").replace("_", " ")}
-                                </span>
+                                ${priorityBadge}
+                              
+                                ${statusBadge}
 
-                                ${
-                                  task.priority
-                                    ? `
-                                        <span
-                                          class="inline-flex items-center rounded px-2 py-0.5 text-[9px] uppercase font-bold tracking-wider border ${
-                                            priorityBadgeStyles[
-                                              task.priority
-                                            ] || priorityBadgeStyles.low
-                                          }"
-                                        >
-                                          ${task.priority}
-                                        </span>
-                                      `
-                                    : ""
-                                }
                                 ${
                                   task.archived
                                     ? `<span
-                                        class="inline-flex items-center rounded px-2 py-0.5 text-[9px] uppercase font-bold bg-amber-500/10 text-amber-400 border border-amber-500/20"
+                                        class="min-h-5.5 inline-flex items-center rounded-md px-2 py-0.5 text-[10px] uppercase font-bold bg-amber-500/10 text-amber-500/80 border border-amber-500/20"
                                         >Archived</span
                                       >`
                                     : ""
@@ -780,7 +756,7 @@ export const DashboardComponent = {
                                         class="flex md:self-end z-20 shrink-0"
                                       >
                                         <span
-                                          class="text-[9px] font-bold text-brand bg-brand/10 px-2 py-0.5 rounded border flex flex-row justify-center items-center border-brand/20"
+                                          class="min-h-5.5 inline-flex items-center rounded-md px-2 py-0.5 text-[10px] font-bold bg-amber-500/10 text-amber-500/80 border border-amber-500/20"
                                         >
                                           ${completed}/${estimated} Units
                                         </span>
@@ -821,34 +797,9 @@ export const DashboardComponent = {
                               <div
                                 class="flex items-center gap-4 text-[11px] text-secondary/80 font-medium flex-wrap"
                               >
-                                <span>${dueBadge}</span>
-                                ${
-                                  task.tags?.length
-                                    ? `
-                                        <div
-                                          class="flex flex-wrap items-center gap-1"
-                                        >
-                                          ${state.tags
-                                            .filter((t) =>
-                                              task.tags.includes(t.id),
-                                            )
-                                            .map(
-                                              (tag) => `
-                                                <span
-                                                  class="text-[9px] bg-surface-3/40 text-secondary px-1.5 py-0.5 rounded border border-border/40 whitespace-nowrap flex flex-row justify-center items-center gap-1"
-                                                >
-                                                  <i
-                                                    class="fa-regular fa-tags"
-                                                  ></i>
-                                                  ${tag.name}
-                                                </span>
-                                              `,
-                                            )
-                                            .join("")}
-                                        </div>
-                                      `
-                                    : ""
-                                }
+                                ${dueBadge}
+
+                                ${tagIdsHtml}
                               </div>
                             </div>
 
@@ -862,7 +813,8 @@ export const DashboardComponent = {
                                   <span class="text-secondary font-medium"
                                     >Subtasks</span
                                   >
-                                  <span class="font-bold ${subtaskPercentColor}"
+                                  <span
+                                    class="font-bold ${subtaskPercentColor}"
                                     >${subtaskInfo.completedCount}/${subtaskInfo.totalCount}
                                     (${subtaskInfo.percentage}%)</span
                                   >
@@ -882,7 +834,8 @@ export const DashboardComponent = {
                                   class="text-[10px] text-secondary/60 block uppercase font-bold"
                                   >Created</span
                                 >
-                                <span class="text-xs font-medium text-color"
+                                <span
+                                  class="text-xs font-medium text-color"
                                   >${task.createdAt || "N/A"}</span
                                 >
                               </div>
@@ -897,5 +850,74 @@ export const DashboardComponent = {
         </div>
       </div>
     `;
+  },
+
+  _normalizeIconClass(iconString) {
+    if (!iconString) return "ti ti-folder";
+    return iconString;
+  },
+
+  _getPriorityBadgeHtml(priorityValue) {
+    const matched = PRIORITY_OPTIONS.find((p) => p.value === priorityValue);
+    const priorityData = matched || {
+      value: priorityValue || "low",
+      icon: "ti ti-circle text-secondary",
+      class: "bg-surface text-secondary border-border/60",
+    };
+
+    const iconClass = this._normalizeIconClass(priorityData.icon);
+
+    return ` <span
+      class="priority-badge min-h-5.5 inline-flex items-center gap-1 rounded-md border ${priorityData.class} px-2 py-0.5 text-[10px] uppercase font-bold tracking-wider"
+      title="priority badge"
+    >
+      <i class="${iconClass} text-[10px] lg:text-xs pb-px"></i>
+      <span>${priorityData.title}</span>
+    </span>`;
+  },
+
+  _getStatusBadgeHtml(statusValue) {
+    const matched = STATUS_OPTIONS.find((p) => p.value === statusValue);
+    const statusData = matched || {
+      value: statusValue || "todo",
+      icon: "ti ti-circle text-secondary",
+      class: "bg-surface text-secondary border-border/60",
+    };
+
+    const iconClass = this._normalizeIconClass(statusData.icon);
+
+    return ` <span
+      class="status-badge min-h-5.5 inline-flex items-center gap-1 rounded-md border ${statusData.class} px-2 py-0.5 text-[10px] uppercase font-bold tracking-wider"
+      title="status badge"
+    >
+      <i class="${iconClass} text-[10px] lg:text-xs pb-px"></i>
+      <span>${statusData.title}</span>
+    </span>`;
+  },
+
+  _renderTagsHtml(tagIds) {
+    const allTags = StateManager.getTags() || [];
+
+    if (!Array.isArray(tagIds) || tagIds.length === 0) return "";
+
+    const matchedTags = allTags.filter((tag) => tagIds.includes(tag.id));
+    if (matchedTags.length === 0) return "";
+
+    return `
+        <div class="flex items-center gap-1.5 flex-wrap">
+          ${matchedTags
+            .map(
+              (tag) => `
+                <span
+                  class="min-h-5.5 inline-flex items-center gap-1 rounded-md bg-surface-3/50 px-2 py-0.5 text-xs text-secondary/80 border border-border/30"
+                >
+                  <i class="ti ti-tag text-[10px] lg:text-xs pb-px"></i>
+                  <span>${tag.name}</span>
+                </span>
+              `,
+            )
+            .join("")}
+        </div>
+      `;
   },
 };

@@ -1,3 +1,7 @@
+import {
+  FILTER_OPTIONS_BY_TAB,
+  SORT_OPTIONS_BY_TAB,
+} from "@/utils/constants/options-value.constants.js";
 import { StateManager, state } from "@/models/state.model.js";
 
 import { AnalyticsController } from "./analytics.controller.js";
@@ -58,33 +62,17 @@ export const TaskController = {
     const sortWrapper = document.getElementById("sort-autocomplete-wrapper");
 
     if (dateWrapper) {
-      const dateOptions = [
-        {
-          value: "all",
-          title: "All Dates",
-          icon: "fa-regular fa-calendar text-emerald-400",
-        },
-        {
-          value: "overdue",
-          title: "Overdue",
-          icon: "fa-regular fa-clock text-rose-400",
-        },
-        {
-          value: "today",
-          title: "Today",
-          icon: "fa-regular fa-calendar-day text-brand/80",
-        },
-        {
-          value: "this_week",
-          title: "This Week",
-          icon: "fa-regular fa-calendar-week text-amber-400",
-        },
-        {
-          value: "no_date",
-          title: "No Due Date",
-          icon: "fa-regular fa-calendar-xmark text-slate-400",
-        },
-      ];
+      if (this.dateFilterAutocomplete) {
+        this.dateFilterAutocomplete.destroy();
+      }
+
+      const rawOptions = FILTER_OPTIONS_BY_TAB;
+
+      const dateOptions = rawOptions.map((opt) => ({
+        title: opt.title || opt.name,
+        value: opt.value || opt.id,
+        icon: opt.icon,
+      }));
 
       this.dateFilterAutocomplete = new AutocompleteComponent(
         dateWrapper,
@@ -119,33 +107,17 @@ export const TaskController = {
     }
 
     if (sortWrapper) {
-      const sortOptions = [
-        {
-          value: "priority",
-          title: "Priority",
-          icon: "fa-regular fa-arrow-down-short-wide text-brand/80",
-        },
-        {
-          value: "dueDate",
-          title: "Due Date",
-          icon: "fa-regular fa-calendar text-emerald-400",
-        },
-        {
-          value: "status",
-          title: "Status",
-          icon: "fa-regular fa-bar-progress text-amber-400",
-        },
-        {
-          value: "createdAt",
-          title: "Date Created",
-          icon: "fa-regular fa-clock text-rose-400",
-        },
-        {
-          value: "title",
-          title: "Title (A-Z)",
-          icon: "fa-regular fa-arrow-down-a-z text-indigo-400",
-        },
-      ];
+      if (this.sortAutocomplete) {
+        this.sortAutocomplete.destroy();
+      }
+
+      const rawOptions = SORT_OPTIONS_BY_TAB;
+
+      const sortOptions = rawOptions.map((opt) => ({
+        title: opt.title || opt.name,
+        value: opt.value || opt.id,
+        icon: opt.icon,
+      }));
 
       this.sortAutocomplete = new AutocompleteComponent(
         sortWrapper,
@@ -534,18 +506,18 @@ export const TaskController = {
         if (tabName === "safeguard") {
           // Safeguard Active State
           btnSafeguard.className =
-            "flex-1 py-2 text-xs font-bold rounded-lg bg-brand text-white transition cursor-pointer";
+            "flex-1 py-2 text-xs font-bold rounded-lg bg-brand text-white transition cursor-pointer flex justify-center items-center";
           btnShortcuts.className =
-            "flex-1 py-2 text-xs font-bold rounded-lg text-secondary hover:text-color transition cursor-pointer";
+            "flex-1 py-2 text-xs font-bold rounded-lg text-secondary hover:text-color transition cursor-pointer flex justify-center items-center";
 
           contentSafeguard.classList.remove("hidden");
           contentShortcuts.classList.add("hidden");
         } else if (tabName === "shortcuts") {
           // Shortcuts Active State
           btnShortcuts.className =
-            "flex-1 py-2 text-xs font-bold rounded-lg bg-brand text-white transition cursor-pointer";
+            "flex-1 py-2 text-xs font-bold rounded-lg bg-brand text-white transition cursor-pointer flex justify-center items-center";
           btnSafeguard.className =
-            "flex-1 py-2 text-xs font-bold rounded-lg text-secondary hover:text-color transition cursor-pointer";
+            "flex-1 py-2 text-xs font-bold rounded-lg text-secondary hover:text-color transition cursor-pointer flex justify-center items-center";
 
           contentShortcuts.classList.remove("hidden");
           contentSafeguard.classList.add("hidden");

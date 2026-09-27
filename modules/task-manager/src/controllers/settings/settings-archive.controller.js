@@ -17,16 +17,16 @@ export const SettingsArchiveController = {
     const toggleDot = document.getElementById("sett-auto-archive-dot");
 
     if (current) {
-      toggleBtn?.classList.replace("bg-neutral-300/80", "bg-brand/80");
+      toggleBtn?.classList.replace("bg-neutral-300/80", "bg-emerald-500/80");
       toggleBtn?.classList.replace(
         "dark:bg-neutral-700/80",
-        "dark:bg-brand/80",
+        "dark:bg-emerald-400/80",
       );
       toggleDot?.classList.replace("translate-x-0", "translate-x-5");
     } else {
-      toggleBtn?.classList.replace("bg-brand/80", "bg-neutral-300/80");
+      toggleBtn?.classList.replace("bg-emerald-500/80", "bg-neutral-300/80");
       toggleBtn?.classList.replace(
-        "dark:bg-brand/80",
+        "dark:bg-emerald-400/80",
         "dark:bg-neutral-700/80",
       );
       toggleDot?.classList.replace("translate-x-5", "translate-x-0");
@@ -43,8 +43,8 @@ export const SettingsArchiveController = {
     NotificationService.show({
       type: "info",
       message: `Autonomous archiving pipeline has been ${nextState ? "activated" : "deactivated"}`,
-      icon: "fa-robot",
-      iconColor: "text-brand/80",
+      icon: "ti-robot-face",
+      iconColor: "text-sky-500/80",
       duration: 5000,
     });
 
@@ -94,8 +94,8 @@ export const SettingsArchiveController = {
         type: "info",
         message:
           "Stale tasks exceeding 30 days structural limits auto-archived",
-        icon: "fa-box-archive",
-        iconColor: "text-brand/80",
+        icon: "ti-archive",
+        iconColor: "text-sky-500/80",
         duration: 5000,
       });
     }

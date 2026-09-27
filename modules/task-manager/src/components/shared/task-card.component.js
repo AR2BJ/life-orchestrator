@@ -1,25 +1,78 @@
+import {
+  PRIORITY_OPTIONS,
+  STATUS_OPTIONS,
+} from "@/utils/constants/options-value.constants";
+
 import { state } from "@/models/state.model.js";
 
 export const TaskCardComponent = {
+  _normalizeIconClass(iconString) {
+    if (!iconString) return "ti ti-folder";
+    return iconString;
+  },
+
+  _getPriorityBadgeHtml(priorityValue, taskId) {
+    const matched = PRIORITY_OPTIONS.find((p) => p.value === priorityValue);
+    const priorityData = matched || {
+      value: priorityValue || "low",
+      icon: "ti ti-circle text-secondary",
+      class: "bg-surface text-secondary border-border/60",
+    };
+
+    const iconClass = this._normalizeIconClass(priorityData.icon);
+
+    return `
+      <span
+        class="priority-badge min-h-4 inline-flex items-center gap-1 rounded border ${priorityData.class} px-2 py-0.5 text-[9px] uppercase font-bold"
+        title="priority badge"
+      >
+        <i
+          class="${iconClass} text-[9px] lg:text-[11px] pb-px"
+        ></i>
+        <span>${priorityData.title}</span>
+      </span>`;
+  },
+
+  _getStatusBadgeHtml(statusValue, taskId) {
+    const matched = STATUS_OPTIONS.find((p) => p.value === statusValue);
+    const statusData = matched || {
+      value: statusValue || "todo",
+      icon: "ti ti-circle text-secondary",
+      class: "bg-surface text-secondary border-border/60",
+    };
+
+    const iconClass = this._normalizeIconClass(statusData.icon);
+
+    return `
+      <span
+        class="status-badge min-h-4 inline-flex items-center gap-1 rounded border ${statusData.class} px-2 py-0.5 text-[9px] uppercase font-bold"
+        title="status badge"
+      >
+        <i
+          class="${iconClass} text-[9px] lg:text-[11px] pb-px"
+        ></i>
+        <span>${statusData.title}</span>
+      </span>`;
+  },
+
   render(task, options = {}) {
     const { headerExtraHtml = "", footerExtraHtml = "" } = options;
+
+    const priorityBadge = this._getPriorityBadgeHtml(task.priority, task.id);
+    const statusBadge = this._getStatusBadgeHtml(task.status, task.id);
+
+    const completed = task.completedFocusUnits || 0;
+    const estimated = task.estimatedFocusUnits || 1;
 
     const statusAccent =
       {
         todo: "bg-sky-500",
-        in_progress: "bg-amber-500",
+        in_progress: "bg-yellow-500",
         done: "bg-emerald-500",
-        blocked: "bg-rose-500",
+        blocked: "bg-red-500",
       }[task.status] || "bg-sky-500";
 
-    const priorityStyles = {
-      low: "border-lime-500/20 bg-lime-500/10 text-lime-500/80",
-      medium: "border-amber-500/20 bg-amber-500/10 text-amber-500/80",
-      high: "border-red-500/20 bg-red-500/10 text-red-500/80",
-    };
-    const priorityClass = priorityStyles[task.priority] || priorityStyles.low;
-
-    const matchedTags = state.tags.filter((t) => task.tags?.includes(t.id));
+    const matchedTags = state.tags.filter((t) => task.tagIds?.includes(t.id));
     const visibleTag = matchedTags[0];
 
     return `
@@ -34,16 +87,21 @@ export const TaskCardComponent = {
           <div>
             <div class="flex items-center justify-between gap-1 mb-1.5 min-w-0">
               <div class="flex items-center gap-1 min-w-0 truncate">
-                <span
-                  class="text-[9px] font-extrabold uppercase tracking-wider text-secondary truncate"
-                >
-                  ${(task.status || "todo").replace("_", " ")}
-                </span>
-                <span
-                  class="inline-flex items-center rounded border px-1 py-0.2 text-[8px] uppercase font-bold tracking-wider ${priorityClass} shrink-0"
-                >
-                  ${task.priority || "low"}
-                </span>
+                ${priorityBadge} 
+                
+                ${statusBadge}
+                
+                ${
+                  estimated !== 0
+                    ? ` <div class="flex md:self-end z-20 shrink-0">
+                        <span
+                          class="min-h-4 inline-flex items-center rounded px-2 py-0.5 text-[9px] font-bold bg-amber-500/10 text-amber-500/80 border border-amber-500/20"
+                        >
+                          ${completed}/${estimated} Units
+                        </span>
+                      </div>`
+                    : ""
+                }
               </div>
 
               <div class="shrink-0">${headerExtraHtml}</div>
@@ -106,7 +164,7 @@ export const TaskCardComponent = {
                     <span
                       class="text-[10px] text-tertiary font-medium flex items-center gap-0.5 whitespace-nowrap shrink-0"
                     >
-                      <i class="fa-regular fa-clock text-[10px]"></i>
+                      <i class="ti ti-clock text-[10px]"></i>
                       ${task.dueDate}
                     </span>
                   `
@@ -120,7 +178,7 @@ export const TaskCardComponent = {
                           class="hidden sm:inline-flex text-[10px] bg-surface-3/40 text-secondary p-0.5 rounded border border-border/40 whitespace-nowrap truncate items-center gap-1"
                           title="${visibleTag.name}"
                         >
-                          <i class="fa-regular fa-tags"></i>
+                          <i class="ti ti-tags"></i>
                           ${visibleTag.name}
                         </span>
 
@@ -144,7 +202,7 @@ export const TaskCardComponent = {
                             .map((t) => t.name)
                             .join(", ")}"
                         >
-                          <i class="fa-regular fa-tags"></i>
+                          <i class="ti ti-tags"></i>
                           +${matchedTags.length}
                         </span>
                       </div>

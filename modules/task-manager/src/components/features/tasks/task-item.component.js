@@ -1,14 +1,102 @@
 import {
+  PRIORITY_OPTIONS,
+  STATUS_OPTIONS,
+} from "@/utils/constants/options-value.constants";
+import {
   calculateSubtaskProgress,
   getDaysRemaining,
   isOverdue,
   openSubtasksState,
 } from "@/utils/helpers.js";
 
-import { state } from "@/models/state.model";
+import { StateManager } from "@/models/state.model";
 
 export const TaskItemComponent = {
+  _normalizeIconClass(iconString) {
+    if (!iconString) return "ti ti-folder";
+    return iconString;
+  },
+
+  _getPriorityBadgeHtml(priorityValue, taskId) {
+    const matched = PRIORITY_OPTIONS.find((p) => p.value === priorityValue);
+    const priorityData = matched || {
+      value: priorityValue || "low",
+      icon: "ti ti-circle text-secondary",
+      class: "bg-surface text-secondary border-border/60",
+    };
+
+    const iconClass = this._normalizeIconClass(priorityData.icon);
+
+    return ` <button
+      type="button"
+      data-task-id="${taskId}"
+      data-current-priority="${priorityData.value}"
+      class="priority-cycle-btn min-h-5.5 inline-flex items-center gap-1 rounded-md border ${priorityData.class} px-2 py-0.5 text-[10px] uppercase font-bold tracking-wider cursor-pointer hover:opacity-80 active:scale-95 transition-all select-none"
+      title="Click to cycle priority"
+    >
+      <i
+        class="${iconClass} text-[10px] lg:text-xs pb-px transition-transform duration-300"
+      ></i>
+      <span>${priorityData.title}</span>
+    </button>`;
+  },
+
+  _getStatusBadgeHtml(statusValue, taskId) {
+    const matched = STATUS_OPTIONS.find((p) => p.value === statusValue);
+    const statusData = matched || {
+      value: statusValue || "todo",
+      icon: "ti ti-circle text-secondary",
+      class: "bg-surface text-secondary border-border/60",
+    };
+
+    const iconClass = this._normalizeIconClass(statusData.icon);
+
+    return ` <button
+      type="button"
+      data-task-id="${taskId}"
+      data-current-status="${statusData.value}"
+      class="status-cycle-btn min-h-5.5 inline-flex items-center gap-1 rounded-md border ${statusData.class} px-2 py-0.5 text-[10px] uppercase font-bold tracking-wider cursor-pointer hover:opacity-80 active:scale-95 transition-all select-none"
+      title="Click to cycle status"
+    >
+      <i
+        class="${iconClass} text-[10px] lg:text-xs pb-px transition-transform duration-300"
+      ></i>
+      <span>${statusData.title}</span>
+    </button>`;
+  },
+
+  _renderTagsHtml(tagIds) {
+    const allTags = StateManager.getTags() || [];
+
+    if (!Array.isArray(tagIds) || tagIds.length === 0) return "";
+
+    const matchedTags = allTags.filter((tag) => tagIds.includes(tag.id));
+    if (matchedTags.length === 0) return "";
+
+    return `
+      <div class="flex items-center gap-1.5 flex-wrap">
+        ${matchedTags
+          .map(
+            (tag) => `
+              <span
+                class="min-h-5.5 inline-flex items-center gap-1 rounded-md bg-surface-3/50 px-2 py-0.5 text-xs text-secondary/80 border border-border/30"
+              >
+                <i class="ti ti-tag text-[10px] lg:text-xs pb-px"></i>
+                <span>${tag.name}</span>
+              </span>
+            `,
+          )
+          .join("")}
+      </div>
+    `;
+  },
+
   render(task) {
+    const priorityBadge = this._getPriorityBadgeHtml(task.priority, task.id);
+    const statusBadge = this._getStatusBadgeHtml(task.status, task.id);
+
+    const tagIdsHtml = this._renderTagsHtml(task.tagIds);
+
     const isCompleted = task.status === "done";
     const isArchived = task.archived;
 
@@ -21,45 +109,40 @@ export const TaskItemComponent = {
 
       if (isCompleted) {
         dueDateBadge = `
-      <span class="inline-flex items-center gap-1 rounded-md border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 text-[10px] font-medium text-emerald-500/80">
-        <i class="fa-regular fa-calendar-check"></i> ${task.dueDate}
-      </span>
-    `;
+          <span
+            class="min-h-5.5 inline-flex items-center gap-1 rounded-md border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 text-[10px] font-medium text-emerald-500/80"
+          >
+            <i class="ti ti-calendar-check text-[10px] lg:text-xs pb-px"></i> ${task.dueDate}
+          </span>
+        `;
       } else if (overdue || daysRemaining < 0) {
         dueDateBadge = `
-      <span class="inline-flex items-center gap-1 rounded-md border border-red-500/30 bg-red-500/10 px-2 py-0.5 text-[10px] font-semibold text-red-500/80 ${isArchived ? "" : "animate-pulse"}">
-        <i class="fa-regular fa-clock"></i> Overdue (${absDays}d ago)
-      </span>
-    `;
+          <span
+            class="min-h-5.5 inline-flex items-center gap-1 rounded-md border border-red-500/30 bg-red-500/10 px-2 py-0.5 text-[10px] font-semibold text-red-500/80 ${
+              isArchived ? "" : "animate-pulse"
+            }"
+          >
+            <i class="ti ti-clock text-[10px] lg:text-xs pb-px"></i> Overdue (${absDays}d ago)
+          </span>
+        `;
       } else if (daysRemaining === 0) {
         dueDateBadge = `
-      <span class="inline-flex items-center gap-1 rounded-md border border-amber-500/30 bg-amber-500/10 px-2 py-0.5 text-[10px] font-semibold text-amber-500/80">
-        <i class="fa-regular fa-clock"></i> Due Today
-      </span>
-    `;
+          <span
+            class="min-h-5.5 inline-flex items-center gap-1 rounded-md border border-yellow-500/30 bg-yellow-500/10 px-2 py-0.5 text-[10px] font-semibold text-yellow-500/80"
+          >
+            <i class="ti ti-clock text-[10px] lg:text-xs pb-px"></i> Due Today
+          </span>
+        `;
       } else {
         dueDateBadge = `
-      <span class="inline-flex items-center gap-1 rounded-md border border-secondary/30 bg-secondary/10 px-2 py-0.5 text-[10px] font-medium text-secondary/80">
-        <i class="fa-regular fa-calendar-day"></i> Due in ${daysRemaining}d
-      </span>
-    `;
+          <span
+            class="min-h-5.5 inline-flex items-center gap-1 rounded-md border border-sky-500/30 bg-sky-500/10 px-2 py-0.5 text-[10px] font-medium text-sky-500/80"
+          >
+            <i class="ti ti-calendar text-[10px] lg:text-xs pb-px"></i> Due in ${daysRemaining}d
+          </span>
+        `;
       }
     }
-
-    const priorityStyles = {
-      low: "border-lime-500/20 bg-lime-500/10 text-lime-500/80",
-      medium: "border-amber-500/20 bg-amber-500/10 text-amber-500/80",
-      high: "border-red-500/20 bg-red-500/10 text-red-500/80",
-    };
-    const priorityClass = priorityStyles[task.priority] || priorityStyles.low;
-
-    const statusStyles = {
-      todo: "border-sky-500/20 bg-sky-500/10 text-sky-500/80",
-      in_progress: "border-orange-500/20 bg-orange-500/10 text-orange-500/80",
-      done: "border-emerald-500/20 bg-emerald-500/10 text-emerald-500/80",
-      blocked: "border-pink-500/20 bg-pink-500/10 text-pink-500/80",
-    };
-    const statusClass = statusStyles[task.status] || statusStyles.todo;
 
     const subtaskProgress = calculateSubtaskProgress(task.subtasks);
     const hasSubtasks =
@@ -95,8 +178,8 @@ export const TaskItemComponent = {
       : "archive-btn hover:bg-amber-600/10";
     const actionTooltip = isArchived ? "Restore" : "Archive";
     const actionIcon = isArchived
-      ? "fa-arrow-rotate-left text-emerald-500/80"
-      : "fa-box-archive text-amber-500/80";
+      ? "ti-rotate -rotate-180 text-emerald-500/80"
+      : "ti-archive text-amber-500/80";
 
     const checkTooltip = isCompleted ? "Uncheck Task" : "Check Task";
     const isExpanded = openSubtasksState.expandedTaskIds.has(task.id);
@@ -128,10 +211,10 @@ export const TaskItemComponent = {
                         }"
                       >
                         <i
-                          class="fa-regular ${
+                          class="ti ${
                             isCompleted
-                              ? "fa-check text-sm md:text-base font-bold"
-                              : "fa-square text-sm"
+                              ? "ti-check text-lg md:text-xl font-bold"
+                              : "ti-square text-xs lg:text-sm"
                           }"
                         ></i>
                       </button>
@@ -146,31 +229,7 @@ export const TaskItemComponent = {
 
             <div class="flex flex-col min-w-0 w-full gap-1.5 pe-12">
               <div class="flex items-center gap-2 flex-wrap">
-                <span
-                  class="inline-flex items-center rounded-md border px-2 py-0.5 text-[10px] uppercase font-semibold tracking-wider ${priorityClass}"
-                >
-                  ${task.priority || "low"}
-                </span>
-
-                <span
-                  class="inline-flex items-center rounded-md border ${statusClass} px-2 py-0.5 text-[10px] uppercase font-semibold tracking-wider"
-                >
-                  ${(task.status || "todo").replace("_", " ")}
-                </span>
-
-                ${dueDateBadge}
-                ${(state.tags.filter((t) => task.tags.includes(t.id)) || [])
-                  .map(
-                    (tag) => `
-                      <span
-                        class="inline-flex items-center gap-1 rounded-md border border-border bg-surface-2 px-1.5 py-0.5 text-[10px] font-semibold text-secondary tracking-wider"
-                      >
-                        <i class="fa-regular fa-tag"></i>
-                        ${tag.name}
-                      </span>
-                    `,
-                  )
-                  .join("")}
+                ${priorityBadge} ${statusBadge} ${dueDateBadge} ${tagIdsHtml}
               </div>
 
               <h2
@@ -195,13 +254,13 @@ export const TaskItemComponent = {
                 class="flex items-center gap-3 mt-2 text-[11px] lg:text-xs text-muted"
               >
                 <span
-                  ><i class="fa-regular fa-clock me-1"></i>Created
+                  ><i class="ti ti-clock me-1"></i>Created
                   ${task.createdAt}</span
                 >
                 ${
                   task.completedAt
                     ? `<span class="text-emerald-500/80"
-                        ><i class="fa-regular fa-circle-check me-1"></i
+                        ><i class="ti ti-circle-check me-1"></i
                         >Completed ${task.completedAt}</span
                       >`
                     : ""
@@ -214,7 +273,7 @@ export const TaskItemComponent = {
                       class="flex items-center gap-3 mt-1 text-[11px] lg:text-xs italic text-secondary"
                     >
                       <span
-                        ><i class="fa-regular fa-calendar-lines-pen  me-1"></i
+                        ><i class="ti ti-calendar-dot  me-1"></i
                         >Updated ${task.updatedAt}</span
                       >
                     </div>`
@@ -222,6 +281,7 @@ export const TaskItemComponent = {
               }
             </div>
           </div>
+
           <div class="flex flex-col justify-between">
             <div
               class="absolute top-3 right-3 md:static md:top-auto md:right-auto flex self-start z-20 shrink-0"
@@ -232,7 +292,7 @@ export const TaskItemComponent = {
                     data-id="${task.id}"
                     class="${actionButtonClass} w-9 h-9 rounded-lg bg-surface-2 border border-border flex items-center justify-center hover:cursor-pointer peer transition"
                   >
-                    <i class="fa-regular ${actionIcon} text-base"></i>
+                    <i class="ti ${actionIcon} text-base md:text-lg"></i>
                   </button>
                   <div
                     class="absolute top-full left-1/2 -translate-x-1/2 mt-2 px-2 py-1 rounded bg-surface-2 text-xs text-color opacity-0 cursor-default peer-hover:opacity-100 transition z-10"
@@ -250,7 +310,7 @@ export const TaskItemComponent = {
                         class="edit-btn w-9 h-9 rounded-lg bg-surface-2 hover:bg-blue-600/10 border border-border flex items-center justify-center hover:cursor-pointer peer transition"
                       >
                         <i
-                          class="fa-regular fa-pen-to-square text-blue-500/80 text-base"
+                          class="ti ti-edit-circle text-blue-500/80 text-base md:text-lg"
                         ></i>
                       </button>
                       <div
@@ -267,7 +327,7 @@ export const TaskItemComponent = {
                     class="delete-btn w-9 h-9 rounded-lg bg-surface-2 hover:bg-red-600/10 border border-border flex items-center justify-center hover:cursor-pointer peer transition"
                   >
                     <i
-                      class="fa-regular fa-trash-can text-red-500/80 text-base"
+                      class="ti ti-trash text-red-500/80  text-base md:text-lg"
                     ></i>
                   </button>
                   <div
@@ -283,7 +343,7 @@ export const TaskItemComponent = {
                   data-id="${task.id}"
                   class="dropdown-toggle-btn h-9 w-9 rounded-lg border border-border text-secondary hover:text-color hover:bg-surface flex items-center justify-center transition shadow-sm cursor-pointer"
                 >
-                  <i class="fa-regular fa-ellipsis-vertical text-lg"></i>
+                  <i class="ti ti-dots-vertical text-base"></i>
                 </button>
 
                 <div
@@ -296,7 +356,7 @@ export const TaskItemComponent = {
                       isArchived ? "restore-btn" : "archive-btn"
                     } flex w-full items-center gap-2 rounded-lg px-2.5 py-1.5 text-left text-xs font-medium border-0 bg-transparent text-secondary hover:text-color hover:bg-surface-2 transition cursor-pointer"
                   >
-                    <i class="fa-regular ${actionIcon} text-xs"></i>
+                    <i class="ti ${actionIcon} text-xs"></i>
                     <span>${isArchived ? "Restore Task" : "Archive Task"}</span>
                   </button>
 
@@ -308,7 +368,7 @@ export const TaskItemComponent = {
                       class="edit-btn flex w-full items-center gap-2 rounded-lg px-2.5 py-1.5 text-left text-xs font-medium border-0 bg-transparent text-secondary hover:text-color hover:bg-surface-2 transition cursor-pointer"
                     >
                       <i
-                        class="fa-regular fa-pen-to-square text-xs text-blue-500/80"
+                        class="ti ti-edit-circle text-xs text-blue-500/80"
                       ></i>
                       <span>Edit Task</span>
                     </button>`
@@ -320,7 +380,7 @@ export const TaskItemComponent = {
                     data-id="${task.id}"
                     class="delete-btn flex w-full items-center gap-2 rounded-lg px-2.5 py-1.5 text-left text-xs font-medium border-0 bg-transparent text-red-500/80 hover:bg-red-500/5 transition cursor-pointer"
                   >
-                    <i class="fa-regular fa-trash-can text-xs"></i>
+                    <i class="ti ti-trash text-xs"></i>
                     <span>Delete Permanently</span>
                   </button>
                 </div>
@@ -331,7 +391,7 @@ export const TaskItemComponent = {
               estimated !== 0
                 ? ` <div class="flex md:self-end z-20 shrink-0">
                     <span
-                      class="text-[11px] font-bold text-brand bg-brand/10 px-2 py-1 rounded-md border flex flex-row justify-center items-center border-brand/20"
+                      class="min-h-5.5 inline-flex items-center rounded-md px-2 py-0.5 text-[11px] font-bold bg-amber-500/10 text-amber-500/80 border border-amber-500/20"
                     >
                       ${completed}/${estimated} Units
                     </span>
@@ -344,7 +404,7 @@ export const TaskItemComponent = {
         ${
           hasSubtasks
             ? `
-                <div class="border-t border-border/60 pt-2">
+                <div class="mt-2 border-t border-border/60 pt-2">
                   <button
                     type="button"
                     data-task-id="${task.id}"
@@ -353,7 +413,7 @@ export const TaskItemComponent = {
                     <div
                       class="w-full sm:w-fit flex justify-center xs:justify-start items-center gap-2"
                     >
-                      <i class="fa-regular fa-list-check text-brand/80"></i>
+                      <i class="ti ti-list-check text-brand/80"></i>
                       <span
                         class="text-[11px] sm:text-xs font-bold text-secondary group-hover/sub-hdr:text-color transition"
                       >
@@ -382,7 +442,7 @@ export const TaskItemComponent = {
                           isExpanded ? "rotate-180" : ""
                         }"
                       >
-                        <i class="fa-regular fa-chevron-down text-xs"></i>
+                        <i class="ti ti-chevron-down  text-base md:text-lg"></i>
                       </div>
                     </div>
                   </button>
@@ -406,25 +466,25 @@ export const TaskItemComponent = {
                                 isArchived
                                   ? ""
                                   : `
-                                  <button
-                                    type="button"
-                                    data-task-id="${task.id}"
-                                    data-subtask-id="${st.id}"
-                                    class="subtask-toggle w-6 h-6 shrink-0 rounded-md border-2 flex items-center justify-center transition peer hover:cursor-pointer ${
-                                      st.completed
-                                        ? "bg-brand/80 border-brand/80 text-(--color-btn-primary-text) shadow-lg shadow-brand/20"
-                                        : "border-border text-secondary hover:border-brand/80 hover:text-brand/80"
-                                    }"
-                                  >
-                                    <i
-                                      class="fa-regular ${
-                                        st.completed
-                                          ? "fa-check text-xs md:text-sm font-bold"
-                                          : "fa-square text-[10px]"
-                                      }"
-                                    ></i>
-                                  </button>
-                                `
+                                      <button
+                                        type="button"
+                                        data-task-id="${task.id}"
+                                        data-subtask-id="${st.id}"
+                                        class="subtask-toggle w-6 h-6 shrink-0 rounded-md border-2 flex items-center justify-center transition peer hover:cursor-pointer ${
+                                          st.completed
+                                            ? "bg-brand/80 border-brand/80 text-(--color-btn-primary-text) shadow-lg shadow-brand/20"
+                                            : "border-border text-secondary hover:border-brand/80 hover:text-brand/80"
+                                        }"
+                                      >
+                                        <i
+                                          class="ti ${
+                                            st.completed
+                                              ? "ti-check text-xs md:text-sm font-bold"
+                                              : "ti-square text-[10px]"
+                                          }"
+                                        ></i>
+                                      </button>
+                                    `
                               }
 
                               <span

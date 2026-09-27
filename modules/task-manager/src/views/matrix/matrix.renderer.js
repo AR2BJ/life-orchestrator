@@ -25,9 +25,9 @@ export function renderEisenhowerGrid(tasks) {
         >
           <div class="flex items-center gap-2.5">
             <div
-              class="w-8 h-8 rounded-xl ${colorTheme.bg} ${colorTheme.text} flex items-center justify-center text-xs font-bold"
+              class="w-8 h-8 rounded-lg ${colorTheme.bg} ${colorTheme.text} flex items-center justify-center text-xs font-bold"
             >
-              <i class="${icon}"></i>
+              <i class="${icon} text-sm lg:text-base"></i>
             </div>
             <div>
               <h3
@@ -57,9 +57,9 @@ export function renderEisenhowerGrid(tasks) {
                   <div
                     class="w-full h-full bg-surface border border-dashed border-border rounded-xl p-4 text-center flex flex-col justify-center items-center"
                   >
-                    <div class="text-2xl mb-2">
+                    <div class="mb-2">
                       <i
-                        class="fa-regular fa-clipboard-list-check text-brand/60"
+                        class="ti ti-clipboard-list text-brand/60 text-2xl lg:text-3xl"
                       ></i>
                     </div>
                     <h2 class="text-xs font-bold text-color">
@@ -83,28 +83,28 @@ export function renderEisenhowerGrid(tasks) {
         "Urgent & Important",
         q1,
         { bg: "bg-red-500/10", text: "text-red-400" },
-        "fa-regular fa-fire",
+        "ti ti-flame",
       )}
       ${renderSection(
         "Schedule (Q2)",
         "Not Urgent but Important",
         q2,
         { bg: "bg-sky-500/10", text: "text-sky-400" },
-        "fa-regular fa-calendar-check",
+        "ti ti-calendar-check",
       )}
       ${renderSection(
         "Delegate (Q3)",
         "Urgent but Not Important",
         q3,
         { bg: "bg-amber-500/10", text: "text-amber-400" },
-        "fa-regular fa-user-gear",
+        "ti ti-user-cog",
       )}
       ${renderSection(
         "Eliminate (Q4)",
         "Neither Urgent nor Important",
         q4,
         { bg: "bg-slate-500/10", text: "text-slate-400" },
-        "fa-regular fa-trash-can",
+        "ti ti-trash",
       )}
     </div>
   `;
@@ -221,9 +221,9 @@ export function renderAbcdeList(tasks) {
                     : `<div
                         class="w-full h-full bg-surface border border-dashed border-border rounded-xl p-4 text-center flex flex-col justify-center items-center"
                       >
-                        <div class="text-2xl mb-2">
+                        <div class="mb-2">
                           <i
-                            class="fa-regular fa-clipboard-list-check text-brand/60"
+                            class="ti ti-clipboard-list text-brand/60 text-2xl lg:text-3xl"
                           ></i>
                         </div>
                         <h2 class="text-xs font-bold text-color">

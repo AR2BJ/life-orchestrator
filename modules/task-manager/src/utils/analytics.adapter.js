@@ -281,7 +281,7 @@ export const AnalyticsAdapter = {
     const tagStats = {};
 
     activeTasks.forEach((task) => {
-      const tags = state.tags.filter((t) => task.tags.includes(t.id)) || [];
+      const tags = state.tags.filter((t) => task.tagIds.includes(t.id)) || [];
       const isDone = task.status === "done";
 
       tags.forEach((tag) => {

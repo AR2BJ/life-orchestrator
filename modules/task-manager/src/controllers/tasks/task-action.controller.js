@@ -6,7 +6,6 @@ import {
 import { GlobalLoaderService } from "@/services/loader.service.js";
 import { NotificationService } from "@/services/notification.service.js";
 import { SettingsArchiveController } from "../settings/settings-archive.controller.js";
-import { SettingsController } from "../settings.controller.js";
 import { StateManager } from "@/models/state.model.js";
 import { TaskService } from "@/services/task.service.js";
 import { openSubtasksState } from "@/utils/helpers.js";
@@ -47,10 +46,10 @@ export const TaskActionController = {
                 message: isNowCompleted
                   ? `Task completed: "${task.title}"`
                   : `Reopened task: "${task.title}"`,
-                icon: isNowCompleted ? "fa-circle-check" : "fa-circle",
+                icon: isNowCompleted ? "ti-circle-check" : "ti-circle",
                 iconColor: isNowCompleted
                   ? "text-emerald-500/80"
-                  : "text-brand/80",
+                  : "text-sky-500/80",
                 duration: 5000,
               });
             } catch (error) {
@@ -94,6 +93,26 @@ export const TaskActionController = {
               message: error.message,
             });
           }
+        }
+        return;
+      }
+
+      const priorityCycleBtn = target.closest(".priority-cycle-btn");
+      if (priorityCycleBtn) {
+        e.stopPropagation();
+        const taskId = priorityCycleBtn.dataset.taskId;
+        if (taskId) {
+          this.cycleTaskPriority(taskId);
+        }
+        return;
+      }
+
+      const statusCycleBtn = target.closest(".status-cycle-btn");
+      if (statusCycleBtn) {
+        e.stopPropagation();
+        const taskId = statusCycleBtn.dataset.taskId;
+        if (taskId) {
+          this.cycleTaskStatus(taskId);
         }
         return;
       }
@@ -254,6 +273,53 @@ export const TaskActionController = {
         }
         return;
       }
+    });
+  },
+
+  cycleTaskPriority(taskId) {
+    const tasks = StateManager.getTasks() || [];
+    const targetTask = tasks.find((p) => String(p.id) === String(taskId));
+    if (!targetTask) return;
+
+    const priorityOrder = ["low", "medium", "high"];
+    const currentIndex = priorityOrder.indexOf(targetTask.priority || "low");
+    const nextPriority =
+      priorityOrder[(currentIndex + 1) % priorityOrder.length];
+
+    const updated = tasks.map((t) =>
+      t.id === taskId ? { ...t, priority: nextPriority } : t,
+    );
+
+    StateManager.save(updated);
+    this.mainController.refreshUI();
+
+    NotificationService.show({
+      type: "info",
+      message: `Task priority changed to "${nextPriority.toUpperCase()}"`,
+      icon: "ti-refresh",
+      duration: 5000,
+    });
+  },
+
+  cycleTaskStatus(taskId) {
+    const tasks = StateManager.getTasks() || [];
+    const targetTask = tasks.find((p) => String(p.id) === String(taskId));
+    if (!targetTask) return;
+
+    const statusOrder = ["todo", "in_progress", "blocked", "done"];
+    const currentIndex = statusOrder.indexOf(targetTask.status || "todo");
+    const nextStatus = statusOrder[(currentIndex + 1) % statusOrder.length];
+
+    const updated = TaskService.updateTaskStatus(tasks, taskId, nextStatus);
+
+    StateManager.save(updated);
+    this.mainController.refreshUI();
+
+    NotificationService.show({
+      type: "info",
+      message: `Task status changed to "${nextStatus.toUpperCase()}"`,
+      icon: "ti-refresh",
+      duration: 5000,
     });
   },
 };

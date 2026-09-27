@@ -3,7 +3,7 @@ export const EditModalsComponent = {
     return `
       <div
         id="edit-modal"
-        class="fixed inset-0 z-50 hidden items-end lg:items-center justify-center p-0 lg:p-4 bg-black/60 backdrop-blur-sm animate-fade-in"
+        class="fixed inset-0 z-400 hidden items-end lg:items-center justify-center p-0 lg:p-4 bg-black/60 backdrop-blur-sm animate-fade-in"
       >
         <div
           class="bg-surface xs:rounded-t-3xl lg:rounded-2xl p-4 lg:p-6 max-w-3xl w-full h-dvh xs:h-[96.5dvh] sm:h-[95dvh] lg:h-auto lg:max-h-screen shadow-2xl flex flex-col border border-border overflow-hidden"
@@ -13,9 +13,9 @@ export const EditModalsComponent = {
           >
             <div class="flex items-center gap-3 min-w-0">
               <div
-                class="w-10 h-10 lg:w-11 lg:h-11 rounded-xl lg:rounded-2xl bg-brand/10 text-brand/80 flex items-center justify-center text-base lg:text-lg shrink-0"
+                class="w-10 h-10 lg:w-11 lg:h-11 rounded-xl lg:rounded-2xl bg-brand/10 text-brand/80 flex items-center justify-center text-lg lg:text-xl shrink-0"
               >
-                <i class="fa-regular fa-pen-to-square"></i>
+                <i class="ti ti-edit-circle"></i>
               </div>
               <div class="min-w-0">
                 <h3
@@ -36,7 +36,7 @@ export const EditModalsComponent = {
               type="button"
               class="w-8 h-8 lg:w-9 lg:h-9 rounded-lg lg:rounded-xl bg-surface-2 hover:bg-red-600/10 border border-border text-secondary hover:text-color flex items-center justify-center transition cursor-pointer shrink-0"
             >
-              <i class="fa-regular fa-xmark text-sm"></i>
+              <i class="ti ti-x text-sm lg:text-base"></i>
             </button>
           </div>
 
@@ -56,7 +56,7 @@ export const EditModalsComponent = {
                     class="flex h-9 w-9 lg:h-10 lg:w-10 self-start shrink-0 items-center justify-center rounded-lg lg:rounded-xl bg-brand/10 text-brand/80"
                   >
                     <i
-                      class="fa-regular fa-file-lines text-sm lg:text-base"
+                      class="ti ti-file-description text-base lg:text-lg"
                     ></i>
                   </div>
                   <div>
@@ -69,7 +69,7 @@ export const EditModalsComponent = {
                   </div>
                 </div>
                 <i
-                  class="accordion-icon fa-regular fa-chevron-up text-secondary text-xs lg:text-sm transition-transform duration-200"
+                  class="accordion-icon ti ti-chevron-up text-secondary text-base lg:text-lg transition-transform duration-200"
                 ></i>
               </button>
 
@@ -123,7 +123,7 @@ export const EditModalsComponent = {
                   <div
                     class="flex h-9 w-9 lg:h-10 lg:w-10 shrink-0 self-start items-center justify-center rounded-lg lg:rounded-xl bg-brand/10 text-brand/80"
                   >
-                    <i class="fa-regular fa-sliders text-sm lg:text-base"></i>
+                    <i class="ti ti-adjustments-horizontal text-base lg:text-lg"></i>
                   </div>
                   <div>
                     <h4 class="text-xs lg:text-sm font-semibold text-color">
@@ -135,7 +135,7 @@ export const EditModalsComponent = {
                   </div>
                 </div>
                 <i
-                  class="accordion-icon fa-regular fa-chevron-down text-secondary text-xs lg:text-sm transition-transform duration-200"
+                  class="accordion-icon ti ti-chevron-down text-secondary text-base lg:text-lg transition-transform duration-200"
                 ></i>
               </button>
 
@@ -168,7 +168,7 @@ export const EditModalsComponent = {
                     class="flex h-9 w-9 lg:h-10 lg:w-10 shrink-0 self-start items-center justify-center rounded-lg lg:rounded-xl bg-brand/10 text-brand/80"
                   >
                     <i
-                      class="fa-regular fa-list-check text-sm lg:text-base"
+                      class="ti ti-list-check text-base lg:text-lg"
                     ></i>
                   </div>
                   <div>
@@ -189,7 +189,7 @@ export const EditModalsComponent = {
                     0/0 Done
                   </span>
                   <i
-                    class="accordion-icon fa-regular fa-chevron-down text-secondary text-xs lg:text-sm transition-transform duration-200"
+                    class="accordion-icon ti ti-chevron-down text-secondary text-base lg:text-lg transition-transform duration-200"
                   ></i>
                 </div>
               </button>
@@ -211,7 +211,7 @@ export const EditModalsComponent = {
                     type="button"
                     class="w-20 h-10 lg:h-11 absolute right-0 px-3.5 rounded-e-xl bg-brand/10 text-brand/80 transition hover:bg-brand/20 font-semibold text-xs lg:text-sm flex items-center gap-1.5 shrink-0 cursor-pointer"
                   >
-                    <i class="fa-regular fa-plus"></i> Add
+                    <i class="ti ti-plus"></i> Add
                   </button>
                 </div>
 
@@ -238,7 +238,7 @@ export const EditModalsComponent = {
                 type="button"
                 class="h-10 lg:h-11 rounded-lg lg:rounded-xl bg-brand/80 hover:bg-brand text-white font-medium text-xs lg:text-sm transition shadow-md shadow-brand/10 cursor-pointer flex items-center justify-center gap-2"
               >
-                <i class="fa-regular fa-check"></i> Save Changes
+                <i class="ti ti-check"></i> Save Changes
               </button>
             </div>
           </div>
@@ -259,7 +259,7 @@ export const EditModalsComponent = {
               type="button"
               class="h-10 lg:h-11 rounded-lg lg:rounded-xl bg-brand/80 hover:bg-brand text-white font-medium text-xs lg:text-sm transition shadow-md shadow-brand/10 cursor-pointer flex items-center justify-center gap-2"
             >
-              <i class="fa-regular fa-check"></i> Save Changes
+              <i class="ti ti-check"></i> Save Changes
             </button>
           </div>
         </div>

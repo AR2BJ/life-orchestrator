@@ -1,110 +1,4 @@
-const HELP_SHORTCUTS = [
-  {
-    category: "Navigation",
-    items: [
-      {
-        label: "Go to Tasks View",
-        icon: "fa-rectangle-history",
-        keys: [["Shift"], ["T"]],
-      },
-      {
-        label: "Go to Analytics Dashboard",
-        icon: "fa-chart-mixed",
-        keys: [["Shift"], ["A"]],
-      },
-      {
-        label: "Go to Calendar View",
-        icon: "fa-calendar",
-        keys: [["Shift"], ["C"]],
-      },
-      {
-        label: "Go to Matrix Priorities",
-        icon: "fa-table-cells",
-        keys: [["Shift"], ["M"]],
-      },
-      {
-        label: "Go to App Settings",
-        icon: "fa-sliders",
-        keys: [["Shift"], ["S"]],
-      },
-    ],
-  },
-  {
-    category: "Quick Actions",
-    items: [
-      {
-        label: "Scrolling To Top",
-        icon: "fa-chevron-square-up",
-        keys: [["Alt"], ["B"]],
-      },
-      {
-        label: "Collapse / Expand Task Form",
-        icon: "fa-square-minus",
-        keys: [["Alt"], ["C"]],
-      },
-      {
-        label: "Toggle Dark/Light Theme",
-        icon: "fa-circle-half-stroke",
-        keys: [["Alt"], ["T"]],
-      },
-      {
-        label: "Toggle Navigation Menu",
-        icon: "fa-bars",
-        keys: [["Alt"], ["N"]],
-      },
-      {
-        label: "Open Reset Data Modal",
-        icon: "fa-arrow-rotate-left",
-        keys: [["Alt"], ["R"]],
-      },
-      {
-        label: "Close Active Modal / Blur Input",
-        icon: "fa-xmark",
-        keys: [["Esc"]],
-      },
-    ],
-  },
-  {
-    category: "Filters & Global",
-    items: [
-      {
-        label: "Quick Search / Filter",
-        icon: "fa-magnifying-glass",
-        keys: [["/"]],
-      },
-      {
-        label: "Switch Tab View (Active / Completed / Archived)",
-        icon: "fa-eye",
-        keys: [["Alt"], ["A", "D", "X"]],
-      },
-      {
-        label: "Switch Chart View (Weekly / Monthly / Yearly)",
-        icon: "fa-chart-line",
-        keys: [["Alt"], ["1 - 3"]],
-      },
-      {
-        label: "Switch Calendar View (Daily / Monthly / Yearly)",
-        icon: "fa-calendar-days",
-        keys: [["Alt"], ["1 - 3"]],
-      },
-      {
-        label: "Switch Matrix View (Eisenhower / ABCD)",
-        icon: "fa-table-cells",
-        keys: [["Alt"], ["1", "2"]],
-      },
-      {
-        label: "Quick Tags Select (Tasks View)",
-        icon: "fa-filter",
-        keys: [["0 - ∞"]],
-      },
-      {
-        label: "Toggle This Help Center",
-        icon: "fa-circle-question",
-        keys: [["?"]],
-      },
-    ],
-  },
-];
+import { HELP_SHORTCUTS } from "@/utils/constants/help-shortcuts.constants";
 
 export const InfoModalComponent = {
   renderShortcutsData() {
@@ -125,7 +19,7 @@ export const InfoModalComponent = {
                   <span
                     class="text-xs font-semibold text-secondary flex items-center gap-2"
                   >
-                    <i class="fa-regular ${item.icon} text-muted"></i>
+                    <i class="ti ${item.icon} text-muted"></i>
                     ${item.label}
                   </span>
                   <div class="flex items-center gap-1 shrink-0">
@@ -158,11 +52,72 @@ export const InfoModalComponent = {
     ).join("");
   },
 
+  renderFeatureGuideData() {
+    return `
+      <div class="space-y-3">
+        <div class="p-4 bg-surface-2 border border-border rounded-2xl">
+          <h4
+            class="text-xs font-bold text-brand uppercase tracking-wider flex items-center gap-1 mb-1.5"
+          >
+            <i class="ti ti-stack-2 text-sm lg:text-base"></i> Subtasks & Progress
+          </h4>
+          <p class="text-xs text-secondary leading-relaxed">
+            Break complex tasks into actionable subtasks inside the Edit Modal.
+            Track completion progress dynamically as subtasks are marked done.
+          </p>
+        </div>
+
+        <div class="p-4 bg-surface-2 border border-border rounded-2xl">
+          <h4
+            class="text-xs font-bold text-emerald-500/80 uppercase tracking-wider flex items-center gap-1 mb-1.5"
+          >
+            <i class="ti ti-tags text-sm lg:text-base"></i> Dynamic Tags & Combobox
+          </h4>
+          <p class="text-xs text-secondary leading-relaxed">
+            Organize tasks using tags. Press
+            <kbd
+              class="px-1.5 py-0.5 text-[10px] bg-surface border border-border rounded shadow-2xs"
+              >Enter</kbd
+            >
+            or
+            <kbd
+              class="px-1.5 py-0.5 text-[10px] bg-surface border border-border rounded shadow-2xs"
+              >,</kbd
+            >
+            to confirm a new tag, or select existing tags from the smart
+            combobox dropdown.
+          </p>
+        </div>
+
+        <div class="p-4 bg-surface-2 border border-border rounded-2xl">
+          <h4
+            class="text-xs font-bold text-amber-500/80 uppercase tracking-wider flex items-center gap-1 mb-1.5"
+          >
+            <i class="ti ti-bolt text-sm lg:text-base"></i> Quick Modal Actions
+          </h4>
+          <p class="text-xs text-secondary leading-relaxed">
+            Inside open modals, press
+            <kbd
+              class="px-1.5 py-0.5 text-[10px] bg-surface border border-border rounded shadow-2xs"
+              >Ctrl + Enter</kbd
+            >
+            to quickly execute save/delete actions, or
+            <kbd
+              class="px-1.5 py-0.5 text-[10px] bg-surface border border-border rounded shadow-2xs"
+              >Esc</kbd
+            >
+            to dismiss.
+          </p>
+        </div>
+      </div>
+    `;
+  },
+
   render() {
     return `
       <div
         id="help-modal"
-        class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in"
+        class="fixed inset-0 z-400 hidden items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in"
       >
         <div
           id="help-modal-backdrop"
@@ -179,7 +134,7 @@ export const InfoModalComponent = {
               <div
                 class="w-10 h-10 rounded-xl bg-brand/10 text-brand flex items-center justify-center text-lg shrink-0"
               >
-                <i class="fa-regular fa-circle-question"></i>
+                <i class="ti ti-help text-lg lg:text-xl"></i>
               </div>
               <div>
                 <h3 class="text-base font-bold text-color">
@@ -195,7 +150,7 @@ export const InfoModalComponent = {
               type="button"
               class="w-8 h-8 rounded-xl bg-surface-2 hover:bg-surface-3 border border-border text-secondary hover:text-color flex items-center justify-center transition cursor-pointer"
             >
-              <i class="fa-regular fa-xmark text-sm"></i>
+              <i class="ti ti-x text-sm lg:text-base"></i>
             </button>
           </div>
 
@@ -204,15 +159,15 @@ export const InfoModalComponent = {
           >
             <button
               id="tab-help-safeguard"
-              class="flex-1 py-2 text-xs font-bold rounded-lg bg-brand text-white transition cursor-pointer"
+              class="flex-1 py-2 text-xs font-bold rounded-lg bg-brand text-white transition cursor-pointer flex justify-center items-center"
             >
-              <i class="fa-regular fa-list-check me-1.5"></i> Task Guide
+              <i class="ti ti-list-check text-sm lg:text-base me-1.5"></i> Task Guide
             </button>
             <button
               id="tab-help-shortcuts"
-              class="flex-1 py-2 text-xs font-bold rounded-lg text-secondary hover:text-color transition cursor-pointer"
+              class="flex-1 py-2 text-xs font-bold rounded-lg text-secondary hover:text-color transition cursor-pointer flex justify-center items-center"
             >
-              <i class="fa-regular fa-keyboard me-1.5"></i> Keyboard Shortcuts
+              <i class="ti ti-keyboard text-sm lg:text-base me-1.5"></i> Keyboard Shortcuts
             </button>
           </div>
 
@@ -220,65 +175,8 @@ export const InfoModalComponent = {
             class="flex-1 overflow-y-auto pe-1 scrollbar-thin scrollbar-thumb-surface-2"
             id="help-modal-content"
           >
-            <div
-              id="content-help-safeguard"
-              class="space-y-4"
-            >
-              <div class="p-4 bg-surface-2 border border-border rounded-2xl">
-                <h4
-                  class="text-xs font-bold text-brand uppercase tracking-wider flex items-center gap-2 mb-1.5"
-                >
-                  <i class="fa-regular fa-layer-group"></i> Subtasks & Progress
-                </h4>
-                <p class="text-xs text-secondary leading-relaxed">
-                  Break complex tasks into actionable subtasks inside the Edit
-                  Modal. Track completion progress dynamically as subtasks are
-                  marked done.
-                </p>
-              </div>
-
-              <div class="p-4 bg-surface-2 border border-border rounded-2xl">
-                <h4
-                  class="text-xs font-bold text-emerald-500/80 uppercase tracking-wider flex items-center gap-2 mb-1.5"
-                >
-                  <i class="fa-regular fa-tags"></i> Dynamic Tags & Combobox
-                </h4>
-                <p class="text-xs text-secondary leading-relaxed">
-                  Organize tasks using tags. Press
-                  <kbd
-                    class="px-1.5 py-0.5 text-[10px] bg-surface border border-border rounded shadow-2xs"
-                    >Enter</kbd
-                  >
-                  or
-                  <kbd
-                    class="px-1.5 py-0.5 text-[10px] bg-surface border border-border rounded shadow-2xs"
-                    >,</kbd
-                  >
-                  to confirm a new tag, or select existing tags from the smart
-                  combobox dropdown.
-                </p>
-              </div>
-
-              <div class="p-4 bg-surface-2 border border-border rounded-2xl">
-                <h4
-                  class="text-xs font-bold text-amber-500/80 uppercase tracking-wider flex items-center gap-2 mb-1.5"
-                >
-                  <i class="fa-regular fa-bolt"></i> Quick Modal Actions
-                </h4>
-                <p class="text-xs text-secondary leading-relaxed">
-                  Inside open modals, press
-                  <kbd
-                    class="px-1.5 py-0.5 text-[10px] bg-surface border border-border rounded shadow-2xs"
-                    >Ctrl + Enter</kbd
-                  >
-                  to quickly execute save/delete actions, or
-                  <kbd
-                    class="px-1.5 py-0.5 text-[10px] bg-surface border border-border rounded shadow-2xs"
-                    >Esc</kbd
-                  >
-                  to dismiss.
-                </p>
-              </div>
+            <div id="content-help-safeguard">
+              ${InfoModalComponent.renderFeatureGuideData()}
             </div>
 
             <div

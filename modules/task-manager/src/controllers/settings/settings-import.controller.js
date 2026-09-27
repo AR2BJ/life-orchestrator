@@ -55,7 +55,7 @@ export const SettingsImportController = {
         type: "error",
         message:
           "Invalid format! Only structural JSON, MD, or CSV files are permitted",
-        icon: "fa-circle-xmark",
+        icon: "ti-circle-x",
         iconColor: "text-red-500/80",
         duration: 5000,
       });
@@ -63,7 +63,7 @@ export const SettingsImportController = {
     }
 
     const reader = new FileReader();
-    reader.addEventListener("load",(event) => {
+    reader.addEventListener("load", (event) => {
       GlobalLoaderService.show(
         `Parsing storage integrity from ${format.toUpperCase()}...`,
       );
@@ -110,7 +110,7 @@ export const SettingsImportController = {
           NotificationService.show({
             type: "success",
             message: `Data ledger parsed and synchronized from ${format.toUpperCase()} file`,
-            icon: "fa-circle-check",
+            icon: "ti-circle-check",
             iconColor: "text-emerald-500/80",
             duration: 5000,
           });
@@ -119,7 +119,7 @@ export const SettingsImportController = {
           NotificationService.show({
             type: "error",
             message: "Failed to parse structural integrity of the file",
-            icon: "fa-triangle-exclamation",
+            icon: "ti-alert-triangle",
             iconColor: "text-red-500/80",
             duration: 5000,
           });
@@ -226,7 +226,7 @@ export const SettingsImportController = {
           estimatedMinutes: estMinutesMatch
             ? parseInt(estMinutesMatch[1], 10)
             : 0,
-          tags: tagIds,
+          tagIds: tagIds,
           createdAt: createdAtMatch ? createdAtMatch[1].trim() : todayISO(),
           updatedAt:
             updatedAtMatch && !updatedAtMatch[1].includes("null")
@@ -376,7 +376,7 @@ export const SettingsImportController = {
           estimatedMinutes: estimatedMinutes
             ? parseInt(estimatedMinutes, 10)
             : 0,
-          tags: tagIds,
+          tagIds: tagIds,
           createdAt:
             createdAt && createdAt.trim() !== "null"
               ? createdAt.trim()

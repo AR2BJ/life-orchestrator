@@ -29,8 +29,8 @@ function normalizeTask(task) {
     estimatedFocusUnits: Number(task.estimatedFocusUnits) || 1,
     completedFocusUnits: Number(task.completedFocusUnits) || 0,
     archived: Boolean(task.archived),
-    tags: Array.isArray(task.tags)
-      ? task.tags.map((t) => (typeof t === "object" ? t.id : String(t)))
+    tagIds: Array.isArray(task.tagIds)
+      ? task.tagIds.map((t) => (typeof t === "object" ? t.id : String(t)))
       : [],
     subtasks: Array.isArray(task.subtasks)
       ? task.subtasks.map((st) => ({

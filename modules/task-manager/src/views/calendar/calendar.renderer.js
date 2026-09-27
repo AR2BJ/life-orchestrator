@@ -153,7 +153,7 @@ export function renderDayList(currentDate, tasks) {
                     class="text-center flex flex-col items-center justify-center gap-3 text-tertiary"
                   >
                     <i
-                      class="fa-regular fa-calendar-xmark text-4xl text-brand/60"
+                      class="ti ti-calendar-x text-4xl text-brand/60"
                     ></i>
                     <h2 class="text-lg font-bold text-color">
                       No active tasks
@@ -222,7 +222,7 @@ export function renderYearHeatmap(currentDate, tasks) {
         >
           <div class="flex items-center justify-between">
             <span class="text-xs font-bold text-color group-hover:text-brand transition">${mName}</span>
-            <i class="fa-regular fa-arrow-right text-[10px] text-tertiary opacity-0 group-hover:opacity-100 transition"></i>
+            <i class="ti ti-arrow-narrow-right text-sm lg:text-base text-tertiary opacity-0 group-hover:opacity-100 transition"></i>
           </div>
           <div class="flex flex-wrap gap-1">
             ${renderMonthDots(currentYear, mIdx, false)}

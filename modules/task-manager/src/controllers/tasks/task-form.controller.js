@@ -1,4 +1,8 @@
 import {
+  PRIORITY_OPTIONS,
+  STATUS_OPTIONS,
+} from "@/utils/constants/options-value.constants";
+import {
   generateId,
   mapTagIdsToObjects,
   processTagPipeline,
@@ -34,47 +38,6 @@ let editStatusAutocomplete = null;
 
 let currentModalSubtasks = [];
 
-const PRIORITY_OPTIONS = [
-  {
-    title: "Low Priority",
-    value: "low",
-    icon: "fa-solid fa-flag text-lime-400",
-  },
-  {
-    title: "Medium Priority",
-    value: "medium",
-    icon: "fa-solid fa-flag text-amber-400",
-  },
-  {
-    title: "High Priority",
-    value: "high",
-    icon: "fa-solid fa-flag text-red-400",
-  },
-];
-
-const STATUS_OPTIONS = [
-  {
-    title: "To Do",
-    value: "todo",
-    icon: "fa-regular fa-square text-sky-400",
-  },
-  {
-    title: "In Progress",
-    value: "in_progress",
-    icon: "fa-regular fa-arrow-progress text-orange-400",
-  },
-  {
-    title: "Done",
-    value: "done",
-    icon: "fa-regular fa-square-check text-emerald-400",
-  },
-  {
-    title: "Blocked",
-    value: "blocked",
-    icon: "fa-regular fa-ban text-pink-400",
-  },
-];
-
 export function setPendingDeleteId(id) {
   pendingDeleteId = id;
 }
@@ -100,7 +63,7 @@ export const TaskFormController = {
         {
           label: "Tags",
           placeholder: "Type and select tags...",
-          iconClass: "fa-regular fa-tag text-brand/80",
+          iconClass: "ti ti-tag text-brand/80",
           itemTitle: "name",
           itemValue: "id",
           multiple: true,
@@ -236,7 +199,7 @@ export const TaskFormController = {
       editTaskCombobox = new ComboboxComponent(editTagsContainer, globalTags, {
         label: "Tags",
         placeholder: "Type and select tags...",
-        iconClass: "fa-regular fa-tag text-brand/80",
+        iconClass: "ti ti-tag text-brand/80",
         itemTitle: "name",
         itemValue: "id",
         containerClass: "bg-surface!",
@@ -244,8 +207,8 @@ export const TaskFormController = {
         chips: true,
       });
 
-      if (Array.isArray(task.tags)) {
-        const selectedTagObjects = mapTagIdsToObjects(task.tags, globalTags);
+      if (Array.isArray(task.tagIds)) {
+        const selectedTagObjects = mapTagIdsToObjects(task.tagIds, globalTags);
         selectedTagObjects.forEach((tagObj) => {
           editTaskCombobox.selectItem(tagObj);
         });
@@ -285,7 +248,7 @@ export const TaskFormController = {
         >
           <div class="h-full flex flex-col justify-center items-center">
             <div class="text-3xl">
-              <i class="fa-regular fa-list-check text-brand/80"></i>
+              <i class="ti ti-list-check text-brand/80"></i>
             </div>
             <p class="mt-3 text-secondary max-w-sm mx-auto text-sm">
               No subtasks defined yet.
@@ -342,10 +305,10 @@ export const TaskFormController = {
                     }"
                   >
                     <i
-                      class="fa-regular ${
+                      class="ti ${
                         subtask.isEditing
-                          ? "fa-floppy-disk"
-                          : "fa-pen-to-square"
+                          ? "ti-device-floppy"
+                          : "ti-edit-circle"
                       } text-blue-500/80 text-base"
                     ></i>
                   </button>
@@ -354,9 +317,7 @@ export const TaskFormController = {
                     data-action="delete"
                     class="delete-btn flex h-8 w-8 sm:w-10 sm:h-10 items-center justify-center rounded-lg sm:rounded-xl border border-border bg-surface hover:bg-red-600/10 hover:cursor-pointer transition"
                   >
-                    <i
-                      class="fa-regular fa-trash-can text-red-500/80 text-base"
-                    ></i>
+                    <i class="ti ti-trash text-red-500/80 text-base"></i>
                   </button>
                 </div>
               </div>
@@ -509,7 +470,7 @@ export const TaskFormController = {
         NotificationService.show({
           type: "error",
           message: "Task title cannot be empty",
-          icon: "fa-triangle-exclamation",
+          icon: "ti-alert-triangle",
           duration: 5000,
         });
         return;
@@ -528,7 +489,7 @@ export const TaskFormController = {
             dueDate,
             priority,
             status,
-            tags: assignedTagIds,
+            tagIds: assignedTagIds,
             subtasks: [],
             archived: false,
             createdAt: todayISO(),
@@ -553,14 +514,14 @@ export const TaskFormController = {
           NotificationService.show({
             type: "success",
             message: `Task "${title}" created successfully!`,
-            icon: "fa-check",
+            icon: "ti-check",
             duration: 5000,
           });
         } catch (error) {
           NotificationService.show({
             type: "error",
             message: error.message || "Failed to create task",
-            icon: "fa-triangle-exclamation",
+            icon: "ti-alert-triangle",
             duration: 5000,
           });
         } finally {
@@ -663,8 +624,8 @@ export const TaskFormController = {
         }
 
         itemHeader?.classList.toggle("border-b", index === currentIndex);
-        icon?.classList.toggle("fa-chevron-up", index === currentIndex);
-        icon?.classList.toggle("fa-chevron-down", index !== currentIndex);
+        icon?.classList.toggle("ti-chevron-up", index === currentIndex);
+        icon?.classList.toggle("ti-chevron-down", index !== currentIndex);
       });
     });
   },
@@ -683,15 +644,15 @@ export const TaskFormController = {
         content.classList.remove("hidden");
         header.classList.add("border-b");
         if (icon) {
-          icon.classList.remove("fa-chevron-down");
-          icon.classList.add("fa-chevron-up");
+          icon.classList.remove("ti-chevron-down");
+          icon.classList.add("ti-chevron-up");
         }
       } else {
         content.classList.add("hidden");
         header.classList.remove("border-b");
         if (icon) {
-          icon.classList.remove("fa-chevron-up");
-          icon.classList.add("fa-chevron-down");
+          icon.classList.remove("ti-chevron-up");
+          icon.classList.add("ti-chevron-down");
         }
       }
     });
@@ -702,7 +663,7 @@ export const TaskFormController = {
     if (!id) return;
 
     const currentTasks = StateManager.getTasks();
-    const taskToDelete = currentTasks.find((h) => String(h.id) === String(id));
+    const taskToDelete = currentTasks.find((t) => String(t.id) === String(id));
 
     if (taskToDelete) {
       const capturedTask = { ...taskToDelete };
@@ -718,8 +679,7 @@ export const TaskFormController = {
             taskToDelete.id,
           );
 
-          const currentTags = StateManager.getTags();
-          StateManager.save(updatedTasks, currentTags);
+          StateManager.save(updatedTasks);
 
           this.mainController.toggleModal("delete-modal", false);
           pendingDeleteId = null;
@@ -762,7 +722,7 @@ export const TaskFormController = {
       NotificationService.show({
         type: "error",
         message: "Task title cannot be empty",
-        icon: "fa-triangle-exclamation",
+        icon: "ti-alert-triangle",
         duration: 5000,
       });
       return;
@@ -798,7 +758,7 @@ export const TaskFormController = {
           dueDate: updatedDueDate,
           priority: updatedPriority,
           status: updatedStatus,
-          tags: assignedTagIds,
+          tagIds: assignedTagIds,
           subtasks: currentModalSubtasks,
         };
 
@@ -839,14 +799,14 @@ export const TaskFormController = {
         NotificationService.show({
           type: "success",
           message: `Task "${newTitle}" updated successfully!`,
-          icon: "fa-check",
+          icon: "ti-check",
           duration: 5000,
         });
       } catch (error) {
         NotificationService.show({
           type: "error",
           message: error.message || "Failed to update task",
-          icon: "fa-triangle-exclamation",
+          icon: "ti-alert-triangle",
           duration: 5000,
         });
       } finally {

@@ -211,7 +211,7 @@ function renderChartEmptyState(chartEl, title, icon, subtitle) {
       class="empty-state-box flex w-full h-full min-h-60 items-center justify-center rounded-2xl border border-dashed border-border/80 bg-surface p-6 text-center"
     >
       <div class="max-w-xs">
-        <i class="text-4xl mb-3 fa-regular ${icon} text-brand/60"></i>
+        <i class="text-4xl mb-3 ti ${icon} text-brand/60"></i>
         <div
           class="mb-2 text-lg font-semibold text-color"
         >
@@ -230,39 +230,39 @@ function renderNoDataState() {
     {
       id: "apex-heatmap-chart",
       title: "Activity Heatmap",
-      icon: "fa-table-cells",
+      icon: "ti-chart-cohort",
       subtitle:
         "Add tasks to see your weekly, monthly, and yearly activity trend.",
     },
     {
       id: "apex-weekday-chart",
       title: "Weekly Activity",
-      icon: "fa-calendar-days",
+      icon: "ti-calendar",
       subtitle:
         "Your task activity by weekday will appear here once data exists.",
     },
     {
       id: "apex-priority-chart",
       title: "Priority Breakdown",
-      icon: "fa-chart-pie-simple",
+      icon: "ti-chart-pie",
       subtitle: "Add tasks with priorities to view the distribution.",
     },
     {
       id: "apex-status-chart",
       title: "Status Overview",
-      icon: "fa-chart-pie",
+      icon: "ti-chart-pie-3",
       subtitle: "Task status analytics will appear here after you add tasks.",
     },
     {
       id: "apex-tag-chart",
       title: "Tag Performance",
-      icon: "fa-chart-column",
+      icon: "ti-chart-bar-popular",
       subtitle: "Tag-based analytics will be shown once you have tagged tasks.",
     },
     {
       id: "apex-tag-chart-desktop",
       title: "Tag Performance",
-      icon: "fa-chart-column",
+      icon: "ti-chart-bar",
       subtitle: "Tag-based analytics will be shown once you have tagged tasks.",
     },
   ];

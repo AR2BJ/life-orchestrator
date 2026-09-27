@@ -14,8 +14,8 @@ export const SettingsExportController = {
       NotificationService.show({
         type: "info",
         message: "There is no data to export",
-        icon: "fa-circle-info",
-        iconColor: "text-brand/80",
+        icon: "ti-circle-info",
+        iconColor: "text-sky-500/80",
         duration: 5000,
       });
       return;
@@ -46,7 +46,7 @@ export const SettingsExportController = {
     NotificationService.show({
       type: "success",
       message: `Database layer exported successfully as ${format.toUpperCase()}`,
-      icon: "fa-file-arrow-down",
+      icon: "ti-file-download",
       iconColor: "text-emerald-500/80",
       duration: 5000,
     });
@@ -67,7 +67,7 @@ export const SettingsExportController = {
     content += `---\n\n## 📝 TASKS LIST\n\n`;
 
     tasks.forEach((task) => {
-      const tagsFormatted = (task.tags || []).join(",");
+      const tagsFormatted = (task.tagIds || []).join(",");
 
       content += `## #️⃣ ${task.id}\n`;
       content += `### 🎯 ${task.title}\n`;
@@ -143,7 +143,7 @@ export const SettingsExportController = {
         escapeCsvValue(t.priority),
         escapeCsvValue(t.dueDate),
         escapeCsvValue(t.estimatedMinutes),
-        escapeCsvValue((t.tags || []).join(";")),
+        escapeCsvValue((t.tagIds || []).join(";")),
         escapeCsvValue(t.createdAt),
         escapeCsvValue(t.updatedAt),
         escapeCsvValue(t.completedAt),

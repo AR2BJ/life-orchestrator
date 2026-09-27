@@ -42,7 +42,7 @@ export const TasksView = {
             <span
               class="absolute inset-y-0 left-0 flex items-center ps-3.5 pointer-events-none text-muted"
             >
-              <i class="fa-regular fa-magnifying-glass text-sm"></i>
+              <i class="ti ti-search text-lg"></i>
             </span>
             <input
               type="text"
@@ -56,16 +56,16 @@ export const TasksView = {
             >
               <button
                 id="clear-search-btn"
-                class="hidden opacity-0 scale-75 h-5 w-5 cursor-pointer items-center justify-center rounded-full border border-border bg-surface-2 hover:bg-surface-4 text-secondary hover:text-color transition-all duration-200 ease-out"
+                class="hidden opacity-0 scale-75 h-5 w-5 cursor-pointer items-center justify-center rounded-full border border-border bg-surface-2 hover:bg-surface-4 text-secondary hover:text-color transition-all duration-200"
                 title="Clear Search"
               >
-                <i class="fa-regular fa-xmark text-[10px]"></i>
+                <i class="ti ti-x text-[11px]"></i>
               </button>
 
               <kbd class="flex items-center pointer-events-none">
                 <span
-                  class="px-1.25 py-1 text-[9px] bg-surface-2 border border-border text-muted rounded-md shadow-2xs flex flex-row justify-center items-center"
-                  ><i class="fa-regular fa-slash-forward"></i
+                  class="px-1.25 py-1 text-xs bg-surface-2 border border-border text-muted rounded-md shadow-2xs flex flex-row justify-center items-center"
+                  ><i class="ti ti-slash"></i
                 ></span>
               </kbd>
             </div>
@@ -84,7 +84,7 @@ export const TasksView = {
               class="w-full px-5 py-4 flex flex-row items-center justify-between text-left font-bold text-slate-500/80 hover:bg-surface-2/40 transition cursor-pointer"
             >
               <div class="flex items-center gap-2">
-                <i class="fa-regular fa-square-plus text-brand/80"></i>
+                <i class="ti ti-square-rounded-plus text-brand/80 text-lg"></i>
                 <span class="text-sm">Create New Task</span>
               </div>
               <div
@@ -92,7 +92,7 @@ export const TasksView = {
                 class="flex items-center"
               >
                 <i
-                  class="fa-regular fa-chevron-down text-secondary text-sm transition-transform duration-300"
+                  class="ti ti-chevron-down text-secondary text-lg transition-transform duration-300"
                 ></i>
               </div>
             </button>
@@ -156,14 +156,16 @@ export const TasksView = {
                 class="flex flex-col gap-3 border-t border-border pt-4 sm:flex-row sm:items-center sm:justify-between"
               >
                 <p class="flex items-center gap-1.5 text-xs text-secondary">
-                  <i class="fa-regular fa-circle-info text-brand/80"></i>
+                  <i
+                    class="ti ti-info-square-rounded text-brand/80 text-base"
+                  ></i>
                   Tasks can be filtered using tag labels and priority tiers.
                 </p>
                 <button
                   id="add-task-btn"
                   class="flex h-10 w-full items-center justify-center gap-2 rounded-xl bg-brand/80 px-5 text-sm font-semibold text-white shadow-lg shadow-brand/10 transition hover:bg-(--color-brand-hover) cursor-pointer sm:w-auto"
                 >
-                  <i class="fa-regular fa-plus"></i> Add Task
+                  <i class="ti ti-plus text-base"></i> Add Task
                 </button>
               </div>
             </div>
@@ -186,7 +188,7 @@ export const TasksView = {
                   type="button"
                   class="absolute left-0 z-20 hidden h-7 w-7 items-center justify-center rounded-lg border border-border bg-surface/95 backdrop-blur-xl shadow-2xl text-secondary hover:text-color hover:border-brand/50 transition-all cursor-pointer"
                 >
-                  <i class="fa-regular fa-chevron-left text-xs"></i>
+                  <i class="ti ti-chevron-left text-sm"></i>
                 </button>
 
                 <div
@@ -206,7 +208,7 @@ export const TasksView = {
                   type="button"
                   class="absolute right-0 z-20 hidden h-7 w-7 items-center justify-center rounded-lg border border-border bg-surface/95 backdrop-blur-xl shadow-2xl text-secondary hover:text-color hover:border-brand/50 transition-all cursor-pointer"
                 >
-                  <i class="fa-regular fa-chevron-right text-xs"></i>
+                  <i class="ti ti-chevron-right text-sm"></i>
                 </button>
               </div>
             </div>
@@ -215,16 +217,12 @@ export const TasksView = {
               class="flex flex-wrap sm:flex-nowrap items-center justify-between sm:justify-end gap-3"
             >
               <div class="w-full flex flex-col xs:flex-row items-center gap-3">
-                <div class="w-full flex items-center gap-2">
-                  <div
-                    id="date-filter-autocomplete-wrapper"
-                  ></div>
+                <div class="w-full flex items-center gap-2 min-w-35">
+                  <div id="date-filter-autocomplete-wrapper" class="w-full"></div>
                 </div>
 
-                <div class="w-full flex items-center gap-2">
-                  <div
-                    id="sort-autocomplete-wrapper"
-                  ></div>
+                <div class="w-full flex items-center gap-2 min-w-35">
+                  <div id="sort-autocomplete-wrapper" class="w-full"></div>
                 </div>
               </div>
 
