@@ -76,5 +76,12 @@ export default defineConfig({
   server: {
     port: 3000,
     open: true,
+    proxy: {
+      "/aparat-api": {
+        target: "https://www.aparat.com",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/aparat-api/, ""),
+      },
+    },
   },
 });

@@ -69,7 +69,7 @@ export const DashboardComponent = {
           class="relative overflow-hidden bg-surface-2 border border-border/70 hover:-translate-y-1 hover:border-brand/30 rounded-2xl p-6 transition-all duration-300 flex flex-col justify-between min-h-36 group"
         >
           <i
-            class="fa-solid fa-clock absolute -right-4 -bottom-6 text-[10rem] text-brand/80 opacity-[0.04] dark:opacity-[0.06] rotate-15 pointer-events-none group-hover:scale-110 group-hover:rotate-5 transition-transform duration-500"
+            class="ti ti-clock-filled absolute -right-4 -bottom-6 text-[11rem] text-brand/80 opacity-[0.04] dark:opacity-[0.06] rotate-15 pointer-events-none group-hover:scale-110 group-hover:rotate-5 transition-transform duration-500"
           ></i>
           <div class="flex items-center justify-between z-10">
             <span
@@ -95,7 +95,7 @@ export const DashboardComponent = {
           class="relative overflow-hidden bg-surface-2 border border-border/70 hover:-translate-y-1 hover:border-emerald-500/30 rounded-2xl p-6 transition-all duration-300 flex flex-col justify-between min-h-36 group"
         >
           <i
-            class="fa-solid fa-hourglass-half absolute -right-4 -bottom-6 text-[10rem] text-emerald-500 opacity-[0.04] dark:opacity-[0.06] rotate-15 pointer-events-none group-hover:scale-110 group-hover:rotate-5 transition-transform duration-500"
+            class="ti ti-hourglass-filled absolute -right-4 -bottom-6 text-[11rem] text-emerald-500 opacity-[0.04] dark:opacity-[0.06] rotate-15 pointer-events-none group-hover:scale-110 group-hover:rotate-5 transition-transform duration-500"
           ></i>
           <div class="flex items-center justify-between z-10">
             <span
@@ -121,7 +121,7 @@ export const DashboardComponent = {
           class="relative overflow-hidden bg-surface-2 border border-border/70 hover:-translate-y-1 hover:border-amber-500/30 rounded-2xl p-6 transition-all duration-300 flex flex-col justify-between min-h-36 group"
         >
           <i
-            class="fa-solid fa-fire absolute -right-4 -bottom-6 text-[10rem] text-yellow-500 opacity-[0.04] dark:opacity-[0.06] rotate-15 pointer-events-none group-hover:scale-110 group-hover:rotate-5 transition-transform duration-500"
+            class="ti ti-flame-filled absolute -right-4 -bottom-6 text-[11rem] text-yellow-500 opacity-[0.04] dark:opacity-[0.06] rotate-15 pointer-events-none group-hover:scale-110 group-hover:rotate-5 transition-transform duration-500"
           ></i>
           <div class="flex items-center justify-between z-10">
             <span
@@ -147,7 +147,7 @@ export const DashboardComponent = {
           class="relative overflow-hidden bg-surface-2 border border-border/70 hover:-translate-y-1 hover:border-indigo-500/30 rounded-2xl p-6 transition-all duration-300 flex flex-col justify-between min-h-36 group"
         >
           <i
-            class="fa-solid fa-list-check absolute -right-4 -bottom-6 text-[10rem] text-indigo-500 opacity-[0.04] dark:opacity-[0.06] rotate-15 pointer-events-none group-hover:scale-110 group-hover:rotate-5 transition-transform duration-500"
+            class="ti ti-list-check absolute -right-4 -bottom-6 text-[11rem] text-indigo-500 opacity-[0.04] dark:opacity-[0.06] rotate-15 pointer-events-none group-hover:scale-110 group-hover:rotate-5 transition-transform duration-500"
           ></i>
           <div class="flex items-center justify-between z-10">
             <span
@@ -173,7 +173,7 @@ export const DashboardComponent = {
           class="relative overflow-hidden bg-surface-2 border border-border/70 hover:-translate-y-1 hover:border-purple-500/30 rounded-2xl p-6 transition-all duration-300 flex flex-col justify-between min-h-36 group"
         >
           <i
-            class="fa-solid fa-stopwatch absolute -right-4 -bottom-6 text-[10rem] text-purple-500 opacity-[0.04] dark:opacity-[0.06] rotate-15 pointer-events-none group-hover:scale-110 group-hover:rotate-5 transition-transform duration-500"
+            class="ti ti-alarm-filled absolute -right-4 -bottom-6 text-[12rem] text-purple-500 opacity-[0.04] dark:opacity-[0.06] rotate-15 pointer-events-none group-hover:scale-110 group-hover:rotate-5 transition-transform duration-500"
           ></i>
           <div class="flex items-center justify-between z-10">
             <span
@@ -199,7 +199,7 @@ export const DashboardComponent = {
           class="relative overflow-hidden bg-surface-2 border border-border/70 hover:-translate-y-1 hover:border-rose-500/30 rounded-2xl p-6 transition-all duration-300 flex flex-col justify-between min-h-36 group"
         >
           <i
-            class="fa-solid fa-calendar-star absolute -right-4 -bottom-6 text-[10rem] text-rose-500 opacity-[0.04] dark:opacity-[0.06] rotate-15 pointer-events-none group-hover:scale-110 group-hover:rotate-5 transition-transform duration-500"
+            class="ti ti-calendar-event-filled absolute -right-4 -bottom-6 text-[11rem] text-rose-500 opacity-[0.04] dark:opacity-[0.06] rotate-15 pointer-events-none group-hover:scale-110 group-hover:rotate-5 transition-transform duration-500"
           ></i>
           <div class="flex items-center justify-between z-10">
             <span
@@ -232,7 +232,7 @@ export const DashboardComponent = {
           class="relative overflow-hidden bg-surface-2 border border-border/70 hover:-translate-y-1 hover:border-sky-500/30 rounded-2xl p-6 transition-all duration-300 flex flex-col justify-between min-h-36 group"
         >
           <i
-            class="fa-solid fa-calendar-day absolute -right-4 -bottom-6 text-[10rem] text-sky-500 opacity-[0.04] dark:opacity-[0.06] rotate-15 pointer-events-none group-hover:scale-110 group-hover:rotate-5 transition-transform duration-500"
+            class="ti ti-calendar-filled absolute -right-4 -bottom-6 text-[11rem] text-sky-500 opacity-[0.04] dark:opacity-[0.06] rotate-15 pointer-events-none group-hover:scale-110 group-hover:rotate-5 transition-transform duration-500"
           ></i>
           <div class="flex items-center justify-between z-10">
             <span
@@ -258,7 +258,7 @@ export const DashboardComponent = {
           class="relative overflow-hidden bg-surface-2 border border-border/70 hover:-translate-y-1 hover:border-orange-500/30 rounded-2xl p-6 transition-all duration-300 flex flex-col justify-between min-h-36 group"
         >
           <i
-            class="fa-solid fa-arrow-right-arrow-left absolute -right-4 -bottom-6 text-[10rem] text-orange-500 opacity-[0.04] dark:opacity-[0.06] rotate-15 pointer-events-none group-hover:scale-110 group-hover:rotate-5 transition-transform duration-500"
+            class="ti ti-arrows-right-left absolute -right-4 -bottom-6 text-[11rem] text-orange-500 opacity-[0.04] dark:opacity-[0.06] rotate-15 pointer-events-none group-hover:scale-110 group-hover:rotate-5 transition-transform duration-500"
           ></i>
           <div class="flex items-center justify-between z-10">
             <span
@@ -296,7 +296,7 @@ export const DashboardComponent = {
               <h4
                 class="text-lg font-bold text-color flex items-center gap-2"
               >
-                <i class="fa-regular fa-chart-network text-brand/80 text-xl"></i>
+                <i class="ti ti-affiliate text-brand/80 text-xl"></i>
                 Activity Heatmap
               </h4>
               <p class="text-xs text-secondary mt-1">
@@ -310,7 +310,7 @@ export const DashboardComponent = {
                 class="sm:hidden inline-flex items-center justify-center h-8 w-8 rounded-lg border border-border bg-surface text-secondary hover:text-color transition shadow-sm cursor-pointer"
                 aria-label="Open view menu"
               >
-                <i class="fa-regular fa-ellipsis-vertical text-lg"></i>
+                <i class="ti ti-dots-vertical text-lg"></i>
               </button>
 
               <div
@@ -388,9 +388,7 @@ export const DashboardComponent = {
             <h4
               class="text-lg font-bold text-color flex items-center gap-2"
             >
-              <i
-                class="fa-regular fa-chart-simple text-amber-400 text-xl"
-              ></i>
+              <i class="ti ti-chart-bar text-brand text-xl rotate-90"></i>
                Weekly Distribution
             </h4>
             <p class="text-xs text-secondary mt-1">
@@ -420,7 +418,7 @@ export const DashboardComponent = {
               <h4
                 class="text-lg font-bold text-color flex items-center gap-2"
               >
-                <i class="fa-regular fa-clock text-brand/80 text-xl"></i>
+                <i class="ti ti-clock text-brand/80 text-xl"></i>
                 Session History
               </h4>
               <p class="text-xs text-secondary/80 mt-0.5 font-medium">
@@ -443,7 +441,7 @@ export const DashboardComponent = {
                     >
                       <div class="text-6xl mb-6">
                         <i
-                          class="fa-regular fa-clock text-brand/60"
+                          class="ti ti-clock text-brand/60"
                         ></i>
                       </div>
                       <h2 class="text-2xl font-bold text-color">
@@ -465,62 +463,57 @@ export const DashboardComponent = {
                         flow: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
                       };
 
+                      const priorityBadge =
+                        DashboardComponent._getPriorityBadgeHtml(
+                          session.task?.priority,
+                        );
+
                       const activeTask = TaskService.getActiveTask();
                       const activeTaskId = activeTask
                         ? String(activeTask.id)
                         : null;
 
-                      const isActive = String(session.task.id) === activeTaskId;
+                      const isActive = String(session.task?.id) === activeTaskId;
 
                       const overdue = isOverdue(
-                        session.task.dueDate,
-                        session.task.status,
+                        session.task?.dueDate,
+                        session.task?.status,
                       );
                       const daysRemaining = getDaysRemaining(
-                        session.task.dueDate,
+                        session.task?.dueDate,
                       );
 
                       let dueDateBadge = "";
-                      if (session.task.dueDate) {
+                      if (session.task?.dueDate) {
                         const absDays = Math.abs(daysRemaining);
 
                         if (overdue || daysRemaining < 0) {
                           dueDateBadge = `
                             <span
-                              class="inline-flex items-center gap-1 rounded border border-red-500/20 bg-red-500/10 px-2 py-0.5 text-[9px] font-semibold text-red-500"
+                              class="min-h-5.5 inline-flex items-center gap-1 rounded-md border border-red-500/20 bg-red-500/10 px-2 py-0.5 text-[10px] font-semibold text-red-500"
                             >
-                              <i class="fa-regular fa-clock"></i> Overdue
+                              <i class="ti ti-clock text-[10px] lg:text-xs pb-px"></i> Overdue
                               (${absDays}d ago)
                             </span>
                           `;
                         } else if (daysRemaining === 0) {
                           dueDateBadge = `
                             <span
-                              class="inline-flex items-center gap-1 rounded border border-amber-500/20 bg-amber-500/10 px-2 py-0.5 text-[9px] font-semibold text-amber-500"
+                              class="min-h-5.5 inline-flex items-center gap-1 rounded-md border border-amber-500/20 bg-amber-500/10 px-2 py-0.5 text-[10px] font-semibold text-amber-500"
                             >
-                              <i class="fa-regular fa-clock"></i> Due Today
+                              <i class="ti ti-clock text-[10px] lg:text-xs pb-px"></i> Due Today
                             </span>
                           `;
                         } else {
                           dueDateBadge = `
                             <span
-                              class="inline-flex items-center gap-1 rounded border border-secondary/20 bg-secondary/10 px-2 py-0.5 text-[9px] font-medium text-secondary/80"
+                              class="min-h-5.5 inline-flex items-center gap-1 rounded-md border border-secondary/20 bg-secondary/10 px-2 py-0.5 text-[10px] font-medium text-secondary/80"
                             >
-                              <i class="fa-regular fa-calendar-day"></i> Due in
+                              <i class="ti ti-calendar text-[10px] lg:text-xs pb-px"></i> Due in
                               ${daysRemaining}d
                             </span>
                           `;
                         }
-                      }
-
-                      let priorityClass =
-                        "text-lime-500/80 bg-lime-500/10 border-lime-500/20";
-                      if (session.task.priority === "medium") {
-                        priorityClass =
-                          "text-amber-500/80 bg-amber-500/10 border-amber-500/20";
-                      } else if (session.task.priority === "high") {
-                        priorityClass =
-                          "text-red-500/80 bg-red-500/10 border-red-500/20";
                       }
 
                       return `
@@ -528,48 +521,38 @@ export const DashboardComponent = {
                           class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 bg-surface/80 hover:bg-surface p-4 rounded-xl border border-border/40 transition"
                         >
                           <div class="flex flex-col gap-1.5 min-w-0 flex-1">
-                            <div class="flex items-center gap-1 flex-wrap">
+                            <div class="flex items-center gap-2 flex-wrap">
                               <span
-                                class="inline-flex items-center rounded px-2 py-0.5 text-[9px] uppercase font-bold tracking-wider border ${
+                                class="min-h-5.5 inline-flex items-center rounded-md px-2 py-0.5 text-[10px] uppercase font-bold tracking-wider border ${
                                   typeBadgeStyles[session.type] ||
                                   typeBadgeStyles.pomodoro
                                 }"
                               >
-                                ${
-                                  session.type === "pomodoro"
-                                    ? "Pomodoro"
-                                    : "Flow"
-                                }
+                                ${session.type === "pomodoro" ? "Pomodoro" : "Flow"}
                               </span>
-
+                              
                               <span
-                                class="text-[9px] text-secondary/80 font-medium border border-border/40 px-2 py-0.5 rounded bg-surface-2/50"
+                                class="min-h-5.5 inline-flex items-center rounded-md px-2 py-0.5 text-[10px] uppercase font-bold tracking-wider border border-border/40 bg-surface-2/50 text-secondary/80"
                               >
                                 ${formattedDuration}
                               </span>
                             </div>
 
                             <div class="flex text-[13px] font-bold text-color">
-                              ${session.task.title}
+                              ${session.task?.title}
                             </div>
 
-                            <div class="flex items-center gap-1">
+                            <div class="flex items-center gap-2">
                               ${dueDateBadge}
 
-                              <span
-                                class="text-[9px] border ${priorityClass} px-2 py-0.5 rounded uppercase font-medium tracking-wider"
-                              >
-                                ${session.task.priority}
-                              </span>
+                              ${priorityBadge}
                             </div>
 
                             <div
                               class="flex items-center gap-4 text-[11px] text-secondary/80 font-medium flex-wrap"
                             >
                               <span>
-                                <i
-                                  class="fa-regular fa-calendar me-1 text-brand/80"
-                                ></i>
+                                <i class="ti ti-calendar text-[10px] lg:text-xs me-1 text-brand/80"></i>
                                 ${session.completedAt}
                               </span>
                             </div>
@@ -598,5 +581,50 @@ export const DashboardComponent = {
         </div>
       </div>
     `;
+  },
+
+  _normalizeIconClass(iconString) {
+    if (!iconString) return "ti ti-folder";
+    return iconString;
+  },
+
+  _getPriorityBadgeHtml(priorityValue) {
+    const PRIORITY_OPTIONS = [
+      {
+        title: "Low",
+        value: "low",
+        icon: "ti ti-flag text-emerald-500/80 text-sm lg:text-base pb-0.5",
+        class: "bg-emerald-500/10 text-emerald-500/80 border-emerald-500/20",
+      },
+      {
+        title: "Medium",
+        value: "medium",
+        icon: "ti ti-flag text-yellow-500/80 text-sm lg:text-base pb-0.5",
+        class: "bg-yellow-500/10 text-yellow-500/80 border-yellow-500/20",
+      },
+      {
+        title: "High",
+        value: "high",
+        icon: "ti ti-flag text-red-500/80 text-sm lg:text-base pb-0.5",
+        class: "bg-red-500/10 text-red-500/80 border-red-500/20",
+      },
+    ];
+
+    const matched = PRIORITY_OPTIONS.find((p) => p.value === priorityValue);
+    const priorityData = matched || {
+      value: priorityValue || "low",
+      icon: "ti ti-circle text-secondary",
+      class: "bg-surface text-secondary border-border/60",
+    };
+
+    const iconClass = this._normalizeIconClass(priorityData.icon);
+
+    return ` <span
+      class="priority-badge min-h-5.5 inline-flex items-center gap-1 rounded-md border ${priorityData.class} px-2 py-0.5 text-[10px] uppercase font-bold tracking-wider"
+      title="priority badge"
+    >
+      <i class="${iconClass} text-[10px] lg:text-xs pb-px"></i>
+      <span>${priorityData.title}</span>
+    </span>`;
   },
 };

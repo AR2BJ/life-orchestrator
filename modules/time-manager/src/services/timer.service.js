@@ -2,7 +2,6 @@ import { StateManager, state } from "@/models/state.model.js";
 
 import { NotificationService } from "./notification.service.js";
 import { SoundModel } from "@/models/sound.model.js";
-import { TaskModel } from "@/models/task.model.js";
 import { TaskService } from "./task.service.js";
 import { soundService } from "./sound.service.js";
 
@@ -109,7 +108,7 @@ class TimerService {
       NotificationService.show({
         type: "success",
         message: "Focus session completed! Time for a break",
-        icon: "fa-circle-check",
+        icon: "ti-circle-check",
         iconColor: "text-emerald-500",
       });
 
@@ -167,8 +166,8 @@ class TimerService {
       NotificationService.show({
         type: "info",
         message: "Break has ended! Ready to focus?",
-        icon: "fa-bolt",
-        iconColor: "text-brand",
+        icon: "ti-bolt",
+        iconColor: "text-sky-500",
       });
 
       if (state.settings.autoStartPomodoros) {
@@ -221,8 +220,8 @@ class TimerService {
     NotificationService.show({
       type: "info",
       message: "Flow Break has ended! Ready to focus?",
-      icon: "fa-bolt",
-      iconColor: "text-brand",
+      icon: "ti-bolt",
+      iconColor: "text-sky-500",
     });
 
     soundService.pause();
@@ -271,7 +270,7 @@ class TimerService {
       NotificationService.show({
         type: "success",
         message: `Flow session completed! You focused for ${Math.round(flowTime / 60)} minutes`,
-        icon: "fa-circle-check",
+        icon: "ti-circle-check",
         iconColor: "text-emerald-500",
       });
     } else {
@@ -279,8 +278,8 @@ class TimerService {
         type: "info",
         message:
           "Flow session was too short (under 25 minutes), No session saved",
-        icon: "fa-info-circle",
-        iconColor: "text-brand",
+        icon: "ti-info-circle",
+        iconColor: "text-sky-500",
       });
     }
 

@@ -30,13 +30,4 @@ export default defineConfig({
       ),
     },
   },
-  server: {
-    proxy: {
-      "/aparat-api": {
-        target: "https://www.aparat.com",
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/aparat-api/, ""),
-      },
-    },
-  },
 });

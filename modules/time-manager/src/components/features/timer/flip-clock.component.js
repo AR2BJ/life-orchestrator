@@ -13,7 +13,7 @@ export class FlipClockComponent {
     this.overlay.id = "flip-clock-overlay";
 
     this.overlay.className =
-      "fixed inset-0 z-400 hidden w-screen h-screen flex flex-col items-center justify-between bg-bg select-none overflow-hidden";
+      "fixed inset-0 z-500 hidden w-screen h-screen flex flex-col items-center justify-between bg-bg select-none overflow-hidden";
 
     this.overlay.innerHTML = `
       <div
@@ -34,7 +34,7 @@ export class FlipClockComponent {
           title="Exit Fullscreen"
         >
           <i
-            class="fa-regular fa-compress text-sm sm:text-base pointer-events-none"
+            class="ti ti-arrows-minimize text-sm sm:text-base pointer-events-none"
           ></i>
         </button>
       </div>
@@ -207,20 +207,20 @@ export class FlipClockComponent {
       if (state === "idle") {
         controlsContainer.innerHTML = `
           <button id="btn-flip-start" type="button" class="${btnClass} bg-brand hover:bg-brand/90 text-(--color-btn-primary-text)">
-            <i class="fa-solid fa-play text-xl sm:text-2xl max-lg:landscape:text-sm pointer-events-none"></i>
+            <i class="ti ti-player-play-filled text-xl sm:text-2xl max-lg:landscape:text-sm pointer-events-none"></i>
           </button>`;
       } else if (state === "running") {
         controlsContainer.innerHTML = `
           <button id="btn-flip-pause" type="button" class="${btnClass} bg-amber-500 hover:bg-amber-600 text-(--color-btn-primary-text)">
-            <i class="fa-solid fa-pause text-xl sm:text-2xl max-lg:landscape:text-sm pointer-events-none"></i>
+            <i class="ti ti-player-pause-filled text-xl sm:text-2xl max-lg:landscape:text-sm pointer-events-none"></i>
           </button>`;
       } else if (state === "paused") {
         controlsContainer.innerHTML = `
           <button id="btn-flip-stop" type="button" class="${btnClass} bg-red-500 hover:bg-red-600 text-(--color-btn-primary-text)">
-            <i class="fa-solid fa-square text-xl sm:text-2xl max-lg:landscape:text-sm pointer-events-none"></i>
+            <i class="ti ti-player-stop-filled text-xl sm:text-2xl max-lg:landscape:text-sm pointer-events-none"></i>
           </button>
           <button id="btn-flip-continue" type="button" class="${btnClass} bg-brand hover:bg-brand/90 text-(--color-btn-primary-text)">
-            <i class="fa-solid fa-play text-xl sm:text-2xl max-lg:landscape:text-sm pointer-events-none"></i>
+            <i class="ti ti-player-play-filled text-xl sm:text-2xl max-lg:landscape:text-sm pointer-events-none"></i>
           </button>`;
       }
     }

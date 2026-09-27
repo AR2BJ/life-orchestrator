@@ -28,9 +28,9 @@ export const TaskModalComponent = {
           >
             <div class="min-w-0 flex-1 flex items-center gap-3">
               <div
-                class="w-10 h-10 rounded-xl bg-brand/10 text-brand flex items-center justify-center text-base shrink-0"
+                class="w-10 h-10 rounded-xl bg-brand/10 text-brand flex items-center justify-center text-base lg:text-lg shrink-0"
               >
-                <i class="fa-regular fa-bullseye-arrow"></i>
+                <i class="ti ti-target-arrow"></i>
               </div>
               <div class="min-w-0">
                 <h3 class="text-base font-bold text-color truncate">
@@ -50,7 +50,7 @@ export const TaskModalComponent = {
               type="button"
               class="w-8 h-8 rounded-xl bg-surface-2 hover:bg-surface-3 border border-border text-secondary hover:text-color flex items-center justify-center transition cursor-pointer shrink-0"
             >
-              <i class="fa-regular fa-xmark text-sm"></i>
+              <i class="ti ti-x text-sm lg:text-base"></i>
             </button>
           </div>
 
@@ -66,7 +66,7 @@ export const TaskModalComponent = {
                       class="h-full flex flex-col justify-center items-center"
                     >
                       <div class="text-3xl">
-                        <i class="fa-regular fa-clipboard-list-check text-brand/60"></i>
+                        <i class="ti ti-clipboard-list text-brand/60"></i>
                       </div>
                       <p class="mt-3 text-secondary max-w-sm mx-auto text-sm">
                         No task defined yet.
@@ -78,6 +78,17 @@ export const TaskModalComponent = {
                       const isActive = String(t.id) === activeTaskId;
                       const isDone = t.status === "done";
                       const isArchived = t.archived;
+
+                      const priorityBadge = this._getPriorityBadgeHtml(
+                        t.priority,
+                        isDone,
+                        isArchived,
+                      );
+                      const statusBadge = this._getStatusBadgeHtml(
+                        t.status,
+                        isDone,
+                        isArchived,
+                      );
 
                       const overdue = isOverdue(t.dueDate, t.status);
                       const daysRemaining = getDaysRemaining(t.dueDate);
@@ -92,74 +103,47 @@ export const TaskModalComponent = {
                         if (isDone) {
                           dueDateBadge = `
                             <span
-                              class="inline-flex items-center gap-1 rounded-md border border-emerald-500/20 bg-emerald-500/10 px-2 py-1.25 text-[10px] font-medium text-emerald-500 ${
+                              class="min-h-6 inline-flex items-center gap-1 rounded-md border border-emerald-500/20 bg-emerald-500/10 px-2 py-1.25 text-[10px] font-medium text-emerald-500 ${
                                 isDone || isArchived ? "opacity-50" : ""
                               }"
                             >
-                              <i class="fa-regular fa-calendar-check"></i>
+                              <i class="ti ti-calendar-check text-[10px] lg:text-xs pb-px"></i>
                               ${t.dueDate}
                             </span>
                           `;
                         } else if (overdue || daysRemaining < 0) {
                           dueDateBadge = `
                             <span
-                              class="inline-flex items-center gap-1 rounded-md border border-red-500/20 bg-red-500/10 px-2 py-1.25 text-[10px] font-semibold text-red-500 ${
+                              class="min-h-6 inline-flex items-center gap-1 rounded-md border border-red-500/20 bg-red-500/10 px-2 py-1.25 text-[10px] font-semibold text-red-500 ${
                                 isArchived ? "" : "animate-pulse"
                               } ${isDone || isArchived ? "opacity-50" : ""}"
                             >
-                              <i class="fa-regular fa-clock"></i> Overdue
+                              <i class="ti ti-clock text-[10px] lg:text-xs pb-px"></i> Overdue
                               (${absDays}d ago)
                             </span>
                           `;
                         } else if (daysRemaining === 0) {
                           dueDateBadge = `
                             <span
-                              class="inline-flex items-center gap-1 rounded-md border border-amber-500/20 bg-amber-500/10 px-2 py-1.25 text-[10px] font-semibold text-amber-500 ${
+                              class="min-h-6 inline-flex items-center gap-1 rounded-md border border-amber-500/20 bg-amber-500/10 px-2 py-1.25 text-[10px] font-semibold text-amber-500 ${
                                 isDone || isArchived ? "opacity-50" : ""
                               }"
                             >
-                              <i class="fa-regular fa-clock"></i> Due Today
+                              <i class="ti ti-clock text-[10px] lg:text-xs pb-px"></i> Due Today
                             </span>
                           `;
                         } else {
                           dueDateBadge = `
                             <span
-                              class="inline-flex items-center gap-1 rounded-md border border-secondary/20 bg-secondary/10 px-2 py-1.25 text-[10px] font-medium text-secondary/80 ${
+                              class="min-h-6 inline-flex items-center gap-1 rounded-md border border-secondary/20 bg-secondary/10 px-2 py-1.25 text-[10px] font-medium text-secondary/80 ${
                                 isDone || isArchived ? "opacity-50" : ""
                               }"
                             >
-                              <i class="fa-regular fa-calendar-day"></i> Due in
+                              <i class="ti ti-calendar text-[10px] lg:text-xs pb-px"></i> Due in
                               ${daysRemaining}d
                             </span>
                           `;
                         }
-                      }
-
-                      let priorityClass =
-                        "text-lime-500/80 bg-lime-500/10 border-lime-500/20";
-                      if (t.priority === "medium") {
-                        priorityClass =
-                          "text-amber-500/80 bg-amber-500/10 border-amber-500/20";
-                      } else if (t.priority === "high") {
-                        priorityClass =
-                          "text-red-500/80 bg-red-500/10 border-red-500/20";
-                      }
-
-                      let statusLabel = "Todo";
-                      let statusClass =
-                        "text-brand/80 bg-brand/10 border-brand/20";
-                      if (t.status === "done") {
-                        statusLabel = "Done";
-                        statusClass =
-                          "text-emerald-500/80 bg-emerald-500/10 border-emerald-500/20";
-                      } else if (t.status === "in_progress") {
-                        statusLabel = "In Progress";
-                        statusClass =
-                          "text-orange-500/80 bg-orange-500/10 border-orange-500/20";
-                      } else if (t.status === "blocked") {
-                        statusLabel = "Blocked";
-                        statusClass =
-                          "text-pink-500/80 bg-pink-500/10 border-pink-500/20";
                       }
 
                       return `
@@ -187,7 +171,7 @@ export const TaskModalComponent = {
                                 ? `<span
                                     class="w-5 h-5 rounded-full bg-brand text-white flex items-center justify-center text-[10px] shrink-0 shadow-xs"
                                   >
-                                    <i class="fa-solid fa-check"></i>
+                                    <i class="ti ti-check"></i>
                                   </span>`
                                 : ""
                             }
@@ -215,7 +199,7 @@ export const TaskModalComponent = {
                                             : estimatedPomos
                                         }"
                                         data-pomo-input="${t.id}"
-                                        id="pomo-input"
+                                        id="pomo-input-${t.id}"
                                         class="pomo-input w-14 h-7 text-center text-xs font-bold bg-surface-1 border border-border rounded-lg text-color focus:outline-none focus:border-brand/60 transition hidden"
                                         onclick="event.stopPropagation()"
                                       />
@@ -226,7 +210,7 @@ export const TaskModalComponent = {
                                         title="Set Pomodoros"
                                       >
                                         <i
-                                          class="fa-regular fa-clock text-xs"
+                                          class="ti ti-clock text-xs lg:text-sm"
                                         ></i>
                                       </button>
                                       <button
@@ -236,7 +220,7 @@ export const TaskModalComponent = {
                                         title="Save Pomodoros"
                                       >
                                         <i
-                                          class="fa-solid fa-check text-xs"
+                                          class="ti ti-check text-xs lg:text-sm"
                                         ></i>
                                       </button>
                                     </div>
@@ -255,29 +239,17 @@ export const TaskModalComponent = {
                                   </span>`
                                 : ""
                             }
-
-                            ${dueDateBadge}
-
-                            <span
-                              class="text-[10px] ${priorityClass} px-2 py-1.25 rounded-md border uppercase font-semibold tracking-wider ${
-                                isDone || isArchived ? "opacity-50" : ""
-                              }"
-                            >
-                              ${t.priority}
-                            </span>
                             
-                            <span
-                              class="text-[10px] ${statusClass} px-2 py-1.25 rounded-md border uppercase font-semibold tracking-wider ${
-                                isDone || isArchived ? "opacity-50" : ""
-                              }"
-                            >
-                              ${statusLabel}
-                            </span>
+                            ${dueDateBadge} 
+                            
+                            ${priorityBadge} 
+                            
+                            ${statusBadge}
 
                             <span
-                              class="text-[10px] font-bold text-brand/80 bg-brand/10 border-brand/20 px-2 py-1.25 rounded-md border ${
+                              class="min-h-6 inline-flex items-center gap-1 rounded-md border text-brand/80 bg-brand/10 border-brand/20 ${
                                 isDone || isArchived ? "opacity-50" : ""
-                              }"
+                              } px-2 py-1.25 text-[10px] font-bold tracking-wider"
                             >
                               ${`${completedPomos}/${estimatedPomos} Units`}
                             </span>
@@ -291,5 +263,104 @@ export const TaskModalComponent = {
         </div>
       </div>
     `;
+  },
+
+  _normalizeIconClass(iconString) {
+    if (!iconString) return "ti ti-folder";
+    return iconString;
+  },
+
+  _getPriorityBadgeHtml(priorityValue, isDone, isArchived) {
+    const PRIORITY_OPTIONS = [
+      {
+        title: "Low",
+        value: "low",
+        icon: "ti ti-flag text-emerald-500/80 text-sm lg:text-base pb-0.5",
+        class: "bg-emerald-500/10 text-emerald-500/80 border-emerald-500/20",
+      },
+      {
+        title: "Medium",
+        value: "medium",
+        icon: "ti ti-flag text-yellow-500/80 text-sm lg:text-base pb-0.5",
+        class: "bg-yellow-500/10 text-yellow-500/80 border-yellow-500/20",
+      },
+      {
+        title: "High",
+        value: "high",
+        icon: "ti ti-flag text-red-500/80 text-sm lg:text-base pb-0.5",
+        class: "bg-red-500/10 text-red-500/80 border-red-500/20",
+      },
+    ];
+
+    const matched = PRIORITY_OPTIONS.find((p) => p.value === priorityValue);
+    const priorityData = matched || {
+      value: priorityValue || "low",
+      icon: "ti ti-circle text-secondary",
+      class: "bg-surface text-secondary border-border/60",
+    };
+
+    const iconClass = this._normalizeIconClass(priorityData.icon);
+
+    return `<div
+      class="priority-badge min-h-6 inline-flex items-center gap-1 rounded-md border ${priorityData.class} px-2 py-1.25 text-[10px] uppercase font-bold tracking-wider ${
+        isDone || isArchived ? "opacity-50" : ""
+      }"
+      title="priority badge"
+    >
+      <i
+        class="${iconClass} text-[10px] lg:text-xs pb-px"
+      ></i>
+      <span>${priorityData.title}</span>
+    </div>`;
+  },
+
+  _getStatusBadgeHtml(statusValue, isDone, isArchived) {
+    const STATUS_OPTIONS = [
+      {
+        title: "To Do",
+        value: "todo",
+        icon: "ti ti-circle text-sky-500/80 text-sm lg:text-base pb-0.5",
+        class: "bg-sky-500/10 text-sky-500/80 border-sky-500/20",
+      },
+      {
+        title: "In Progress",
+        value: "in_progress",
+        icon: "ti ti-progress-down text-yellow-500/80 text-sm lg:text-base pb-0.5",
+        class: "bg-yellow-500/10 text-yellow-500/80 border-yellow-500/20",
+      },
+      {
+        title: "Blocked",
+        value: "blocked",
+        icon: "ti ti-ban text-red-500/80 text-sm lg:text-base pb-0.5",
+        class: "bg-red-500/10 text-red-500/80 border-red-500/20",
+      },
+      {
+        title: "Done",
+        value: "done",
+        icon: "ti ti-circle-check text-emerald-500/80 text-sm lg:text-base pb-0.5",
+        class: "bg-emerald-500/10 text-emerald-500/80 border-emerald-500/20",
+      },
+    ];
+
+    const matched = STATUS_OPTIONS.find((p) => p.value === statusValue);
+    const statusData = matched || {
+      value: statusValue || "todo",
+      icon: "ti ti-circle text-secondary",
+      class: "bg-surface text-secondary border-border/60",
+    };
+
+    const iconClass = this._normalizeIconClass(statusData.icon);
+
+    return `<div
+      class="status-badge min-h-6 inline-flex items-center gap-1 rounded-md border ${statusData.class} px-2 py-1.25 text-[10px] uppercase font-bold tracking-wider ${
+        isDone || isArchived ? "opacity-50" : ""
+      }"
+      title="status badge"
+    >
+      <i
+        class="${iconClass} text-[10px] lg:text-xs pb-px"
+      ></i>
+      <span>${statusData.title}</span>
+    </div>`;
   },
 };
