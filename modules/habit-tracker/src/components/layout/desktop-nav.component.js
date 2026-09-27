@@ -28,7 +28,7 @@ export const DesktopNavComponent = {
             class="nav-item justify-center shadow-brand/10"
             title="Habits"
           >
-            <i class="fa-regular fa-list text-xl"></i>
+            <i class="ti ti-list text-2xl"></i>
           </button>
 
           <button
@@ -36,7 +36,7 @@ export const DesktopNavComponent = {
             class="nav-item justify-center"
             title="Analytics"
           >
-            <i class="fa-regular fa-chart-line text-xl"></i>
+            <i class="ti ti-chart-line text-2xl"></i>
           </button>
         </div>
 
@@ -46,7 +46,7 @@ export const DesktopNavComponent = {
             class="nav-item justify-center"
             title="Settings"
           >
-            <i class="fa-regular fa-gear text-xl"></i>
+            <i class="ti ti-settings text-2xl"></i>
           </button>
         </div>
       </div>

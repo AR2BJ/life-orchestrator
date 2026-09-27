@@ -1,13 +1,14 @@
+import { formatDate, generateId } from "@/utils/helpers.js";
+
 import { CoreStore } from "@life-orchestrator/core-store";
-import { formatDate } from "@/utils/helpers.js";
 
 export const HABIT_NAMESPACE = "habit_tracker";
 export const STORAGE_VERSION = 1;
 
-function migrateHabit(habit) {
+function migrateHabit(habit = {}) {
   return {
-    id: habit.id,
-    name: habit.name,
+    id: String(habit.id || generateId()),
+    name: habit.name || "Untitled Habit",
     category: habit.category ?? "general",
     frequency: Number(habit.frequency ?? 7),
     createdAt: habit.createdAt ?? formatDate(new Date()),
@@ -18,10 +19,14 @@ function migrateHabit(habit) {
 }
 
 export function saveToStorage(habitsArray) {
-  CoreStore.setNamespace(HABIT_NAMESPACE, {
-    version: STORAGE_VERSION,
-    habits: habitsArray,
-  });
+  try {
+    CoreStore.setNamespace(HABIT_NAMESPACE, {
+      version: STORAGE_VERSION,
+      habits: habitsArray,
+    });
+  } catch (error) {
+    console.error("Failed to save data structure:", error);
+  }
 }
 
 export function loadFromStorage() {
@@ -30,7 +35,7 @@ export function loadFromStorage() {
 
   return {
     version: data.version ?? STORAGE_VERSION,
-    habits: (data.habits || []).map(migrateHabit),
+    habits: (data.habits || [])?.map(migrateHabit),
   };
 }
 

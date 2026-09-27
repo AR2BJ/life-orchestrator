@@ -3,7 +3,7 @@ export const SettingsResetComponent = {
     return `
       <div
         id="settings-reset-modal"
-        class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in"
+        class="fixed inset-0 z-400 hidden items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in"
       >
         <div
           class="bg-surface rounded-2xl p-6 max-w-sm w-full shadow-xl flex flex-col gap-4"
@@ -11,7 +11,7 @@ export const SettingsResetComponent = {
           <div
             class="w-10 h-10 lg:w-11 lg:h-11 rounded-xl lg:rounded-2xl bg-red-500/10 text-red-500/80 flex items-center justify-center text-xl mx-auto"
           >
-            <i class="fa-regular fa-triangle-exclamation"></i>
+            <i class="ti ti-alert-triangle"></i>
           </div>
 
           <div class="text-center flex flex-col gap-1">

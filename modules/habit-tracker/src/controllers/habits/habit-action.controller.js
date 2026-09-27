@@ -52,10 +52,10 @@ export const HabitActionController = {
                 message: isNowCompleted
                   ? `Completed "${habit.name}" for today! ✨`
                   : `Removed completion for "${habit.name}"`,
-                icon: isNowCompleted ? "fa-circle-check" : "fa-circle",
+                icon: isNowCompleted ? "ti-circle-check" : "ti-circle",
                 iconColor: isNowCompleted
                   ? "text-emerald-500/80"
-                  : "text-brand/80",
+                  : "text-sky-500/80",
                 duration: 5000,
               });
             } catch (error) {
@@ -89,7 +89,7 @@ export const HabitActionController = {
           GlobalLoaderService.show(
             `Processing calendar entry for ${date === today ? "Today" : "Yesterday"}...`,
           );
-          
+
           setTimeout(() => {
             try {
               const updated = HabitService.toggleSkipHabitDate(
@@ -108,8 +108,10 @@ export const HabitActionController = {
                 message: isNowSkipped
                   ? `Safeguard activated: Skipped day for "${habit.name}".`
                   : `Removed safeguard for "${habit.name}"`,
-                icon: isNowSkipped ? "fa-shield-halved" : "fa-calendar",
-                iconColor: isNowSkipped ? "text-amber-500/80" : "text-brand/80",
+                icon: isNowSkipped ? "ti-shield-half" : "ti-calendar",
+                iconColor: isNowSkipped
+                  ? "text-amber-500/80"
+                  : "text-sky-500/80",
                 duration: 5000,
               });
             } finally {
@@ -144,10 +146,10 @@ export const HabitActionController = {
                   message: isNowCompleted
                     ? `Marked "${habit.name}" as done for ${dateLabel}! ✨`
                     : `Unchecked "${habit.name}" for ${dateLabel}`,
-                  icon: isNowCompleted ? "fa-square-check" : "fa-square-xmark",
+                  icon: isNowCompleted ? "ti-square-check" : "ti-square-x",
                   iconColor: isNowCompleted
                     ? "text-emerald-500/80"
-                    : "text-brand/80",
+                    : "text-sky-500/80",
                   duration: 5000,
                 });
               } finally {
@@ -197,6 +199,7 @@ export const HabitActionController = {
                 type: "info",
                 message: `Archived: "${targetHabit.name}"`,
                 duration: 5000,
+                iconColor: "text-sky-500/80",
                 undoAction: () => {
                   GlobalLoaderService.show("Rolling back archive operation...");
                   setTimeout(() => {
@@ -255,6 +258,7 @@ export const HabitActionController = {
                 type: "info",
                 message: `Restored: "${targetHabit.name}"`,
                 duration: 5000,
+                iconColor: "text-sky-500/80",
                 undoAction: () => {
                   GlobalLoaderService.show("Re-archiving record...");
                   setTimeout(() => {

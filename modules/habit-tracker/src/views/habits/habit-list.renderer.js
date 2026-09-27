@@ -21,8 +21,8 @@ export function renderHabitList(habits, activeTab = "active") {
 
   const isArchived = activeTab === "archived";
   const icon = isArchived
-    ? "<i class='fa-regular fa-box-open text-brand/60'></i>"
-    : "<i class='fa-regular fa-bullseye-arrow text-brand/60'></i>";
+    ? "<i class='ti ti-package text-brand/60'></i>"
+    : "<i class='ti ti-target-arrow text-brand/60'></i>";
   const title = isArchived ? "No archived habits" : "No habits yet";
   const description = isArchived
     ? "Archived habits will appear here."
@@ -31,11 +31,13 @@ export function renderHabitList(habits, activeTab = "active") {
   if (habits.length === 0) {
     container.innerHTML = `
       <div
-        class="min-h-80 bg-surface border border-dashed border-border rounded-2xl p-16 text-center"
+        class="min-h-72 bg-surface border border-dashed border-border rounded-2xl p-12 text-center flex flex-col items-center justify-center"
       >
-        <div class="text-6xl mb-6">${icon}</div>
-        <h2 class="text-2xl font-bold text-color">${title}</h2>
-        <p class="mt-3 text-secondary max-w-sm mx-auto">${description}</p>
+        <div class="text-6xl mb-2">${icon}</div>
+        <h2 class="text-xl font-bold text-color">${title}</h2>
+        <p class="mt-2 text-sm text-secondary max-w-sm mx-auto">
+          ${description}
+        </p>
       </div>
     `;
     return;

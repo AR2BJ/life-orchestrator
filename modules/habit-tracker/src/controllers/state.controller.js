@@ -1,7 +1,7 @@
-import { loadFromStorage, saveToStorage } from "@/models/storage.model.js";
-
 import { NotificationService } from "@/services/notification.service";
+import { StateManager } from "@/models/state.model";
 import { formatDate } from "@/utils/helpers.js";
+import { loadFromStorage } from "@/models/storage.model.js";
 
 export const StateController = {
   execute() {
@@ -54,15 +54,12 @@ export const StateController = {
     });
 
     if (isDataMutated) {
-      saveToStorage({
-        ...storageData,
-        habits: updatedHabits,
-      });
+      StateManager.save(updatedHabits);
       NotificationService.show({
         type: "success",
         message:
           "Previous days without a status have been automatically marked as skipped",
-        icon: "fa-circle-check",
+        icon: "ti-circle-check",
         iconColor: "text-emerald-500/80",
         duration: 5000,
       });
