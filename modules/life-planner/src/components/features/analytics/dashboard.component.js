@@ -495,16 +495,16 @@ export const DashboardComponent = {
     const iconClass = this._normalizeIconClass(areaData.icon);
 
     return `
-        <span
-          class="min-h-5.5 inline-flex items-center gap-1 rounded-md border ${areaData.class} px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider"
-        >
-          <i class="${iconClass} text-[10px] lg:text-xs pb-px"></i>
-          <span>${areaData.name}</span>
-        </span>
-      `;
+      <span
+        class="min-h-5.5 inline-flex items-center gap-1 rounded-md border ${areaData.class} px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider"
+      >
+        <i class="${iconClass} text-[10px] lg:text-xs pb-px"></i>
+        <span>${areaData.name}</span>
+      </span>
+    `;
   },
 
-  _getStateBadgeHtml(stateKey, planId) {
+  _getStateBadgeHtml(stateKey) {
     const matched = PLAN_STATES.find((s) => s.id === stateKey);
     const stateData = matched || {
       name: stateKey || "active",
@@ -516,10 +516,8 @@ export const DashboardComponent = {
 
     return `
       <div
-        data-plan-id="${planId}"
-        data-current-state="${stateData.id}"
-        class="state-cycle-btn min-h-5.5 inline-flex items-center gap-1.5 rounded-md border ${stateData.class} px-2 py-0.5 text-[10px] uppercase font-bold tracking-wider transition-all"
-        title="Click to cycle status"
+        class="state-badge min-h-5.5 inline-flex items-center gap-1.5 rounded-md border ${stateData.class} px-2 py-0.5 text-[10px] uppercase font-bold tracking-wider transition-all"
+        title="status badge"
       >
         <i
           class="${iconClass} text-[10px] lg:text-xs pb-px transition-transform duration-300"
@@ -529,7 +527,7 @@ export const DashboardComponent = {
     `;
   },
 
-  _getMoodBadgeHtml(moodValue, logId) {
+  _getMoodBadgeHtml(moodValue) {
     const matched = MOOD_OPTIONS.find(
       (m) => String(m.value) === String(moodValue),
     );
@@ -543,9 +541,8 @@ export const DashboardComponent = {
 
     return `
       <div
-        data-log-id="${logId}"
-        data-current-mood="${moodData.value || moodValue}"
-        class="mood-cycle min-h-5.5 inline-flex items-center gap-1 rounded-md border ${moodData.class} px-2 py-0.5 text-[10px] uppercase font-semibold transition-all"
+        class="mood-badge min-h-5.5 inline-flex items-center gap-1 rounded-md border ${moodData.class} px-2 py-0.5 text-[10px] uppercase font-semibold transition-all"
+        title="mood badge"
       >
         <i
           class="${iconClass} text-[10px] lg:text-xs pb-px transition-transform duration-300"
@@ -555,7 +552,7 @@ export const DashboardComponent = {
     `;
   },
 
-  _getEnergyBadgeHtml(energyValue, logId) {
+  _getEnergyBadgeHtml(energyValue) {
     const matched = ENERGY_LEVEL_OPTIONS.find(
       (e) => Number(e.value) === Number(energyValue),
     );
@@ -569,9 +566,8 @@ export const DashboardComponent = {
 
     return `
       <div
-        data-log-id="${logId}"
-        data-current-energy="${energyValue}"
-        class="energy-cycle min-h-5.5 inline-flex items-center gap-1 rounded-md border ${energyData.class} px-2 py-0.5 text-[10px] uppercase font-semibold transition-all"
+        class="energy-badge min-h-5.5 inline-flex items-center gap-1 rounded-md border ${energyData.class} px-2 py-0.5 text-[10px] uppercase font-semibold transition-all"
+        title="energy badge"
       >
         <i
           class="${iconClass} text-xs lg:text-sm pb-px transition-transform duration-300"
@@ -661,7 +657,7 @@ export const DashboardComponent = {
     return plans
       .map((plan) => {
         const lifeAreaBadge = this._getLifeAreaBadgeHtml(plan.lifeAreaId);
-        const stateBadge = this._getStateBadgeHtml(plan.state, plan.id);
+        const stateBadge = this._getStateBadgeHtml(plan.state);
 
         const objectives = Array.isArray(plan.objectives)
           ? plan.objectives
@@ -781,8 +777,8 @@ export const DashboardComponent = {
     }
     return logs
       .map((log) => {
-        const moodBadge = this._getMoodBadgeHtml(log.mood, log.id);
-        const energyBadge = this._getEnergyBadgeHtml(log.energy, log.id);
+        const moodBadge = this._getMoodBadgeHtml(log.mood);
+        const energyBadge = this._getEnergyBadgeHtml(log.energy);
 
         let linkedPlanBadgeHtml = "";
         let lifeAreaBadgeHtml = "";

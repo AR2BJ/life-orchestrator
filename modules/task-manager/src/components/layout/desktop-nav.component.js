@@ -7,7 +7,10 @@ export const DesktopNavComponent = {
       >
         <div class="flex flex-col items-center gap-6 w-full px-3">
           <div class="w-13.5 h-13.5 flex flex-row justify-center items-center">
-            <a href="/task-manager" class="w-13.5 h-13.5 flex flex-row justify-center items-center">
+            <a
+              href="/task-manager"
+              class="w-13.5 h-13.5 flex flex-row justify-center items-center"
+            >
               <img
                 id="logo"
                 src="/modules/task-manager/public/picture/logo.png"
@@ -43,7 +46,7 @@ export const DesktopNavComponent = {
           >
             <i class="fa-regular fa-calendar text-lg"></i>
           </button>
-          
+
           <button
             id="nav-matrix"
             class="nav-item justify-center"

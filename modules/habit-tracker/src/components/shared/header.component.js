@@ -13,7 +13,10 @@ export const HeaderComponent = {
           <div
             class="w-10 h-10 lg:hidden flex flex-row justify-center items-center"
           >
-            <a href="/habit-tracker" class="w-10 h-10 flex flex-row justify-center items-center">
+            <a
+              href="/habit-tracker"
+              class="w-10 h-10 flex flex-row justify-center items-center"
+            >
               <img
                 id="logo"
                 src="/modules/habit-tracker/public/picture/logo.png"
