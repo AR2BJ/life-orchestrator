@@ -95,7 +95,7 @@ export const TaskCardComponent = {
                   estimated !== 0
                     ? ` <div class="flex md:self-end z-20 shrink-0">
                         <span
-                          class="min-h-4 inline-flex items-center rounded px-2 py-0.5 text-[9px] font-bold bg-amber-500/10 text-amber-500/80 border border-amber-500/20"
+                          class="min-h-4 inline-flex items-center rounded px-2 py-0.5 text-[9px] font-bold bg-violet-500/10 text-violet-500/80 border border-violet-500/20"
                         >
                           ${completed}/${estimated} Units
                         </span>
