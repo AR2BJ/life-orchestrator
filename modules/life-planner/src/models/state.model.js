@@ -69,11 +69,19 @@ export const StateManager = {
   },
 
   dispatchStateEvents() {
+    const ui = this.getActiveUIState();
+
     eventBus.emit("store:plans:changed", state.plans);
     eventBus.emit("store:logs:changed", state.logs);
     eventBus.emit("store:templates:changed", state.templates);
+    eventBus.emit("ui:calendar:mode:changed", state.calendarMode);
     eventBus.emit("ui:tab:changed", state.activeTab);
-    eventBus.emit("store:changed", state);
+    eventBus.emit("ui:search:changed", ui.searchQuery);
+    eventBus.emit("ui:filter:lifeArea", ui.selectedLifeArea);
+    eventBus.emit("ui:filter:changed", ui.filterBy);
+    eventBus.emit("ui:sort:changed", ui.sortBy);
+    eventBus.emit("ui:view:changed");
+    eventBus.emit("store:changed");
   },
 
   setupReactiveEngine() {
@@ -329,61 +337,55 @@ export const StateManager = {
   setView(view) {
     state.currentView = view;
     eventBus.emit("ui:view:changed", view);
-    eventBus.emit("store:changed", state);
+    eventBus.emit("store:changed");
   },
 
   setCalendarMode(mode) {
     state.calendarMode = mode;
     eventBus.emit("ui:calendar:mode:changed", mode);
-    eventBus.emit("store:changed", state);
+    eventBus.emit("store:changed");
   },
 
   setTab(tab) {
     if (["plans", "logs", "templates"].includes(tab)) {
       state.activeTab = tab;
       eventBus.emit("ui:tab:changed", tab);
-      eventBus.emit("store:changed", state);
+      eventBus.emit("store:changed");
     }
   },
 
   setHeatmapView(view) {
     if (!state.analyticsUI) state.analyticsUI = {};
     state.analyticsUI.heatmapView = view;
-    eventBus.emit("store:changed", state);
+    eventBus.emit("store:changed");
   },
 
   setLifeAreaFilter(lifeAreaId) {
     const ui = this.getActiveUIState();
     ui.selectedLifeArea = lifeAreaId;
     eventBus.emit("ui:filter:lifeArea", lifeAreaId);
-    this.notifyActiveTabChanged();
+    eventBus.emit("store:changed");
   },
 
   setFilterBy(filterValue) {
     const ui = this.getActiveUIState();
     ui.filterBy = filterValue;
     eventBus.emit("ui:filter:changed", filterValue);
-    this.notifyActiveTabChanged();
+    eventBus.emit("store:changed");
   },
 
   setSortBy(sortBy) {
     const ui = this.getActiveUIState();
     ui.sortBy = sortBy;
     eventBus.emit("ui:sort:changed", sortBy);
-    this.notifyActiveTabChanged();
+    eventBus.emit("store:changed");
   },
 
   setSearchQuery(query) {
     const ui = this.getActiveUIState();
     ui.searchQuery = query;
     eventBus.emit("ui:search:changed", query);
-    this.notifyActiveTabChanged();
-  },
-
-  notifyActiveTabChanged() {
-    const currentTab = state.activeTab;
-    eventBus.emit(`store:${currentTab}:changed`, state[currentTab]);
-    eventBus.emit("store:changed", state);
+    eventBus.emit("store:changed");
   },
 
   // --- PERSISTENCE ---

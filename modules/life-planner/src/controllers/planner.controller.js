@@ -26,7 +26,6 @@ import { SettingsViewComponent } from "@/components/features/settings/settings-v
 import { eventBus } from "@/services/event-bus.service.js";
 import { openObjectivesState } from "@/utils/helpers.js";
 import { renderPlannerList } from "@/views/planner/planner-list.renderer.js";
-import { store } from "@/services/store.service.js";
 
 export const PlannerController = {
   init() {
@@ -136,7 +135,7 @@ export const PlannerController = {
             GlobalLoaderService.show("Sorting items...");
             setTimeout(() => {
               try {
-                store.setSortBy(selectedVal);
+                StateManager.setSortBy(selectedVal);
                 this.refreshUI();
               } finally {
                 GlobalLoaderService.hide();
@@ -283,21 +282,44 @@ export const PlannerController = {
   },
 
   subscribeToDataChanges() {
-    eventBus.subscribe("store:changed", () => {
-      this.refreshUI();
-    });
-    eventBus.subscribe("store:plans:changed", () => {
-      this.refreshUI();
-    });
-    eventBus.subscribe("store:logs:changed", () => {
-      this.refreshUI();
-    });
-    eventBus.subscribe("store:templates:changed", () => {
-      this.refreshUI();
-    });
-    eventBus.subscribe("ui:tab:changed", (tab) => {
-      this.updateTabStyles(tab);
-      this.switchFormTabVisibility(tab);
+    const ui = StateManager.getActiveUIState();
+
+    [
+      "store:changed",
+      "store:plans:changed",
+      "store:logs:changed",
+      "store:templates:changed",
+      "ui:calendar:mode:changed",
+      "ui:view:changed",
+      "ui:tab:changed",
+      "ui:filter:lifeArea",
+      "ui:filter:changed",
+      "ui:sort:changed",
+      "ui:search:changed",
+    ].forEach((event) => {
+      eventBus.subscribe(event, (data) => {
+        if (event === "store:plans:changed") {
+          state.plans = data;
+        } else if (event === "store:logs:changed") {
+          state.logs = data;
+        } else if (event === "store:templates:changed") {
+          state.templates = data;
+        } else if (event === "ui:calendar:mode:changed") {
+          state.calendarMode = data;
+        } else if (event === "ui:tab:changed") {
+          this.updateTabStyles(data);
+          this.switchFormTabVisibility(data);
+        } else if (event === "ui:filter:changed") {
+          ui.filterBy = data;
+        } else if (event === "ui:filter:lifeArea") {
+          ui.selectedLifeArea = data;
+        } else if (event === "ui:sort:changed") {
+          ui.sortBy = data;
+        } else if (event === "ui:search:changed") {
+          ui.searchQuery = data;
+        }
+        this.refreshUI();
+      });
     });
   },
 
@@ -437,7 +459,7 @@ export const PlannerController = {
         if (!btn) return;
 
         const selectedTag = btn.dataset.lifeArea;
-        store.setLifeAreaFilter(selectedTag);
+        StateManager.setLifeAreaFilter(selectedTag);
       });
     }
 
@@ -496,7 +518,7 @@ export const PlannerController = {
         GlobalLoaderService.show("Searching plans...");
         setTimeout(() => {
           try {
-            store.setSearchQuery(e.target.value);
+            StateManager.setSearchQuery(e.target.value);
             evaluateSearchState();
           } finally {
             GlobalLoaderService.hide();
@@ -515,7 +537,7 @@ export const PlannerController = {
         setTimeout(() => {
           try {
             searchInput.value = "";
-            store.setSearchQuery("");
+            StateManager.setSearchQuery("");
             setTimeout(() => searchInput.focus(), 100);
             evaluateSearchState();
           } finally {
@@ -729,7 +751,7 @@ export const PlannerController = {
   },
 
   handleTabSwitch(tab) {
-    store.setTab(tab);
+    StateManager.setTab(tab);
 
     openObjectivesState.clear();
 

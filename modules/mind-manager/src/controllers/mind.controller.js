@@ -25,7 +25,6 @@ import { SettingsViewComponent } from "@/components/features/settings/settings-v
 import { TagItemsModalComponent } from "@/components/modals/tag-items-modal.component.js";
 import { eventBus } from "@/services/event-bus.service.js";
 import { renderMindList } from "@/views/mind/mind-list.renderer.js";
-import { store } from "@/services/store.service.js";
 
 export const MindController = {
   async init() {
@@ -91,7 +90,7 @@ export const MindController = {
             GlobalLoaderService.show("Applying filter...");
             setTimeout(() => {
               try {
-                store.setFilterBy(selectedVal);
+                StateManager.setFilterBy(selectedVal);
                 this.refreshUI();
               } finally {
                 GlobalLoaderService.hide();
@@ -130,7 +129,7 @@ export const MindController = {
             GlobalLoaderService.show("Sorting items...");
             setTimeout(() => {
               try {
-                store.setSortBy(selectedVal);
+                StateManager.setSortBy(selectedVal);
                 this.refreshUI();
               } finally {
                 GlobalLoaderService.hide();
@@ -222,24 +221,47 @@ export const MindController = {
   },
 
   subscribeToDataChanges() {
-    eventBus.subscribe("store:changed", () => {
-      this.refreshUI();
-    });
-    eventBus.subscribe("store:notes:changed", () => {
-      this.refreshUI();
-    });
-    eventBus.subscribe("store:snippets:changed", () => {
-      this.refreshUI();
-    });
-    eventBus.subscribe("store:bookmarks:changed", () => {
-      this.refreshUI();
-    });
-    eventBus.subscribe("store:cheatsheets:changed", () => {
-      this.refreshUI();
-    });
-    eventBus.subscribe("ui:tab:changed", (tab) => {
-      this.updateTabStyles(tab);
-      this.switchFormTabVisibility(tab);
+    const ui = StateManager.getActiveUIState();
+
+    [
+      "store:changed",
+      "store:tags:changed",
+      "store:notes:changed",
+      "store:snippets:changed",
+      "store:bookmarks:changed",
+      "store:cheatsheets:changed",
+      "ui:view:changed",
+      "ui:tab:changed",
+      "ui:filter:category",
+      "ui:filter:changed",
+      "ui:sort:changed",
+      "ui:search:changed",
+    ].forEach((event) => {
+      eventBus.subscribe(event, (data) => {
+        if (event === "store:tags:changed") {
+          state.tags = data;
+        } else if (event === "store:notes:changed") {
+          state.notes = data;
+        } else if (event === "store:snippets:changed") {
+          state.snippets = data;
+        } else if (event === "store:bookmarks:changed") {
+          state.bookmarks = data;
+        } else if (event === "store:cheatsheets:changed") {
+          state.cheatsheets = data;
+        } else if (event === "ui:tab:changed") {
+          this.updateTabStyles(data);
+          this.switchFormTabVisibility(data);
+        } else if (event === "ui:filter:changed") {
+          ui.filterBy = data;
+        } else if (event === "ui:filter:category") {
+          ui.selectedCategory = data;
+        } else if (event === "ui:sort:changed") {
+          ui.sortBy = data;
+        } else if (event === "ui:search:changed") {
+          ui.searchQuery = data;
+        }
+        this.refreshUI();
+      });
     });
   },
 
@@ -387,7 +409,7 @@ export const MindController = {
         if (!btn) return;
 
         const selectedCategory = btn.dataset.category;
-        store.setCategoryFilter(selectedCategory);
+        StateManager.setCategoryFilter(selectedCategory);
       });
     }
 
@@ -446,7 +468,7 @@ export const MindController = {
         GlobalLoaderService.show("Searching items...");
         setTimeout(() => {
           try {
-            store.setSearchQuery(e.target.value);
+            StateManager.setSearchQuery(e.target.value);
             evaluateSearchState();
           } finally {
             GlobalLoaderService.hide();
@@ -465,7 +487,7 @@ export const MindController = {
         setTimeout(() => {
           try {
             searchInput.value = "";
-            store.setSearchQuery("");
+            StateManager.setSearchQuery("");
             setTimeout(() => searchInput.focus(), 100);
             evaluateSearchState();
           } finally {
@@ -665,7 +687,7 @@ export const MindController = {
   },
 
   handleTabSwitch(tab) {
-    store.setTab(tab);
+    StateManager.setTab(tab);
 
     const searchInput = document.getElementById("search-mind");
     if (searchInput) {

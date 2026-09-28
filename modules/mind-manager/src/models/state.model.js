@@ -81,12 +81,19 @@ export const StateManager = {
   },
 
   dispatchStateEvents() {
+    const ui = this.getActiveUIState();
+
     eventBus.emit("store:tags:changed", state.tags);
     eventBus.emit("store:notes:changed", state.notes);
     eventBus.emit("store:snippets:changed", state.snippets);
     eventBus.emit("store:bookmarks:changed", state.bookmarks);
     eventBus.emit("store:cheatsheets:changed", state.cheatsheets);
     eventBus.emit("ui:tab:changed", state.activeTab);
+    eventBus.emit("ui:search:changed", ui.searchQuery);
+    eventBus.emit("ui:filter:category", ui.selectedCategory);
+    eventBus.emit("ui:filter:changed", ui.filterBy);
+    eventBus.emit("ui:sort:changed", ui.sortBy);
+    eventBus.emit("ui:view:changed");
     eventBus.emit("store:changed", state);
   },
 
@@ -311,55 +318,49 @@ export const StateManager = {
   setView(view) {
     state.currentView = view;
     eventBus.emit("ui:view:changed", view);
-    eventBus.emit("store:changed", state);
+    eventBus.emit("store:changed");
   },
 
   setTab(tab) {
     if (["notes", "snippets", "bookmarks", "cheatsheets"].includes(tab)) {
       state.activeTab = tab;
       eventBus.emit("ui:tab:changed", tab);
-      eventBus.emit("store:changed", state);
+      eventBus.emit("store:changed");
     }
   },
 
   setHeatmapView(view) {
     if (!state.analyticsUI) state.analyticsUI = {};
     state.analyticsUI.heatmapView = view;
-    eventBus.emit("store:changed", state);
+    eventBus.emit("store:changed");
   },
 
   setCategoryFilter(category) {
     const ui = this.getActiveUIState();
     ui.selectedCategory = category;
     eventBus.emit("ui:filter:category", category);
-    this.notifyActiveTabChanged();
+    eventBus.emit("store:changed");
   },
 
   setFilterBy(filterValue) {
     const ui = this.getActiveUIState();
     ui.filterBy = filterValue;
     eventBus.emit("ui:filter:changed", filterValue);
-    this.notifyActiveTabChanged();
+    eventBus.emit("store:changed");
   },
 
   setSortBy(sortBy) {
     const ui = this.getActiveUIState();
     ui.sortBy = sortBy;
     eventBus.emit("ui:sort:changed", sortBy);
-    this.notifyActiveTabChanged();
+    eventBus.emit("store:changed");
   },
 
   setSearchQuery(query) {
     const ui = this.getActiveUIState();
     ui.searchQuery = query;
     eventBus.emit("ui:search:changed", query);
-    this.notifyActiveTabChanged();
-  },
-
-  notifyActiveTabChanged() {
-    const currentTab = state.activeTab;
-    eventBus.emit(`store:${currentTab}:changed`, state[currentTab]);
-    eventBus.emit("store:changed", state);
+    eventBus.emit("store:changed");
   },
 
   // --- PERSISTENCE ---

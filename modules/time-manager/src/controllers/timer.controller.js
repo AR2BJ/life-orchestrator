@@ -10,6 +10,7 @@ import { FlipClockController } from "./flip-clock.controller";
 import { HeaderComponent } from "@/components/shared/header.component.js";
 import { MobileNavComponent } from "@/components/layout/mobile-nav.component.js";
 import { ModalController } from "./modal.controller";
+import { NoteComponent } from "@/components/features/note/note.component";
 import { NoteController } from "./note.controller";
 import { NotificationService } from "@/services/notification.service";
 import { SettingsViewComponent } from "@/components/features/settings/settings-view.component.js";
@@ -77,7 +78,7 @@ export const TimerController = {
       }
     });
 
-    this.renderTaskWidgets();
+    this.renderWidgets();
   },
 
   subscribeToDataChanges() {
@@ -800,11 +801,12 @@ export const TimerController = {
     document.addEventListener("themeChanged", window.currentThemeListener);
   },
 
-  renderTaskWidgets() {
+  renderWidgets() {
     const taskContainer = document.getElementById("active-task-container");
     const overviewContainer = document.getElementById(
       "today-overview-container",
     );
+    const noteSlot = document.getElementById("note-slot");
 
     if (taskContainer) {
       taskContainer.innerHTML = ActiveTaskCardComponent.render();
@@ -812,13 +814,16 @@ export const TimerController = {
     if (overviewContainer) {
       overviewContainer.innerHTML = TodayOverviewComponent.render();
     }
+    if (noteSlot) {
+      noteSlot.innerHTML = NoteComponent.render();
+    }
   },
 
   refreshUI() {
     this.updateTimerDisplay();
     this.updateAudioUI();
     this.updateModeStyles(state.activeMode);
-    this.renderTaskWidgets();
+    this.renderWidgets();
   },
 
   handleModeSwitch(targetMode) {

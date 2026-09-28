@@ -152,7 +152,7 @@ export function loadFromStorage() {
 
     Object.keys(ENTITY_NORMALIZERS).forEach((key) => {
       const normalizer = ENTITY_NORMALIZERS[key];
-      result[key] = (data[key] || []).map(normalizer);
+      result[key] = (raw[key] || []).map(normalizer);
     });
 
     return result;

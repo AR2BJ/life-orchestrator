@@ -1,12 +1,10 @@
-import "@/services/store.service";
-
+import { CoreStore, ROOT_KEY } from "@life-orchestrator/core-store";
 import {
   TASK_NAMESPACE,
   loadFromStorage,
   saveToStorage,
 } from "./storage.model.js";
 
-import { CoreStore } from "@life-orchestrator/core-store";
 import { eventBus } from "@/services/event-bus.service.js";
 
 export const state = {
@@ -30,6 +28,7 @@ export const StateManager = {
 
   init() {
     this.reloadFromStorage(false);
+    this.setupReactiveEngine();
     return state;
   },
 
@@ -53,7 +52,29 @@ export const StateManager = {
   dispatchStateEvents() {
     eventBus.emit("store:tasks:changed", state.tasks);
     eventBus.emit("store:tags:changed", state.tags);
-    eventBus.emit("store:changed", { tasks: state.tasks, tags: state.tags });
+    eventBus.emit("ui:filter:date", state.dateFilter);
+    eventBus.emit("ui:tag:changed", state.selectedTag);
+    eventBus.emit("ui:priority:changed", state.currentPriority);
+    eventBus.emit("ui:status:changed", state.currentStatus);
+    eventBus.emit("ui:search:changed", state.searchQuery);
+    eventBus.emit("ui:matrix:mode:changed", state.matrixMode);
+    eventBus.emit("ui:calendar:mode:changed", state.calendarMode);
+    eventBus.emit("ui:sort:changed", state.sortBy);
+    eventBus.emit("ui:tab:changed", state.activeTab);
+    eventBus.emit("ui:view:changed");
+    eventBus.emit("store:changed");
+  },
+
+  setupReactiveEngine() {
+    window.addEventListener("storage", (event) => {
+      if (event.key === ROOT_KEY) {
+        try {
+          this.reloadFromStorage(true);
+        } catch (error) {
+          console.error("Error syncing cross-tab storage:", error);
+        }
+      }
+    });
   },
 
   getTasks() {
@@ -153,44 +174,64 @@ export const StateManager = {
     });
   },
 
-  setDateFilter(filter) {
-    state.dateFilter = filter;
+  setDateFilter(date) {
+    state.dateFilter = date;
+    eventBus.emit("ui:filter:date", date);
+    eventBus.emit("store:changed");
   },
 
   setSelectedTag(tag) {
     state.selectedTag = tag;
+    eventBus.emit("ui:tag:changed", tag);
+    eventBus.emit("store:changed");
   },
 
   setPriority(priority) {
     state.currentPriority = priority;
+    eventBus.emit("ui:priority:changed", priority);
+    eventBus.emit("store:changed");
   },
 
   setStatus(status) {
     state.currentStatus = status;
+    eventBus.emit("ui:status:changed", status);
+    eventBus.emit("store:changed");
   },
 
   setSortBy(sortBy) {
     state.sortBy = sortBy;
+    eventBus.emit("ui:sort:changed", sortBy);
+    eventBus.emit("store:changed");
   },
 
   setMatrixMode(mode) {
     state.matrixMode = mode;
+    eventBus.emit("ui:matrix:mode:changed", mode);
+    eventBus.emit("store:changed");
   },
 
   setCalendarMode(mode) {
     state.calendarMode = mode;
+    eventBus.emit("ui:calendar:mode:changed", mode);
+    eventBus.emit("store:changed");
   },
 
   setTab(tab) {
     state.activeTab = tab;
+    eventBus.emit("ui:tab:changed", tab);
+    eventBus.emit("store:changed");
   },
 
   setView(view) {
     state.currentView = view;
+    eventBus.emit("ui:view:changed", view);
+    eventBus.emit("store:changed");
   },
 
   setSearchQuery(query) {
     state.searchQuery = query;
+    eventBus.emit("ui:search:changed", query);
+    eventBus.emit("store:changed");
   },
 
   save(tasks = state.tasks, tags = state.tags) {

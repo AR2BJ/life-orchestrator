@@ -176,11 +176,47 @@ export const TaskController = {
   },
 
   subscribeToDataChanges() {
-    eventBus.subscribe("store:changed", ({ tasks, tags }) => {
-      state.tasks = tasks;
-      state.tags = tags;
-
-      this.refreshUI();
+    [
+      "store:changed",
+      "store:tags:changed",
+      "store:tasks:changed",
+      "ui:view:changed",
+      "ui:tab:changed",
+      "ui:filter:date",
+      "ui:tag:changed",
+      "ui:priority:changed",
+      "ui:status:changed",
+      "ui:matrix:mode:changed",
+      "ui:calendar:mode:changed",
+      "ui:sort:changed",
+      "ui:search:changed",
+    ].forEach((event) => {
+      eventBus.subscribe(event, (data) => {
+        if (event === "store:tags:changed") {
+          state.tags = data;
+        } else if (event === "store:tasks:changed") {
+          state.tasks = data;
+        } else if (event === "ui:tag:changed") {
+          state.selectedTag = data;
+        } else if (event === "store:priority:changed") {
+          state.currentPriority = data;
+        } else if (event === "store:status:changed") {
+          state.currentStatus = data;
+        } else if (event === "store:matrix:mode:changed") {
+          state.matrixMode = data;
+        } else if (event === "ui:calendar:mode:changed") {
+          state.calendarMode = data;
+        } else if (event === "ui:tab:changed") {
+          this.updateTabStyles(data);
+        } else if (event === "ui:filter:date") {
+          state.dateFilter = data;
+        } else if (event === "ui:sort:changed") {
+          state.sortBy = data;
+        } else if (event === "ui:search:changed") {
+          state.searchQuery = data;
+        }
+        this.refreshUI();
+      });
     });
   },
 

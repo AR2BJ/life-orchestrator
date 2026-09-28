@@ -1,5 +1,5 @@
-import "@/services/store.service";
-
+import { CoreStore, ROOT_KEY } from "@life-orchestrator/core-store";
+import { SOUND_STATE, SoundModel, stateSound } from "./sound.model.js";
 import { TIME_MANAGER_EVENTS, eventBus } from "@/services/event-bus.service.js";
 import {
   TIME_NAMESPACE,
@@ -8,9 +8,7 @@ import {
 } from "./storage.model.js";
 import { formatDate, generateId, todayISO } from "@/utils/helpers.js";
 
-import { CoreStore } from "@life-orchestrator/core-store";
 import { NoteModel } from "./note.model.js";
-import { SoundModel } from "./sound.model.js";
 import { TaskModel } from "./task.model.js";
 
 export const TASK_NAMESPACE = "task_manager";
@@ -51,7 +49,6 @@ export const state = {
 };
 
 const listeners = new Set();
-let isInitialized = false;
 
 const taskData = CoreStore.getNamespace(TASK_NAMESPACE);
 
@@ -59,9 +56,8 @@ export const StateManager = {
   _rawCache: {},
 
   init() {
-    if (isInitialized) return state;
     this.reloadFromStorage(false);
-    isInitialized = true;
+    this.setupReactiveEngine();
     return state;
   },
 
@@ -78,30 +74,35 @@ export const StateManager = {
       state.activeTaskId = saved.activeTaskId
         ? String(saved.activeTaskId)
         : null;
-
-      if (saved.settings) {
-        state.settings = {
-          ...DEFAULT_SETTINGS,
-          ...saved.settings,
-          pomodoroEndSound:
-            saved.settings.pomodoroEndSound ??
-            DEFAULT_SETTINGS.pomodoroEndSound,
-          breakEndSound:
-            saved.settings.breakEndSound ?? DEFAULT_SETTINGS.breakEndSound,
-          longBreakInterval:
-            Number(saved.settings.longBreakInterval) ||
-            DEFAULT_SETTINGS.longBreakInterval,
-        };
-        SoundModel.init(state.settings);
-      } else {
-        SoundModel.init(DEFAULT_SETTINGS);
-      }
-
-      if (saved.timer) {
-        state.timer = { ...state.timer, ...saved.timer };
-      }
+      state.settings = {
+        ...DEFAULT_SETTINGS,
+        ...saved.settings,
+        pomodoroEndSound:
+          saved.settings.pomodoroEndSound ?? DEFAULT_SETTINGS.pomodoroEndSound,
+        breakEndSound:
+          saved.settings.breakEndSound ?? DEFAULT_SETTINGS.breakEndSound,
+        longBreakInterval:
+          Number(saved.settings.longBreakInterval) ||
+          DEFAULT_SETTINGS.longBreakInterval,
+      };
+      state.timer = { ...state.timer, ...saved.timer };
     } else {
-      SoundModel.init(DEFAULT_SETTINGS);
+      state.currentView = "timer";
+      state.activeTaskId = null;
+      state.activeMode = "pomodoro";
+      state.sessions = [];
+      state.notes = [];
+      state.settings = { ...DEFAULT_SETTINGS };
+      state.timer = {
+        isRunning: false,
+        isPaused: false,
+        timeRemaining: 25 * 60,
+        duration: 25 * 60,
+        flowTime: 0,
+        pomodoroSessionCount: 0,
+        currentPhase: "work",
+      };
+      SoundModel.reset();
     }
 
     if (state.activeTaskId && Array.isArray(tasks) && tasks.length > 0) {
@@ -142,6 +143,18 @@ export const StateManager = {
     });
 
     eventBus.emit(TIME_MANAGER_EVENTS.STORE_CHANGED, state);
+  },
+
+  setupReactiveEngine() {
+    window.addEventListener("storage", (event) => {
+      if (event.key === ROOT_KEY) {
+        try {
+          this.reloadFromStorage(true);
+        } catch (error) {
+          console.error("Error syncing cross-tab storage:", error);
+        }
+      }
+    });
   },
 
   getState() {
