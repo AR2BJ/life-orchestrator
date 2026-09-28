@@ -8,6 +8,7 @@ import { NoteService } from "@/services/note.service";
 import { NotificationService } from "@/services/notification.service.js";
 import { SoundModel } from "@/models/sound.model.js";
 import { TIME_NAMESPACE } from "@/models/storage.model.js";
+import { TaskModel } from "@/models/task.model";
 import { TimerController } from "../timer.controller";
 import { soundService } from "@/services/sound.service.js";
 
@@ -72,8 +73,6 @@ export const SettingsResetController = {
     const previousPayload = CoreStore.getNamespace(TIME_NAMESPACE);
 
     const previousState = {
-      tasks: (state.tasks || []).map((t) => ({ ...t })),
-      notes: (state.notes || []).map((t) => ({ ...t })),
       sessions: (state.sessions || []).map((s) => ({ ...s })),
       settings: { ...state.settings },
       activeMode: state.activeMode,
@@ -108,8 +107,6 @@ export const SettingsResetController = {
                   CoreStore.setNamespace(TIME_NAMESPACE, previousPayload);
                 }
 
-                state.tasks = previousState.tasks;
-                state.notes = previousState.notes;
                 state.sessions = previousState.sessions;
                 state.settings = previousState.settings;
                 state.activeMode = previousState.activeMode;
@@ -117,7 +114,6 @@ export const SettingsResetController = {
                 state.timer = previousState.timer;
 
                 SoundModel.init(previousState.settings);
-                NoteService.restoreNotes(previousState.notes);
                 NoteController.init();
 
                 StateManager.setView("timer");

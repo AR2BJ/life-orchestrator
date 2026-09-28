@@ -1,7 +1,6 @@
 import { generateId, todayISO } from "@/utils/helpers.js";
 
 import { CoreStore } from "@life-orchestrator/core-store";
-import { TaskModel } from "./task.model";
 
 export const TIME_NAMESPACE = "time_manager";
 export const STORAGE_VERSION = 1;
@@ -13,14 +12,6 @@ function normalizeSession(session) {
     type: session.type || "pomodoro",
     durationSeconds: Number(session.durationSeconds) || 0,
     completedAt: session.completedAt || todayISO(),
-  };
-}
-
-function normalizeNote(note) {
-  return {
-    id: String(note.id || generateId()),
-    text: note.text ? String(note.text).trim() : "",
-    createdAt: note.createdAt || todayISO(),
   };
 }
 
@@ -39,7 +30,6 @@ function normalizeTimer(timer, defaultWorkTime = 25) {
 
 function migrateData(data) {
   const sessions = Array.isArray(data.sessions) ? data.sessions : [];
-  const notes = Array.isArray(data.notes) ? data.notes : [];
   const settings = data.settings || {};
   const pomodoroWorkTime = Number(settings.pomodoroWorkTime) || 25;
 
@@ -48,7 +38,6 @@ function migrateData(data) {
     activeMode: data.activeMode === "flow" ? "flow" : "pomodoro",
     activeTaskId: data.activeTaskId ? String(data.activeTaskId) : null,
     sessions: sessions.map(normalizeSession),
-    notes: notes.map(normalizeNote),
     timer: normalizeTimer(data.timer, pomodoroWorkTime),
     settings: {
       ...settings,
@@ -77,7 +66,6 @@ export function saveToStorage(data) {
     activeMode: data.activeMode || "pomodoro",
     activeTaskId: data.activeTaskId ? String(data.activeTaskId) : null,
     sessions: data.sessions || [],
-    notes: data.notes || [],
     timer: data.timer || {},
     settings: data.settings || {},
   });

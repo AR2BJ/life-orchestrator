@@ -8,8 +8,8 @@ export const NoteService = {
     return NoteModel.getNotes();
   },
 
-  addNote(text) {
-    if (!text || !text.trim()) {
+  addNote(title) {
+    if (!title || !title.trim()) {
       NotificationService.show({
         type: "warning",
         message: "Please write something before adding a note",
@@ -22,7 +22,7 @@ export const NoteService = {
 
     const allNotes = this.getNotes();
     const isDuplicate = allNotes.some(
-      (n) => n.text.trim().toLowerCase() === text.trim().toLowerCase(),
+      (n) => n.title.trim().toLowerCase() === title.trim().toLowerCase(),
     );
     if (isDuplicate) {
       NotificationService.show({
@@ -37,7 +37,7 @@ export const NoteService = {
 
     const newNote = {
       id: generateId(),
-      text: text.trim(),
+      title: title.trim(),
       createdAt: todayISO(),
     };
 

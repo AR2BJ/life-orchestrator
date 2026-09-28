@@ -12,6 +12,7 @@ import { NoteModel } from "./note.model.js";
 import { TaskModel } from "./task.model.js";
 
 export const TASK_NAMESPACE = "task_manager";
+export const MIND_NAMESPACE = "mind_manager";
 
 export const DEFAULT_SETTINGS = {
   pomodoroWorkTime: 25,
@@ -44,13 +45,14 @@ export const state = {
     currentPhase: "work",
   },
   sessions: [],
-  notes: [],
   settings: { ...DEFAULT_SETTINGS },
 };
 
 const listeners = new Set();
 
 const taskData = CoreStore.getNamespace(TASK_NAMESPACE);
+
+const noteData = CoreStore.getNamespace(MIND_NAMESPACE);
 
 export const StateManager = {
   _rawCache: {},
@@ -64,13 +66,9 @@ export const StateManager = {
   reloadFromStorage(notify = true) {
     const saved = loadFromStorage();
 
-    const currentTaskData = CoreStore.getNamespace(TASK_NAMESPACE);
-    const tasks = currentTaskData?.tasks || [];
-
     if (saved) {
       state.activeMode = saved.activeMode || "pomodoro";
       state.sessions = saved.sessions || [];
-      state.notes = saved.notes || [];
       state.activeTaskId = saved.activeTaskId
         ? String(saved.activeTaskId)
         : null;
@@ -91,7 +89,6 @@ export const StateManager = {
       state.activeTaskId = null;
       state.activeMode = "pomodoro";
       state.sessions = [];
-      state.notes = [];
       state.settings = { ...DEFAULT_SETTINGS };
       state.timer = {
         isRunning: false,
@@ -126,7 +123,7 @@ export const StateManager = {
 
   dispatchStateEvents() {
     eventBus.emit(TIME_MANAGER_EVENTS.TASKS_CHANGED, taskData?.tasks);
-    eventBus.emit(TIME_MANAGER_EVENTS.NOTES_CHANGED, state.notes);
+    eventBus.emit(TIME_MANAGER_EVENTS.NOTES_CHANGED, noteData?.notes);
     eventBus.emit(TIME_MANAGER_EVENTS.SESSIONS_CHANGED, state.sessions);
     eventBus.emit(TIME_MANAGER_EVENTS.SETTINGS_CHANGED, state.settings);
     eventBus.emit(TIME_MANAGER_EVENTS.TIMER_CHANGED, state.timer);
@@ -259,7 +256,6 @@ export const StateManager = {
   resetToDefaults() {
     state.settings = { ...DEFAULT_SETTINGS };
     state.sessions = [];
-    state.notes = [];
     state.activeTaskId = null;
     state.activeMode = "pomodoro";
 
@@ -275,11 +271,8 @@ export const StateManager = {
     };
 
     SoundModel.reset();
-    NoteModel.reset();
 
     this.save();
-
-    window.dispatchEvent(new CustomEvent("notesChanged"));
   },
 
   addSession(sessionData = {}) {
@@ -310,7 +303,6 @@ export const StateManager = {
       activeMode: state.activeMode,
       activeTaskId: state.activeTaskId,
       sessions: state.sessions,
-      notes: state.notes,
       timer: state.timer,
       settings: state.settings,
     });

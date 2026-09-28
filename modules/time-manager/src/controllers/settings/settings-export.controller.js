@@ -1,14 +1,16 @@
+import { NoteModel } from "@/models/note.model";
 import { NotificationService } from "@/services/notification.service.js";
 import { STORAGE_VERSION } from "@/models/storage.model.js";
 import { SoundModel } from "@/models/sound.model.js";
+import { TaskModel } from "@/models/task.model";
 import { state } from "@/models/state.model.js";
 import { todayISO } from "@/utils/helpers.js";
 
 export const SettingsExportController = {
   handleDataExport(format = "json") {
-    const tasks = Array.isArray(state.tasks) ? state.tasks : [];
+    const tasks = TaskModel.getTasks();
     const sessions = Array.isArray(state.sessions) ? state.sessions : [];
-    const notes = Array.isArray(state.notes) ? state.notes : [];
+    const notes = NoteModel.getNotes();
     const settings = state.settings || {};
     const soundState = SoundModel.getState();
 
@@ -33,14 +35,8 @@ export const SettingsExportController = {
           volume: soundState.volume,
           isMuted: soundState.isMuted,
         },
-        tasks: tasks.map((t) => ({
-          id: t.id,
-          title: t.title,
-          status: t.status || "todo",
-          estimatedFocusUnits: Number(t.estimatedFocusUnits) || 1,
-          completedFocusUnits: Number(t.completedFocusUnits) || 0,
-          createdAt: t.createdAt,
-        })),
+        notes,
+        tasks,
         sessions: sessions.map((s) => ({
           id: s.id,
           taskId: s.taskId || null,
@@ -48,11 +44,6 @@ export const SettingsExportController = {
           type: s.type || "pomodoro",
           durationSeconds: s.durationSeconds || 0,
           completedAt: s.completedAt,
-        })),
-        notes: notes.map((n) => ({
-          id: n.id,
-          text: n.text || "",
-          createdAt: n.createdAt,
         })),
       };
 
@@ -63,7 +54,6 @@ export const SettingsExportController = {
       fileContent = this.generateMarkdownExport(
         tasks,
         sessions,
-        notes,
         settings,
         soundState,
       );
@@ -73,7 +63,6 @@ export const SettingsExportController = {
       fileContent = this.generateCsvExport(
         tasks,
         sessions,
-        notes,
         settings,
         soundState,
       );

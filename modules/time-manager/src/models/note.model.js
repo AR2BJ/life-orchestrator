@@ -1,8 +1,13 @@
 import { StateManager, state } from "./state.model.js";
 
+import { CoreStore } from "@life-orchestrator/core-store";
+
+const MIND_NAMESPACE = "mind_manager";
+
 export const NoteModel = {
   getNotes() {
-    return state.notes || [];
+    const data = CoreStore.getNamespace(MIND_NAMESPACE);
+    return data?.notes || [];
   },
 
   getItems() {
@@ -10,39 +15,62 @@ export const NoteModel = {
   },
 
   getById(noteId) {
+    const data = CoreStore.getNamespace(MIND_NAMESPACE);
+
     const targetIdStr = String(noteId);
     return (
-      (state.notes || []).find((n) => String(n.id) === targetIdStr) || null
+      (data?.notes || [])?.find((t) => String(t.id) === targetIdStr) || null
     );
   },
 
   setItems(items = []) {
-    state.notes = Array.isArray(items) ? [...items] : [];
-    this.commit();
+    const data = CoreStore.getNamespace(MIND_NAMESPACE);
+
+    const notes = Array.isArray(items)
+      ? [...(data?.notes || []), ...items]
+      : [];
+
+    this.commit(notes);
   },
 
   insert(noteData) {
-    if (!state.notes) state.notes = [];
-    state.notes.push(noteData);
-    this.commit();
+    const data = CoreStore.getNamespace(MIND_NAMESPACE);
+
+    if (!data?.notes) return;
+
+    const notes = [...(data?.notes || [])];
+
+    notes.push(noteData);
+
+    this.commit(notes);
     return noteData;
   },
 
   insertAt(noteData, index) {
-    if (!state.notes) state.notes = [];
-    state.notes.splice(index, 0, noteData);
-    this.commit();
+    const data = CoreStore.getNamespace(MIND_NAMESPACE);
+
+    if (!data?.notes) return;
+
+    const notes = (data?.notes || []).toSpliced(index, 0, noteData);
+
+    this.commit(notes);
   },
 
   remove(noteId) {
+    const data = CoreStore.getNamespace(MIND_NAMESPACE);
+
+    if (!data?.notes) return;
+
+    let notes = [...(data?.notes || [])];
+
     const targetIdStr = String(noteId);
-    const index = (state.notes || []).findIndex(
-      (n) => String(n.id) === targetIdStr,
-    );
+    const index = (notes || []).findIndex((n) => String(n.id) === targetIdStr);
     if (index === -1) return null;
 
-    const [deletedNote] = state.notes.splice(index, 1);
-    this.commit();
+    const [deletedNote] = notes.splice(index, 1);
+
+    this.commit(notes);
+
     return { deletedNote, index };
   },
 
@@ -50,7 +78,11 @@ export const NoteModel = {
     return this.remove(noteId);
   },
 
-  commit() {
+  commit(notes = []) {
+    const data = CoreStore.getNamespace(MIND_NAMESPACE);
+
+    CoreStore.setNamespace(MIND_NAMESPACE, { ...data, notes });
+
     StateManager.save();
   },
 
