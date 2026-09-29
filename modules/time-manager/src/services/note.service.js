@@ -64,7 +64,7 @@ export const NoteService = {
 
     NotificationService.show({
       type: "error",
-      message: `Note "${deletedNote.text}" removed`,
+      message: `Note "${deletedNote.title}" removed`,
       undoAction: () => {
         this.restoreNote(deletedNote, index);
       },
