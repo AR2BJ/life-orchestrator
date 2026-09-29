@@ -36,7 +36,8 @@ export const NoteModel = {
   insert(noteData) {
     const data = CoreStore.getNamespace(MIND_NAMESPACE);
 
-    if (!data?.notes) return;
+    if (!data?.notes)
+      CoreStore.setNamespace(MIND_NAMESPACE, { ...data, notes: [] });
 
     const notes = [...(data?.notes || [])];
 
@@ -49,7 +50,8 @@ export const NoteModel = {
   insertAt(noteData, index) {
     const data = CoreStore.getNamespace(MIND_NAMESPACE);
 
-    if (!data?.notes) return;
+    if (!data?.notes)
+      CoreStore.setNamespace(MIND_NAMESPACE, { ...data, notes: [] });
 
     const notes = (data?.notes || []).toSpliced(index, 0, noteData);
 

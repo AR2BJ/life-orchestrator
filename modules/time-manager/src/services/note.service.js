@@ -50,7 +50,6 @@ export const NoteService = {
         icon: "ti-note",
         iconColor: "text-emerald-500",
       });
-      window.dispatchEvent(new CustomEvent("notesChanged"));
     }
 
     return createdNote;
@@ -70,20 +69,16 @@ export const NoteService = {
       },
     });
 
-    window.dispatchEvent(new CustomEvent("notesChanged"));
-
     return result;
   },
 
   restoreNote(note, index) {
     if (!note) return;
     NoteModel.insertAt(note, index);
-    window.dispatchEvent(new CustomEvent("notesChanged"));
   },
 
   restoreNotes(notes) {
     if (!Array.isArray(notes)) return;
     NoteModel.setItems(notes);
-    window.dispatchEvent(new CustomEvent("notesChanged"));
   },
 };

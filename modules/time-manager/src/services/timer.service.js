@@ -1,4 +1,8 @@
-import { StateManager, state } from "@/models/state.model.js";
+import {
+  MIN_SESSION_SECONDS,
+  StateManager,
+  state,
+} from "@/models/state.model.js";
 
 import { NotificationService } from "./notification.service.js";
 import { SoundModel } from "@/models/sound.model.js";
@@ -46,6 +50,11 @@ class TimerService {
 
   pause() {
     clearInterval(this.timerInterval);
+
+    if (state.timer.isRunning && !state.timer.isPaused) {
+      StateManager.addInterruption();
+    }
+
     StateManager.updateTimerState({ isRunning: false, isPaused: true });
 
     soundService.pause();
@@ -53,6 +62,10 @@ class TimerService {
 
   stopAndTransition() {
     clearInterval(this.timerInterval);
+
+    if (state.timer.isRunning && !state.timer.isPaused) {
+      StateManager.addInterruption();
+    }
 
     if (state.activeMode === "flow") {
       this._handleFlowStop();
@@ -73,7 +86,10 @@ class TimerService {
     if (newTime <= 0) {
       this._onPomodoroComplete();
     } else {
-      StateManager.updateTimerState({ timeRemaining: newTime });
+      StateManager.updateTimerState(
+        { timeRemaining: newTime },
+        { silent: true },
+      );
     }
   }
 
@@ -92,25 +108,54 @@ class TimerService {
       const currentTaskId = state.activeTaskId;
       const currentTask = TaskService.getActiveTask();
 
-      if (currentTaskId) {
-        TaskService.incrementCompletedFocusUnits(currentTaskId);
+      const elapsedSeconds = Math.max(
+        0,
+        (state.timer.duration || 0) - (state.timer.timeRemaining || 0),
+      );
+
+      const shouldSaveSession = elapsedSeconds >= MIN_SESSION_SECONDS;
+
+      if (shouldSaveSession) {
+        if (currentTaskId) {
+          TaskService.incrementCompletedFocusUnits(currentTaskId);
+        }
+
+        StateManager.addSession({
+          task: currentTask,
+          type: "pomodoro",
+          durationSeconds: elapsedSeconds,
+          interruptionsCount: state.currentSessionInterruptions,
+        });
+
+        NotificationService.show({
+          type: "success",
+          message: "Focus session completed! Time for a break",
+          icon: "ti-circle-check",
+          iconColor: "text-emerald-500",
+        });
+      } else {
+        NotificationService.show({
+          type: "info",
+          message: `Session too short (under 15 minutes), not saved`,
+          icon: "ti-info-circle",
+          iconColor: "text-sky-500",
+        });
       }
 
       const newSessionCount = (state.timer.pomodoroSessionCount || 0) + 1;
       const workSecs = (state.settings.pomodoroWorkTime || 25) * 60;
 
-      StateManager.addSession({
-        task: currentTask,
-        type: "pomodoro",
-        durationSeconds: workSecs,
-      });
-
-      NotificationService.show({
-        type: "success",
-        message: "Focus session completed! Time for a break",
-        icon: "ti-circle-check",
-        iconColor: "text-emerald-500",
-      });
+      if (!shouldSaveSession) {
+        StateManager.updateTimerState({
+          isRunning: false,
+          isPaused: false,
+          currentPhase: "work",
+          timeRemaining: workSecs,
+          duration: workSecs,
+        });
+        soundService.pause();
+        return;
+      }
 
       if (state.settings.disableBreaks) {
         StateManager.updateTimerState({
@@ -196,11 +241,17 @@ class TimerService {
       if (newTime <= 0) {
         this._onFlowBreakComplete();
       } else {
-        StateManager.updateTimerState({ timeRemaining: newTime });
+        StateManager.updateTimerState(
+          { timeRemaining: newTime },
+          { silent: true },
+        );
       }
     } else {
       const newFlowTime = (state.timer.flowTime || 0) + 1;
-      StateManager.updateTimerState({ flowTime: newFlowTime });
+      StateManager.updateTimerState(
+        { flowTime: newFlowTime },
+        { silent: true },
+      );
     }
   }
 
@@ -261,6 +312,7 @@ class TimerService {
         task: currentTask,
         type: "flow",
         durationSeconds: flowTime,
+        interruptionsCount: state.currentSessionInterruptions,
       });
 
       if (currentTaskId) {

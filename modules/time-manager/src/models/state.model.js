@@ -14,6 +14,8 @@ import { TaskModel } from "./task.model.js";
 export const TASK_NAMESPACE = "task_manager";
 export const MIND_NAMESPACE = "mind_manager";
 
+export const MIN_SESSION_SECONDS = 15 * 60;
+
 export const DEFAULT_SETTINGS = {
   pomodoroWorkTime: 25,
   shortBreakTime: 5,
@@ -44,6 +46,7 @@ export const state = {
     pomodoroSessionCount: 0,
     currentPhase: "work",
   },
+  currentSessionInterruptions: 0,
   sessions: [],
   settings: { ...DEFAULT_SETTINGS },
 };
@@ -83,6 +86,7 @@ export const StateManager = {
           Number(saved.settings.longBreakInterval) ||
           DEFAULT_SETTINGS.longBreakInterval,
       };
+      state.currentSessionInterruptions = 0;
       state.timer = { ...state.timer, ...saved.timer };
     } else {
       state.currentView = "timer";
@@ -90,6 +94,7 @@ export const StateManager = {
       state.activeMode = "pomodoro";
       state.sessions = [];
       state.settings = { ...DEFAULT_SETTINGS };
+      state.currentSessionInterruptions = 0;
       state.timer = {
         isRunning: false,
         isPaused: false,
@@ -102,13 +107,17 @@ export const StateManager = {
       SoundModel.reset();
     }
 
-    if (state.activeTaskId && Array.isArray(tasks) && tasks.length > 0) {
-      const exists = tasks.some(
+    if (
+      state.activeTaskId &&
+      Array.isArray(taskData?.tasks) &&
+      taskData?.tasks.length > 0
+    ) {
+      const exists = taskData?.tasks.some(
         (t) => String(t.id) === String(state.activeTaskId),
       );
 
       if (!exists) {
-        const firstValid = tasks.find((t) => t.status !== "done");
+        const firstValid = taskData?.tasks.find((t) => t.status !== "done");
         state.activeTaskId = firstValid ? String(firstValid.id) : null;
       }
     }
@@ -122,11 +131,11 @@ export const StateManager = {
   },
 
   dispatchStateEvents() {
-    eventBus.emit(TIME_MANAGER_EVENTS.TASKS_CHANGED, taskData?.tasks);
-    eventBus.emit(TIME_MANAGER_EVENTS.NOTES_CHANGED, noteData?.notes);
-    eventBus.emit(TIME_MANAGER_EVENTS.SESSIONS_CHANGED, state.sessions);
-    eventBus.emit(TIME_MANAGER_EVENTS.SETTINGS_CHANGED, state.settings);
-    eventBus.emit(TIME_MANAGER_EVENTS.TIMER_CHANGED, state.timer);
+    eventBus.emit(TIME_MANAGER_EVENTS.TASKS_CHANGED);
+    eventBus.emit(TIME_MANAGER_EVENTS.NOTES_CHANGED);
+    eventBus.emit(TIME_MANAGER_EVENTS.SESSIONS_CHANGED);
+    eventBus.emit(TIME_MANAGER_EVENTS.SETTINGS_CHANGED);
+    eventBus.emit(TIME_MANAGER_EVENTS.TIMER_CHANGED);
 
     const currentSoundId = state.settings.currentSoundId || "none";
     const volume = state.settings.volume ?? 50;
@@ -208,8 +217,18 @@ export const StateManager = {
     return { sessionsDone, totalMinutes };
   },
 
-  updateTimerState(newTimerState) {
+  updateTimerState(newTimerState, { silent = false } = {}) {
     state.timer = { ...state.timer, ...newTimerState };
+
+    if (!silent) {
+      this.save();
+    } else {
+      this.notify();
+    }
+  },
+
+  addInterruption() {
+    state.currentSessionInterruptions += 1;
     this.save();
   },
 
@@ -240,6 +259,7 @@ export const StateManager = {
     const defaultSecs = (state.settings.pomodoroWorkTime || 25) * 60;
     state.timer.isRunning = false;
     state.timer.isPaused = false;
+    state.currentSessionInterruptions = 0;
 
     if (state.activeMode === "pomodoro") {
       state.timer.timeRemaining = defaultSecs;
@@ -258,6 +278,7 @@ export const StateManager = {
     state.sessions = [];
     state.activeTaskId = null;
     state.activeMode = "pomodoro";
+    state.currentSessionInterruptions = 0;
 
     const defaultSecs = DEFAULT_SETTINGS.pomodoroWorkTime * 60;
     state.timer = {
@@ -280,11 +301,16 @@ export const StateManager = {
       id: generateId(),
       task: sessionData.task,
       type: sessionData.type || state.activeMode,
-      durationSeconds: sessionData.durationSeconds || 0,
       completedAt: todayISO(),
+      durationSeconds: sessionData.durationSeconds || 0,
+      interruptionsCount:
+        sessionData.interruptionsCount ??
+        state.currentSessionInterruptions ??
+        0,
     };
 
     state.sessions.push(session);
+    state.currentSessionInterruptions = 0;
     this.save();
   },
 

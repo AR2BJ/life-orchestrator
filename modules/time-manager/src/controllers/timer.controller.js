@@ -1,5 +1,6 @@
 import { SYSTEM_EVENTS, globalEventBus } from "@life-orchestrator/event-bus";
 import { StateManager, TASK_NAMESPACE, state } from "@/models/state.model.js";
+import { TIME_MANAGER_EVENTS, eventBus } from "@/services/event-bus.service";
 
 import { ActiveTaskCardComponent } from "@/components/features/tasks/active-task-card.component";
 import { AnalyticsController } from "./analytics.controller";
@@ -49,6 +50,7 @@ export const TimerController = {
     this.subscribeToDataChanges();
 
     this.refreshUI();
+    this.renderWidgets("all");
 
     StateManager.subscribe(() => {
       this.refreshUI();
@@ -77,11 +79,19 @@ export const TimerController = {
         container.innerHTML = renderFn();
       }
     });
-
-    this.renderWidgets();
   },
 
   subscribeToDataChanges() {
+    eventBus.subscribe(TIME_MANAGER_EVENTS.NOTES_CHANGED, () => {
+      this.renderWidgets("note");
+    });
+    eventBus.subscribe(TIME_MANAGER_EVENTS.TASKS_CHANGED, () => {
+      this.renderWidgets("task");
+    });
+    eventBus.subscribe(TIME_MANAGER_EVENTS.SESSIONS_CHANGED, () => {
+      this.renderWidgets("overview");
+    });
+
     globalEventBus.on(SYSTEM_EVENTS.TASK_DELETED, ({ taskId }) => {
       const currentActiveId = state.activeTaskId
         ? String(state.activeTaskId)
@@ -801,20 +811,20 @@ export const TimerController = {
     document.addEventListener("themeChanged", window.currentThemeListener);
   },
 
-  renderWidgets() {
+  renderWidgets(type = "all") {
     const taskContainer = document.getElementById("active-task-container");
     const overviewContainer = document.getElementById(
       "today-overview-container",
     );
     const noteSlot = document.getElementById("note-slot");
 
-    if (taskContainer) {
+    if (taskContainer && (type === "task" || type === "all")) {
       taskContainer.innerHTML = ActiveTaskCardComponent.render();
     }
-    if (overviewContainer) {
+    if (overviewContainer && (type === "overview" || type === "all")) {
       overviewContainer.innerHTML = TodayOverviewComponent.render();
     }
-    if (noteSlot) {
+    if (noteSlot && (type === "note" || type === "all")) {
       noteSlot.innerHTML = NoteComponent.render();
     }
   },
@@ -823,7 +833,6 @@ export const TimerController = {
     this.updateTimerDisplay();
     this.updateAudioUI();
     this.updateModeStyles(state.activeMode);
-    this.renderWidgets();
   },
 
   handleModeSwitch(targetMode) {
