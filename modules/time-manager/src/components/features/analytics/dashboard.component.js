@@ -27,14 +27,18 @@ export const DashboardComponent = {
       const today = todayISO();
       let checkDate = new Date(today);
 
-      const hasTodaySession = sessions.some((s) => s.completedAt === today);
+      const hasTodaySession = sessions.some(
+        (s) => formatDate(s.completedAt) === today,
+      );
       if (!hasTodaySession) {
         checkDate.setDate(checkDate.getDate() - 1);
       }
 
       while (true) {
         const dateStr = formatDate(checkDate);
-        const hasSession = sessions.some((s) => s.completedAt === dateStr);
+        const hasSession = sessions.some(
+          (s) => formatDate(s.completedAt) === dateStr,
+        );
 
         if (hasSession) {
           currentStreak++;
@@ -55,7 +59,9 @@ export const DashboardComponent = {
       totalPomos > 0 ? Math.round(totalPomoMinutes / totalPomos) : 0;
 
     const today = todayISO();
-    const todaySessions = sessions.filter((s) => s.completedAt === today);
+    const todaySessions = sessions.filter(
+      (s) => formatDate(s.completedAt) === today,
+    );
     const todayTotalSeconds = todaySessions.reduce(
       (acc, s) => acc + (s.durationSeconds || 0),
       0,
@@ -473,7 +479,8 @@ export const DashboardComponent = {
                         ? String(activeTask.id)
                         : null;
 
-                      const isActive = String(session.task?.id) === activeTaskId;
+                      const isActive =
+                        String(session.task?.id) === activeTaskId;
 
                       const overdue = isOverdue(
                         session.task?.dueDate,
@@ -553,7 +560,7 @@ export const DashboardComponent = {
                             >
                               <span>
                                 <i class="ti ti-calendar text-[10px] lg:text-xs me-1 text-brand/80"></i>
-                                ${session.completedAt}
+                                ${formatDate(session.completedAt)}
                               </span>
                             </div>
                           </div>
@@ -568,7 +575,7 @@ export const DashboardComponent = {
                               >
                               <span
                                 class="text-xs font-mono font-medium text-color"
-                                >${session.completedAt}</span
+                                >${formatDate(session.completedAt)}</span
                               >
                             </div>
                           </div>

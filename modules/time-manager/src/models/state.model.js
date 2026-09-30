@@ -47,6 +47,7 @@ export const state = {
     currentPhase: "work",
   },
   currentSessionInterruptions: 0,
+  currentSessionStartedAt: null,
   sessions: [],
   settings: { ...DEFAULT_SETTINGS },
 };
@@ -87,6 +88,7 @@ export const StateManager = {
           DEFAULT_SETTINGS.longBreakInterval,
       };
       state.currentSessionInterruptions = 0;
+      state.currentSessionStartedAt = null;
       state.timer = { ...state.timer, ...saved.timer };
     } else {
       state.currentView = "timer";
@@ -95,6 +97,7 @@ export const StateManager = {
       state.sessions = [];
       state.settings = { ...DEFAULT_SETTINGS };
       state.currentSessionInterruptions = 0;
+      state.currentSessionStartedAt = null;
       state.timer = {
         isRunning: false,
         isPaused: false,
@@ -217,6 +220,10 @@ export const StateManager = {
     return { sessionsDone, totalMinutes };
   },
 
+  getCurrentTimestamp() {
+    return new Date().toISOString();
+  },
+
   updateTimerState(newTimerState, { silent = false } = {}) {
     state.timer = { ...state.timer, ...newTimerState };
 
@@ -301,16 +308,33 @@ export const StateManager = {
       id: generateId(),
       task: sessionData.task,
       type: sessionData.type || state.activeMode,
-      completedAt: todayISO(),
+      startedAt:
+        sessionData.startedAt ??
+        state.currentSessionStartedAt ??
+        this.getCurrentTimestamp(),
+      completedAt: this.getCurrentTimestamp(),
       durationSeconds: sessionData.durationSeconds || 0,
       interruptionsCount:
         sessionData.interruptionsCount ??
         state.currentSessionInterruptions ??
         0,
+      breakDurationSeconds: 0,
     };
+
+    const prevSession = state.sessions[state.sessions.length - 1];
+    if (prevSession && prevSession.completedAt && session.startedAt) {
+      const prevCompleted = new Date(prevSession.completedAt).getTime();
+      const currStarted = new Date(session.startedAt).getTime();
+      const breakSeconds = Math.max(
+        0,
+        Math.round((currStarted - prevCompleted) / 1000),
+      );
+      prevSession.breakDurationSeconds = breakSeconds;
+    }
 
     state.sessions.push(session);
     state.currentSessionInterruptions = 0;
+    state.currentSessionStartedAt = null;
     this.save();
   },
 

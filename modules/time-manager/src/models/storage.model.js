@@ -10,9 +10,14 @@ function normalizeSession(session) {
     id: String(session.id || generateId()),
     task: session.task,
     type: session.type || "pomodoro",
+    startedAt: session.startedAt || todayISO(),
     completedAt: session.completedAt || todayISO(),
     durationSeconds: Number(session.durationSeconds) || 0,
     interruptionsCount: Number(session.interruptionsCount) || 0,
+    breakDurationSeconds:
+      session.breakDurationSeconds === null
+        ? null
+        : Number(session.breakDurationSeconds) || 0,
   };
 }
 

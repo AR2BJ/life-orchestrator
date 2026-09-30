@@ -1,3 +1,5 @@
+import { formatDate, todayISO } from "@/utils/helpers";
+
 import { StateManager } from "@/models/state.model.js";
 
 export const TodayOverviewComponent = {
@@ -20,20 +22,20 @@ export const TodayOverviewComponent = {
     });
 
     if (allSessions.length > 0) {
-      const todayStr = new Date().toISOString().split("T")[0];
+      const todayStr = todayISO();
 
       let checkDate = todayStr;
 
       if (sessionsDone === 0) {
         const yesterday = new Date();
         yesterday.setDate(yesterday.getDate() - 1);
-        checkDate = yesterday.toISOString().split("T")[0];
+        checkDate = formatDate(yesterday);
       }
 
       let currentCheckDate = new Date(checkDate);
 
       while (true) {
-        const dateStr = currentCheckDate.toISOString().split("T")[0];
+        const dateStr = currentCheckDate.toISOString();
 
         const hasSessionOnDate = allSessions.some(
           (s) => s.completedAt === dateStr,

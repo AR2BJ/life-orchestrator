@@ -1,10 +1,11 @@
+import { formatDate, todayISO } from "@/utils/helpers.js";
+
 import { NoteModel } from "@/models/note.model";
 import { NotificationService } from "@/services/notification.service.js";
 import { STORAGE_VERSION } from "@/models/storage.model.js";
 import { SoundModel } from "@/models/sound.model.js";
 import { TaskModel } from "@/models/task.model";
 import { state } from "@/models/state.model.js";
-import { todayISO } from "@/utils/helpers.js";
 
 export const SettingsExportController = {
   handleDataExport(format = "json") {
@@ -43,7 +44,7 @@ export const SettingsExportController = {
           taskTitle: s.taskTitle || "Untitled",
           type: s.type || "pomodoro",
           durationSeconds: s.durationSeconds || 0,
-          completedAt: s.completedAt,
+          completedAt: formatDate(s.completedAt),
         })),
       };
 
@@ -54,6 +55,7 @@ export const SettingsExportController = {
       fileContent = this.generateMarkdownExport(
         tasks,
         sessions,
+        notes,
         settings,
         soundState,
       );
@@ -63,6 +65,7 @@ export const SettingsExportController = {
       fileContent = this.generateCsvExport(
         tasks,
         sessions,
+        notes,
         settings,
         soundState,
       );
@@ -124,7 +127,7 @@ export const SettingsExportController = {
       content += `_No sessions recorded._\n\n`;
     } else {
       sessions.forEach((s) => {
-        content += `- **ID:** ${s.id} | **Task:** ${s.taskTitle} (Task ID: ${s.taskId || "N/A"}) | **Type:** ${s.type} | **Duration:** ${s.durationSeconds}s | **Completed At:** ${s.completedAt}\n`;
+        content += `- **ID:** ${s.id} | **Task:** ${s.taskTitle} (Task ID: ${s.taskId || "N/A"}) | **Type:** ${s.type} | **Duration:** ${s.durationSeconds}s | **Completed At:** ${formatDate(s.completedAt)}\n`;
       });
       content += `\n---\n\n`;
     }
@@ -176,7 +179,7 @@ export const SettingsExportController = {
 
     content += `\n[SESSIONS]\nId,Task ID,Task Title,Type,Duration Seconds,Completed At\n`;
     sessions.forEach((s) => {
-      content += `${escapeCsvValue(s.id)},${escapeCsvValue(s.taskId)},${escapeCsvValue(s.taskTitle)},${escapeCsvValue(s.type)},${escapeCsvValue(s.durationSeconds)},${escapeCsvValue(s.completedAt)}\n`;
+      content += `${escapeCsvValue(s.id)},${escapeCsvValue(s.taskId)},${escapeCsvValue(s.taskTitle)},${escapeCsvValue(s.type)},${escapeCsvValue(s.durationSeconds)},${escapeCsvValue(formatDate(s.completedAt))}\n`;
     });
 
     content += `\n[NOTES]\nId,Text,Created At\n`;

@@ -114,38 +114,16 @@ class TimerService {
       );
 
       const shouldSaveSession = elapsedSeconds >= MIN_SESSION_SECONDS;
+      const workSecs = (state.settings.pomodoroWorkTime || 25) * 60;
 
-      if (shouldSaveSession) {
-        if (currentTaskId) {
-          TaskService.incrementCompletedFocusUnits(currentTaskId);
-        }
-
-        StateManager.addSession({
-          task: currentTask,
-          type: "pomodoro",
-          durationSeconds: elapsedSeconds,
-          interruptionsCount: state.currentSessionInterruptions,
-        });
-
-        NotificationService.show({
-          type: "success",
-          message: "Focus session completed! Time for a break",
-          icon: "ti-circle-check",
-          iconColor: "text-emerald-500",
-        });
-      } else {
+      if (!shouldSaveSession) {
         NotificationService.show({
           type: "info",
           message: `Session too short (under 15 minutes), not saved`,
           icon: "ti-info-circle",
           iconColor: "text-sky-500",
         });
-      }
 
-      const newSessionCount = (state.timer.pomodoroSessionCount || 0) + 1;
-      const workSecs = (state.settings.pomodoroWorkTime || 25) * 60;
-
-      if (!shouldSaveSession) {
         StateManager.updateTimerState({
           isRunning: false,
           isPaused: false,
@@ -156,6 +134,27 @@ class TimerService {
         soundService.pause();
         return;
       }
+
+      if (currentTaskId) {
+        TaskService.incrementCompletedFocusUnits(currentTaskId);
+      }
+
+      StateManager.addSession({
+        task: currentTask,
+        type: "pomodoro",
+        startedAt: state.currentSessionStartedAt,
+        durationSeconds: elapsedSeconds,
+        interruptionsCount: state.currentSessionInterruptions,
+      });
+
+      NotificationService.show({
+        type: "success",
+        message: "Focus session completed! Time for a break",
+        icon: "ti-circle-check",
+        iconColor: "text-emerald-500",
+      });
+
+      const newSessionCount = (state.timer.pomodoroSessionCount || 0) + 1;
 
       if (state.settings.disableBreaks) {
         StateManager.updateTimerState({
@@ -311,6 +310,7 @@ class TimerService {
       StateManager.addSession({
         task: currentTask,
         type: "flow",
+        startedAt: state.currentSessionStartedAt,
         durationSeconds: flowTime,
         interruptionsCount: state.currentSessionInterruptions,
       });

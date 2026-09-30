@@ -1,4 +1,5 @@
 import { NoteModel } from "@/models/note.model.js";
+import { formatDate } from "@/utils/helpers";
 
 export const NoteComponent = {
   render() {
@@ -56,7 +57,7 @@ export const NoteComponent = {
               : items
                   .map((item) => {
                     const category = item.category || "general";
-                    const dateStr = this.formatDate(
+                    const dateStr = formatDate(
                       item.createdAt || item.updatedAt,
                     );
 
@@ -117,13 +118,6 @@ export const NoteComponent = {
       .replace(/([a-z])([A-Z])/g, "$1 $2")
       .replace(/[-_]/g, " ")
       .toUpperCase();
-  },
-
-  formatDate(dateInput) {
-    if (!dateInput) return new Date().toISOString().split("T")[0];
-    const date = new Date(dateInput);
-    if (isNaN(date.getTime())) return String(dateInput);
-    return date.toISOString().split("T")[0];
   },
 
   escapeHtml(str) {

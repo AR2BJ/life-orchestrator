@@ -25,7 +25,7 @@ function getSessionActivityMap(sessions) {
 
   sessions.forEach((session) => {
     if (session.completedAt) {
-      const dateIso = session.completedAt;
+      const dateIso = formatDate(session.completedAt);
       map[dateIso] = (map[dateIso] || 0) + 1;
     }
   });
