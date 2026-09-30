@@ -36,8 +36,7 @@ class TimerService {
     if (state.timer.isRunning && !state.timer.isPaused) return;
 
     if (!state.timer.isPaused) {
-      state.currentSessionStartedAt =
-        StateManager.getCurrentTimestamp();
+      state.currentSessionStartedAt = StateManager.getCurrentTimestamp();
     }
 
     StateManager.updateTimerState({ isRunning: true, isPaused: false });
