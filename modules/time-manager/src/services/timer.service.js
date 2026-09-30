@@ -35,6 +35,11 @@ class TimerService {
   start() {
     if (state.timer.isRunning && !state.timer.isPaused) return;
 
+    if (!state.timer.isPaused) {
+      state.currentSessionStartedAt =
+        StateManager.getCurrentTimestamp();
+    }
+
     StateManager.updateTimerState({ isRunning: true, isPaused: false });
 
     const currentTrack = SoundModel.getCurrentTrack();
@@ -142,7 +147,6 @@ class TimerService {
       StateManager.addSession({
         task: currentTask,
         type: "pomodoro",
-        startedAt: state.currentSessionStartedAt,
         durationSeconds: elapsedSeconds,
         interruptionsCount: state.currentSessionInterruptions,
       });
@@ -310,7 +314,6 @@ class TimerService {
       StateManager.addSession({
         task: currentTask,
         type: "flow",
-        startedAt: state.currentSessionStartedAt,
         durationSeconds: flowTime,
         interruptionsCount: state.currentSessionInterruptions,
       });
