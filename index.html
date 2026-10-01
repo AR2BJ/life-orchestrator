@@ -85,14 +85,56 @@
     <main
       class="w-full max-w-6xl mx-auto py-12 flex-1 flex flex-col justify-center"
     >
-      <div class="mb-10 text-center max-w-xl mx-auto space-y-3">
+      <div class="mb-8 text-center max-w-xl mx-auto space-y-2">
         <h2 class="text-3xl md:text-4xl font-black text-primary tracking-tight">
           Select Active Workspace
         </h2>
         <p class="text-secondary text-sm leading-relaxed">
-          Access standalone modules engineered for high-performance
-          productivity, habit tracking, and time management.
+          Access standalone modules or launch the central intelligence hub.
         </p>
+      </div>
+
+      <!-- Featured Strategic Module: Orchestration Core -->
+      <div class="mb-8">
+        <a
+          href="/orchestration.html"
+          class="card group relative p-6 rounded-2xl flex flex-col md:flex-row items-center justify-between bg-brand/10 border border-brand/40 hover:border-brand hover:shadow-xl hover:shadow-brand/10 hover:-translate-y-1 transition-all duration-300"
+        >
+          <div class="flex items-center gap-5 mb-4 md:mb-0">
+            <div
+              class="w-16 h-16 rounded-2xl bg-brand/20 border border-brand/30 flex items-center justify-center text-brand text-3xl shadow-inner"
+            >
+              <i class="ti ti-chart-dots"></i>
+            </div>
+            <div>
+              <div class="flex items-center gap-2 mb-1">
+                <h3
+                  class="text-xl font-black text-primary group-hover:text-brand transition-colors"
+                >
+                  Life Orchestration Core
+                </h3>
+                <span
+                  class="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-brand text-white"
+                  >STRATEGIC HUB</span
+                >
+              </div>
+              <p class="text-secondary text-xs max-w-xl leading-relaxed">
+                Centralized behavioral analysis engine that measures focus
+                quality, recovery rhythm, workload balance, and projects your
+                trajectory across the next 30 days.
+              </p>
+            </div>
+          </div>
+
+          <div
+            class="flex items-center gap-2 px-4 py-2 rounded-xl bg-brand text-white font-semibold text-xs group-hover:bg-brand/90 transition-all shadow-md"
+          >
+            <span>Enter the analysis core</span>
+            <i
+              class="ti ti-arrow-right group-hover:translate-x-1 transition-transform"
+            ></i>
+          </div>
+        </a>
       </div>
 
       <!-- Tile Grid -->
@@ -331,6 +373,64 @@
             </div>
           </div>
         </a>
+
+        <!-- Module 6: Suspended / R&D Phase -->
+        <div
+          class="card group relative p-6 rounded-2xl flex flex-col justify-between bg-surface/60 backdrop-blur-xl border border-border overflow-hidden cursor-not-allowed select-none"
+          aria-disabled="true"
+        >
+          <div
+            class="pointer-events-none absolute inset-0 backdrop-blur-xs bg-surface/20 z-10"
+          ></div>
+
+          <div class="relative z-0">
+            <div class="flex items-center justify-between mb-5">
+              <div
+                class="w-14 h-14 rounded-2xl overflow-hidden bg-surface-2/80 border border-border/80 p-2 shadow-inner"
+              >
+                <img
+                  src="/modules/finance-manager/public/picture/logo.png"
+                  alt="Finance Manager"
+                  class="w-full h-full object-contain"
+                />
+              </div>
+              <span
+                class="text-[11px] font-mono font-medium text-secondary/80 bg-surface-2 px-2.5 py-1 rounded-md border border-border/50"
+                >v1.0</span
+              >
+            </div>
+
+            <h3 class="text-lg font-bold text-primary mb-2">Finance Manager</h3>
+            <p class="text-secondary text-xs leading-relaxed">
+              Track income, expenses, budgets, and financial goals with a clear
+              overview of your wealth trajectory.
+            </p>
+          </div>
+
+          <div
+            class="relative z-0 pt-5 mt-6 border-t border-border/50 flex items-center justify-between text-xs font-semibold text-secondary"
+          >
+            <span>Launch Module</span>
+            <div
+              class="w-7 h-7 rounded-lg bg-surface-2 flex items-center justify-center"
+            >
+              <i class="ti ti-arrow-right"></i>
+            </div>
+          </div>
+
+          <div
+            class="pointer-events-none absolute inset-0 z-20 flex items-center justify-center"
+          >
+            <div class="flex flex-col justify-center items-center gap-3">
+              <div
+                class="w-16 h-16 rounded-2xl bg-secondary/20 border border-secondary/40 flex items-center justify-center backdrop-blur-md shadow-lg shadow-secondary/20"
+              >
+                <i class="ti ti-lock text-secondary text-3xl"></i>
+              </div>
+              <p class="text-primary">Coming Soon</p>
+            </div>
+          </div>
+        </div>
       </div>
     </main>
 
