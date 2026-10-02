@@ -27,14 +27,14 @@ export class CoreInsightWidget {
     const alertsHTML = alerts
       .map(
         (item) => `
-      <div class="p-4 rounded-xl border mb-3 flex items-start gap-3 ${this._getAlertStyle(item.severity)}">
-        <i class="ti ${this._getAlertIcon(item.severity)} text-2xl mt-0.5 shrink-0"></i>
-        <div class="w-full">
-          <div class="flex items-center justify-between mb-1">
-            <h5 class="text-sm font-bold">${item.title}</h5>
-            <span class="text-xs uppercase font-bold px-2.5 py-0.5 rounded bg-black/20">${item.severity}</span>
+      <div class="p-3.5 sm:p-4 rounded-xl border flex items-start gap-3 transition-colors ${this._getAlertStyle(item.severity)}">
+        <i class="ti ${this._getAlertIcon(item.severity)} text-lg sm:text-xl mt-0.5 shrink-0"></i>
+        <div class="w-full min-w-0">
+          <div class="flex items-center justify-between gap-2 mb-1">
+            <h5 class="text-xs font-bold uppercase tracking-wider truncate">${item.title}</h5>
+            <span class="text-[9px] sm:text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-black/30 border border-white/10 uppercase tracking-widest shrink-0">${item.severity}</span>
           </div>
-          <p class="text-xs leading-relaxed opacity-90 mt-1">${item.message}</p>
+          <p class="text-xs leading-relaxed opacity-90 wrap-break-word">${item.message}</p>
         </div>
       </div>
     `,
@@ -44,10 +44,10 @@ export class CoreInsightWidget {
     const recommendationsHTML = recommendations
       .map(
         (rec) => `
-      <div class="p-3.5 rounded-xl bg-surface-2/80 border border-border/80 text-xs text-secondary flex items-start gap-2.5 mb-2.5">
+      <div class="p-3 sm:p-3.5 rounded-xl bg-[#162036]/80 border border-[#1e293b] text-xs text-[#94a3b8] flex items-start gap-3">
         <i class="ti ti-arrow-right text-brand text-base mt-0.5 shrink-0"></i>
-        <div class="leading-relaxed">
-          <strong class="text-primary font-bold">[${rec.targetModule.toUpperCase()}] ${rec.action}:</strong> ${rec.description}
+        <div class="leading-relaxed min-w-0 wrap-break-word">
+          <strong class="text-white font-bold">[${rec.targetModule.toUpperCase()}] ${rec.action}:</strong> ${rec.description}
         </div>
       </div>
     `,
@@ -55,30 +55,42 @@ export class CoreInsightWidget {
       .join("");
 
     this.container.innerHTML = `
-      <div class="card p-6 rounded-2xl bg-surface/60 backdrop-blur-xl border border-border mb-6">
-        <h3 class="text-base font-extrabold text-primary mb-5 flex items-center gap-2">
-          <i class="ti ti-bulb text-amber-400 text-2xl"></i>
-          Executive Tactical Directives & Alerts
-        </h3>
+      <div class="p-4 sm:p-6 rounded-2xl bg-[#0f172a]/80 backdrop-blur-xl border border-[#1e293b] space-y-5 sm:space-y-6 h-full flex flex-col justify-between">
+        <div class="space-y-5">
+          <!-- Header -->
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-[#162036] border border-[#1e293b] flex items-center justify-center text-[#f59e0b] shrink-0">
+              <i class="ti ti-bulb text-lg sm:text-xl"></i>
+            </div>
+            <div class="min-w-0">
+              <h3 class="text-sm sm:text-base font-black text-white tracking-tight truncate">Executive Tactical Directives & Alerts</h3>
+              <p class="text-xs text-[#94a3b8] truncate">Automated operational diagnostics and system alerts</p>
+            </div>
+          </div>
 
-        <!-- System Alerts -->
-        <div class="space-y-2 mb-6">
-          <h4 class="text-xs font-bold text-secondary uppercase tracking-wider mb-3">Critical System Alerts</h4>
-          ${
-            alertsHTML.length > 0
-              ? alertsHTML
-              : '<p class="text-xs text-emerald-400 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-center">No operational issues detected. All systems running smoothly.</p>'
-          }
-        </div>
+          <!-- System Alerts -->
+          <div class="space-y-2.5">
+            <h4 class="text-[10px] sm:text-[11px] font-mono font-bold text-tertiary uppercase tracking-wider">Critical System Alerts</h4>
+            <div class="space-y-2">
+              ${
+                alertsHTML.length > 0
+                  ? alertsHTML
+                  : '<p class="text-xs text-[#10b981] p-3.5 rounded-xl bg-[#10b981]/10 border border-[#10b981]/20 text-center font-medium">No operational issues detected. All systems running smoothly.</p>'
+              }
+            </div>
+          </div>
 
-        <!-- Recommendations -->
-        <div class="space-y-2">
-          <h4 class="text-xs font-bold text-secondary uppercase tracking-wider mb-3">Actionable Directives</h4>
-          ${
-            recommendationsHTML.length > 0
-              ? recommendationsHTML
-              : '<p class="text-xs text-secondary text-center py-3">All module operations are well-calibrated.</p>'
-          }
+          <!-- Recommendations -->
+          <div class="space-y-2.5">
+            <h4 class="text-[10px] sm:text-[11px] font-mono font-bold text-tertiary uppercase tracking-wider">Actionable Directives</h4>
+            <div class="space-y-2">
+              ${
+                recommendationsHTML.length > 0
+                  ? recommendationsHTML
+                  : '<p class="text-xs text-[#94a3b8] text-center py-3 bg-[#162036]/40 rounded-xl border border-[#1e293b]">All module operations are well-calibrated.</p>'
+              }
+            </div>
+          </div>
         </div>
       </div>
     `;
@@ -92,11 +104,11 @@ export class CoreInsightWidget {
   _getAlertStyle(severity) {
     switch (severity) {
       case "CRITICAL":
-        return "bg-red-500/10 text-red-400 border-red-500/30";
+        return "bg-[#ef4444]/10 text-[#ef4444] border-[#ef4444]/30";
       case "HIGH":
-        return "bg-amber-500/10 text-amber-400 border-amber-500/30";
+        return "bg-[#f59e0b]/10 text-[#f59e0b] border-[#f59e0b]/30";
       default:
-        return "bg-sky-500/10 text-sky-400 border-sky-500/30";
+        return "bg-[#627492]/10 text-[#94a3b8] border-[#627492]/30";
     }
   }
 

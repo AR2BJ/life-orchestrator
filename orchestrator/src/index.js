@@ -25,30 +25,30 @@ export class OrchestratorModule {
     const root = document.getElementById(this.mountPoint);
     if (!root) return;
 
-    // Render Module Layout Shell
+    // Render Clean Tailwind Layout Shell (No fake containers or bootstrap classes)
     root.innerHTML = `
-      <div class="container-fluid p-6 max-w-8xl mx-auto space-y-6">
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+      <div class="w-full space-y-6">
+        <div class="flex flex-col md:flex-row md:items-center justify-center md:justify-between gap-4">
           <div>
-            <h2 class="text-2xl font-black text-primary tracking-tight mb-1">
+            <h2 class="text-2xl text-center md:text-left font-black text-white tracking-tight mb-1">
               Life Orchestrator Engine
             </h2>
-            <p class="text-xs text-secondary">
+            <p class="text-xs text-center text-[#94a3b8] font-medium">
               Centralized behavioral telemetry, predictive trajectory projections, and strategic focus-principle evaluation.
             </p>
           </div>
-          <div class="flex items-center gap-2">
-            <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-              <span class="relative flex size-2">
+          <div class="flex justify-center items-center gap-2 shrink-0">
+            <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+              <span class="relative flex h-2 w-2">
                 <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
-                <span class="relative inline-flex size-2 rounded-full bg-emerald-500"></span>
+                <span class="relative inline-flex h-2 w-2 rounded-full bg-emerald-500"></span>
               </span>
               Live Telemetry Active
             </span>
           </div>
         </div>
 
-        <div id="orchestrator-dashboard-mount"></div>
+        <div id="orchestrator-dashboard-mount" class="w-full"></div>
       </div>
     `;
 

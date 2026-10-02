@@ -1,7 +1,6 @@
 /**
  * @file AnalyticsOverviewDashboard.js
- * @description Master orchestrator component that mounts all telemetry visualizers,
- * principle scorecards, trajectory analysis, and actionable insights.
+ * @description Master orchestrator component that mounts all telemetry visualizers with perfect grid alignment.
  */
 
 import { CoreInsightWidget } from "./CoreInsightWidget.js";
@@ -10,34 +9,27 @@ import { PrinciplesMatrixGrid } from "./PrinciplesMatrixGrid.js";
 import { TrajectoryCard } from "./TrajectoryCard.js";
 
 export class AnalyticsOverviewDashboard {
-  /**
-   * @param {string} containerId - DOM Node ID
-   */
   constructor(containerId) {
     this.container = document.getElementById(containerId);
     this.components = [];
   }
 
-  /**
-   * Mounts all child components into the container DOM node.
-   * @param {number} daysBack
-   */
   mount(daysBack = 30) {
     if (!this.container) return;
 
     this.container.innerHTML = `
-      <div class="analytics-dashboard max-w-7xl mx-auto space-y-6 dir-ltr">
+      <div class="analytics-dashboard w-full space-y-4 sm:space-y-6">
         <!-- Top Operational Health Matrix -->
-        <div id="principle-score-card-node"></div>
+        <div id="principle-score-card-node" class="w-full"></div>
 
-        <!-- Trajectory Analysis -->
-        <div id="trajectory-card-node"></div>
+        <!-- Middle Bento Section: Trajectory + Directives -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 items-stretch w-full">
+          <div id="trajectory-card-node" class="lg:col-span-5 h-full"></div>
+          <div id="core-insight-widget-node" class="lg:col-span-7 h-full"></div>
+        </div>
 
-        <!-- Executive Tactical Directives & Alerts -->
-        <div id="core-insight-widget-node"></div>
-
-        <!-- Full Selected Principles Breakdown Grid -->
-        <div id="principles-matrix-grid-node"></div>
+        <!-- Behavioral Matrix Grid -->
+        <div id="principles-matrix-grid-node" class="w-full"></div>
       </div>
     `;
 

@@ -7,9 +7,9 @@
     <meta charset="UTF-8" />
     <meta
       name="viewport"
-      content="width=device-width, initial-scale=1.0"
+      content="width=device-width, initial-scale=1.0, maximum-scale=5.0"
     />
-    <title>Life Orchestrator Core</title>
+    <title>Life Orchestrator | Core Telemetry</title>
     <link
       rel="shortcut icon"
       href="/favicon.ico"
@@ -25,51 +25,109 @@
     />
   </head>
   <body
-    class="min-h-screen flex flex-col justify-between p-4 md:p-8 bg-bg text-primary selection:bg-brand selection:text-white"
+    class="min-h-screen bg-[#090e1a] text-primary font-sans antialiased overflow-x-hidden selection:bg-brand selection:text-white"
   >
-    <!-- Background Ambient Blur -->
-    <div
-      class="fixed inset-0 pointer-events-none -z-10 flex justify-center items-center overflow-hidden"
-    >
+    <div class="flex min-h-screen">
+      <!-- Left Compact Command Bar -->
+      <aside
+        class="h-screen hidden lg:flex flex-col sticky top-0 justify-between w-20 border-r border-[#1e293b] bg-[#0f172a]/90 backdrop-blur-2xl p-4 shrink-0"
+      >
+        <div class="flex flex-col items-center gap-8">
+          <a
+            href="/"
+            class="w-12 h-12 rounded-2xl bg-linear-to-tr from-brand to-[#1f2d4d] p-px shadow-lg shadow-brand/20 group"
+          >
+            <div
+              class="w-full h-full bg-[#0f172a] rounded-[15px] p-2 flex items-center justify-center group-hover:bg-transparent transition-all"
+            >
+              <img
+                src="picture/logo.png"
+                alt="Logo"
+                class="w-full h-full object-contain"
+              />
+            </div>
+          </a>
+          <nav class="flex flex-col gap-4 text-[#94a3b8]">
+            <a
+              href="/"
+              class="w-10 h-10 rounded-xl hover:bg-[#162036] hover:text-white flex items-center justify-center transition-all"
+            >
+              <i class="ti ti-layout-grid text-xl"></i>
+            </a>
+            <a
+              href="/orchestrator.html"
+              class="w-10 h-10 rounded-xl bg-brand/20 text-white flex items-center justify-center border border-brand/40"
+            >
+              <i class="ti ti-chart-dots text-xl"></i>
+            </a>
+          </nav>
+        </div>
+      </aside>
+
+      <!-- Background Glow Effects -->
+      <div class="fixed inset-0 pointer-events-none -z-10 overflow-hidden">
+        <div
+          class="absolute -top-40 left-1/3 w-150 h-100 bg-brand/10 rounded-full blur-[160px]"
+        ></div>
+        <div
+          class="absolute bottom-0 right-1/4 w-125 h-125 bg-[#1f2d4d]/20 rounded-full blur-[180px]"
+        ></div>
+      </div>
+
       <div
-        class="w-150 h-150 bg-brand/10 rounded-full blur-[140px] opacity-60"
-      ></div>
+        class="min-h-screen flex flex-col p-4 sm:p-8 max-w-[1600px] mx-auto w-full justify-between"
+      >
+        <!-- Top Header -->
+        <header
+          class="flex items-center justify-center md:justify-between pb-6 border-b border-[#1e293b]"
+        >
+          <div class="flex items-center gap-4">
+            <a
+              href="/"
+              class="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-[#0f172a] border border-[#1e293b] hover:border-brand hover:bg-[#162036] flex items-center justify-center text-[#94a3b8] hover:text-white transition-all"
+            >
+              <i class="ti ti-arrow-left text-lg sm:text-xl"></i>
+            </a>
+            <div>
+              <h1
+                class="text-lg xs:text-xl sm:text-2xl font-black text-white tracking-tight flex items-center gap-3"
+              >
+                Strategic Intelligence Core
+              </h1>
+              <p class="text-xs text-[#94a3b8] font-medium">
+                Cross-Module Behavioral Telemetry Engine
+              </p>
+            </div>
+          </div>
+
+          <a
+            href="/index.html"
+            class="hidden sm:flex items-center gap-2 px-4 py-2 rounded-xl bg-[#0f172a] hover:bg-[#162036] border border-[#1e293b] text-xs font-semibold text-[#94a3b8] hover:text-white transition-all"
+          >
+            <i class="ti ti-layout-grid"></i>
+            <span>Hub Matrix</span>
+          </a>
+        </header>
+
+        <!-- Clean Dynamic Mount Point -->
+        <main class="py-4 flex-1 flex flex-col">
+          <div
+            id="orchestrator-app"
+            class="w-full flex-1"
+          ></div>
+        </main>
+
+        <!-- Footer -->
+        <footer
+          class="pt-4 border-t border-[#1e293b] flex flex-wrap justify-center gap-5 items-center text-xs text-tertiary font-mono"
+        >
+          <span>Cross-Namespace LocalStorage Bus</span>
+          <span class="hidden sm:flex">|</span>
+          <span>Life Orchestrator v1.0</span>
+        </footer>
+      </div>
     </div>
 
-    <!-- Header Navigation -->
-    <header
-      class="w-full max-w-7xl mx-auto flex items-center justify-between pb-6 border-b border-border/60"
-    >
-      <div class="flex items-center gap-3.5">
-        <a
-          href="/index.html"
-          class="w-10 h-10 rounded-xl bg-surface border border-border flex items-center justify-center text-secondary hover:text-primary transition-colors"
-        >
-          <i class="ti ti-arrow-left text-xl"></i>
-        </a>
-        <div>
-          <h1
-            class="text-xl font-extrabold tracking-wide text-primary flex items-center gap-2"
-          >
-            Life Orchestrator Core
-            <span
-              class="text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full bg-brand/15 text-brand border border-brand/20"
-              >ANALYTICS</span
-            >
-          </h1>
-          <p class="text-xs text-secondary font-medium">
-            The focused brain for analysis and bio-guidance
-          </p>
-        </div>
-      </div>
-    </header>
-
-    <!-- App Mount Point -->
-    <main class="w-full max-w-7xl mx-auto">
-      <div id="orchestrator-app"></div>
-    </main>
-
-    <!-- Script Entrypoint -->
     <script type="module">
       import { OrchestratorModule } from "./orchestrator/src/index.js";
 
