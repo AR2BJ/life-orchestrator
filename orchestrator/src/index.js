@@ -1,6 +1,6 @@
 /**
- * @file orchestration/src/index.js
- * @description Main entry point for the Life Orchestration Module.
+ * @file orchestrator/src/index.js
+ * @description Main entry point for the Life Orchestrator Module.
  * Initializes the analytics dashboard, instantiates strategic evaluation components,
  * and binds to global state mutation events for reactive UI rendering.
  */
@@ -8,7 +8,7 @@
 import { AnalyticsOverviewDashboard } from "./components/AnalyticsOverviewDashboard.js";
 import { globalEventBus } from "../../packages/event-bus/src/index.js";
 
-export class OrchestrationModule {
+export class OrchestratorModule {
   /**
    * @param {Object} config
    */
@@ -31,7 +31,7 @@ export class OrchestrationModule {
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
           <div>
             <h2 class="text-2xl font-black text-primary tracking-tight mb-1">
-              Life Orchestration Engine
+              Life Orchestrator Engine
             </h2>
             <p class="text-xs text-secondary">
               Centralized behavioral telemetry, predictive trajectory projections, and strategic focus-principle evaluation.
@@ -48,13 +48,13 @@ export class OrchestrationModule {
           </div>
         </div>
 
-        <div id="orchestration-dashboard-mount"></div>
+        <div id="orchestrator-dashboard-mount"></div>
       </div>
     `;
 
     // Initialize full dashboard orchestrator
     this.dashboard = new AnalyticsOverviewDashboard(
-      "orchestration-dashboard-mount",
+      "orchestrator-dashboard-mount",
     );
     this.renderAll();
 

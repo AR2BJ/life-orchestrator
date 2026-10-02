@@ -1,12 +1,12 @@
 <div align="center">
-  <img src="./public/picture/demo.gif" alt="Habit Tracker Demo" width="100%" />
+  <img src="/modules/habit-tracker/public/picture/demo.gif" alt="Habit Tracker Demo" width="100%" />
 </div>
 
 <br/>
 <br>
 
 <div align="center">
-  <img src="./public/picture/logo-2.png" alt="Habit Tracker Logo" height="145" />
+  <img src="/modules/habit-tracker/public/picture/logo-2.png" alt="Habit Tracker Logo" height="145" />
 </div>
 
 <br/>
@@ -160,7 +160,7 @@ Potential future enhancements include:
 
 ## License
 
-This project is licensed under the [MIT license](https://github.com/AR2BJ/habit-tracker/blob/dev/LICENSE).
+This project is licensed under the [MIT license](https://github.com/AR2BJ/habit-tracker/blob/master/LICENSE).
 
 ## Contributing
 

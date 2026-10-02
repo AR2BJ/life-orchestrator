@@ -9,7 +9,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0"
     />
-    <title>Life Orchestration Core</title>
+    <title>Life Orchestrator Core</title>
     <link
       rel="shortcut icon"
       href="/favicon.ico"
@@ -51,7 +51,7 @@
           <h1
             class="text-xl font-extrabold tracking-wide text-primary flex items-center gap-2"
           >
-            Life Orchestration Core
+            Life Orchestrator Core
             <span
               class="text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full bg-brand/15 text-brand border border-brand/20"
               >ANALYTICS</span
@@ -66,15 +66,15 @@
 
     <!-- App Mount Point -->
     <main class="w-full max-w-7xl mx-auto">
-      <div id="orchestration-app"></div>
+      <div id="orchestrator-app"></div>
     </main>
 
     <!-- Script Entrypoint -->
     <script type="module">
-      import { OrchestrationModule } from "./orchestration/src/index.js";
+      import { OrchestratorModule } from "./orchestrator/src/index.js";
 
-      const module = new OrchestrationModule({
-        mountPoint: "orchestration-app",
+      const module = new OrchestratorModule({
+        mountPoint: "orchestrator-app",
       });
 
       document.addEventListener("DOMContentLoaded", () => {

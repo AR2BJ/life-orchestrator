@@ -1,12 +1,12 @@
 <div align="center">
-  <img src="./public/picture/demo.gif" alt="Task Manager Demo" width="100%" />
+  <img src="/modules/task-manager/public/picture/demo.gif" alt="Task Manager Demo" width="100%" />
 </div>
 
 <br/>
 <br>
 
 <div align="center">
-  <img src="./public/picture/logo-2.png" alt="Task Manager Logo" height="145" />
+  <img src="/modules/task-manager/public/picture/logo-2.png" alt="Task Manager Logo" height="145" />
 </div>
 
 <br/>
@@ -167,7 +167,7 @@ Potential future enhancements include:
 
 ## License
 
-This project is licensed under the [MIT license](https://github.com/AR2BJ/task-manager/blob/dev/LICENSE).
+This project is licensed under the [MIT license](https://github.com/AR2BJ/task-manager/blob/master/LICENSE).
 
 ## Contributing
 

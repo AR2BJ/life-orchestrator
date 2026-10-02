@@ -1,12 +1,12 @@
 <div align="center">
-  <img src="/public/picture/demo.gif" alt="Life Planner Demo" width="100%" />
+  <img src="/modules/life-planner/public/picture/demo.gif" alt="Life Planner Demo" width="100%" />
 </div>
 
 <br/>
 <br>
 
 <div align="center">
-  <img src="/public/picture/logo-2.png" alt="Life Planner Logo" height="145" />
+  <img src="/modules/life-planner/public/picture/logo-2.png" alt="Life Planner Logo" height="145" />
 </div>
 
 <br/>
@@ -218,7 +218,7 @@ Potential future improvements include:
 
 ## License
 
-This project is licensed under the [MIT License](https://github.com/AR2BJ/life-planner/blob/dev/LICENSE).
+This project is licensed under the [MIT License](https://github.com/AR2BJ/life-planner/blob/master/LICENSE).
 
 ## Contributing
 

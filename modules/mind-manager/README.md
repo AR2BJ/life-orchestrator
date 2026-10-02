@@ -1,12 +1,12 @@
 <div align="center">
-  <img src="/public/picture/demo.gif" alt="Mind Manager Demo" width="100%" />
+  <img src="/modules/mind-manager/public/picture/demo.gif" alt="Mind Manager Demo" width="100%" />
 </div>
 
 <br/>
 <br>
 
 <div align="center">
-  <img src="/public/picture/logo-2.png" alt="Mind Manager Logo" height="145" />
+  <img src="/modules/mind-manager/public/picture/logo-2.png" alt="Mind Manager Logo" height="145" />
 </div>
 
 <br/>
@@ -256,7 +256,7 @@ Potential future improvements include:
 
 ## License
 
-This project is licensed under the [MIT License](https://github.com/AR2BJ/mind-manager/blob/dev/LICENSE).
+This project is licensed under the [MIT License](https://github.com/AR2BJ/mind-manager/blob/master/LICENSE).
 
 ## Contributing
 

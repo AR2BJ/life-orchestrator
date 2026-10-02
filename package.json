@@ -1,22 +1,33 @@
 {
   "name": "life-orchestrator",
   "version": "1.0.0",
-  "private": true,
-  "type": "module",
-  "workspaces": [
-    "packages/*",
-    "modules/*",
-    "orchestrator-app"
-  ],
+  "description": "",
+  "main": "index.html",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AR2BJ/life-orchestrator.git"
+  },
+  "keywords": [],
+  "author": "AR2BJ",
+  "license": "MIT",
+  "type": "module",
+  "private": true,
+  "bugs": {
+    "url": "https://github.com/AR2BJ/life-orchestrator/issues"
+  },
+  "homepage": "https://github.com/AR2BJ/life-orchestrator#readme",
+  "workspaces": [
+    "packages/*",
+    "modules/*",
+    "orchestrator-app"
+  ],
   "devDependencies": {
     "vite": "^8.1.5",
     "vite-jsconfig-paths": "^2.0.1"
-  },
-  "author": "Arman Birjandi",
-  "license": "MIT"
+  }
 }
