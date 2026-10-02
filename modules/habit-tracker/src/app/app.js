@@ -16,6 +16,34 @@ const app = document.querySelector("#app");
 app.classList.add("hidden");
 
 document.addEventListener("DOMContentLoaded", () => {
+  const panel = document.getElementById("edge-panel");
+  const toggleBtn = document.getElementById("edge-panel-toggle");
+  const closeBtn = document.getElementById("edge-panel-close");
+
+  if (!panel || !toggleBtn) return;
+
+  // Toggle state on click/tap (for Mobile devices)
+  toggleBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    const isExpanded = panel.getAttribute("data-expanded") === "true";
+    panel.setAttribute("data-expanded", (!isExpanded).toString());
+  });
+
+  // Explicit close button
+  if (closeBtn) {
+    closeBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      panel.setAttribute("data-expanded", "false");
+    });
+  }
+
+  // Close when clicking outside panel
+  document.addEventListener("click", (e) => {
+    if (!panel.contains(e.target)) {
+      panel.setAttribute("data-expanded", "false");
+    }
+  });
+
   setTimeout(() => {
     loader.classList.add("opacity-0", "pointer-events-none");
 

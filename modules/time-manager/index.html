@@ -25,6 +25,82 @@
 
   <body class="min-h-screen bg-surface text-color">
     <!-- ============================= -->
+    <!-- CROSS-MODULE EDGE PANEL START -->
+    <!-- ============================= -->
+    <div
+      id="edge-panel"
+      class="group fixed right-0 top-1/2 z-700 -translate-y-1/2 flex items-center transition-transform duration-300 translate-x-[calc(100%-12px)] hover:translate-x-0 data-[expanded=true]:translate-x-0"
+      data-expanded="false"
+    >
+      <!-- Edge Handle Tab -->
+      <button
+        id="edge-panel-toggle"
+        type="button"
+        class="flex h-20 w-3 cursor-pointer items-center justify-center rounded-l-md bg-brand/80 text-white shadow-xl transition-all duration-200 group-hover:w-4 group-hover:bg-brand"
+        title="Quick Switcher"
+        aria-label="Toggle Quick Switcher"
+      >
+        <div class="h-8 w-1 rounded-full bg-white/60"></div>
+      </button>
+
+      <!-- Edge Panel Content Container -->
+      <aside
+        class="flex flex-col gap-3 rounded-l-2xl border-l border-y border-surface-2 bg-surface/95 p-3 backdrop-blur-md shadow-2xl"
+      >
+        <!-- Navigation Module Links -->
+        <nav class="flex flex-col gap-2">
+          <!-- Habit Tracker (Active) -->
+          <a
+            href="/habit-tracker"
+            class="group/item relative flex h-10 w-10 items-center justify-center rounded-xl text-muted hover:bg-surface-2 hover:text-color transition-all hover:scale-105"
+            title="Habit Tracker"
+          >
+            <i class="ti ti-checkup-list text-xl"></i>
+          </a>
+
+          <!-- Task Manager -->
+          <a
+            href="/task-manager"
+            class="group/item relative flex h-10 w-10 items-center justify-center rounded-xl text-muted hover:bg-surface-2 hover:text-color transition-all hover:scale-105"
+            title="Task Manager"
+          >
+            <i class="ti ti-checkbox text-xl"></i>
+          </a>
+
+          <!-- Time Manager -->
+          <a
+            href="/time-manager"
+            class="group/item relative flex h-10 w-10 items-center justify-center rounded-xl bg-brand text-white shadow-md transition-all hover:scale-105"
+            title="Time Manager"
+          >
+            <i class="ti ti-clock text-xl"></i>
+          </a>
+
+          <!-- Life Planner -->
+          <a
+            href="/life-planner"
+            class="group/item relative flex h-10 w-10 items-center justify-center rounded-xl text-muted hover:bg-surface-2 hover:text-color transition-all hover:scale-105"
+            title="Life Planner"
+          >
+            <i class="ti ti-compass text-xl"></i>
+          </a>
+
+          <!-- Mind Manager -->
+          <a
+            href="/mind-manager"
+            class="group/item relative flex h-10 w-10 items-center justify-center rounded-xl text-muted hover:bg-surface-2 hover:text-color transition-all hover:scale-105"
+            title="Mind Manager"
+          >
+            <i class="ti ti-brain text-xl"></i>
+          </a>
+        </nav>
+      </aside>
+    </div>
+    <!-- ============================= -->
+    <!-- CROSS-MODULE EDGE PANEL END -->
+    <!-- ============================= -->
+
+    <!-- ============================= -->
     <!-- APP CONTAINER START -->
     <!-- ============================= -->
 
