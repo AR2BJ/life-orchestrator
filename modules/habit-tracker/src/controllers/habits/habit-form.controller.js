@@ -92,10 +92,10 @@ export const HabitFormController = {
 
     if (!habit) return;
 
-    const titleInput = document.getElementById("edit-habit-title");
+    const nameInput = document.getElementById("edit-habit-name");
     const descInput = document.getElementById("edit-habit-desc");
 
-    if (titleInput) titleInput.value = habit.name || "";
+    if (nameInput) nameInput.value = habit.name || "";
     if (descInput) descInput.value = habit.description || "";
 
     const categoryWrapper = document.getElementById("edit-category-wrapper");
@@ -308,7 +308,7 @@ export const HabitFormController = {
   },
 
   executeEdit() {
-    const editInput = document.getElementById("edit-habit-input");
+    const editInput = document.getElementById("edit-habit-name");
 
     if (!pendingEditId || !editInput) return;
 

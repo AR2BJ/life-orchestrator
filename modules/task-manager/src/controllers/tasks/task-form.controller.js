@@ -309,7 +309,7 @@ export const TaskFormController = {
                         subtask.isEditing
                           ? "ti-device-floppy"
                           : "ti-edit-circle"
-                      } text-blue-500/80 text-base"
+                      } text-blue-500/80 text-base lg:text-lg"
                     ></i>
                   </button>
 
@@ -317,7 +317,7 @@ export const TaskFormController = {
                     data-action="delete"
                     class="delete-btn flex h-8 w-8 sm:w-10 sm:h-10 items-center justify-center rounded-lg sm:rounded-xl border border-border bg-surface hover:bg-red-600/10 hover:cursor-pointer transition"
                   >
-                    <i class="ti ti-trash text-red-500/80 text-base"></i>
+                    <i class="ti ti-trash text-red-500/80 text-base lg:text-lg"></i>
                   </button>
                 </div>
               </div>

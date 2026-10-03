@@ -292,7 +292,7 @@ export const TaskItemComponent = {
                     data-id="${task.id}"
                     class="${actionButtonClass} w-9 h-9 rounded-lg bg-surface-2 border border-border flex items-center justify-center hover:cursor-pointer peer transition"
                   >
-                    <i class="ti ${actionIcon} text-base md:text-lg"></i>
+                    <i class="ti ${actionIcon} text-base lg:text-lg"></i>
                   </button>
                   <div
                     class="absolute top-full left-1/2 -translate-x-1/2 mt-2 px-2 py-1 rounded bg-surface-2 text-xs text-color opacity-0 cursor-default peer-hover:opacity-100 transition z-10"
@@ -310,7 +310,7 @@ export const TaskItemComponent = {
                         class="edit-btn w-9 h-9 rounded-lg bg-surface-2 hover:bg-blue-600/10 border border-border flex items-center justify-center hover:cursor-pointer peer transition"
                       >
                         <i
-                          class="ti ti-edit-circle text-blue-500/80 text-base md:text-lg"
+                          class="ti ti-edit-circle text-blue-500/80 text-base lg:text-lg"
                         ></i>
                       </button>
                       <div
@@ -327,7 +327,7 @@ export const TaskItemComponent = {
                     class="delete-btn w-9 h-9 rounded-lg bg-surface-2 hover:bg-red-600/10 border border-border flex items-center justify-center hover:cursor-pointer peer transition"
                   >
                     <i
-                      class="ti ti-trash text-red-500/80  text-base md:text-lg"
+                      class="ti ti-trash text-red-500/80 text-base lg:text-lg"
                     ></i>
                   </button>
                   <div
@@ -380,7 +380,7 @@ export const TaskItemComponent = {
                     data-id="${task.id}"
                     class="delete-btn flex w-full items-center gap-2 rounded-lg px-2.5 py-1.5 text-left text-xs font-medium border-0 bg-transparent text-red-500/80 hover:bg-red-500/5 transition cursor-pointer"
                   >
-                    <i class="ti ti-trash text-xs"></i>
+                    <i class="ti ti-trash text-xs text-red-500/80"></i>
                     <span>Delete Permanently</span>
                   </button>
                 </div>

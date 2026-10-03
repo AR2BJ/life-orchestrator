@@ -6,8 +6,8 @@ export const HabitService = {
 
     const cleanedName = (rawName || "").trim().replace(/\s+/g, " ");
 
-    if (!cleanedName || cleanedName.length < 2 || cleanedName.length > 20) {
-      throw new Error("Invalid habit name length (2-20 chars)");
+    if (!cleanedName || cleanedName.length < 2 || cleanedName.length > 40) {
+      throw new Error("Invalid habit name length (2-40 chars)");
     }
 
     const alreadyExists = currentHabits.some(
@@ -98,9 +98,9 @@ export const HabitService = {
       if (
         !cleanedTitle ||
         cleanedTitle.length < 2 ||
-        cleanedTitle.length > 20
+        cleanedTitle.length > 40
       ) {
-        throw new Error("Invalid habit name length (2-20 chars)");
+        throw new Error("Invalid habit name length (2-40 chars)");
       }
     }
 

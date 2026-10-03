@@ -95,8 +95,6 @@ export const PlannerController = {
                 if (ui) {
                   ui.filterBy = selectedVal;
                 }
-
-                StateManager.notifyActiveTabChanged();
                 this.refreshUI();
               } finally {
                 GlobalLoaderService.hide();

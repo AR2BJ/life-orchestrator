@@ -45,14 +45,14 @@ export const EditModalsComponent = {
             <div class="space-y-4">
               <div>
                 <label
-                  for="edit-habit-title"
+                  for="edit-habit-name"
                   class="mb-1.5 block ps-3 text-xs font-semibold text-secondary"
                 >
                   Habit name <span class="text-red-700">*</span>
                 </label>
 
                 <input
-                  id="edit-habit-title"
+                  id="edit-habit-name"
                   type="text"
                   placeholder="What habit do you want to build or quit?...."
                   class="h-11 w-full rounded-xl border border-border bg-surface-2 px-4 text-sm text-color placeholder:text-secondary/70 transition focus:border-brand/80 focus:outline-none"
